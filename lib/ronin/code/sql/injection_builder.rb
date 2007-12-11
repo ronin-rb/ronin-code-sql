@@ -21,7 +21,7 @@
 
 require 'ronin/code/sql/statement'
 require 'ronin/code/sql/program'
-require 'ronin/code/sql/injectionstyle'
+require 'ronin/code/sql/injection_style'
 require 'ronin/extensions/string'
 
 module Ronin

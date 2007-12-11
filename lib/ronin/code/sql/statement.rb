@@ -21,9 +21,9 @@
 
 require 'ronin/code/sql/expr'
 require 'ronin/code/sql/field'
-require 'ronin/code/sql/binaryexpr'
-require 'ronin/code/sql/unaryexpr'
-require 'ronin/code/sql/likeexpr'
+require 'ronin/code/sql/binary_expr'
+require 'ronin/code/sql/unary_expr'
+require 'ronin/code/sql/like_expr'
 require 'ronin/code/sql/in'
 require 'ronin/code/sql/function'
 

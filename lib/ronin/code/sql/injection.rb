@@ -20,8 +20,8 @@
 #
 
 require 'ronin/code/sql/program'
-require 'ronin/code/sql/injectionstyle'
-require 'ronin/code/sql/injectionbuilder'
+require 'ronin/code/sql/injection_style'
+require 'ronin/code/sql/injection_builder'
 require 'ronin/extensions/string'
 
 module Ronin

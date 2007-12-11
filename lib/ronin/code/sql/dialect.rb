@@ -19,14 +19,14 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/code/sql/createtable'
-require 'ronin/code/sql/createview'
+require 'ronin/code/sql/create_table'
+require 'ronin/code/sql/create_view'
 require 'ronin/code/sql/insert'
 require 'ronin/code/sql/select'
 require 'ronin/code/sql/update'
 require 'ronin/code/sql/delete'
-require 'ronin/code/sql/droptable'
-require 'ronin/code/sql/exceptions/unknowndialect'
+require 'ronin/code/sql/drop_table'
+require 'ronin/code/sql/exceptions/unknown_dialect'
 
 module Ronin
   module Code
