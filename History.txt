@@ -1,0 +1,7 @@
+== 0.1.0 / 2007-12-23
+
+ * Initial release.
+ * Supports SQL code generation.
+ * Supports basic obfustication of SQL code.
+ * Supports SQL Injection code generation.
+
