@@ -32,4 +32,6 @@ lib/ronin/code/sql/statement.rb
 lib/ronin/code/sql/style.rb
 lib/ronin/code/sql/unary_expr.rb
 lib/ronin/code/sql/update.rb
+lib/ronin/sql/version.rb
+lib/ronin/sql.rb
 test/test_ronin.rb

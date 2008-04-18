@@ -1,6 +1,7 @@
-Ronin
-    by Postmodern Modulus III
-    http://rubyforge.net/projects/ronin/
+= Ronin SQL
+
+* http://ronin.rubyforge.net/
+* Postmodern Modulus III
 
 == DESCRIPTION:
 
