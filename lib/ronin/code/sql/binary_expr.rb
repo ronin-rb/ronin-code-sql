@@ -19,24 +19,26 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/expr'
+require 'ronin/code/sql/expr'
 
 module Ronin
-  module SQL
-    class BinaryExpr < Expr
+  module Code
+    module SQL
+      class BinaryExpr < Expr
 
-      def initialize(style,op,left,right)
-        super(style)
+        def initialize(style,op,left,right)
+          super(style)
 
-        @op = op
-        @left = left
-        @right = right
+          @op = op
+          @left = left
+          @right = right
+        end
+
+        def compile
+          compile_expr(compile_data(@left),compile_keyword(@op),compile_data(@right))
+        end
+
       end
-
-      def compile
-        compile_expr(compile_data(@left),compile_keyword(@op),compile_data(@right))
-      end
-
     end
   end
 end
