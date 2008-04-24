@@ -64,7 +64,7 @@ module Ronin
         def self.option_list(name,values=[])
           values.each do |opt|
             class_eval %{
-              def #{opt}(&block)
+              def #{opt}_#{name}(&block)
                 instance_variable_set("@#{name}",'#{opt.to_s.upcase}')
 
                 instance_eval(&block) if block

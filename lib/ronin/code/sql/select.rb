@@ -30,10 +30,10 @@ module Ronin
 
         option_list :rows, [:all, :distinct]
 
-        def initialize(style,tables=nil,opts={:fields => nil, :where => nil},&block)
-          @fields = opts[:fields] || all_fields
+        def initialize(style,tables=nil,options={:fields => nil, :where => nil},&block)
+          @fields = options[:fields] || all
           @tables = tables
-          @where = opts[:where]
+          @where = options[:where]
 
           super(style,&block)
         end
@@ -43,8 +43,8 @@ module Ronin
           return self
         end
 
-        def tables(expr)
-          @table = expr
+        def tables(*expr)
+          @tables = expr
           return self
         end
 
@@ -110,7 +110,7 @@ module Ronin
                        compile_list(@tables),
                        where?,
                        order_by?,
-                       group_by?,
+                       having_by?,
                        unioned?)
         end
 
@@ -130,7 +130,7 @@ module Ronin
             unless @fields.empty?
               return compile_row(@fields)
             else
-              return all_fields.to_s
+              return all.to_s
             end
           else
             return @fields.to_s
@@ -145,12 +145,12 @@ module Ronin
           compile_expr(keyword_order_by,@order_by) if @order_by
         end
 
-        def having?
-          compile_expr(keyword_having,@having) if @having
+        def group_by?
+          compile_expr(keyword_group_by,compile_row(@group_by)) if @group_by
         end
 
-        def group_by?
-          compile_expr(keyword_group_by,compile_row(@group_by),having?) if @group_by
+        def having?
+          compile_expr(keyword_having,@having) if @having
         end
 
         def unioned?

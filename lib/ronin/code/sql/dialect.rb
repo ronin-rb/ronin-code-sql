@@ -114,7 +114,7 @@ module Ronin
           return self
         end
 
-        def self.aggregators(*names)
+        def self.function(*names)
           names.each do |name|
             class_def(name) do |field|
               Function.new(@style,name,field)
@@ -122,6 +122,10 @@ module Ronin
           end
 
           return self
+        end
+
+        def self.aggregators(*names)
+          function(*names)
         end
 
         def self.command(name,base)

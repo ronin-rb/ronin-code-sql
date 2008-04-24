@@ -50,20 +50,21 @@ module Ronin
           end
         end
 
+        def compile_space
+          if @comment_evasion
+            return '/**/'
+          else
+            return super
+          end
+        end
+
         def compile_keyword(name)
           name = name.to_s
 
-          if (!(name.empty?) && (@comment_evasion || @case_evasion))
-
-            if @case_evasion
-              (rand(name.length)+1).times do
-                i = rand(name.length-1).to_i
-                name[i] = name[i..i].swapcase
-              end
-            end
-
-            if (name.length>1 && @comment_evasion)
-              name = name.insert(rand(name.length-2)+1,'/**/')
+          if @case_evasion
+            (rand(name.length)+1).times do
+              i = rand(name.length-1).to_i
+              name[i] = name[i..i].swapcase
             end
 
             return name

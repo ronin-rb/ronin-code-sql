@@ -32,10 +32,9 @@ module Ronin
       class Builder < Statement
 
         def initialize(style,options={},&block)
-          @style = style
-
           @commands = []
-          instance_eval(&block) if block
+
+          super(style,&block)
         end
 
         def compile

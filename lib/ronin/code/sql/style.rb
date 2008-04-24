@@ -141,7 +141,9 @@ module Ronin
         end
 
         def compile_data(data)
-          if data.kind_of?(Array)
+          if data.kind_of?(Statement)
+            return "(#{data})"
+          elsif data.kind_of?(Array)
             return compile_datalist(data)
           elsif data.kind_of?(String)
             return quote_string(data)

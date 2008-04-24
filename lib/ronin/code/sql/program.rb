@@ -53,28 +53,24 @@ module Ronin
           self.new(options,&block).compile
         end
 
-        def url_encode
-          compile.url_encode
+        def uri_encode
+          compile.uri_encode
         end
 
-        def self.url_encode(*expr,&block)
-          self.new(expr,&block).url_encode
+        def uri_escape
+          compile.uri_escape
         end
 
         def html_encode
           compile.html_encode
         end
 
-        def self.html_(options={},&block)
-          self.new(options,&block).html_encode
+        def format_html(options={})
+          compile.format_html(options)
         end
 
         def base64_encode
           compile.base64_encode
-        end
-
-        def self.base64_encode(options={},&block)
-          self.new(options,&block).base64_encode
         end
 
       end

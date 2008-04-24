@@ -72,7 +72,7 @@ module Ronin
         end
 
         def has_table?(table)
-          inject_or(select_from(table,:fields => count(all), :from => table)==1)
+          inject_and(select_from(table,:fields => count(all), :from => table)==1)
         end
 
         def has_field?(field)
