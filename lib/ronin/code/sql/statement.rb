@@ -1,8 +1,9 @@
 #
+#--
 # Ronin SQL - A Ronin library providing support for SQL related security
 # tasks.
 #
-# Copyright (c) 2007 Hal Brodigan (postmodern at users.sourceforge.net)
+# Copyright (c) 2007-2008 Hal Brodigan (postmodern.mod3 at gmail.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#++
 #
 
 require 'ronin/code/sql/expr'
@@ -25,7 +27,7 @@ require 'ronin/code/sql/binary_expr'
 require 'ronin/code/sql/unary_expr'
 require 'ronin/code/sql/like_expr'
 require 'ronin/code/sql/in'
-require 'ronin/code/sql/function'
+require 'ronin/extensions/meta'
 
 module Ronin
   module Code
@@ -40,109 +42,71 @@ module Ronin
 
         protected
 
-        def Statement.option(id,value=nil)
-          class_eval <<-end_eval
-      def #{id}(&block)
-        @#{id} = true
+        def self.option(name,value=nil)
+          class_eval %{
+            def #{name}(&block)
+              instance_variable_set("@#{name}",true)
 
-          instance_eval(&block) if block
-          return self
-        end
-    end_eval
+              instance_eval(&block) if block
+              return self
+            end
+          }
 
-        if value
-          class_eval <<-end_eval
-        protected
-
-        def #{id}?
-          keyword('#{value}') if @#{id}
-        end
-      end_eval
-      else
-        class_eval <<-end_eval
-        protected
-
-        def #{id}?
-          @#{id}
-        end
-      end_eval
-      end
-    end
-
-    def Statement.option_list(id,values=[])
-      values.each do |opt|
-        class_eval <<-end_eval
-        def #{opt}(&block)
-          @#{id} = '#{opt.to_s.upcase}'
-
-          if block
-            instance_eval(&block)
-            return self
+          class_def("#{name}?") do
+            if value
+              keyword(value.to_s) if instance_variable_get("@#{name}")
+            else
+              instance_variable_get("@#{name}")
+            end
           end
         end
-      end_eval
+
+        def self.option_list(name,values=[])
+          values.each do |opt|
+            class_eval %{
+              def #{opt}(&block)
+                instance_variable_set("@#{name}",'#{opt.to_s.upcase}')
+
+                instance_eval(&block) if block
+                return self
+              end
+            }
+          end
+
+          class_def("#{name}?") do
+            opt = instance_variable_get("@#{name}")
+
+            return keyword(opt) if opt
+            return nil
+          end
+        end
+
+        def all
+          field_cache[:'*']
+        end
+
+        def id
+          field_cache[:id]
+        end
+
+        def method_missing(sym,*args,&block)
+          if @style.dialect.expresses?(sym)
+            return @style.dialect.express(sym,*args,&block)
+          end
+
+          # return a field
+          return field_cache[sym] if args.empty?
+
+          return super(sym,*args,&block)
+        end
+
+        private
+
+        def field_cache
+          @field_cache ||= Hash.new { |hash,key| hash[key] = Field.new(@style,key) }
+        end
+
       end
-
-      class_eval <<-end_eval
-      def #{id}?
-      keyword(@#{id}) if @#{id}
-    end
-    end_eval
-  end
-
-  def all_fields
-    field_cache[:"*"]
-  end
-
-  def id
-    field_cache[:id]
-  end
-
-  def or!(*expr)
-    if expr.length==2
-      return BinaryExpr.new(@style,'OR',expr[0],expr[1])
-    else
-      return BinaryExpr.new(@style,'OR',expr.shift,or!(*expr))
-    end
-  end
-
-  def and!(*expr)
-    if expr.length==2
-      return BinaryExpr.new(@style,'AND',expr[0],expr[1])
-    else
-      return BinaryExpr.new(@style,'AND',expr.shift,and!(*expr))
-    end
-  end
-
-  def xor!(*expr)
-    if expr.length==2
-      return BinaryExpr.new(@style,'XOR',expr[0],expr[1])
-    else
-      return BinaryExpr.new(@style,'XOR',expr.shift,xor!(*expr))
-    end
-  end
-
-  def method_missing(sym,*args)
-    return @style.express(sym,*args) if @style.expresses?(sym)
-
-    unless args.empty?
-      # Return a function if there are arguments
-      return Function.new(@style,sym,*args)
-    else
-      # Otherwise return a field
-      return field_cache[sym]
-    end
-
-    raise(NoMethodError,sym.id2name)
-  end
-
-  private
-
-  def field_cache
-    @field_cache ||= Hash.new { |hash,key| hash[key] = Field.new(@style,key) }
-  end
-
-end
     end
   end
 end

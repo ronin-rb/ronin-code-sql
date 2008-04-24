@@ -21,40 +21,40 @@
 #++
 #
 
-require 'ronin/code/sql/statement'
 require 'ronin/code/sql/dialect'
-require 'ronin/code/sql/common_dialect'
-require 'ronin/code/sql/style'
+require 'ronin/code/sql/create_table'
+require 'ronin/code/sql/create_index'
+require 'ronin/code/sql/create_view'
+require 'ronin/code/sql/insert'
+require 'ronin/code/sql/select'
+require 'ronin/code/sql/update'
+require 'ronin/code/sql/delete'
+require 'ronin/code/sql/drop_table'
 
 module Ronin
   module Code
     module SQL
-      class Builder < Statement
+      class CommonDialect < Dialect
 
-        def initialize(style,options={},&block)
-          @style = style
+        dialect :common
 
-          @commands = []
-          instance_eval(&block) if block
-        end
+        primitives :yes, :no, :on, :off, :null
 
-        def compile
-          @style.compile_statements(@commands)
-        end
+        data_type :int
+        data_type :varchar, :length => true
+        data_type :text
+        data_type :record
 
-        protected
+        aggregators :count, :min, :max, :sum, :avg
 
-        def command(cmd)
-          @commands << cmd
-          return self
-        end
-
-        def method_missing(sym,*args,&block)
-          result = super(sym,*args,&block)
-
-          @commands << result if result.kind_of?(Statement)
-          return result
-        end
+        command :create_type, CreateTable
+        command :create_index, CreateIndex
+        command :create_view, CreateView
+        command :insert, Insert
+        command :select_from, Select
+        command :update, Update
+        command :delete, Delete
+        command :drop_table, DropTable
 
       end
     end

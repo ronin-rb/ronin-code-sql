@@ -1,8 +1,9 @@
 #
+#--
 # Ronin SQL - A Ronin library providing support for SQL related security
 # tasks.
 #
-# Copyright (c) 2007 Hal Brodigan (postmodern at users.sourceforge.net)
+# Copyright (c) 2007-2008 Hal Brodigan (postmodern.mod3 at gmail.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#++
 #
 
 require 'ronin/code/sql/style'
@@ -32,11 +34,20 @@ module Ronin
         # Swapcase-Obfusciate all keywords
         attr_accessor :case_evasion
 
-        def initialize(dialect=Dialect.new)
-          super(dialect)
+        def initialize(options={})
+          super(options)
 
-          @comment_evasion = false
-          @case_evasion = false
+          if options[:comment_evasion].nil?
+            @comment_evasion = false
+          else
+            @comment_evasion = options[:comment_evasion]
+          end
+
+          if options[:case_evasion].nil?
+            @case_evasion = false
+          else
+            @case_evasion = options[:case_evasion]
+          end
         end
 
         def compile_keyword(name)

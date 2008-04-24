@@ -1,4 +1,5 @@
 #
+#--
 # Ronin SQL - A Ronin library providing support for SQL related security
 # tasks.
 #
@@ -17,128 +18,130 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#++
 #
 
-require 'ronin/code/sql/create_table'
-require 'ronin/code/sql/create_view'
-require 'ronin/code/sql/insert'
-require 'ronin/code/sql/select'
-require 'ronin/code/sql/update'
-require 'ronin/code/sql/delete'
-require 'ronin/code/sql/drop_table'
 require 'ronin/code/sql/exceptions/unknown_dialect'
+require 'ronin/code/sql/function'
+require 'ronin/extensions/meta'
 
 module Ronin
   module Code
     module SQL
       class Dialect
 
-        def varchar(length=nil)
-          if length
-            return "#{VARCHAR}(#{length})"
-          else
-            return VARCHAR
-          end
-        end
+        # The style to use
+        attr_reader :style
 
-        def create_table(style,table=nil,opts={:columns => {}, :not_null => {}, :as => nil},&block)
-          CreateTable.new(style,table,opts,&block)
+        def initialize(style)
+          @style = style
         end
-
-        def create_index(style,index=nil,table=nil,columns={},&block)
-          CreateIndex.new(style,index,table,columns={},&block)
-        end
-
-        def create_view(style,view=nil,query=nil,&block)
-          CreateView.new(style,view,query,&block)
-        end
-
-        def insert(style,table=nil,opts={:fields => nil, :values => nil, :from => nil},&block)
-          Insert.new(style,table,opts,&block)
-        end
-
-        def select_from(style,tables=nil,opts={:fields => nil, :where => nil},&block)
-          Select.new(style,tables,opts,&block)
-        end
-
-        def update(style,table=nil,set_data={},where_expr=nil,&block)
-          Update.new(style,table,set_data,where_expr,&block)
-        end
-
-        def delete(style,table=nil,where_expr=nil,&block)
-          Delete.new(style,style,table,where_expr,&block)
-        end
-
-        def drop_table(style,table=nil,&block)
-          DropTable.new(style,table,&block)
-        end
-
-        protected
 
         def Dialect.dialects
           @@dialects ||= {}
         end
 
         def Dialect.has_dialect?(name)
-          Dialect.dialects.has_key?(name.to_s)
+          Dialect.dialects.has_key?(name.to_sym)
         end
 
         def Dialect.get_dialect(name)
-          name = name.to_s
+          name = name.to_sym
 
           unless Dialect.has_dialect?(name)
-            raise(UnknownDialect,"unknown dialect '#{name}'",caller)
+            raise(UnknownDialect,"unknown dialect #{name.dump}",caller)
           end
 
-          return Dialect.dialects[name].new
+          return Dialect.dialects[name]
         end
 
-        def Dialect.dialect(name)
-          dialects[name.to_s] = self
-
-          class_eval <<-end_eval
-      def to_s
-        '#{name}'
-      end
-    end_eval
+        def expresses?(name)
+          public_methods.include?(name.to_s)
         end
 
-        dialect 'common'
-
-        def self.primitive(*ids)
-          for id in ids
-            const_name = id.to_s.upcase
-            class_eval <<-end_eval
-            #{const_name} = :#{const_name}.freeze
-
-        def #{id}
-        #{const_name}
-        end
-      end_eval
-          end
-        end
-
-        primitive :yes, :no, :on, :off, :null, :int, :varchar, :text, :record
-
-        def Dialect.aggregate(*syms)
-          for sym in syms
-            class_eval <<-end_eval
-        def #{sym}(style,field)
-            Function.new(style,:#{sym},field)
-        end
-      end_eval
-          end
-        end
-
-        aggregate :count, :min, :max, :sum, :avg
-
-        def method_missing(sym,*args)
-          name = sym.id2name
-          if (dialects.has_key?(name) && args.length==0)
-            return dialects[name]
+        def express(name,*args,&block)
+          unless expresses?(name)
+            raise(NameError,"undefined method '#{name}' for #{self}",caller)
           end
 
-          raise(NoMethodError,name)
+          return send(name,*args,&block)
+        end
+
+        protected
+
+        def self.dialect(name)
+          name = name.to_sym
+
+          class_def(:name) { name }
+
+          Dialect.dialects[name] = self
+          return self
+        end
+
+        def self.keyword(name,value=name.to_s.upcase)
+          name = name.to_s.downcase
+
+          class_def("keyword_#{name}") { keyword(value) }
+          return self
+        end
+
+        def self.primitives(*names)
+          names.each do |name|
+            name = name.to_s.downcase
+
+            class_def(name) { keyword(name) }
+          end
+
+          return self
+        end
+
+        def self.data_type(name,options={})
+          name = name.to_s.downcase
+          type_name = name.upcase.to_sym
+
+          if options[:length]==true
+            class_def(name) do |length|
+              if length
+                "#{type_name}(#{length})"
+              else
+                type_name
+              end
+            end
+          else
+            class_def(name) { type_name }
+          end
+
+          return self
+        end
+
+        def self.aggregators(*names)
+          names.each do |name|
+            class_def(name) do |field|
+              Function.new(@style,name,field)
+            end
+          end
+
+          return self
+        end
+
+        def self.command(name,base)
+          class_eval %{
+            def #{name}(*args,&block)
+              #{base}.new(@style,*args,&block)
+            end
+          }
+
+          return self
+        end
+
+        def keyword(value)
+          keyword_cache[value.to_sym]
+        end
+
+        private
+
+        def keyword_cache
+          @keyword_cache ||= Hash.new { |hash,key| hash[key] = Keyword.new(self,key) }
         end
 
       end

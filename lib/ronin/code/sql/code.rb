@@ -2,7 +2,7 @@
 # Ronin SQL - A Ronin library providing support for SQL related security
 # tasks.
 #
-# Copyright (c) 2007 Hal Brodigan (postmodern at users.sourceforge.net)
+# Copyright (c) 2007-2008 Hal Brodigan (postmodern.mod3 at gmail.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@ require 'ronin/code/sql/injection'
 
 module Ronin
   module Code
-    def Code.sql(*cmds,&block)
-      SQL::Program.new(cmds,&block)
+    def Code.sql(options={},&block)
+      SQL::Program.new(options,&block)
     end
 
-    def Code.sql_injection(*expr,&block)
-      SQL::Injection.new(expr,&block)
+    def Code.sql_injection(options={},&block)
+      SQL::Injection.new(options,&block)
     end
   end
 end

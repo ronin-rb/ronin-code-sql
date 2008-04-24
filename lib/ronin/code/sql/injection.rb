@@ -2,7 +2,7 @@
 # Ronin SQL - A Ronin library providing support for SQL related security
 # tasks.
 #
-# Copyright (c) 2007 Hal Brodigan (postmodern at users.sourceforge.net)
+# Copyright (c) 2007-2008 Hal Brodigan (postmodern.mod3 at gmail.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,53 +29,8 @@ module Ronin
     module SQL
       class Injection < Program
 
-        def initialize(expr=[],style=InjectionStyle.new,&block)
-          @style = style
-          @builder = InjectionBuilder.new(expr,style,&block)
-        end
-
-        def compile
-          @builder.to_s
-        end
-
-        def to_s
-          compile
-        end
-
-        def Injection.compile(*expr,&block)
-          Injection.new(expr,&block).compile
-        end
-
-        def url_encode
-          compile.url_encode
-        end
-
-        def Injection.url_encode(*expr,&block)
-          Injection.new(expr,&block).url_encode
-        end
-
-        def html_hex
-          compile.html_hex_encode
-        end
-
-        def Injection.html_hex(*expr,&block)
-          Injection.new(expr,&block).html_hex
-        end
-
-        def html_dec
-          compile.html_dec_encode
-        end
-
-        def Injection.html_dec(*expr,&block)
-          Injection.new(expr,&block).html_dec
-        end
-
-        def base64
-          compile.base64_encode
-        end
-
-        def Injection.base64(*expr,&block)
-          Injection.new(expr,&block).base64
+        def initialize(options={},&block)
+          @builder = InjectionBuilder.new(InjectionStyle.new(options),&block)
         end
 
       end

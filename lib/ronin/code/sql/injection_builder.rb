@@ -1,8 +1,9 @@
 #
+#--
 # Ronin SQL - A Ronin library providing support for SQL related security
 # tasks.
 #
-# Copyright (c) 2007 Hal Brodigan (postmodern at users.sourceforge.net)
+# Copyright (c) 2007-2008 Hal Brodigan (postmodern.mod3 at gmail.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,111 +18,91 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#++
 #
 
 require 'ronin/code/sql/statement'
-require 'ronin/code/sql/program'
 require 'ronin/code/sql/injection_style'
-require 'ronin/extensions/string'
 
 module Ronin
   module Code
     module SQL
       class InjectionBuilder < Statement
 
-        # Style of the injection
-        attr_reader :style
-
-        def initialize(expr=[],style=InjectionStyle.new,&block)
-          @expressions = expr.flatten
-          @escape_string = false
+        def initialize(style,&block)
+          @escape = nil
+          @escape_data = nil
+          @expressions = []
+          @program = nil
 
           super(style,&block)
         end
 
-        def escape(var)
-          @escape = var
-          @escape_string = false
+        def escape(var=1,&block)
+          @escape = nil
+          @escape_data = var
+
+          block.call if block
           return self
         end
 
-        def escape_string(var=nil)
-          @escape = "#{var}'"
-          @escape_string = true
-          return self
-        end
-
-        def inject(expr)
-          @expressions << expr
+        def inject(*expr)
+          @expressions += expr
           return self
         end
 
         def inject_and(expr)
-          @expressions+=[keyword_and,expr]
-          return self
+          inject(keyword_and, expr)
         end
 
         def inject_or(expr)
-          @expressions+=[keyword_or,expr]
-          return self
+          inject(keyword_or, expr)
         end
 
-        def inject_error(garbage='1')
-          @expressions << garbage
-          return self
-        end
-
-        def exec_error
-          @expessions+=keywords('EXEC','SP_','(OR','EXEC','XP_)')
-          return self
+        def inject_sql(options={},&block)
+          @program = Program.new(@style,options,&block)
         end
 
         def all_rows(var=1)
           inject_or(BinaryExpr.new(@style,'=',var,var))
-          return self
         end
 
         def exact_rows(var=1)
           inject_and(BinaryExpr.new(@style,'=',var,var))
-          return self
-        end
-
-        def running_admin?
-          inject_and(BinaryExpr.new(@style,Function.new(@style,'USER_NAME'),'dbo'))
-          return self
         end
 
         def has_table?(table)
-          inject_or(select_from(table,:fields => count, :from => table)==1)
-          return self
+          inject_or(select_from(table,:fields => count(all), :from => table)==1)
         end
 
         def has_field?(field)
-          inject_or(field.not_null?)
-          return self
+          inject_or(field.is_not?(null))
         end
 
         def uses_table?(table)
-          inject_or(table.not_null?)
-          return self
+          inject_or(table.is_not?(null))
         end
 
-        def expression(*exprs)
-          exprs.each { |expr| inject_or(expr) }
-          return self
-        end
+        def compile
+          injection_expr = lambda {
+            compile_expr("#{@escape_data}#{@escape}",*(@expressions))
+          }
 
-        def sql(*commands,&block)
-          @program = Program.new(commands,@style,&block)
-        end
+          append_comment = lambda { |str|
+            compile_expr(str,'--')
+          }
 
-        def respond_to?(sym)
-          return true if @style.expresses?(sym)
-          return super(sym)
-        end
+          if @program
+            return compile_statements(injection_expr.call,append_comment.call(@program))
+          else
+            injection = injection_expr.call
 
-        def to_s
-          escape_injection(inject_expression,inject_program)
+            if (@escape && injection =~ /#{@escape}\s*$/)
+              return injection.rstrip.chop
+            else
+              return append_comment.call(injection)
+            end
+          end
         end
 
         protected
@@ -129,33 +110,26 @@ module Ronin
         keyword :or
         keyword :and
 
-        def inject_expression
-          compile_expr(@expressions).strip
-        end
+        def self.escape(name,char)
+          name = name.to_s.downcase.to_sym
+          char = char.to_s
 
-        def inject_program
-          return '' unless @program
+          class_eval %{
+            def escape_#{name}(var=nil,&block)
+              @escape = #{char.dump}
+              @escape_data = var
 
-          if @style.multiline
-            return "\n#{@program}"
-          else
-            return "; #{@program}"
-          end
-        end
-
-        def escape_injection(*exprs)
-          expr = exprs.join
-
-          if @escape
-            if (@escape_string && expr[-1].chr=="'")
-              return append_space(@escape)+expr.chop
-            else
-              return append_space(@escape)+expr+' --'
+              block.call if block
+              return self
             end
-          else
-            return expr
-          end
+          }
+
+          return self
         end
+
+        escape :string, "'"
+        escape :parenthesis, ')'
+        escape :statement, ';'
 
       end
     end

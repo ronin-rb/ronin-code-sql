@@ -1,8 +1,9 @@
 #
+#--
 # Ronin SQL - A Ronin library providing support for SQL related security
 # tasks.
 #
-# Copyright (c) 2007 Hal Brodigan (postmodern at users.sourceforge.net)
+# Copyright (c) 2007-2008 Hal Brodigan (postmodern.mod3 at gmail.com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,8 +18,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#++
 #
 
+require 'ronin/code/sql/style'
 require 'ronin/code/sql/builder'
 
 module Ronin
@@ -26,41 +29,52 @@ module Ronin
     module SQL
       class Program
 
-        # Style of the program
-        attr_reader :style
-
-        def initialize(cmds=[],style=Style.new,&block)
-          @style = style
-          @builder = Builder.new(cmds,style,&block)
+        def initialize(options={},&block)
+          @builder = Builder.new(Style.new(options),&block)
         end
 
-        def dialect(name)
-          @style.set_dialect(name)
+        def style
+          @builder.style
+        end
+
+        def dialect
+          @builder.style.dialect.name
         end
 
         def compile
-          @builder.to_s
+          @builder.compile
         end
 
         def to_s
           compile
         end
 
-        def Program.compile(*cmds,&block)
-          Program.new(cmds,&block).compile
+        def self.compile(options={},&block)
+          self.new(options,&block).compile
         end
 
-        protected
+        def url_encode
+          compile.url_encode
+        end
 
-        def method_missing(sym,*args,&block)
-          return @style.send(sym,*args,&block) if @style.respond_to?(sym)
+        def self.url_encode(*expr,&block)
+          self.new(expr,&block).url_encode
+        end
 
-          if @builder.respond_to?(sym)
-            @builder.send(sym,*args,&block)
-            return self
-          end
+        def html_encode
+          compile.html_encode
+        end
 
-          raise(NoMethodError,sym.id2name)
+        def self.html_(options={},&block)
+          self.new(options,&block).html_encode
+        end
+
+        def base64_encode
+          compile.base64_encode
+        end
+
+        def self.base64_encode(options={},&block)
+          self.new(options,&block).base64_encode
         end
 
       end
