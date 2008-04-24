@@ -7,6 +7,7 @@ lib/ronin/code/sql.rb
 lib/ronin/code/sql/between.rb
 lib/ronin/code/sql/builder.rb
 lib/ronin/code/sql/code.rb
+lib/ronin/code/sql/common_dialect.rb
 lib/ronin/code/sql/create_index.rb
 lib/ronin/code/sql/create_table.rb
 lib/ronin/code/sql/create_view.rb
@@ -17,7 +18,6 @@ lib/ronin/code/sql/exceptions.rb
 lib/ronin/code/sql/exceptions/unknown_dialect.rb
 lib/ronin/code/sql/expr.rb
 lib/ronin/code/sql/field.rb
-lib/ronin/code/sql/function.rb
 lib/ronin/code/sql/in.rb
 lib/ronin/code/sql/injection.rb
 lib/ronin/code/sql/injection_builder.rb
