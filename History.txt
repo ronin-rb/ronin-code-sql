@@ -2,6 +2,6 @@
 
  * Initial release.
  * Supports SQL code generation.
- * Supports basic obfustication of SQL code.
+ * Supports obfustication of SQL code.
  * Supports SQL Injection code generation.
 

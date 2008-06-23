@@ -71,12 +71,12 @@ module Ronin
           inject_and(BinaryExpr.new(@style,'=',var,var))
         end
 
-        def has_table?(table)
-          inject_and(select_from(table,:fields => count(all), :from => table)==1)
+        def has_field?(name)
+          inject_or(field(name).is_not?(null))
         end
 
-        def has_field?(field)
-          inject_or(field.is_not?(null))
+        def has_table?(table)
+          inject_and(select_from(table,:fields => count(all), :from => table)==1)
         end
 
         def uses_table?(table)

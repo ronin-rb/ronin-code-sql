@@ -60,6 +60,10 @@ module Ronin
           end
         end
 
+        def to_sym
+          compile.to_sym
+        end
+
         protected
 
         def method_missing(sym,*args)

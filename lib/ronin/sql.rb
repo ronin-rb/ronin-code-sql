@@ -22,4 +22,5 @@
 #
 
 require 'ronin/code/sql'
+require 'ronin/sql/sql'
 require 'ronin/sql/version'

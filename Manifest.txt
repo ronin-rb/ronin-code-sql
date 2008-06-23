@@ -5,6 +5,7 @@ README.txt
 Rakefile
 lib/ronin/code/sql.rb
 lib/ronin/code/sql/between.rb
+lib/ronin/code/sql/binary_expr.rb
 lib/ronin/code/sql/builder.rb
 lib/ronin/code/sql/code.rb
 lib/ronin/code/sql/common_dialect.rb
@@ -18,6 +19,7 @@ lib/ronin/code/sql/exceptions.rb
 lib/ronin/code/sql/exceptions/unknown_dialect.rb
 lib/ronin/code/sql/expr.rb
 lib/ronin/code/sql/field.rb
+lib/ronin/code/sql/function.rb
 lib/ronin/code/sql/in.rb
 lib/ronin/code/sql/injection.rb
 lib/ronin/code/sql/injection_builder.rb
@@ -32,6 +34,7 @@ lib/ronin/code/sql/statement.rb
 lib/ronin/code/sql/style.rb
 lib/ronin/code/sql/unary_expr.rb
 lib/ronin/code/sql/update.rb
+lib/ronin/sql/sql.rb
 lib/ronin/sql/version.rb
 lib/ronin/sql.rb
 test/test_ronin.rb

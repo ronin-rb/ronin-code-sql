@@ -31,7 +31,7 @@ module Ronin
 
         def initialize(style,name)
           @style = style
-          @name = name.to_sym
+          @name = name.to_s
         end
 
         def compile

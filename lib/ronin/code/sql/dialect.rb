@@ -67,6 +67,10 @@ module Ronin
           return send(name,*args,&block)
         end
 
+        def field(name)
+          field_cache[name.to_sym]
+        end
+
         protected
 
         def self.dialect(name)
@@ -145,7 +149,11 @@ module Ronin
         private
 
         def keyword_cache
-          @keyword_cache ||= Hash.new { |hash,key| hash[key] = Keyword.new(self,key) }
+          @keyword_cache ||= Hash.new { |hash,key| hash[key] = Keyword.new(@style,key) }
+        end
+
+        def field_cache
+          @field_cache ||= Hash.new { |hash,key| hash[key] = Field.new(@style,key) }
         end
 
       end

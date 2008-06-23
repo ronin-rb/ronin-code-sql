@@ -95,7 +95,7 @@ module Ronin
           end
 
           # return a field
-          return field_cache[sym] if args.empty?
+          return @style.dialect.field(sym) if args.empty?
 
           return super(sym,*args,&block)
         end

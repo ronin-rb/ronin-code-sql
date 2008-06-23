@@ -53,11 +53,6 @@ module Ronin
           return self
         end
 
-        def order_by(*exprs)
-          @order_by = exprs
-          return self
-        end
-
         def group_by(*fields)
           @group_by = fields
           return self
@@ -66,6 +61,19 @@ module Ronin
         def having(expr)
           @having = expr
           return self
+        end
+
+        def order_by(*exprs)
+          @order_by = exprs
+          return self
+        end
+
+        def limit(value)
+          @limit = value
+        end
+
+        def offset(value)
+          @limit = value
         end
 
         def union(table,opts={:fields => [], :where => nil},&block)
@@ -111,6 +119,8 @@ module Ronin
                        where?,
                        order_by?,
                        having_by?,
+                       order_by?,
+                       limit?,
                        unioned?)
         end
 
@@ -121,9 +131,11 @@ module Ronin
         keyword :where
         keyword :union
         keyword :union_all
-        keyword :order_by, 'ORDER BY'
         keyword :group_by, 'GROUP BY'
         keyword :having
+        keyword :order_by, 'ORDER BY'
+        keyword :limit
+        keyword :offset
 
         def fields?
           if @fields.kind_of?(Array)
@@ -141,16 +153,24 @@ module Ronin
           compile_expr(keyword_where,@where) if @where
         end
 
-        def order_by?
-          compile_expr(keyword_order_by,@order_by) if @order_by
-        end
-
         def group_by?
           compile_expr(keyword_group_by,compile_row(@group_by)) if @group_by
         end
 
-        def having?
+        def having_by?
           compile_expr(keyword_having,@having) if @having
+        end
+
+        def order_by?
+          compile_expr(keyword_order_by,@order_by) if @order_by
+        end
+
+        def limit?
+          compile_expr(keyword_limit,@limit,offset?) if @limit
+        end
+
+        def offset?
+          compile_expr(keyword_offset,@offset) if @offset
         end
 
         def unioned?
