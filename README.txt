@@ -8,10 +8,9 @@
 Ronin SQL is a Ruby library for Ronin that provids support for SQL related
 security tasks.
 
-Ronin is a Ruby development platform designed for information security
-and data exploration tasks. Ronin allows for the rapid development and
-distribution of code over many of the common Source-Code-Management (SCM)
-systems.
+Ronin is a Ruby platform designed for information security and data
+exploration tasks. Ronin allows for the rapid development and distribution
+of code over many of the common Source-Code-Management (SCM) systems.
 
 == FEATURES/PROBLEMS:
 
