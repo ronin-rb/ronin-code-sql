@@ -12,7 +12,33 @@ Ronin is a Ruby platform designed for information security and data
 exploration tasks. Ronin allows for the rapid development and distribution
 of code over many of the common Source-Code-Management (SCM) systems.
 
-== FEATURES/PROBLEMS:
+=== Free
+
+All source code within Ronin is licensed under the GPL-2, therefore no user
+will ever have to pay for Ronin or updates to Ronin. Not only is the
+source code free, the Ronin project will not sell enterprise grade security
+snake-oil solutions, give private training classes or later turn Ronin into
+commercial software.
+
+=== Modular
+
+Ronin was not designed as one monolithic library but instead as a collection
+of libraries which can be individually installed. This allows users to pick
+and choose what functionality they want in Ronin.
+
+=== Decentralized
+
+Ronin does not have a central repository of exploits and payloads which
+all developers contribute to. Instead Ronin has Overlays, repositories of
+code that can be hosted on any CVS/SVN/Git/Rsync server. Users can then use
+Ronin to quickly install or update Overlays. This allows developers and
+users to form their own communities, independent of the main developers
+of Ronin.
+
+== FEATURES:
+
+* Provides an DSL for crafting normal SQL and SQL injections.
+* Provides tests for finding SQL injections.
 
 == INSTALL:
 
