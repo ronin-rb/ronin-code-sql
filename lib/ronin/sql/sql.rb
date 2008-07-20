@@ -35,7 +35,7 @@ module Ronin
       :ms_jetdb => /Microsoft JET Database Engine/,
       :ms_adodb => /ADODB.Command.*error/,
       :asp_net => /Server Error.*System\.Data\.OleDb\.OleDbException/,
-      :my_sql => /(Warning.*(supplied argument is not a valid MySQL result|mysql_.*\(\))|You have an error in your SQL syntax.*(on|at) line)/,
+      :mysql => /(Warning.*(supplied argument is not a valid MySQL result|mysql_.*\(\))|You have an error in your SQL syntax.*(on|at) line)/,
       :php => /(Warning.*failed to open stream|Fatal Error.*(on|at) line)/,
       :oracle => /ORA-[0-9][0-9][0-9][0-9]/,
       :jdbc => /Invalid SQL statement or JDBC/,
@@ -60,7 +60,7 @@ module Ronin
       patterns.each do |type|
         match = ERROR_PATTERNS[type].match(body)
 
-        return Error.new(type,match[0]) if match
+        return Error.new(type,match[0].strip_html) if match
       end
 
       return nil

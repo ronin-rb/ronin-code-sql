@@ -40,8 +40,8 @@ module Ronin
         @message = message
       end
 
-      def inspect
-        "#{@type} => #{@message}"
+      def to_s
+        @message.to_s
       end
 
     end
