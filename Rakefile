@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'hoe'
+require './tasks/spec.rb'
 require './lib/ronin/sql/version.rb'
 
 Hoe.new('ronin-sql', Ronin::SQL::VERSION) do |p|
