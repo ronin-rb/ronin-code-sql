@@ -40,6 +40,9 @@ module Ronin
         @message = message
       end
 
+      #
+      # Returns the message in String form.
+      #
       def to_s
         @message.to_s
       end
