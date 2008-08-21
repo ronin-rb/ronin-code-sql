@@ -23,6 +23,7 @@
 
 module Ronin
   module SQL
+    # Ronin SQL version
     VERSION = '0.1.0'
   end
 end
