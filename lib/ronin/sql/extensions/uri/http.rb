@@ -43,7 +43,7 @@ module URI
     def sql_errors(options={})
       injection = (options[:injection] || "'")
 
-      return test_query_params(injection,options) do |injection_url|
+      return test_query_params(injection,options) do |param,injection_url|
         body = Net.http_get_body(options.merge(:url => injection_url))
 
         Ronin::SQL.error(body,options)
