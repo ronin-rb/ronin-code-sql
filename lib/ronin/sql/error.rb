@@ -21,8 +21,32 @@
 #++
 #
 
-require 'ronin/code/sql'
-require 'ronin/sql/extensions'
-require 'ronin/sql/error'
-require 'ronin/sql/sql'
-require 'ronin/sql/version'
+module Ronin
+  module SQL
+    class Error
+
+      # SQL error type
+      attr_reader :type
+
+      # SQL error message
+      attr_reader :message
+
+      #
+      # Creates a new SQL Error object with the specified _type_ and
+      # _message_.
+      #
+      def initialize(type,message)
+        @type = type
+        @message = message
+      end
+
+      #
+      # Returns the message in String form.
+      #
+      def to_s
+        @message.to_s
+      end
+
+    end
+  end
+end
