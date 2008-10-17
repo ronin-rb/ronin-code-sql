@@ -21,7 +21,6 @@
 #++
 #
 
-require 'ronin/code/sql/keyword'
 require 'ronin/extensions/meta'
 
 module Ronin
@@ -29,15 +28,12 @@ module Ronin
     module SQL
       class Expr
 
-        # The style to use
-        attr_reader :style
-
-        def initialize(style)
-          @style = style
+        def initialize(program)
+          @program = program
         end
 
         def in?(*range)
-          In.new(@style,self,*range)
+          In.new(@program,self,*range)
         end
 
         def ===(*range)
@@ -48,38 +44,20 @@ module Ronin
           in?(*range).not!
         end
 
-        def compile
+        def emit
           # place holder
         end
 
         def to_s
-          compile
+          @program.compile_expr(self)
         end
 
         protected
 
-        def keyword(value)
-          keyword_cache[value.to_sym]
-        end
-
-        def keywords(*values)
-          values.map { |value| keyword(value) }
-        end
-
-        def self.keyword(name,value=name.to_s.upcase)
-          name = name.to_s.downcase
-
-          class_def("keyword_#{name}") do
-            keyword(value)
-          end
-
-          return self
-        end
-
         def self.binary_op(op,*names)
           names.each do |name|
             class_def(name) do |expr|
-              BinaryExpr.new(@style,op,self,expr)
+              BinaryExpr.new(@program,op,self,expr)
             end
           end
 
@@ -104,7 +82,7 @@ module Ronin
         def self.like_op(op,*names)
           names.each do |name|
             class_def(name) do |expr,escape|
-              LikeExpr.new(@style,op,self,expr,escape)
+              LikeExpr.new(@program,op,self,expr,escape)
             end
           end
 
@@ -119,7 +97,7 @@ module Ronin
         def self.unary_op(op,*names)
           names.each do |name|
             class_def(name) do
-              UnaryExpr.new(@style,op,self)
+              UnaryExpr.new(@program,op,self)
             end
           end
 
@@ -128,64 +106,6 @@ module Ronin
 
         unary_op 'NOT', :not!
         unary_op 'EXISTS', :exists?
-
-        def compile_space
-          @style.compile_space
-        end
-
-        def preappend_space(str)
-          @style.preappend_space(str)
-        end
-
-        def append_space(str)
-          @style.append_space(str)
-        end
-
-        def space(*str)
-          @style.space(*str)
-        end
-
-        def compile_newline
-          @style.compile_newline
-        end
-
-        def quote_string(data)
-          @style.quote_string(data)
-        end
-
-        def compile_keyword(name)
-          @style.compile_keyword(name)
-        end
-
-        def compile_list(*expr)
-          @style.compile_list(*expr)
-        end
-
-        def compile_datalist(*expr)
-          @style.compile_list(*expr)
-        end
-
-        def compile_row(*expr)
-          @style.compile_row(*expr)
-        end
-
-        def compile_data(data)
-          @style.compile_data(data)
-        end
-
-        def compile_expr(*expr)
-          @style.compile_expr(*expr)
-        end
-
-        def compile_statements(*statements)
-          @style.compile_statements(*statements)
-        end
-
-        private
-
-        def keyword_cache
-          @keyword_cache ||= Hash.new { |hash,key| hash[key] = Keyword.new(@style,key) }
-        end
 
       end
     end
