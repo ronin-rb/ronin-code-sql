@@ -28,22 +28,19 @@ module Ronin
     module SQL
       class Function < Expr
 
-        def initialize(style,func,*fields)
-          super(style)
+        # Name of the function
+        attr_reader :name
+
+        def initialize(program,name,*fields)
+          super(program)
 
           @style = style
-          @func = keyword(func)
+          @name = name
           @fields = fields
         end
 
-        def compile
-          "#{@func}(#{fields?})"
-        end
-
-        protected
-
-        def fields?
-          return compile_list(@fields) unless @fields.empty?
+        def emit
+          [Keyworld.new(@name)] + @fields
         end
 
       end

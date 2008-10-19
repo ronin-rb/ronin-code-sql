@@ -28,24 +28,17 @@ require 'ronin/extensions/meta'
 module Ronin
   module Code
     module SQL
-      class Dialect
-
-        # The style to use
-        attr_reader :style
-
-        def initialize(style)
-          @style = style
-        end
+      module Dialect
 
         def Dialect.dialects
-          @@dialects ||= {}
+          @@ronin_sql_dialects ||= {}
         end
 
         def Dialect.has_dialect?(name)
           Dialect.dialects.has_key?(name.to_sym)
         end
 
-        def Dialect.get_dialect(name)
+        def Dialect.get(name)
           name = name.to_sym
 
           unless Dialect.has_dialect?(name)
@@ -55,37 +48,10 @@ module Ronin
           return Dialect.dialects[name]
         end
 
-        def expresses?(name)
-          public_methods.include?(name.to_s)
-        end
-
-        def express(name,*args,&block)
-          unless expresses?(name)
-            raise(NameError,"undefined method '#{name}' for #{self}",caller)
-          end
-
-          return send(name,*args,&block)
-        end
-
-        def field(name)
-          field_cache[name.to_sym]
-        end
-
         protected
 
         def self.dialect(name)
-          name = name.to_sym
-
-          class_def(:name) { name }
-
-          Dialect.dialects[name] = self
-          return self
-        end
-
-        def self.keyword(name,value=name.to_s.upcase)
-          name = name.to_s.downcase
-
-          class_def("keyword_#{name}") { keyword(value) }
+          Dialect.dialects[name.to_sym] = self
           return self
         end
 
@@ -101,18 +67,15 @@ module Ronin
 
         def self.data_type(name,options={})
           name = name.to_s.downcase
-          type_name = name.upcase.to_sym
+          type_name = name.upcase
+          supports_length = options[:length]
 
-          if options[:length]==true
-            class_def(name) do |length|
-              if length
-                "#{type_name}(#{length})"
-              else
-                type_name
-              end
+          class_def(name) do |length|
+            if (supports_length && length)
+              Keyword.new("#{type_name}(#{length})")
+            else
+              Keyword.new(type_name)
             end
-          else
-            class_def(name) { type_name }
           end
 
           return self
@@ -121,7 +84,7 @@ module Ronin
         def self.function(*names)
           names.each do |name|
             class_def(name) do |field|
-              Function.new(@style,name,field)
+              Function.new(self,name,field)
             end
           end
 
@@ -140,20 +103,6 @@ module Ronin
           }
 
           return self
-        end
-
-        def keyword(value)
-          keyword_cache[value.to_sym]
-        end
-
-        private
-
-        def keyword_cache
-          @keyword_cache ||= Hash.new { |hash,key| hash[key] = Keyword.new(@style,key) }
-        end
-
-        def field_cache
-          @field_cache ||= Hash.new { |hash,key| hash[key] = Field.new(@style,key) }
         end
 
       end

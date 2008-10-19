@@ -26,20 +26,16 @@ module Ronin
     module SQL
       class Keyword
 
-        # The style to use
-        attr_reader :style
-
-        def initialize(style,name)
-          @style = style
-          @name = name.to_s
+        def initialize(name)
+          @name = name
         end
 
-        def compile
-          @style.compile_keyword(@name)
+        def emit
+          @name.to_s
         end
 
         def to_s
-          compile
+          @name.to_s
         end
 
       end

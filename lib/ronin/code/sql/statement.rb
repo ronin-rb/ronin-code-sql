@@ -80,7 +80,7 @@ module Ronin
 
           @clauses.each do |tokens,clause|
             if clause
-              tokens + clause.compile
+              tokens + clause.emit
             end
           end
 
@@ -132,12 +132,8 @@ module Ronin
           return clause_type
         end
 
-        def method_missing(symbol,*arguments)
-          if arguments.empty?
-            return @program.symbols[symbol]
-          end
-
-          raise(NoMethodError,symbol.id2name)
+        def method_missing(name,*arguments,&block)
+          @program.send(name,*arguments,&block)
         end
 
       end

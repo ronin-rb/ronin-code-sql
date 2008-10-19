@@ -30,10 +30,6 @@ module Ronin
           @program = program
         end
 
-        def field(name)
-          @program.symbols[name.to_sym]
-        end
-
       end
     end
   end
