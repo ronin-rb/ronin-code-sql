@@ -118,7 +118,7 @@ module Ronin
         def self.functions(*names)
           names.each do |name|
             class_def(name) do |*fields|
-              Function.new(self,name,*fields)
+              Function.new(@program,name,*fields)
             end
           end
 
@@ -132,7 +132,7 @@ module Ronin
         def self.aggregators(*names)
           names.each do |name|
             class_def(name) do |field|
-              Function.new(self,name,field)
+              Function.new(@program,name,field)
             end
           end
 
