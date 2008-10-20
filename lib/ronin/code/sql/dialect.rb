@@ -34,9 +34,9 @@ module Ronin
         # Creates a new Dialect object connected to the specified
         # _program_.
         #
-        def initialize(name,program)
-          @name = name
+        def initialize(program,name)
           @program = program
+          @name = name
         end
 
         #
