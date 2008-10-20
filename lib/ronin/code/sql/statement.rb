@@ -133,7 +133,13 @@ module Ronin
         end
 
         def method_missing(name,*arguments,&block)
-          @program.send(name,*arguments,&block)
+          if (dialect.class.public_method_defined?(name))
+            return dialect.send(name,*arguments,&block)
+          elsif (arguments.empty? && block.nil?)
+            return @symbol_table.symbol(name)
+          end
+
+          raise(NoMethodError,name.id2name)
         end
 
       end
