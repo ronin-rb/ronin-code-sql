@@ -45,7 +45,7 @@ module Ronin
         end
 
         def emit
-          # place holder
+          nil
         end
 
         def to_s
@@ -106,6 +106,25 @@ module Ronin
 
         unary_op 'NOT', :not!
         unary_op 'EXISTS', :exists?
+
+        #
+        # Returns the current SQL Dialect.
+        #
+        def dialect
+          @program.dialect
+        end
+
+        #
+        # Emits the specified _value_ if _value_ is a kind of Expr object,
+        # otherwise _value_ will be returned.
+        #
+        def emit_value(value)
+          if value.kind_of?(Expr)
+            return value.emit
+          else
+            return value
+          end
+        end
 
       end
     end
