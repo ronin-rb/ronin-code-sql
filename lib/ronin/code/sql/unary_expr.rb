@@ -28,15 +28,15 @@ module Ronin
     module SQL
       class UnaryExpr < Expr
 
-        def initialize(style,op,expr)
-          super(style)
+        def initialize(program,op,expr)
+          super(program)
 
           @op = op
           @expr = expr
         end
 
-        def compile
-          compile_expr(compile_keyword(@op),@expr)
+        def emit
+          [Keyword.new(@op)] + emit_value(@expr)
         end
 
       end
