@@ -119,17 +119,19 @@ module Ronin
           self.clause_order.insert(index,name)
           self.clauses[name] = clause_type
 
-          class_def(name) do |*args|
-            clause_index = self.class.clause_order.index(name)
-
-            unless (@clauses[clause_index] && args.empty?)
-              @clauses[clause_index] = self.clauses[name].new(*args)
-            end
-
-            return @clauses[clause_index]
-          end
+          class_def(name) { |*args| clause(name,*args) }
 
           return clause_type
+        end
+
+        def clause(name,*arguments)
+          clause_index = self.class.clause_order.index(name)
+
+          unless (@clauses[clause_index] && args.empty?)
+            @clauses[clause_index] = self.clauses[name].new(*args)
+          end
+
+          return @clauses[clause_index]
         end
 
         def method_missing(name,*arguments,&block)
