@@ -28,21 +28,42 @@ require 'ronin/extensions/meta'
 module Ronin
   module Code
     module SQL
-      module Dialect
+      class Dialect
 
-        def Dialect.dialects
-          @@ronin_sql_dialects ||= {}
+        #
+        # Creates a new Dialect object connected to the specified
+        # _program_.
+        #
+        def initialize(name,program)
+          @name = name
+          @program = program
         end
 
+        #
+        # Returns the Hash of defined SQL dialects.
+        #
+        def Dialect.dialects
+          @@dialects ||= {}
+        end
+
+        #
+        # Returns +true+ if there is a SQL Dialect defined with the
+        # specified _name_, returns +false+ otherwise.
+        #
         def Dialect.has_dialect?(name)
           Dialect.dialects.has_key?(name.to_sym)
         end
 
+        #
+        # Returns the SQL Dialect defined with the specified _name_. If no
+        # such SQL Dialect exists, an UnknownDialect exception will be
+        # raised.
+        #
         def Dialect.get(name)
           name = name.to_sym
 
           unless Dialect.has_dialect?(name)
-            raise(UnknownDialect,"unknown dialect #{name.dump}",caller)
+            raise(UnknownDialect,"unknown dialect #{name}",caller)
           end
 
           return Dialect.dialects[name]
@@ -50,21 +71,31 @@ module Ronin
 
         protected
 
+        #
+        # Defines a SQL Dialect with the specified _name_.
+        #
         def self.dialect(name)
           Dialect.dialects[name.to_sym] = self
           return self
         end
 
+        #
+        # Defines various SQL primitives with the specified _names_.
+        #
         def self.primitives(*names)
           names.each do |name|
             name = name.to_s.downcase
 
-            class_def(name) { keyword(name) }
+            class_def(name) { Keyword.new(name) }
           end
 
           return self
         end
 
+        #
+        # Defines a SQL data-type with the specified _name_ and given
+        # _options_.
+        #
         def self.data_type(name,options={})
           name = name.to_s.downcase
           type_name = name.upcase
@@ -81,7 +112,24 @@ module Ronin
           return self
         end
 
-        def self.function(*names)
+        #
+        # Defines various SQL function with the specified _names_.
+        #
+        def self.functions(*names)
+          names.each do |name|
+            class_def(name) do |*fields|
+              Function.new(self,name,*fields)
+            end
+          end
+
+          return self
+        end
+
+        #
+        # Defines various SQL aggregate functions with the specified
+        # _names_.
+        #
+        def self.aggregators(*names)
           names.each do |name|
             class_def(name) do |field|
               Function.new(self,name,field)
@@ -91,14 +139,14 @@ module Ronin
           return self
         end
 
-        def self.aggregators(*names)
-          function(*names)
-        end
-
-        def self.command(name,base)
+        #
+        # Defines an SQL statement with the specified _name_ and _base_
+        # class.
+        #
+        def self.statement(name,base)
           class_eval %{
-            def #{name}(*args,&block)
-              #{base}.new(@style,*args,&block)
+            def #{name}(*arguments,&block)
+              #{base}.new(@program,*arguments,&block)
             end
           }
 
