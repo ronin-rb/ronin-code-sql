@@ -48,7 +48,9 @@ module Ronin
         attr_accessor :newline
 
         def initialize(options={},&block)
-          @dialect = (options[:dialect] || :common)
+          dialect_name = (options[:dialect] || :common)
+
+          @dialect = Dialect.get(dialect_name).new(self,dialect_name)
 
           if options.has_key?(:multiline)
             @multiline = options[:multiline]
@@ -71,10 +73,13 @@ module Ronin
           @space = (options[:space] || ' ')
           @newline = (options[:newline] || "\n")
 
-          @symbol_table = SymbolTable.new(options[:symbols] || {})
-          @statements = []
+          @symbol_table = SymbolTable.new
 
-          extend(Dialect.get(@dialect))
+          if options[:symbols]
+            @symbol_table.symbols = options[:symbols]
+          end
+
+          @statements = []
 
           instance_eval(&block) if block
         end
@@ -183,7 +188,12 @@ module Ronin
         end
 
         def method_missing(name,*arguments,&block)
-          if (arguments.empty? && block.nil?)
+          if (@dialect.class.public_method_defined?(name))
+            stmt = @dialect.send(name,*arguments,&block)
+
+            @statements << stmt if stmt.kind_of?(Statement)
+            return stmt
+          elsif (arguments.empty? && block.nil?)
             return @symbol_table.symbol(name)
           end
 
