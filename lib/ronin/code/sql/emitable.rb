@@ -42,7 +42,7 @@ module Ronin
           if value.kind_of?(Emitable)
             return value.emit
           else
-            return value
+            return [value]
           end
         end
       end
