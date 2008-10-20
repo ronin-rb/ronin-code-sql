@@ -36,12 +36,19 @@ module Ronin
           @name = name
         end
 
+        def field(name)
+          sym = symbol("#{self}.#{name}")
+          sym.value ||= Field.new(@program,name,self)
+
+          return sym
+        end
+
         def *
-          Keyword.new('*')
+          field('*')
         end
 
         def id
-          field_cache[:id]
+          field('id')
         end
 
         def between(start,stop)
@@ -53,6 +60,10 @@ module Ronin
         end
 
         def emit
+          self.to_s.to_sym
+        end
+
+        def to_s
           if @prefix
             return "#{@prefix}.#{@name}"
           else
@@ -64,17 +75,13 @@ module Ronin
 
         def method_missing(name,*arguments,&block)
           if (arguments.empty? && @prefix.nil? && block.nil?)
-            return field_cache[name]
+            return field(name)
           end
 
           raise(NoMethodError,sym.id2name)
         end
 
         private
-
-        def field_cache
-          @field_cache ||= Hash.new { |hash,key| hash[key] = Field.new(@style,key,self) }
-        end
 
       end
     end
