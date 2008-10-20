@@ -45,6 +45,17 @@ module Ronin
             return [value]
           end
         end
+
+        #
+        # Emits each of the specified _valueis_.
+        #
+        def emit_values(values)
+          tokens = []
+
+          values.each { |value| tokens += emit_value(value) }
+
+          return tokens
+        end
       end
     end
   end
