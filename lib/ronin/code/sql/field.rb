@@ -29,15 +29,15 @@ module Ronin
     module SQL
       class Field < Expr
 
-        def initialize(style,name,prefix=nil)
-          super(style)
+        def initialize(program,name,prefix=nil)
+          super(program)
 
           @prefix = prefix
           @name = name
         end
 
         def *
-          field_cache[:"*"]
+          Keyword.new('*')
         end
 
         def id
@@ -52,23 +52,19 @@ module Ronin
           between(range.begin,range.end)
         end
 
-        def compile
+        def emit
           if @prefix
             return "#{@prefix}.#{@name}"
           else
-            return @name.to_s
+            return "#{@name}"
           end
-        end
-
-        def to_sym
-          compile.to_sym
         end
 
         protected
 
-        def method_missing(sym,*args)
-          if (args.length==0 && @prefix.nil?)
-            return field_cache[sym]
+        def method_missing(name,*arguments,&block)
+          if (arguments.empty? && @prefix.nil? && block.nil?)
+            return field_cache[name]
           end
 
           raise(NoMethodError,sym.id2name)

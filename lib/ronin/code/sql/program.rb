@@ -21,56 +21,173 @@
 #++
 #
 
-require 'ronin/code/sql/style'
-require 'ronin/code/sql/builder'
+require 'ronin/code/sql/dialect'
+require 'ronin/code/symbol_table'
 
 module Ronin
   module Code
     module SQL
       class Program
 
+        # Name of the dialect
+        attr_reader :dialect
+
+        # Use single-line or multi-line style
+        attr_accessor :multiline
+
+        # Use lowercase style
+        attr_accessor :lowercase
+
+        # Compile with less parenthesis
+        attr_accessor :less_parenthesis
+
+        # Space string
+        attr_accessor :space
+
+        # New-line string
+        attr_accessor :newline
+
         def initialize(options={},&block)
-          @builder = Builder.new(Style.new(options),&block)
-        end
+          @dialect = (options[:dialect] || :common)
 
-        def style
-          @builder.style
-        end
+          if options.has_key?(:multiline)
+            @multiline = options[:multiline]
+          else
+            @multiline = true
+          end
 
-        def dialect
-          @builder.style.dialect.name
+          if options.has_key?(:lowercase)
+            @lowercase = options[:lowercase]
+          else
+            @lowercase = false
+          end
+
+          if options.has_key?(:less_parens)
+            @less_parens = options[:less_parens]
+          else
+            @less_parens = false
+          end
+
+          @space = (options[:space] || ' ')
+          @newline = (options[:newline] || "\n")
+
+          @symbol_table = SymbolTable.new(options[:symbols] || {})
+          @statements = []
+
+          extend(Dialect.get(@dialect))
+
+          instance_eval(&block) if block
         end
 
         def compile
-          @builder.compile
         end
 
-        def to_s
-          compile
-        end
+        alias to_s compile
 
         def self.compile(options={},&block)
           self.new(options,&block).compile
         end
 
-        def uri_encode
-          compile.uri_encode
+        protected
+
+        def space_token
+          if @space.kind_of?(Array)
+            return @space[rand(@space.length)].to_s
+          else
+            return @space.to_s
+          end
         end
 
-        def uri_escape
-          compile.uri_escape
+        def preappend_space(str)
+          "#{space_token}#{str}"
         end
 
-        def html_encode
-          compile.html_encode
+        def append_space(str)
+          "#{str}#{space_token}"
         end
 
-        def format_html(options={})
-          compile.format_html(options)
+        def newline_token
+          return space_token unless @multiline
+
+          if @newline.kind_of?(Array)
+            return @newline[rand(@newline.length)].to_s
+          else
+            return @newline.to_s
+          end
         end
 
-        def base64_encode
-          compile.base64_encode
+        def format_string(data)
+         "'" + data.to_s.sub("'","''") + "'"
+        end
+
+        def format_keyword(name)
+          name = name.to_s
+
+          if @lowercase
+            return name.downcase
+          else
+            return name.upcase
+          end
+        end
+
+        def format_list(*exprs)
+          exprs = exprs.flatten.compact
+
+          unless @less_parens
+            return exprs.join(append_space(','))
+          else
+            return exprs.join(',')
+          end
+        end
+
+        def format_datalist(*exprs)
+          format_row(exprs.flatten.map { |expr| format_data(value) })
+        end
+
+        def format_row(*exprs)
+          exprs = exprs.flatten
+
+          unless exprs.length==1
+            unless @less_parens
+              return "(#{format_list(exprs)})"
+            else
+              return format_list(exprs)
+            end
+          else
+            return exprs[0].to_s
+          end
+        end
+
+        def format_data(data)
+          if data.kind_of?(Statement)
+            return "(#{data})"
+          elsif data.kind_of?(Array)
+            return format_datalist(data)
+          elsif data.kind_of?(String)
+            return format_string(data)
+          else
+            return data.to_s
+          end
+        end
+
+        def format_expression(*expr)
+          expr.compact.join(space_token).strip
+        end
+
+        def format_statements(statements)
+          if @multiline
+            return statements.join(newline_token)
+          else
+            return statements.join(append_space(';'))
+          end
+        end
+
+        def method_missing(name,*arguments,&block)
+          if (arguments.empty? && block.nil?)
+            return @symbol_table.symbol(name)
+          end
+
+          raise(NoMethodError,name.id2name)
         end
 
       end

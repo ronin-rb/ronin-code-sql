@@ -21,26 +21,13 @@
 #++
 #
 
-require 'ronin/code/sql/expr'
-
 module Ronin
   module Code
     module SQL
-      class Function < Expr
+      class Clause
 
-        # Name of the function
-        attr_reader :name
-
-        def initialize(program,name,*fields)
-          super(program)
-
-          @style = style
-          @name = name
-          @fields = fields
-        end
-
-        def emit
-          [Keyworld.new(@name)] + @fields
+        def initialize(program)
+          @program = program
         end
 
       end

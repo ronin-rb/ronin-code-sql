@@ -34,76 +34,106 @@ module Ronin
     module SQL
       class Statement < Expr
 
-        def initialize(style,&block)
-          super(style)
+        #
+        # Creates a new Statement object connected to the specified
+        # _program_. If a _block_ is given, it will be evaluated within
+        # the newly created Statement object.
+        #
+        def initialize(program,&block)
+          super(program)
+
+          @clauses = []
 
           instance_eval(&block) if block
         end
 
+        #
+        # Returns the Array denoting the precedence of clauses provided by
+        # the statement.
+        #
+        def self.clause_order
+          @@clause_order ||= []
+        end
+
+        #
+        # Returns the Hash of the clause names and the Clause classes
+        # provided by the statement.
+        #
+        def self.clauses
+          @@clauses ||= {}
+        end
+
+        #
+        # Returns +true+ if the statement provides a clause with the
+        # specified _name_, returns +false+ otherwise.
+        #
+        def self.has_clause?(name)
+          self.clauses.has_key?(name.to_sym)
+        end
+
+        #
+        # Returns an Array of unformatted tokens that represent the
+        # statement.
+        #
+        def emit
+          tokens = []
+
+          @clauses.each do |tokens,clause|
+            if clause
+              tokens + clause.emit
+            end
+          end
+
+          return tokens
+        end
+
+        #
+        # Returns an formatted String representing the statement.
+        #
+        def to_s
+          @program.compile_statement(self)
+        end
+
         protected
 
-        def self.option(name,value=nil)
-          class_eval %{
-            def #{name}(&block)
-              instance_variable_set("@#{name}",true)
+        #
+        # Adds a clause with the specified _name_, _clause_type_ and given
+        # _options_ to the statement.
+        #
+        # _options_ may contain the following:
+        # <tt>:before</tt>:: The name of the clause to take precedence
+        #                    over.
+        # <tt>:after</tt>:: The name of the clause which will take
+        #                   precedence over the newly added clause.
+        #
+        def self.clause(name,clause_type,options={})
+          name = name.to_sym
+          index = self.clause_order.length
 
-              instance_eval(&block) if block
-              return self
+          if options[:before]
+            index = self.clause_order.index(options[:before])
+          elsif options[:after]
+            index = self.clause_order.index(options[:after]) + 1
+          end
+
+          self.clause_order.insert(index,name)
+          self.clauses[name] = clause_type
+
+          class_def(name) do |*args|
+            clause_index = self.class.clause_order.index(name)
+
+            unless (@clauses[clause_index] && args.empty?)
+              @clauses[clause_index] = self.clauses[name].new(*args)
             end
-          }
 
-          class_def("#{name}?") do
-            if value
-              keyword(value.to_s) if instance_variable_get("@#{name}")
-            else
-              instance_variable_get("@#{name}")
-            end
-          end
-        end
-
-        def self.option_list(name,values=[])
-          values.each do |opt|
-            class_eval %{
-              def #{opt}_#{name}(&block)
-                instance_variable_set("@#{name}",'#{opt.to_s.upcase}')
-
-                instance_eval(&block) if block
-                return self
-              end
-            }
+            return @clauses[clause_index]
           end
 
-          class_def("#{name}?") do
-            opt = instance_variable_get("@#{name}")
-
-            return keyword(opt) if opt
-            return nil
-          end
+          return clause_type
         end
 
-        def all
-          field_cache[:'*']
-        end
-
-        def id
-          field_cache[:id]
-        end
-
-        def method_missing(sym,*args,&block)
-          if @style.dialect.expresses?(sym)
-            return @style.dialect.express(sym,*args,&block)
-          end
-
-          # return a field
-          return @style.dialect.field(sym) if args.empty?
-
-          return super(sym,*args,&block)
-        end
-
-        private
-
-        def field_cache
-          @field_cache ||= Hash.new { |hash,key| hash[key] = Field.new(@style,key) }
+        def method_missing(name,*arguments,&block)
+          @program.send(name,*arguments,&block)
         end
 
       end
