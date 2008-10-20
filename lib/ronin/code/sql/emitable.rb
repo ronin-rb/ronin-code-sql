@@ -29,7 +29,7 @@ module Ronin
         # Default emit method which simply returns +nil+.
         #
         def emit
-          nil
+          []
         end
 
         protected
