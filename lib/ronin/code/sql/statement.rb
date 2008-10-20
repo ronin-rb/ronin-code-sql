@@ -124,6 +124,17 @@ module Ronin
           return clause_type
         end
 
+        def symbol(name)
+          @program.symbol(name)
+        end
+
+        def field(name)
+          sym = symbol(name)
+          sym.value ||= Field.new(@program,name)
+
+          return sym
+        end
+
         def clause(name,*arguments)
           clause_index = self.class.clause_order.index(name)
 
@@ -138,7 +149,7 @@ module Ronin
           if (dialect.class.public_method_defined?(name))
             return dialect.send(name,*arguments,&block)
           elsif (arguments.empty? && block.nil?)
-            return @symbol_table.symbol(name)
+            return field(name)
           end
 
           raise(NoMethodError,name.id2name)
