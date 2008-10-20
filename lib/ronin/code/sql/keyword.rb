@@ -21,10 +21,14 @@
 #++
 #
 
+require 'ronin/code/sql/emitable'
+
 module Ronin
   module Code
     module SQL
       class Keyword
+
+        include Emitable
 
         #
         # Creates a new Keyword object with the specified _value_.
@@ -34,7 +38,7 @@ module Ronin
         end
 
         def emit
-          self
+          [self]
         end
 
         #
