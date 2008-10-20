@@ -26,16 +26,21 @@ module Ronin
     module SQL
       class Keyword
 
-        def initialize(name)
-          @name = name
+        #
+        # Creates a new Keyword object with the specified _value_.
+        #
+        def initialize(value)
+          @value = value
         end
 
         def emit
-          @name.to_s
+          self
         end
 
+        #
+        # Returns the value of the keyword in String form.
         def to_s
-          @name.to_s
+          @value.to_s
         end
 
       end
