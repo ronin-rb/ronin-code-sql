@@ -70,8 +70,12 @@ module Ronin
 
         protected
 
+        def clause(name,*arguments)
+          dialect.caluse(name,*arguments)
+        end
+
         def method_missing(name,*arguments,&block)
-          if (self.class.has_clause?(name) && block.nil?)
+          if (dialect.has_clause?(name) && block.nil?)
             return caluse(name,*arguments)
           end
 
