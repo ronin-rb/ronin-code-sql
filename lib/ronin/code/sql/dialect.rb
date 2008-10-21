@@ -139,18 +139,70 @@ module Ronin
           return self
         end
 
+        def self.statements
+          @@statements ||= {}
+        end
+
+        def self.has_statement?(name)
+          self.statements.has_key?(name.to_sym)
+        end
+
         #
         # Defines an SQL statement with the specified _name_ and _base_
         # class.
         #
         def self.statement(name,base)
+          name = name.to_sym
+
+          self.statements[name] = base
+
           class_eval %{
             def #{name}(*arguments,&block)
-              #{base}.new(@program,*arguments,&block)
+              statement(:#{name},*arguments,&block)
             end
           }
 
           return self
+        end
+
+        def self.has_clause?(name)
+          self.statements.each do |stmt|
+            return true if stmt.has_cluase?(name)
+          end
+
+          return false
+        end
+
+        def statements
+          self.class.statements
+        end
+
+        def has_statement?(name)
+          self.class.has_statement?(name)
+        end
+
+        def statement(name,*arguments,&block)
+          name = name.to_sym
+
+          unless has_statement?(name)
+            raise(UnknownStatement,"unknown statement #{name} in #{@name} dialect",caller)
+          end
+
+          return statements[name].new(@program,*arguments,&block)
+        end
+
+        def has_clause?(name)
+          self.class.has_clause?(name)
+        end
+
+        def clause(name,*arguments)
+          self.statements.each do |stmt|
+            if stmt.has_clause?(name)
+              return stmt.clauses[name].new(*arguments)
+            end
+          end
+
+          raise(UnknownClause,"unknown clause #{name} in #{@name} dialect",caller)
         end
 
       end
