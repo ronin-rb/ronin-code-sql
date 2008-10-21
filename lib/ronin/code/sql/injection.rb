@@ -20,17 +20,120 @@
 #
 
 require 'ronin/code/sql/program'
-require 'ronin/code/sql/injection_style'
-require 'ronin/code/sql/injection_builder'
-require 'ronin/extensions/string'
+require 'ronin/code/sql/injected_statement'
+require 'ronin/formatting/text'
 
 module Ronin
   module Code
     module SQL
       class Injection < Program
 
+        # Comment-Obfusticate all keywords
+        attr_accessor :comment_evasion
+
+        # Swapcase-Obfusciate all keywords
+        attr_accessor :case_evasion
+
         def initialize(options={},&block)
-          @builder = InjectionBuilder.new(InjectionStyle.new(options),&block)
+          if options.has_key?(:comment_evasion)
+            @comment_evasion = options[:comment_evasion]
+          else
+            @comment_evasion = false
+          end
+
+          if options.has_key?(:case_evasion)
+            @case_evasion = options[:case_evasion]
+          else
+            @case_evasion = false
+          end
+
+          @escape_value = nil
+          @escape_token = nil
+          @expression = nil
+
+          super(options,&block)
+        end
+
+        def escape_with(value=1,&block)
+          @escape_value = value
+
+          block.call if block
+          return self
+        end
+
+        def escape_string(value='',&block)
+          @escape_token = "'"
+
+          return escape_with(value,&block)
+        end
+
+        def escape_parenthesis(value='',&block)
+          @escape_token = ')'
+
+          return escape_with(nil,&block)
+        end
+
+        def escape_statement(&block)
+          @escape_token = ';'
+
+          return escape_with(nil,&block)
+        end
+
+        def inject(&block)
+          @expression = InjectedStatement.new(self,&block)
+        end
+
+        def compile
+          injection = ''
+
+          if (@escape_value || @escape_token)
+            injection << @escape_value if @escape_value
+            injection << @escape_token if @escape_token
+
+            injection << space_token
+          end
+          
+          injection << super.rstrip
+
+          if (@escape_token && injection[-1..-1] == @escape_token)
+            return injection.chop!
+          else
+            return [injection,'--'].join(space_token)
+          end
+        end
+
+        protected
+
+        def space_token
+          if @comment_evasion
+            return '/**/'
+          else
+            return super
+          end
+        end
+
+        def format_keyword(keyword)
+          if @case_evasion
+            return super(keyword).random_case
+          else
+            return super(keyword)
+          end
+        end
+
+        def each_token(&block)
+          if @escape_value
+            block.call(@escape_value)
+          end
+
+          if @escape_token
+            block.call(@escape_token)
+          end
+
+          if @expression
+            formatted_tokens(@expression.emit,&block)
+          end
+
+          return super(&block)
         end
 
       end
