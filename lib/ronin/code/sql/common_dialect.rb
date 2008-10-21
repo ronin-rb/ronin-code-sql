@@ -25,6 +25,7 @@ require 'ronin/code/sql/dialect'
 require 'ronin/code/sql/create_table'
 require 'ronin/code/sql/create_index'
 require 'ronin/code/sql/create_view'
+require 'ronin/code/sql/alter_table'
 require 'ronin/code/sql/insert'
 require 'ronin/code/sql/select'
 require 'ronin/code/sql/update'
@@ -47,14 +48,15 @@ module Ronin
 
         aggregators :count, :min, :max, :sum, :avg
 
-        command :create_type, CreateTable
-        command :create_index, CreateIndex
-        command :create_view, CreateView
-        command :insert, Insert
-        command :select_from, Select
-        command :update, Update
-        command :delete, Delete
-        command :drop_table, DropTable
+        statement :create_type, CreateTable
+        statement :create_index, CreateIndex
+        statement :create_view, CreateView
+        statement :alter_table, AlterTable
+        statement :insert, Insert
+        statement :select_from, Select
+        statement :update, Update
+        statement :delete, Delete
+        statement :drop_table, DropTable
 
       end
     end
