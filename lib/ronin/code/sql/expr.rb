@@ -29,6 +29,8 @@ module Ronin
     module SQL
       class Expr
 
+        include Emitable
+
         def initialize(program)
           @program = program
         end

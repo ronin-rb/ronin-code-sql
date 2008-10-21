@@ -45,7 +45,7 @@ module Ronin
         end
 
         def emit
-          [Keyword.new('UPDATE')] + emit_value(@table) + super
+          emit_keyword('UPDATE') + emit_value(@table) + super
         end
 
       end

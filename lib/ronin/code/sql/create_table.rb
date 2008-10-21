@@ -49,11 +49,11 @@ module Ronin
         end
 
         def emit
-          tokens = [Keyword.new('CREATE')]
+          tokens = emit_keyword('CREATE')
 
-          tokens << Keyword.new('TEMP') if @temp
-          tokens << Keyword.new('TABLE')
-          tokens << Keyword.new('IF NOT EXISTS') if @if_not_exists
+          tokens += emit_keyword('TEMP') if @temp
+          tokens += emit_keyword('TABLE')
+          tokens += emit_keyword('IF NOT EXISTS') if @if_not_exists
 
           return tokens + super
         end

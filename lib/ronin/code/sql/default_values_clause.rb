@@ -29,7 +29,7 @@ module Ronin
       class DefaultValuesClause < Clause
 
         def emit
-          [Keyword.new('DEFAULT'), Keyword.new('VALUES')]
+          emit_keyword('DEFAULT' VALUES')
         end
 
       end

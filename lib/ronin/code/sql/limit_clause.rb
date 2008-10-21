@@ -37,7 +37,7 @@ module Ronin
         end
 
         def emit
-          [keyword('LIMIT')] + emit_value(@value)
+          emit_keyword('LIMIT') + emit_value(@value)
         end
 
       end

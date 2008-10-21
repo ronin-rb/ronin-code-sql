@@ -40,7 +40,7 @@ module Ronin
         end
 
         def emit
-          [Keyworld.new(@name)] + @fields
+          emit_keyworld(@name) + emit_row(@fields)
         end
 
       end

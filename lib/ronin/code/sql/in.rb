@@ -36,7 +36,7 @@ module Ronin
         end
 
         def emit
-          emit_value(@field) + Keyword.new('IN') + emit_values(@range)
+          emit_value(@field) + emit_keyword('IN') + emit_values(@range)
         end
 
       end

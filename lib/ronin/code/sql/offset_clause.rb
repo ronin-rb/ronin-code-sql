@@ -37,7 +37,7 @@ module Ronin
         end
 
         def emit
-          [keyword('OFFSET')] + emit_value(@value)
+          emit_keyword('OFFSET') + emit_value(@value)
         end
 
       end

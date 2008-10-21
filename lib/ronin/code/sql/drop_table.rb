@@ -22,17 +22,15 @@
 #
 
 require 'ronin/code/sql/statement'
-require 'ronin/code/sql/if_exists_clause'
 
 module Ronin
   module Code
     module SQL
       class DropTable < Statement
 
-        clause :if_exists, IfExistsClause
-
-        def initialize(program,table=nil,&block)
+        def initialize(program,table=nil,options={},&block)
           @table = table
+          @if_exists = options[:if_exists]
 
           super(program,&block)
         end
@@ -42,10 +40,14 @@ module Ronin
           return self
         end
 
-        def emit
-          tokens = [Keyword.new('DROP TABLE')]
+        def if_exists
+          @if_exists = true
+          return self
+        end
 
-          tokens << Keyword.new('IF EXISTS') if @if_exists
+        def emit
+          tokens = emit_keyword('DROP TABLE')
+          tokens += emit_keyword('IF EXISTS') if @if_exists
 
           return tokens + emit_value(@table)
         end

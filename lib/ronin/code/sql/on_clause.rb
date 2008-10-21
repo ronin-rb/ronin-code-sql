@@ -40,9 +40,11 @@ module Ronin
         end
 
         def emit
-          tokens = [Keyword.new('ON')] + emit_value(@table)
+          tokens = emit_keyword('ON') + emit_value(@table)
 
-          return tokens + emit_row(@fields) unless @fields.empty?
+          tokens += emit_row(@fields) unless @fields.empty?
+
+          return tokens
         end
 
       end

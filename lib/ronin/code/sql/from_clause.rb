@@ -37,7 +37,7 @@ module Ronin
         end
 
         def emit
-          [Keyword.new('FROM')] + emit_value(@table)
+          emit_keyword('FROM') + emit_value(@table)
         end
 
       end

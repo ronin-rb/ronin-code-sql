@@ -25,11 +25,8 @@ require 'ronin/code/sql/statement'
 require 'ronin/code/sql/fields_clause'
 require 'ronin/code/sql/from_clause'
 require 'ronin/code/sql/join_clause'
-require 'ronin/code/sql/inner_join_clause'
-require 'ronin/code/sql/left_join_clause'
-require 'ronin/code/sql/right_join_clause'
 require 'ronin/code/sql/where_clause'
-require 'ronin/cdoe/sql/group_by_clause'
+require 'ronin/code/sql/group_by_clause'
 require 'ronin/code/sql/having_clause'
 require 'ronin/code/sql/order_by_clause'
 require 'ronin/code/sql/limit_clause'
@@ -45,9 +42,6 @@ module Ronin
         clause :fields, FieldsClause
         clause :from, FromClause
         clause :join, JoinClause
-        clause :inner_join, InnerJoinClause
-        clause :left_join, LeftJoinClause
-        clause :right_join, RightJoinClause
         clause :where, WhereClause
         clause :group_by, GroupByClause
         clause :having, HavingClause
@@ -55,7 +49,7 @@ module Ronin
         clause :limit, LimitClause
         clause :offset, OffsetClause
         clause :union, UnionClause
-        clause :union_all, UnionClause
+        clause :union_all, UnionAllClause
 
         def initialize(program,options={},&block)
           @distinct_rows = options[:distinct_rows]
@@ -78,12 +72,12 @@ module Ronin
         end
 
         def emit
-          tokens = [Keyword.new('SELECT')]
+          tokens = emit_keyword('SELECT')
 
           if @distinct_rows
-            tokens << Keyword.new('DISTINCT')
+            tokens += emit_keyword('DISTINCT')
           elsif @all_rows
-            tokens << Keyword.new('ALL')
+            tokens += emit_keyword('ALL')
           end
           
           return tokens + super

@@ -45,11 +45,11 @@ module Ronin
         def emit
           tokens = emit_value(@expr)
 
-          tokens << Keyword.new('NOT') if @negated
-          tokens << Keyword.new('BETWEEN')
+          tokens += emit_keyword('NOT') if @negated
+          tokens += emit_keyword('BETWEEN')
 
           tokens += emit_value(@lower)
-          tokens << Keyword.new('AND')
+          tokens += emit_keyword('AND')
           tokens += emit_value(@higher)
 
           return tokens

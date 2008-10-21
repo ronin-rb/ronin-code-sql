@@ -37,7 +37,7 @@ module Ronin
         end
 
         def emit
-          [Keyword.new('VALUES')] + emit_row(@values)
+          emit_keyword('VALUES') + emit_row(@values)
         end
 
       end

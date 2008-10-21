@@ -47,7 +47,7 @@ module Ronin
         end
 
         def emit
-          [Keyword.new('REPLACE INTO')] + emit_value(@table) + super
+          emit_keyword('REPLACE INTO') + emit_value(@table) + super
         end
 
       end

@@ -93,27 +93,27 @@ module Ronin
         def emit
           tokens = []
 
-          tokens << Keyword.new('NATURAL') if @natural
+          tokens += emit_keyword('NATURAL') if @natural
 
           case @direction
           when :left, 'left'
-            tokens << Keyword.new('LEFT')
+            tokens += emit_keyword('LEFT')
           when :right, 'right'
-            tokens << Keyword.new('RIGHT')
+            tokens += emit_keyword('RIGHT')
           when :full, 'full'
-            tokens << Keyword.new('FULL')
+            tokens += emit_keyword('FULL')
           end
 
           case @side
           when :inner, 'inner'
-            tokens << Keyword.new('INNER')
+            tokens += emit_keyword('INNER')
           when :outer, 'outer'
-            tokens << Keyword.new('OUTER')
+            tokens += emit_keyword('OUTER')
           when :cross, 'cross'
-            tokens << Keyword.new('CROSS')
+            tokens += emit_keyword('CROSS')
           end
 
-          tokens << Keyword.new('JOIN')
+          tokens += emit_keyword('JOIN')
           
           return tokens + emit_value(@table)
         end

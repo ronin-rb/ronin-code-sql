@@ -37,7 +37,7 @@ module Ronin
         end
 
         def emit
-          [keyword('RENAME'), keyword('TO')] + emit_value(@table)
+          emit_keyword('RENAME TO') + emit_value(@table)
         end
 
       end

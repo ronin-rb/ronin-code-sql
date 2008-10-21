@@ -36,7 +36,7 @@ module Ronin
         end
 
         def emit
-          [Keyword.new(@op)] + emit_value(@expr)
+          emit_keyword(@op) + emit_value(@expr)
         end
 
       end

@@ -37,7 +37,7 @@ module Ronin
         end
 
         def emit
-          [Keyword.new('WHERE')] + emit_row(@values)
+          emit_keyword('WHERE') + emit_row(@values)
         end
 
       end

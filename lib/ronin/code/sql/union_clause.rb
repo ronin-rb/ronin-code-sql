@@ -37,7 +37,7 @@ module Ronin
         end
 
         def emit
-          [keyword('UNION')] + emit_value(@select)
+          emit_keyword('UNION') + emit_value(@select)
         end
 
       end

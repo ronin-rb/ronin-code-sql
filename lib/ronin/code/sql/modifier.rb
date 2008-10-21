@@ -13,7 +13,7 @@ module Ronin
         end
 
         def emit
-          emit_value(@expr) + [keyword(@name)]
+          emit_value(@expr) + emit_keyword(@name)
         end
       end
     end
