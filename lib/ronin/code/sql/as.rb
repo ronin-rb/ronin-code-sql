@@ -21,22 +21,21 @@
 #++
 #
 
-require 'ronin/code/sql/expr'
+require 'ronin/code/sql/modifier'
 
 module Ronin
   module Code
     module SQL
-      class As < Expr
+      class As < Modifier
 
         def initialize(program,field,name)
-          super(program)
+          super(program,field,'AS')
 
-          @field = field
           @name = name
         end
 
         def emit
-          emit_value(@field) + [Keyword.new('AS')] + emit_value(@name)
+          super + [emit_value(@name)]
         end
 
       end
