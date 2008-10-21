@@ -28,15 +28,15 @@ module Ronin
     module SQL
       class In < Expr
 
-        def initialize(style,field,*range)
-          super(style)
+        def initialize(program,field,*range)
+          super(program)
 
           @field = field
           @range = range
         end
 
-        def compile
-          compile_expr(@field,keyword_in,compile_datalist(@range))
+        def emit
+          emit_value(@field) + Keyword.new('IN') + emit_values(@range)
         end
 
         protected
