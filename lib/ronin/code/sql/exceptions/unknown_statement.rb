@@ -21,6 +21,11 @@
 #++
 #
 
-require 'ronin/code/sql/exceptions/unknown_dialect'
-require 'ronin/code/sql/exceptions/unknown_statement'
-require 'ronin/code/sql/exceptions/unknown_clause'
+module Ronin
+  module Code
+    module SQL
+      class UnknownStatement < RuntimeError
+      end
+    end
+  end
+end
