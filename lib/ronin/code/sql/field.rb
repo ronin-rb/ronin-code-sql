@@ -46,9 +46,11 @@ module Ronin
           return sym
         end
 
-        def *
+        def all
           field('*')
         end
+
+        alias * all
 
         def id
           field('id')
