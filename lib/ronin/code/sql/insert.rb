@@ -32,8 +32,8 @@ module Ronin
       class Insert < Statement
 
         clause :fields, FieldsClause
-        clause :values, ValuesClause
         clause :default_values, DefaultValuesClause
+        clause :values, ValuesClause
 
         def initialize(program,options={},&block)
           @table = options[:table]

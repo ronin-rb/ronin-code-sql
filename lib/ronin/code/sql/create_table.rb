@@ -22,9 +22,7 @@
 #
 
 require 'ronin/code/sql/statement'
-require 'ronin/code/sql/table_clause'
 require 'ronin/code/sql/fields_clause'
-require 'ronin/code/sql/on_clause'
 
 module Ronin
   module Code

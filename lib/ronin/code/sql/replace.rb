@@ -22,7 +22,6 @@
 #
 
 require 'ronin/code/sql/statement'
-require 'ronin/code/sql/into_clause'
 require 'ronin/code/sql/fields_clause'
 require 'ronin/code/sql/values_clause'
 require 'ronin/code/sql/default_values_clause'
@@ -32,13 +31,23 @@ module Ronin
     module SQL
       class Replace < Statement
 
-        clause :into, IntoClause
         clause :fields, FieldsClause
-        clause :values, ValuesClause
         clause :default_values, DefaultValuesClause
+        clause :values, ValuesClause
+
+        def initialize(program,options={},&block)
+          @table = options[:table]
+
+          super(program,options,&block)
+        end
+
+        def table(name)
+          @table = name
+          return value
+        end
 
         def emit
-          [Keyword.new('REPLACE')] + super
+          [Keyword.new('REPLACE INTO')] + emit_value(@table) + super
         end
 
       end

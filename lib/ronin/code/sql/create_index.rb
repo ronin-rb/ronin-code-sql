@@ -22,9 +22,6 @@
 #
 
 require 'ronin/code/sql/statement'
-require 'ronin/code/sql/unique_index_clause'
-require 'ronin/code/sql/index_clause'
-require 'ronin/code/sql/if_not_exists_clause'
 require 'ronin/code/sql/fields_clause'
 require 'ronin/code/sql/on_clause'
 
@@ -34,6 +31,7 @@ module Ronin
       class CreateIndex < Statement
 
         clause :fields, FieldsClause
+        clause :on, OnClause
 
         def initialize(program,options={},&block)
           @temp = (options[:temp] || options[:temporary])

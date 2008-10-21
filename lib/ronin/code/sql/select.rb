@@ -24,6 +24,10 @@
 require 'ronin/code/sql/statement'
 require 'ronin/code/sql/fields_clause'
 require 'ronin/code/sql/from_clause'
+require 'ronin/code/sql/join_clause'
+require 'ronin/code/sql/inner_join_clause'
+require 'ronin/code/sql/left_join_clause'
+require 'ronin/code/sql/right_join_clause'
 require 'ronin/code/sql/where_clause'
 require 'ronin/cdoe/sql/group_by_clause'
 require 'ronin/code/sql/having_clause'
@@ -32,10 +36,6 @@ require 'ronin/code/sql/limit_clause'
 require 'ronin/code/sql/offset_clause'
 require 'ronin/code/sql/union_clause'
 require 'ronin/code/sql/union_all_clause'
-require 'ronin/code/sql/join_clause'
-require 'ronin/code/sql/inner_join_clause'
-require 'ronin/code/sql/left_join_clause'
-require 'ronin/code/sql/right_join_clause'
 
 module Ronin
   module Code
@@ -44,6 +44,10 @@ module Ronin
 
         clause :fields, FieldsClause
         clause :from, FromClause
+        clause :join, JoinClause
+        clause :inner_join, InnerJoinClause
+        clause :left_join, LeftJoinClause
+        clause :right_join, RightJoinClause
         clause :where, WhereClause
         clause :group_by, GroupByClause
         clause :having, HavingClause
@@ -52,16 +56,13 @@ module Ronin
         clause :offset, OffsetClause
         clause :union, UnionClause
         clause :union_all, UnionClause
-        clause :join, JoinClause
-        clause :inner_join, InnerJoinClause
-        clause :left_join, LeftJoinClause
-        clause :right_join, RightJoinClause
 
-        def initialize(program,options={},&block)
+        def initialize(program,from=nil,options={},&block)
           @distinct_rows = options[:distinct_rows]
           @all_rows = options[:all_rows]
 
-          options[:from] ||= (options[:table] || all)
+          options[:fields] ||= all
+          options[:from] ||= (from || options[:table])
 
           super(program,options)
         end
