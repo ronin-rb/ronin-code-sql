@@ -56,6 +56,28 @@ module Ronin
 
           return tokens
         end
+
+        #
+        # Emits the comma separated list of the specified _values_.
+        #
+        def emit_list(values)
+          tokens = []
+
+          (values.length - 1).times do |index|
+            tokens << values[i]
+            tokens << Keyword.new(',')
+          end
+
+          tokens << values.last
+          return tokens
+        end
+
+        #
+        # Emits the specified SQL _row_.
+        #
+        def emit_row(row)
+          [Keyword.new('(')] + emit_list(row) + [Keyword.new(')')]
+        end
       end
     end
   end
