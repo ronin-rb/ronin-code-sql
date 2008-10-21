@@ -30,14 +30,92 @@ module Ronin
 
         attr_accessor :table
 
-        def initialize(program,table)
+        attr_accessor :natural
+
+        attr_accessor :direction
+
+        attr_accessor :side
+
+        def initialize(program,table,options={})
           super(program)
 
           @table = table
+
+          if options[:left]
+            @direction = :left
+          elsif options[:right]
+            @direction = :right
+          elsif options[:full]
+            @direction = :full
+          end
+
+          if options[:inner]
+            @direction = :inner
+          elsif options[:outer]
+            @direction = :outer
+          elsif options[:cross]
+            @direction = :cross
+          end
+
+          @natural = options[:natural]
+        end
+
+        def left
+          @direction = :left
+          return self
+        end
+
+        def right
+          @direction = :right
+          return self
+        end
+
+        def full
+          @direction = :full
+          return self
+        end
+
+        def inner
+          @direction = :inner
+          return self
+        end
+
+        def outer
+          @direction = :outer
+          return self
+        end
+
+        def cross
+          @direction = :cross
+          return self
         end
 
         def emit
-          [Keyword.new('JOIN')] + emit_value(@table)
+          tokens = []
+
+          tokens << Keyword.new('NATURAL') if @natural
+
+          case @direction
+          when :left, 'left'
+            tokens << Keyword.new('LEFT')
+          when :right, 'right'
+            tokens << Keyword.new('RIGHT')
+          when :full, 'full'
+            tokens << Keyword.new('FULL')
+          end
+
+          case @side
+          when :inner, 'inner'
+            tokens << Keyword.new('INNER')
+          when :outer, 'outer'
+            tokens << Keyword.new('OUTER')
+          when :cross, 'cross'
+            tokens << Keyword.new('CROSS')
+          end
+
+          tokens << Keyword.new('JOIN')
+          
+          return tokens + emit_value(@table)
         end
 
       end
