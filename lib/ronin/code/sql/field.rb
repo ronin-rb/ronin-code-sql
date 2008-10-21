@@ -24,6 +24,8 @@
 require 'ronin/code/sql/expr'
 require 'ronin/code/sql/as'
 require 'ronin/code/sql/between'
+require 'ronin/code/sql/asc'
+require 'ronin/code/sql/desc'
 
 module Ronin
   module Code
@@ -62,6 +64,14 @@ module Ronin
 
         def <=>(range)
           between(range.begin,range.end)
+        end
+
+        def asc
+          Asc.new(@program,self)
+        end
+
+        def desc
+          Desc.new(@program,self)
         end
 
         def emit
