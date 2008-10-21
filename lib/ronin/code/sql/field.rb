@@ -52,7 +52,7 @@ module Ronin
         end
 
         def between(start,stop)
-          Between.new(self,start,stop)
+          Between.new(@program,self,start,stop)
         end
 
         def <=>(range)
@@ -80,8 +80,6 @@ module Ronin
 
           raise(NoMethodError,sym.id2name)
         end
-
-        private
 
       end
     end
