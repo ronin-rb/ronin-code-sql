@@ -34,6 +34,10 @@ module Ronin
 
         protected
 
+        def keyword(value)
+          Keyword.new(value)
+        end
+
         #
         # Emits the specified _value_ if _value_ is a kind of Expr object,
         # otherwise _value_ will be returned.
