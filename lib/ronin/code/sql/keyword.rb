@@ -37,16 +37,45 @@ module Ronin
           @value = value
         end
 
+        def Keyword.separator
+          Keyword.new(';')
+        end
+
+        def Keyword.open_paren
+          Keyword.new('(')
+        end
+
+        def Keyword.close_paren
+          Keyword.new(')')
+        end
+
+        def Keyword.comma
+          Keyword.new(',')
+        end
+
         def emit
           [self]
         end
 
-        def ==(value)
-          @value == value || super(value)
+        def is_separator?
+          @value == ';'
+        end
+
+        def is_open_paren?
+          @value == '('
+        end
+
+        def is_close_paren?
+          @value == ')'
+        end
+
+        def is_comma?
+          @value == ','
         end
 
         #
         # Returns the value of the keyword in String form.
+        #
         def to_s
           @value.to_s
         end
