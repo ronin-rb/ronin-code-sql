@@ -47,10 +47,6 @@ module Ronin
           in?(*range).not!
         end
 
-        def emit
-          nil
-        end
-
         def to_s
           @program.compile_expr(self)
         end
@@ -115,6 +111,10 @@ module Ronin
         #
         def dialect
           @program.dialect
+        end
+
+        def symbol(name)
+          @program.symbol(name)
         end
 
       end
