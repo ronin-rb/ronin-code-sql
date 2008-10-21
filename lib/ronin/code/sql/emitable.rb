@@ -34,7 +34,7 @@ module Ronin
 
         protected
 
-        def keyword(value)
+        def emit_keyword(value)
           Keyword.new(value)
         end
 
