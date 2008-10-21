@@ -22,6 +22,7 @@
 #
 
 require 'ronin/code/sql/expr'
+require 'ronin/code/sql/as'
 require 'ronin/code/sql/between'
 
 module Ronin
@@ -49,6 +50,10 @@ module Ronin
 
         def id
           field('id')
+        end
+        
+        def as(name)
+          As.new(@program,self,name)
         end
 
         def between(start,stop)
