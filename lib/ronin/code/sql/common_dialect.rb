@@ -53,7 +53,7 @@ module Ronin
         statement :create_view, CreateView
         statement :alter_table, AlterTable
         statement :insert, Insert
-        statement :select_from, Select
+        statement :select, Select
         statement :update, Update
         statement :delete, Delete
         statement :drop_table, DropTable
