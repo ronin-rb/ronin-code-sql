@@ -87,43 +87,7 @@ module Ronin
         def compile
           sql = ''
 
-          each_token do |token|
-            if token == ';'
-              if @multiline
-                sql << newline_token
-              else
-                sql << append_space(token)
-              end
-
-              next
-            end
-
-            if token == '('
-              if @less_parens
-                token << space_token
-              else
-                token << preappend_space(token)
-              end
-            end
-
-            if token == ')'
-              if @less_parens
-                token << space_token
-              else
-                token << append_space(token)
-              end
-            end
-
-            if token == ','
-              if @less_parens
-                tokens << token
-              else
-                tokens << append_space(token)
-              end
-
-              next
-            end
-          end
+          each_formatted_token { |token| sql << token }
 
           return sql
         end
@@ -135,20 +99,6 @@ module Ronin
         end
 
         protected
-
-        def each_token(&block)
-          format = lambda { |token|
-            block.call(format_token(token))
-          }
-
-          @statements.each do |stmt|
-            stmt.emit.each(&format)
-
-            format.call(Keyword.new(';'))
-          end
-
-          return self
-        end
 
         def space_token
           if @space.kind_of?(Array)
@@ -180,13 +130,37 @@ module Ronin
          "'" + data.to_s.sub("'","''") + "'"
         end
 
-        def format_keyword(name)
-          name = name.to_s
-
-          if @lowercase
-            return name.downcase
+        def format_keyword(keyword)
+          if keyword.is_separator?
+            if @multiline
+              return newline_token
+            else
+              return append_space(keyword)
+            end
+          elsif keyword.is_open_paren?
+            if @less_parens
+              return space_token
+            else
+              return preappend_space(keyword)
+            end
+          elsif keyword.is_open_paren?
+            if @less_parens
+              return space_token
+            else
+              return append_space(keyword)
+            end
+          elsif keyword.is_comma?
+            if @less_parens
+              return keyword.to_s
+            else
+              return append_space(keyword)
+            end
           else
-            return name.upcase
+            if @lowercase
+              return name.to_s.downcase
+            else
+              return name.to_s.upcase
+            end
           end
         end
 
@@ -198,6 +172,20 @@ module Ronin
           else
             return data.to_s
           end
+        end
+
+        def each_token(&block)
+          @statements.each do |stmt|
+            stmt.emit.each(&block)
+
+            block.call(Keyword.separator)
+          end
+
+          return self
+        end
+
+        def each_formatted_token(&block)
+          each_token { |token| block.call(format_token(token)) }
         end
 
         def method_missing(name,*arguments,&block)
