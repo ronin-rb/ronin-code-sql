@@ -35,6 +35,8 @@ module Ronin
     module SQL
       class Statement < Expr
 
+        attr_reader :clauses
+
         #
         # Creates a new Statement object connected to the specified
         # _program_. If a _block_ is given, it will be evaluated within
@@ -78,10 +80,6 @@ module Ronin
           self.clauses.has_key?(name.to_sym)
         end
 
-        def all
-          field('*')
-        end
-
         #
         # Returns an Array of unformatted tokens that represent the
         # statement.
@@ -89,7 +87,7 @@ module Ronin
         def emit
           tokens = []
 
-          @clauses.each do |tokens,clause|
+          @clauses.each do |clause|
             if clause
               tokens += clause.emit
             end
@@ -139,15 +137,12 @@ module Ronin
           return clause_type
         end
 
-        def symbol(name)
-          @program.symbol(name)
+        def field(name)
+          @program.field(name)
         end
 
-        def field(name)
-          sym = symbol(name)
-          sym.value ||= Field.new(@program,name)
-
-          return sym
+        def all
+          @program.all
         end
 
         def clause(name,*arguments)
@@ -156,11 +151,7 @@ module Ronin
           unless (@clauses[clause_index] && args.empty?)
             clause_type = self.class.clauses[name]
 
-            if clause_type.kind_of?(Class)
-              @clauses[clause_index] = clause_type.new(*arguments)
-            elsif arguments.empty?
-              @clauses[clause_index] = Keyword.new(clause_type)
-            end
+            @clauses[clause_index] = clause_type.new(@program,*arguments)
           end
 
           return @clauses[clause_index]
