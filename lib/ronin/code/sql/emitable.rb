@@ -35,7 +35,7 @@ module Ronin
         protected
 
         def emit_keyword(value)
-          Keyword.new(value)
+          value.to_s.split(/\s/).map { |word| Keyword.new(word) }
         end
 
         #
