@@ -85,6 +85,47 @@ module Ronin
         end
 
         def compile
+          sql = ''
+
+          each_token do |token|
+            if token == ';'
+              if @multiline
+                sql << newline_token
+              else
+                sql << append_space(token)
+              end
+
+              next
+            end
+
+            if token == '('
+              if @less_parens
+                token << space_token
+              else
+                token << preappend_space(token)
+              end
+            end
+
+            if token == ')'
+              if @less_parens
+                token << space_token
+              else
+                token << append_space(token)
+              end
+            end
+
+            if token == ','
+              if @less_parens
+                tokens << token
+              else
+                tokens << append_space(token)
+              end
+
+              next
+            end
+          end
+
+          return sql
         end
 
         alias to_s compile
@@ -94,6 +135,20 @@ module Ronin
         end
 
         protected
+
+        def each_token(&block)
+          format = lambda { |token|
+            block.call(format_token(token))
+          }
+
+          @statements.each do |stmt|
+            stmt.emit.each(&format)
+
+            format.call(Keyword.new(';'))
+          end
+
+          return self
+        end
 
         def space_token
           if @space.kind_of?(Array)
@@ -135,55 +190,13 @@ module Ronin
           end
         end
 
-        def format_list(*exprs)
-          exprs = exprs.flatten.compact
-
-          unless @less_parens
-            return exprs.join(append_space(','))
-          else
-            return exprs.join(',')
-          end
-        end
-
-        def format_datalist(*exprs)
-          format_row(exprs.flatten.map { |expr| format_data(value) })
-        end
-
-        def format_row(*exprs)
-          exprs = exprs.flatten
-
-          unless exprs.length==1
-            unless @less_parens
-              return "(#{format_list(exprs)})"
-            else
-              return format_list(exprs)
-            end
-          else
-            return exprs[0].to_s
-          end
-        end
-
-        def format_data(data)
-          if data.kind_of?(Statement)
-            return "(#{data})"
-          elsif data.kind_of?(Array)
-            return format_datalist(data)
-          elsif data.kind_of?(String)
-            return format_string(data)
+        def format_token(token)
+          if token.kind_of?(Keyword)
+            return format_keyword(token)
+          elsif token.kind_of?(String)
+            return format_string(token)
           else
             return data.to_s
-          end
-        end
-
-        def format_expression(*expr)
-          expr.compact.join(space_token).strip
-        end
-
-        def format_statements(statements)
-          if @multiline
-            return statements.join(newline_token)
-          else
-            return statements.join(append_space(';'))
           end
         end
 
