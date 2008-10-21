@@ -24,7 +24,7 @@
 module Ronin
   module Code
     module SQL
-      class DialectNotFound < RuntimeError
+      class UnknownDialect < RuntimeError
       end
     end
   end
