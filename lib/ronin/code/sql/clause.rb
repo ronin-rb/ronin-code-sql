@@ -22,6 +22,7 @@
 #
 
 require 'ronin/code/sql/emitable'
+require 'ronin/code/sql/keyword'
 
 module Ronin
   module Code
