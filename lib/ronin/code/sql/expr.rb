@@ -21,6 +21,7 @@
 #++
 #
 
+require 'ronin/code/sql/emitable'
 require 'ronin/extensions/meta'
 
 module Ronin
@@ -112,18 +113,6 @@ module Ronin
         #
         def dialect
           @program.dialect
-        end
-
-        #
-        # Emits the specified _value_ if _value_ is a kind of Expr object,
-        # otherwise _value_ will be returned.
-        #
-        def emit_value(value)
-          if value.kind_of?(Expr)
-            return value.emit
-          else
-            return value
-          end
         end
 
       end
