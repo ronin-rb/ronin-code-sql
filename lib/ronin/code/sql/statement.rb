@@ -166,8 +166,12 @@ module Ronin
           return @clauses[clause_index]
         end
 
+        def select(options={},&block)
+          dialect.statement(:select,options,&block)
+        end
+
         def method_missing(name,*arguments,&block)
-          if (dialect.class.public_method_defined?(name))
+          if dialect.class.public_method_defined?(name)
             return dialect.send(name,*arguments,&block)
           elsif (arguments.empty? && block.nil?)
             return field(name)

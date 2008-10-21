@@ -101,6 +101,10 @@ module Ronin
 
         protected
 
+        def select(options={},&block)
+          @dialect.statement(:select,options,&block)
+        end
+
         def space_token
           if @space.kind_of?(Array)
             return @space[rand(@space.length)].to_s
