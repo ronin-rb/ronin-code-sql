@@ -21,10 +21,14 @@
 #++
 #
 
+require 'ronin/code/sql/emitable'
+
 module Ronin
   module Code
     module SQL
       class Clause
+
+        include Emitable
 
         def initialize(program)
           @program = program
