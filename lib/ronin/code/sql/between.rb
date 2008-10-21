@@ -28,8 +28,8 @@ module Ronin
     module SQL
       class Between < Expr
 
-        def initialize(expr,lower,higher)
-          super(expr.style)
+        def initialize(program,expr,lower,higher)
+          super(program)
 
           @expr = expr
           @lower = lower
@@ -43,17 +43,16 @@ module Ronin
         end
 
         def compile
-          compile_expr(@expr,negated?,keyword_between,@lower,keyword_and,@higher)
-        end
+          tokens = emit_value(@expr)
 
-        protected
+          tokens << Keyword.new('NOT') if @negated
+          tokens << Keyword.new('BETWEEN')
 
-        keyword :between
-        keyword :and
-        keyword :not
+          tokens += emit_value(@lower)
+          tokens << Keyword.new('AND')
+          tokens += emit_value(@higher)
 
-        def negated?
-          keyword_not if @negated
+          return tokens
         end
 
       end
