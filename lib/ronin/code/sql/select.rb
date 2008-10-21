@@ -55,10 +55,7 @@ module Ronin
           @distinct_rows = options[:distinct_rows]
           @all_rows = options[:all_rows]
 
-          options[:fields] ||= all
-          options[:from] ||= options[:table]
-
-          super(program,options)
+          super(program,options,&block)
         end
 
         def all_rows

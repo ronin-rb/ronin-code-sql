@@ -37,7 +37,11 @@ module Ronin
         end
 
         def emit
-          emit_row(@fields)
+          if @fields.empty?
+            return emit_keyword('*')
+          else
+            return emit_row(@fields)
+          end
         end
 
       end
