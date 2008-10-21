@@ -30,20 +30,14 @@ module Ronin
 
         attr_accessor :values
 
-        def initialize(program,values={})
+        def initialize(program,*values)
           super(program)
 
           @values = values
         end
 
         def emit
-          tokens = [Keyword.new('WHERE')]
-
-          tokens += emit_row(@values.map { |name,value|
-            BinaryExpr.new(@program,'=',name,value)
-          })
-
-          return tokens
+          [Keyword.new('WHERE')] + emit_row(@values)
         end
 
       end
