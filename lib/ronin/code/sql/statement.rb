@@ -22,6 +22,7 @@
 #
 
 require 'ronin/code/sql/expr'
+require 'ronin/code/sql/keyword'
 require 'ronin/code/sql/field'
 require 'ronin/code/sql/binary_expr'
 require 'ronin/code/sql/unary_expr'
@@ -125,7 +126,11 @@ module Ronin
           self.clause_order.insert(index,name)
           self.clauses[name] = clause_type
 
-          class_def(name) { |*args| clause(name,*args) }
+          if clause_type.kind_of?(Class)
+            class_def(name) { |*args| clause(name,*args) }
+          else
+            class_def(name) { clause(name) }
+          end
 
           return clause_type
         end
@@ -145,7 +150,13 @@ module Ronin
           clause_index = self.class.clause_order.index(name)
 
           unless (@clauses[clause_index] && args.empty?)
-            @clauses[clause_index] = self.clauses[name].new(*args)
+            clause_type = self.class.clauses[name]
+
+            if clause_type.kind_of?(Class)
+              @clauses[clause_index] = clause_type.new(*arguments)
+            elsif arguments.empty?
+              @clauses[clause_index] = Keyword.new(clause_type)
+            end
           end
 
           return @clauses[clause_index]
