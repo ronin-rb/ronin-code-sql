@@ -85,6 +85,21 @@ module Ronin
           instance_eval(&block) if block
         end
 
+        def symbol(name)
+          @symbol_table.symbol(name)
+        end
+
+        def field(name)
+          sym = symbol(name)
+          sym.value ||= Field.new(self,name)
+
+          return sym
+        end
+
+        def all
+          field('*')
+        end
+
         def compile
           sql = ''
 
@@ -162,9 +177,9 @@ module Ronin
             end
           else
             if @lowercase
-              return name.to_s.downcase
+              return keyword.to_s.downcase
             else
-              return name.to_s.upcase
+              return keyword.to_s.upcase
             end
           end
         end
@@ -175,7 +190,7 @@ module Ronin
           elsif token.kind_of?(String)
             return format_string(token)
           else
-            return data.to_s
+            return token.to_s
           end
         end
 
@@ -200,7 +215,7 @@ module Ronin
             @statements << stmt if stmt.kind_of?(Statement)
             return stmt
           elsif (arguments.empty? && block.nil?)
-            return @symbol_table.symbol(name)
+            return field(name)
           end
 
           raise(NoMethodError,name.id2name)
