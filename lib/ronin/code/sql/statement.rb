@@ -78,6 +78,10 @@ module Ronin
           self.clauses.has_key?(name.to_sym)
         end
 
+        def all
+          field('*')
+        end
+
         #
         # Returns an Array of unformatted tokens that represent the
         # statement.
