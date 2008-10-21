@@ -41,6 +41,10 @@ module Ronin
           [self]
         end
 
+        def ==(value)
+          @value == value || super(value)
+        end
+
         #
         # Returns the value of the keyword in String form.
         def to_s
