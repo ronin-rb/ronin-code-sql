@@ -98,7 +98,7 @@ module Ronin
           if (@escape_token && injection[-1..-1] == @escape_token)
             return injection.chop!
           else
-            return [injection,'--'].join(space_token)
+            return [injection, '--'].join(space_token)
           end
         end
 
