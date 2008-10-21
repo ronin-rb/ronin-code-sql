@@ -22,163 +22,70 @@
 #
 
 require 'ronin/code/sql/statement'
+require 'ronin/code/sql/fields_clause'
+require 'ronin/code/sql/from_clause'
+require 'ronin/code/sql/where_clause'
+require 'ronin/cdoe/sql/group_by_clause'
+require 'ronin/code/sql/having_clause'
+require 'ronin/code/sql/order_by_clause'
+require 'ronin/code/sql/limit_clause'
+require 'ronin/code/sql/offset_clause'
+require 'ronin/code/sql/union_clause'
+require 'ronin/code/sql/union_all_clause'
+require 'ronin/code/sql/join_clause'
+require 'ronin/code/sql/inner_join_clause'
+require 'ronin/code/sql/left_join_clause'
+require 'ronin/code/sql/right_join_clause'
 
 module Ronin
   module Code
     module SQL
       class Select < Statement
 
-        option_list :rows, [:all, :distinct]
+        clause :fields, FieldsClause
+        clause :from, FromClause
+        clause :where, WhereClause
+        clause :group_by, GroupByClause
+        clause :having, HavingClause
+        clause :order_by, OrderByClause
+        clause :limit, LimitClause
+        clause :offset, OffsetClause
+        clause :union, UnionClause
+        clause :union_all, UnionClause
+        clause :join, JoinClause
+        clause :inner_join, InnerJoinClause
+        clause :left_join, LeftJoinClause
+        clause :right_join, RightJoinClause
 
-        def initialize(style,tables=nil,options={:fields => nil, :where => nil},&block)
-          @fields = options[:fields] || all
-          @tables = tables
-          @where = options[:where]
+        def initialize(program,options={},&block)
+          @distinct_rows = options[:distinct_rows]
+          @all_rows = options[:all_rows]
 
-          super(style,&block)
+          options[:from] ||= (options[:table] || all)
+
+          super(program,options)
         end
 
-        def fields(*exprs)
-          @fields = exprs
+        def all_rows
+          @all_rows = true
           return self
         end
 
-        def tables(*expr)
-          @tables = expr
+        def distinct_rows
+          @distinct_rows = true
           return self
         end
 
-        def where(expr)
-          @where = expr
-          return self
-        end
+        def emit
+          tokens = [Keyword.new('SELECT')]
 
-        def group_by(*fields)
-          @group_by = fields
-          return self
-        end
-
-        def having(expr)
-          @having = expr
-          return self
-        end
-
-        def order_by(*exprs)
-          @order_by = exprs
-          return self
-        end
-
-        def limit(value)
-          @limit = value
-        end
-
-        def offset(value)
-          @limit = value
-        end
-
-        def union(table,opts={:fields => [], :where => nil},&block)
-          @union = Select.new(@style,table,opts,&block)
-          return self
-        end
-
-        def union_all(table,opts={:fields => [], :where => nil},&block)
-          @union_all = Select.new(@style,table,opts,&block)
-          return self
-        end
-
-        def join(table,on_expr)
-          @join_type = :outer
-          @join_table = table
-          @join_on = on_expr
-        end
-
-        def inner_join(table,on_expr)
-          @join_type = :inner
-          @join_table = table
-          @join_on = on_expr
-        end
-
-        def left_join(table,on_expr)
-          @join_type = :left
-          @join_table = table
-          @join_on = on_expr
-        end
-
-        def right_join(table,on_expr)
-          @join_type = :right
-          @join_table = table
-          @join_on = on_expr
-        end
-
-        def compile
-          compile_expr(keyword_select,
-                       rows?,
-                       fields?,
-                       keyword_from,
-                       compile_list(@tables),
-                       where?,
-                       order_by?,
-                       having_by?,
-                       order_by?,
-                       limit?,
-                       unioned?)
-        end
-
-        protected
-
-        keyword :select
-        keyword :from
-        keyword :where
-        keyword :union
-        keyword :union_all
-        keyword :group_by, 'GROUP BY'
-        keyword :having
-        keyword :order_by, 'ORDER BY'
-        keyword :limit
-        keyword :offset
-
-        def fields?
-          if @fields.kind_of?(Array)
-            unless @fields.empty?
-              return compile_row(@fields)
-            else
-              return all.to_s
-            end
-          else
-            return @fields.to_s
+          if @distinct_rows
+            tokens << Keyword.new('DISTINCT')
+          elsif @all_rows
+            tokens << Keyword.new('ALL')
           end
-        end
-
-        def where?
-          compile_expr(keyword_where,@where) if @where
-        end
-
-        def group_by?
-          compile_expr(keyword_group_by,compile_row(@group_by)) if @group_by
-        end
-
-        def having_by?
-          compile_expr(keyword_having,@having) if @having
-        end
-
-        def order_by?
-          compile_expr(keyword_order_by,@order_by) if @order_by
-        end
-
-        def limit?
-          compile_expr(keyword_limit,@limit,offset?) if @limit
-        end
-
-        def offset?
-          compile_expr(keyword_offset,@offset) if @offset
-        end
-
-        def unioned?
-          if @union_all
-            return compile_expr(keyword_union_all,@union_all)
-          elsif @union
-            return compile_expr(keyword_union,@union)
-          end
+          
+          return tokens + super
         end
 
       end

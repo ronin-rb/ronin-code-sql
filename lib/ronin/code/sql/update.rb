@@ -22,18 +22,21 @@
 #
 
 require 'ronin/code/sql/statement'
+require 'ronin/code/sql/set_clause'
+require 'ronin/code/sql/where_clause'
 
 module Ronin
   module Code
     module SQL
       class Update < Statement
 
-        def initialize(style,table=nil,set_data={},where_expr=nil,&block)
-          @table = table
-          @set_data = set_data
-          @where_expr = where_expr
+        clause :set, SetClause
+        clause :where, WhereClause
 
-          super(style,&block)
+        def initialize(program,table=nil,options={},&block)
+          @table = table
+
+          super(program,options,&block)
         end
 
         def table(value)
@@ -41,32 +44,8 @@ module Ronin
           return self
         end
 
-        def set(data)
-          @set_data = data
-          return self
-        end
-
-        def where(expr)
-          @where_expr = expr
-          return self
-        end
-
-        def compile
-          set_values = "#{keyword_set} "+@set_data.map { |name,value|
-      "#{name} = #{quote_string(value)}"
-          }.join(', ')
-
-          return compile_expr(keyword_update,@table,set_values,where?)
-        end
-
-        protected
-
-        keyword :update
-        keyword :where
-        keyword :set
-
-        def where?
-          compile_expr(keyword_where,@where_expr) if @where_expr
+        def emit
+          [Keyword.new('UPDATE')] + emit_value(@table) + super
         end
 
       end

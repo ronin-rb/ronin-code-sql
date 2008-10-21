@@ -22,34 +22,23 @@
 #
 
 require 'ronin/code/sql/statement'
+require 'ronin/code/sql/into_clause'
+require 'ronin/code/sql/fields_clause'
+require 'ronin/code/sql/values_clause'
+require 'ronin/code/sql/default_values_clause'
 
 module Ronin
   module Code
     module SQL
       class Replace < Statement
 
-        def initialize(style,table=nil,values=nil,from=nil,&block)
-          @table = table
-          @values = values
-          @from = from
+        clause :into, IntoClause
+        clause :fields, FieldsClause
+        clause :values, ValuesClause
+        clause :default_values, DefaultValuesClause
 
-          super(style,&block)
-        end
-
-        def values(data)
-          @values = data
-        end
-
-        def from(expr)
-          @from = expr
-        end
-
-        def compile
-          if @values.kind_of?(Hash)
-            return compile_expr('REPLACE INTO',@table,compile_list(@values.keys),'VALUES',compile_datalist(@values.values))
-          elsif @from.kind_of?(Select)
-            return compile_expr('REPLACE INTO',@table,compile_list(@values),@from)
-          end
+        def emit
+          [Keyword.new('REPLACE')] + super
         end
 
       end

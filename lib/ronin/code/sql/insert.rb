@@ -22,63 +22,33 @@
 #
 
 require 'ronin/code/sql/statement'
+require 'ronin/code/sql/fields_clause'
+require 'ronin/code/sql/values_clause'
+require 'ronin/code/sql/default_values_clause'
 
 module Ronin
   module Code
     module SQL
       class Insert < Statement
 
-        def initialize(style,table=nil,opts={:fields => nil, :values => nil, :from => nil},&block)
-          @table = table
-          @fields = opts[:fields]
-          @values = opts[:values]
-          @from = opts[:from]
+        clause :fields, FieldsClause
+        clause :values, ValuesClause
+        clause :default_values, DefaultValuesClause
 
-          super(style,&block)
+        def initialize(program,options={},&block)
+          @table = options[:table]
+
+          super(program,options,&block)
         end
 
-        def into(table)
-          @table = table
-          return self
+        def table(name)
+          @table = name
+          return value
         end
 
-        def fields(*fields)
-          @fields = fields
-          return self
+        def emit
+          [Keyword.new('INSERT INTO')] + emit_value(@table) + super
         end
-
-        def values(*values)
-          if (@values.length==1 && @values[0].kind_of?(Hash))
-            @values = values[0]
-          else
-            @values = values
-          end
-          return self
-        end
-
-        def from(expr)
-          @from = expr
-          return self
-        end
-
-        def compile
-          if @values.kind_of?(Hash)
-            return compile_expr(keyword_insert,@table,compile_row(@values.keys),keyword_values,compile_datalist(@values.values))
-          elsif @from
-            return compile_expr(keyword_insert,@table,compile_row(@fields),@from)
-          else
-            if @fields
-              return compile_expr(keyword_insert,@table,compile_row(@fields),keyword_values,compile_datalist(@values))
-            else
-              return compile_expr(keyword_insert,@table,keyword_values,compile_datalist(@values))
-            end
-          end
-        end
-
-        protected
-
-        keyword :insert, 'INSERT INTO'
-        keyword :values
 
       end
     end

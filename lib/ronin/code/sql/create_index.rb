@@ -22,53 +22,45 @@
 #
 
 require 'ronin/code/sql/statement'
+require 'ronin/code/sql/unique_index_clause'
+require 'ronin/code/sql/index_clause'
+require 'ronin/code/sql/if_not_exists_clause'
+require 'ronin/code/sql/fields_clause'
+require 'ronin/code/sql/on_clause'
 
 module Ronin
   module Code
     module SQL
       class CreateIndex < Statement
 
-        option :unqiue, "UNIQUE"
-        option :if_not_exists, "IF NOT EXISTS"
+        clause :fields, FieldsClause
 
-        def initialize(style,index=nil,table=nil,columns={},&block)
-          @index = index
-          @table = table
-          @columns = columns
+        def initialize(program,options={},&block)
+          @temp = (options[:temp] || options[:temporary])
+          @if_not_exists = options[:if_not_exists]
 
-          super(style,&block)
+          super(program,options,&block)
         end
 
-        def index(field)
-          @index = field
+        def temp
+          @temp = true
           return self
         end
 
-        def table(field)
-          @table = field
+        def if_not_exists
+          @if_not_exists = true
           return self
         end
 
-        def column(name,type)
-          @columns[name.to_s] = type.to_s
-          return self
+        def emit
+          tokens = [Keyword.new('CREATE')]
+
+          tokens << Keyword.new('TEMP') if @temp
+          tokens << Keyword.new('INDEX')
+          tokens << Keyword.new('IF NOT EXISTS') if @if_not_exists
+
+          return tokens + super
         end
-
-        def compile(dialect=nil,multiline=false)
-          format_columns = lambda {
-            @columns.map { |name,type|
-        "#{name} #{type}"
-          }
-          }
-
-          return compile_expr(keyword_create,unique?,keyword_index,if_not_exists?,@index,keyword_on,@table,compile_row(format_columns.call))
-        end
-
-        protected
-
-        keyword :create
-        keyword :index
-        keyword :on
 
       end
     end

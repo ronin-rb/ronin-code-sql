@@ -23,41 +23,45 @@
 
 require 'ronin/code/sql/statement'
 require 'ronin/code/sql/select'
+require 'ronin/code/sql/as'
 
 module Ronin
   module Code
     module SQL
       class CreateView < Statement
 
-        option :temp, "TEMP"
-        option :if_not_exists, "IF NOT EXISTS"
+        def initialize(program,options={},&block)
+          @temp = (options[:temp] || options[:temporary])
+          @if_not_exists = options[:if_not_exists]
+          @view = options[:view]
 
-        def initialize(style,view=nil,query=nil,&block)
-          @view = view
-          @query = query
-
-          super(style,&block)
+          super(program,&block)
         end
 
-        def view(field)
-          @view = field
+        def temp
+          @temp = true
           return self
         end
 
-        def query(table=nil,opts={:fields => nil, :where => nil},&block)
-          @query = Select.new(@style,table,opts,&block)
+        def if_not_exists
+          @if_not_exists = true
           return self
         end
 
-        def compile
-          compile_expr(keyword_create,temp?,keyword_view,if_not_exists?,@view,keyword_as,@query)
+        def view(value)
+          @view = value
+          return self
         end
 
-        protected
+        def emit
+          tokens = [Keyword.new('CREATE')]
 
-        keyword :create
-        keyword :view
-        keyword :as
+          tokens << Keyword.new('TEMP') if @temp
+          tokens << Keyword.new('VIEW')
+          tokens << Keyword.new('IF NOT EXISTS') if @if_not_exists
+
+          return tokens + emit_value(@view)
+        end
 
       end
     end

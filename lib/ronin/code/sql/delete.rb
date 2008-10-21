@@ -22,40 +22,28 @@
 #
 
 require 'ronin/code/sql/statement'
+require 'ronin/code/sql/where_clause'
 
 module Ronin
   module Code
     module SQL
       class Delete < Statement
 
-        def initialize(style,table=nil,where_expr=nil,&block)
-          @table = table || everything
-          @where = where_expr
+        clause :where, WhereClause
 
-          super(style,&block)
+        def initialize(program,options={},&block)
+          @table = options[:table]
+
+          super(program,options,&block)
         end
 
-        def from(table)
-          @table = table
+        def from(name)
+          @table = name
           return self
         end
 
-        def where(expr)
-          @where = expr
-          return self
-        end
-
-        def compile
-          compile_expr(keyword_delete,@table,where?)
-        end
-
-        protected
-
-        keyword :delete, 'DELETE FROM'
-        keyword :where
-
-        def where?
-          compile_expr(keyword_where,@where) if @where
+        def emit
+          [Keyword.new('DELETE FROM')] + emit_value(@table)
         end
 
       end

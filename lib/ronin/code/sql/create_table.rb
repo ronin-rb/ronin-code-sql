@@ -22,69 +22,42 @@
 #
 
 require 'ronin/code/sql/statement'
-require 'ronin/code/sql/select'
+require 'ronin/code/sql/table_clause'
+require 'ronin/code/sql/fields_clause'
+require 'ronin/code/sql/on_clause'
 
 module Ronin
   module Code
     module SQL
       class CreateTable < Statement
 
-        option :temp, "TEMP"
-        option :if_not_exists, "IF NOT EXISTS"
+        clause :fields, FieldsClause
 
-        def initialize(style,table=nil,opts={:columns => {}, :not_null => {}, :as => nil},&block)
-          @table = table
-          @columns = opts[:columns]
-          @not_null = opts[:not_null]
-          @as = opts[:as]
+        def initialize(program,options={},&block)
+          @temp = (options[:temp] || options[:temporary])
+          @if_not_exists = options[:if_not_exists]
 
-          super(style,&block)
+          super(program,options,&block)
         end
 
-        def table(field)
-          @table = field
+        def temp
+          @temp = true
           return self
         end
 
-        def as(table=nil,opts={:fields => nil, :where => nil},&block)
-          @as = Select.new(@style,table,opts,&block)
+        def if_not_exists
+          @if_not_exists = true
           return self
         end
 
-        def column(name,type,null=false)
-          name = name.to_s
-          @columns[name] = type.to_s
-          @not_null[name] = null
-          return self
-        end
+        def emit
+          tokens = [Keyword.new('CREATE')]
 
-        def primary_key(field)
-          @primary_key = field
-          return self
-        end
+          tokens << Keyword.new('TEMP') if @temp
+          tokens << Keyword.new('TABLE')
+          tokens << Keyword.new('IF NOT EXISTS') if @if_not_exists
 
-        def compile
-          format_columns = lambda {
-            @columns.map { |name,type|
-            if @not_null[name]
-          "#{name} #{type} NOT NULL"
-            else
-          "#{name} #{type}"
-            end
-          }
-          }
-
-          return compile_expr(keyword_create,temp?,keyword_table,if_not_exists?,@table,compile_row(format_columns.call))
-        end
-
-        protected
-
-        keyword :create
-        keyword :table
-        keyword :primary_key
-
-        def primary_key?
-          compile_expr(keyword_primary_key,@primary_key) if @primary_key
+          return tokens + super
         end
 
       end
