@@ -42,7 +42,7 @@ module Ronin
           return self
         end
 
-        def compile
+        def emit
           tokens = emit_value(@expr)
 
           tokens << Keyword.new('NOT') if @negated
