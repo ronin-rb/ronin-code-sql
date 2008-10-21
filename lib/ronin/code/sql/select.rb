@@ -57,12 +57,12 @@ module Ronin
         clause :union, UnionClause
         clause :union_all, UnionClause
 
-        def initialize(program,from=nil,options={},&block)
+        def initialize(program,options={},&block)
           @distinct_rows = options[:distinct_rows]
           @all_rows = options[:all_rows]
 
           options[:fields] ||= all
-          options[:from] ||= (from || options[:table])
+          options[:from] ||= options[:table]
 
           super(program,options)
         end
