@@ -39,10 +39,16 @@ module Ronin
         # _program_. If a _block_ is given, it will be evaluated within
         # the newly created Statement object.
         #
-        def initialize(program,&block)
+        def initialize(program,options={},&block)
           super(program)
 
           @clauses = []
+
+          options.each do |name,args|
+            if self.class.has_clause?(name)
+              clause(name,*args)
+            end
+          end
 
           instance_eval(&block) if block
         end
@@ -80,7 +86,7 @@ module Ronin
 
           @clauses.each do |tokens,clause|
             if clause
-              tokens + clause.emit
+              tokens += clause.emit
             end
           end
 
