@@ -39,10 +39,6 @@ module Ronin
           emit_value(@field) + Keyword.new('IN') + emit_values(@range)
         end
 
-        protected
-
-        keyword :in
-
       end
     end
   end
