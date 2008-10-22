@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('LIMIT') + emit_value(@value)
+          emit_token('LIMIT') + emit_value(@value)
         end
 
       end

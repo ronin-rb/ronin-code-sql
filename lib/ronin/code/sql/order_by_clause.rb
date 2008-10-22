@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('ORDER BY') + emit_row(@fields)
+          emit_token('ORDER BY') + emit_row(@fields)
         end
 
       end

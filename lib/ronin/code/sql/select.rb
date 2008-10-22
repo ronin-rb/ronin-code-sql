@@ -73,12 +73,12 @@ module Ronin
         end
 
         def emit
-          tokens = emit_keyword('SELECT')
+          tokens = emit_token('SELECT')
 
           if @distinct_rows
-            tokens += emit_keyword('DISTINCT')
+            tokens += emit_token('DISTINCT')
           elsif @all_rows
-            tokens += emit_keyword('ALL')
+            tokens += emit_token('ALL')
           end
           
           return tokens + super

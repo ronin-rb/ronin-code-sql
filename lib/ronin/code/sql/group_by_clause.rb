@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('GROUP BY') + emit_list(@fields)
+          emit_token('GROUP BY') + emit_list(@fields)
         end
 
       end

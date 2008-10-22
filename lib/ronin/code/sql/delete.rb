@@ -43,7 +43,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('DELETE FROM') + emit_value(@table)
+          emit_token('DELETE FROM') + emit_value(@table)
         end
 
       end

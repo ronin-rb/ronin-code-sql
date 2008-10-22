@@ -43,11 +43,11 @@ module Ronin
         end
 
         def emit
-          tokens = emit_keyword('DROP')
-          tokens += emit_keyword(@type)
+          tokens = emit_token('DROP')
+          tokens += emit_token(@type)
 
-          tokens += emit_keyword('IF EXISTS') if @if_exists
-          tokens += emit_keyword(@name)
+          tokens += emit_token('IF EXISTS') if @if_exists
+          tokens += emit_token(@name)
 
           return tokens + emit_value(@table)
         end

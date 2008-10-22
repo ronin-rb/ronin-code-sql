@@ -29,7 +29,7 @@ module Ronin
       class DefaultValuesClause < Clause
 
         def emit
-          emit_keyword('DEFAULT VALUES')
+          emit_token('DEFAULT VALUES')
         end
 
       end

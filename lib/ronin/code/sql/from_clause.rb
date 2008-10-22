@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('FROM') + emit_value(@table)
+          emit_token('FROM') + emit_value(@table)
         end
 
       end

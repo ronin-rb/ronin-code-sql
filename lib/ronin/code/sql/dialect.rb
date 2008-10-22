@@ -129,7 +129,7 @@ module Ronin
         end
 
         def all
-          Keyword.new('*')
+          Token.new('*')
         end
 
         def id
@@ -140,7 +140,7 @@ module Ronin
           @statements.each do |stmt|
             stmt.emit.each(&block)
 
-            block.call(Keyword.separator)
+            block.call(Token.separator)
           end
 
           return self
@@ -167,7 +167,7 @@ module Ronin
           names.each do |name|
             name = name.to_s.downcase
 
-            class_def(name) { Keyword.new(name) }
+            class_def(name) { Token.new(name) }
           end
 
           return self
@@ -184,9 +184,9 @@ module Ronin
 
           class_def(name) do |length|
             if (supports_length && length)
-              Keyword.new("#{type_name}(#{length})")
+              Token.new("#{type_name}(#{length})")
             else
-              Keyword.new(type_name)
+              Token.new(type_name)
             end
           end
 

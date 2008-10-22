@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('INTERSECT') + emit_value(@select)
+          emit_token('INTERSECT') + emit_value(@select)
         end
 
       end

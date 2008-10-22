@@ -47,13 +47,13 @@ module Ronin
         def emit
           tokens = emit_value(@left)
 
-          tokens += emit_keyword('NOT') if @negated
+          tokens += emit_token('NOT') if @negated
 
-          tokens += emit_keyword(@op)
+          tokens += emit_token(@op)
           tokens += emit_value(@right)
 
           if @escape
-            tokens += emit_keyword('ESCAPE')
+            tokens += emit_token('ESCAPE')
             tokens << @escape.to_s[0..0]
           end
 

@@ -22,7 +22,7 @@
 #
 
 require 'ronin/code/sql/expr'
-require 'ronin/code/sql/keyword'
+require 'ronin/code/sql/token'
 require 'ronin/code/sql/field'
 require 'ronin/code/sql/binary_expr'
 require 'ronin/code/sql/unary_expr'

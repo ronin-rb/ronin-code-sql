@@ -34,7 +34,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword(@op) + emit_value(@expr)
+          emit_token(@op) + emit_value(@expr)
         end
 
       end

@@ -43,11 +43,11 @@ module Ronin
         def emit
           tokens = emit_value(@expr)
 
-          tokens += emit_keyword('NOT') if @negated
-          tokens += emit_keyword('BETWEEN')
+          tokens += emit_token('NOT') if @negated
+          tokens += emit_token('BETWEEN')
 
           tokens += emit_value(@lower)
-          tokens += emit_keyword('AND')
+          tokens += emit_token('AND')
           tokens += emit_value(@higher)
 
           return tokens

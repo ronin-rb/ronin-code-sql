@@ -91,27 +91,27 @@ module Ronin
         def emit
           tokens = []
 
-          tokens += emit_keyword('NATURAL') if @natural
+          tokens += emit_token('NATURAL') if @natural
 
           case @direction
           when :left, 'left'
-            tokens += emit_keyword('LEFT')
+            tokens += emit_token('LEFT')
           when :right, 'right'
-            tokens += emit_keyword('RIGHT')
+            tokens += emit_token('RIGHT')
           when :full, 'full'
-            tokens += emit_keyword('FULL')
+            tokens += emit_token('FULL')
           end
 
           case @side
           when :inner, 'inner'
-            tokens += emit_keyword('INNER')
+            tokens += emit_token('INNER')
           when :outer, 'outer'
-            tokens += emit_keyword('OUTER')
+            tokens += emit_token('OUTER')
           when :cross, 'cross'
-            tokens += emit_keyword('CROSS')
+            tokens += emit_token('CROSS')
           end
 
-          tokens += emit_keyword('JOIN')
+          tokens += emit_token('JOIN')
           
           return tokens + emit_value(@table)
         end

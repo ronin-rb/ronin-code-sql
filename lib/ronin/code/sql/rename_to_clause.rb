@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('RENAME TO') + emit_value(@table)
+          emit_token('RENAME TO') + emit_value(@table)
         end
 
       end

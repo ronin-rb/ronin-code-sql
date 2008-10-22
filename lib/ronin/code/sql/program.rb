@@ -158,21 +158,21 @@ module Ronin
          "'" + data.to_s.sub!("'","''") + "'"
         end
 
-        def format_keyword(keyword)
-          keyword = keyword.to_s
+        def format_token(token)
+          token = token.to_s
 
           if @lowercase
-            keyword.downcase!
+            token.downcase!
           else
-            keyword.upcase!
+            token.upcase!
           end
 
-          return keyword
+          return token
         end
 
         def format_token(token)
-          if token.kind_of?(Keyword)
-            return format_keyword(token)
+          if token.kind_of?(Token)
+            return format_token(token)
           elsif token.kind_of?(String)
             return format_string(token)
           else

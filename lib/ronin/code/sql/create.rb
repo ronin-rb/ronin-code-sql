@@ -51,13 +51,13 @@ module Ronin
         end
 
         def emit
-          tokens = emit_keyword('CREATE')
-          tokens += emit_keyword('TEMP') if @temp
+          tokens = emit_token('CREATE')
+          tokens += emit_token('TEMP') if @temp
 
-          tokens += emit_keyword(@type)
+          tokens += emit_token(@type)
 
-          tokens += emit_keyword('IF NOT EXISTS') if @if_not_exists
-          tokens += emit_keyword(@name)
+          tokens += emit_token('IF NOT EXISTS') if @if_not_exists
+          tokens += emit_token(@name)
 
           return tokens + super
         end

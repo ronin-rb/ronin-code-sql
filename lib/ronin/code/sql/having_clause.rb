@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('HAVING') + emit_value(@expr)
+          emit_token('HAVING') + emit_value(@expr)
         end
 
       end

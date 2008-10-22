@@ -34,8 +34,8 @@ module Ronin
 
         protected
 
-        def emit_keyword(value)
-          value.to_s.split(/\s/).map { |word| Keyword.new(word) }
+        def emit_token(value)
+          value.to_s.split(/\s/).map { |word| Token.new(word) }
         end
 
         #
@@ -69,7 +69,7 @@ module Ronin
 
           (values.length - 1).times do |index|
             tokens << values[i]
-            tokens << Keyword.new(',')
+            tokens << Token.new(',')
           end
 
           tokens << values.last
@@ -86,7 +86,7 @@ module Ronin
           when 1
             return emit_list(row)
           else
-            return [Keyword.new('(')] + emit_list(row) + [Keyword.new(')')]
+            return [Token.new('(')] + emit_list(row) + [Token.new(')')]
           end
         end
       end

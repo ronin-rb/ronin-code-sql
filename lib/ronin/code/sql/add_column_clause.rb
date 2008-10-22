@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_keyword('ADD COLUMN') + emit_value(@table)
+          emit_token('ADD COLUMN') + emit_value(@table)
         end
 
       end

@@ -28,10 +28,10 @@ module Ronin
     module SQL
       class Injection < Program
 
-        # Comment-Obfusticate all keywords
+        # Comment-Obfustication
         attr_accessor :comment_evasion
 
-        # Swapcase-Obfusciate all keywords
+        # Swapcase-Obfusciation
         attr_accessor :case_evasion
 
         def initialize(options={},&block)
@@ -108,14 +108,14 @@ module Ronin
           end
         end
 
-        def format_keyword(keyword)
-          keyword = super(keyword)
+        def format_token(token)
+          token = super(token)
 
           if @case_evasion
-            keyword = keyword.random_case
+            token = token.random_case
           end
 
-          return keyword
+          return token
         end
 
         def each_token(&block)
@@ -126,7 +126,7 @@ module Ronin
           if @expression
             @expression.emit.each(&block)
 
-            block.call(Keyword.separator)
+            block.call(Token.separator)
           end
 
           return super(&block)
