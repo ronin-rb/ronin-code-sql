@@ -57,6 +57,8 @@ module Ronin
         statement :update, Update
         statement :delete, Delete
         statement :drop_table, DropTable
+        statement :drop_index, DropIndex
+        statement :drop_view, DropView
 
       end
     end
