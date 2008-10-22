@@ -31,6 +31,8 @@ require 'ronin/code/sql/select'
 require 'ronin/code/sql/update'
 require 'ronin/code/sql/delete'
 require 'ronin/code/sql/drop_table'
+require 'ronin/code/sql/drop_index'
+require 'ronin/code/sql/drop_view'
 
 module Ronin
   module Code

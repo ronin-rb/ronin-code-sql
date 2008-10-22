@@ -24,6 +24,7 @@
 require 'ronin/code/sql/dialect'
 require 'ronin/code/sql/common_dialect'
 require 'ronin/code/symbol_table'
+require 'ronin/chars/char_set'
 
 module Ronin
   module Code
@@ -70,8 +71,8 @@ module Ronin
             @less_parens = false
           end
 
-          @space = (options[:space] || ' ')
-          @newline = (options[:newline] || "\n")
+          @space = Chars::CharSet.new(options[:space] || ' ')
+          @newline = Chars::CharSet.new(options[:newline] || "\n")
 
           @dialect = Dialect.get(options[:dialect]).new(options[:symbols])
 
@@ -91,13 +92,54 @@ module Ronin
         end
 
         def compile
-          sql = ''
+          sql = []
+          stmt = []
+          prev = nil
 
-          each_string do |prev,current|
-            sql << current
+          each_string do |current|
+            if current == ';'
+              sql << stmt
+              stmt = []
+            elsif (current == '(' || current == ')')
+              next if @less_parens
+
+              stmt << current
+            elsif (current == ',' || prev == '(')
+              stmt.last << current
+            elsif prev == ','
+              if @less_parens
+                stmt.last << current
+              else
+                stmt << current
+              end
+            else
+              stmt << current
+            end
+
+            prev = current
           end
 
-          return sql
+          sql_string = ''
+
+          sql.each_with_index do |stmt,stmt_index|
+            stmt.each_with_index do |token,token_index|
+              sql_string << token
+
+              unless token_index == (stmt.length - 1)
+                sql_string << space_token
+              end
+            end
+
+            unless stmt_index == (sql.length - 1)
+              if @multiline
+                sql_string << newline_token
+              else
+                sql_string << space_token
+              end
+            end
+          end
+
+          return sql_string
         end
 
         alias to_s compile
@@ -105,66 +147,24 @@ module Ronin
         protected
 
         def space_token
-          if @space.kind_of?(Array)
-            return @space[rand(@space.length)].to_s
-          else
-            return @space.to_s
-          end
-        end
-
-        def preappend_space(str)
-          "#{space_token}#{str}"
-        end
-
-        def append_space(str)
-          "#{str}#{space_token}"
+          @space.random_char
         end
 
         def newline_token
-          return space_token unless @multiline
-
-          if @newline.kind_of?(Array)
-            return @newline[rand(@newline.length)].to_s
-          else
-            return @newline.to_s
-          end
+          @newline.random_char
         end
 
         def format_string(data)
-         "'" + data.to_s.sub("'","''") + "'"
+         "'" + data.to_s.sub!("'","''") + "'"
         end
 
         def format_keyword(keyword)
-          if keyword.is_separator?
-            if @multiline
-              return newline_token
-            else
-              return append_space(keyword)
-            end
-          elsif keyword.is_open_paren?
-            if @less_parens
-              return space_token
-            else
-              return preappend_space(keyword)
-            end
-          elsif keyword.is_open_paren?
-            if @less_parens
-              return space_token
-            else
-              return append_space(keyword)
-            end
-          elsif keyword.is_comma?
-            if @less_parens
-              return keyword.to_s
-            else
-              return append_space(keyword)
-            end
+          keyword = keyword.to_s
+
+          if @lowercase
+            return keyword.downcase!
           else
-            if @lowercase
-              return keyword.to_s.downcase
-            else
-              return keyword.to_s.upcase
-            end
+            return keyword.upcase!
           end
         end
 
@@ -187,13 +187,8 @@ module Ronin
         end
 
         def each_string(&block)
-          prev = nil
-
           each_token do |token|
-            current = format_token(token)
-
-            block.call(prev,current)
-            prev = current
+            block.call(format_token(token))
           end
 
           return self
