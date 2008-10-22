@@ -54,11 +54,14 @@ module Ronin
           super(options,&block)
         end
 
+        def inject(&block)
+          @expression = InjectedStatement.new(@dialect,&block)
+          return self
+        end
+
         def escape_with(value=1,&block)
           @escape_value = value
-
-          block.call if block
-          return self
+          return inject(&block)
         end
 
         def escape_string(value='',&block)
@@ -79,21 +82,8 @@ module Ronin
           return escape_with(nil,&block)
         end
 
-        def inject(&block)
-          @expression = InjectedStatement.new(self,&block)
-        end
-
         def compile
-          injection = ''
-
-          if (@escape_value || @escape_token)
-            injection << @escape_value if @escape_value
-            injection << @escape_token if @escape_token
-
-            injection << space_token
-          end
-          
-          injection << super.rstrip
+          injection = super.rstrip
 
           if (@escape_token && injection[-1..-1] == @escape_token)
             return injection.chop!
@@ -113,24 +103,22 @@ module Ronin
         end
 
         def format_keyword(keyword)
+          keyword = super(keyword)
+
           if @case_evasion
-            return super(keyword).random_case
-          else
-            return super(keyword)
+            keyword = keyword.random_case
           end
+
+          return keyword
         end
 
         def each_token(&block)
-          if @escape_value
-            block.call(@escape_value)
-          end
-
-          if @escape_token
-            block.call(@escape_token)
+          if (@escape_value || @escape_token)
+            block.call("#{@escape_value}#{@escape_token}")
           end
 
           if @expression
-            formatted_tokens(@expression.emit,&block)
+            @expression.emit.each(&block)
           end
 
           return super(&block)
