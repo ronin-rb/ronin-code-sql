@@ -57,22 +57,6 @@ module Ronin
           [self]
         end
 
-        def is_separator?
-          @value == ';'
-        end
-
-        def is_open_paren?
-          @value == '('
-        end
-
-        def is_close_paren?
-          @value == ')'
-        end
-
-        def is_comma?
-          @value == ','
-        end
-
         #
         # Returns the value of the keyword in String form.
         #
