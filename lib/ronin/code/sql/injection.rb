@@ -51,7 +51,9 @@ module Ronin
           @escape_token = nil
           @expression = nil
 
-          super(options,&block)
+          super(options)
+
+          instance_eval(&block) if block
         end
 
         def inject(&block)
@@ -59,7 +61,7 @@ module Ronin
           return self
         end
 
-        def escape_with(value=1,&block)
+        def escape(value=1,&block)
           @escape_value = value
           return inject(&block)
         end
@@ -67,19 +69,23 @@ module Ronin
         def escape_string(value='',&block)
           @escape_token = "'"
 
-          return escape_with(value,&block)
+          return escape(value,&block)
         end
 
         def escape_parenthesis(value='',&block)
           @escape_token = ')'
 
-          return escape_with(nil,&block)
+          return escape(nil,&block)
         end
 
         def escape_statement(&block)
           @escape_token = ';'
 
-          return escape_with(nil,&block)
+          return escape(nil,&block)
+        end
+
+        def sql(&block)
+          @dialect.instance_eval(&block) if block
         end
 
         def compile
