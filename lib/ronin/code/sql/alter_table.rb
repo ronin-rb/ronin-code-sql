@@ -33,10 +33,10 @@ module Ronin
         clause :rename_to, RenameToClause
         clause :add_column, AddColumnClause
 
-        def initialize(program,options={},&block)
+        def initialize(options={},&block)
           @table = options[:table]
 
-          super(program,options,&block)
+          super(options,&block)
         end
 
         def table(name)

@@ -32,16 +32,15 @@ module Ronin
     module SQL
       class Field < Expr
 
-        def initialize(program,name,prefix=nil)
-          super(program)
-
+        def initialize(symbols,name,prefix=nil)
+          @symbols = symbols
           @prefix = prefix
           @name = name
         end
 
         def field(name)
-          sym = symbol("#{self}.#{name}")
-          sym.value ||= Field.new(@program,name,self)
+          sym = @symbols.symbol("#{self}.#{name}")
+          sym.value ||= Field.new(@symbols,name,self)
 
           return sym
         end
@@ -57,11 +56,11 @@ module Ronin
         end
         
         def as(name)
-          As.new(@program,self,name)
+          As.new(self,name)
         end
 
         def between(start,stop)
-          Between.new(@program,self,start,stop)
+          Between.new(self,start,stop)
         end
 
         def <=>(range)
@@ -69,15 +68,15 @@ module Ronin
         end
 
         def asc
-          Asc.new(@program,self)
+          Asc.new(self)
         end
 
         def desc
-          Desc.new(@program,self)
+          Desc.new(self)
         end
 
         def emit
-          self.to_s.to_sym
+          [self.to_s.to_sym]
         end
 
         def to_s

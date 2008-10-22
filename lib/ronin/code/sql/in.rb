@@ -28,9 +28,7 @@ module Ronin
     module SQL
       class In < Expr
 
-        def initialize(program,field,*range)
-          super(program)
-
+        def initialize(field,*range)
           @field = field
           @range = range
         end

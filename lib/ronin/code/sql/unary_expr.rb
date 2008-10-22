@@ -28,9 +28,7 @@ module Ronin
     module SQL
       class UnaryExpr < Expr
 
-        def initialize(program,op,expr)
-          super(program)
-
+        def initialize(op,expr)
           @op = op
           @expr = expr
         end

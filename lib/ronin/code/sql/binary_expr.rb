@@ -28,9 +28,7 @@ module Ronin
     module SQL
       class BinaryExpr < Expr
 
-        def initialize(program,op,left,right)
-          super(program)
-
+        def initialize(op,left,right)
           @op = op
           @left = left
           @right = right

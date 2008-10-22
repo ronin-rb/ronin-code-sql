@@ -39,12 +39,13 @@ module Ronin
 
         #
         # Creates a new Statement object connected to the specified
-        # _program_. If a _block_ is given, it will be evaluated within
+        # _dialect_. If a _block_ is given, it will be evaluated within
         # the newly created Statement object.
         #
-        def initialize(program,options={},&block)
-          super(program)
+        def initialize(dialect,options={},&block)
+          super()
 
+          @dialect = dialect
           @clauses = []
 
           options.each do |name,args|
@@ -96,13 +97,6 @@ module Ronin
           return tokens
         end
 
-        #
-        # Returns an formatted String representing the statement.
-        #
-        def to_s
-          @program.compile_statement(self)
-        end
-
         protected
 
         #
@@ -137,38 +131,30 @@ module Ronin
           return clause_type
         end
 
-        def field(name)
-          @program.field(name)
-        end
-
-        def all
-          @program.all
-        end
-
         def clause(name,*arguments)
           clause_index = self.class.clause_order.index(name)
 
-          unless (@clauses[clause_index] && args.empty?)
+          unless (@clauses[clause_index] && arguments.empty?)
             clause_type = self.class.clauses[name]
 
-            @clauses[clause_index] = clause_type.new(@program,*arguments)
+            @clauses[clause_index] = clause_type.new(*arguments)
           end
 
           return @clauses[clause_index]
         end
 
         def select(options={},&block)
-          dialect.statement(:select,options,&block)
+          @dialect.statement(:select,options,&block)
         end
 
         def method_missing(name,*arguments,&block)
-          if dialect.class.public_method_defined?(name)
-            return dialect.send(name,*arguments,&block)
+          if @dialect.has_statement?(name)
+            return @dialect.statement(name,*arguments,&block)
+          elsif @dialect.class.public_method_defined?(name)
+            return @dialect.send(name,*arguments,&block)
           elsif (arguments.empty? && block.nil?)
-            return field(name)
+            return @dialect.field(name)
           end
-
-          raise(NoMethodError,name.id2name)
         end
 
       end

@@ -28,8 +28,8 @@ module Ronin
     module SQL
       class Asc < Modifier
 
-        def initialize(program,expr)
-          super(@program,expr,'DESC')
+        def initialize(expr)
+          super(expr,'DESC')
         end
 
       end

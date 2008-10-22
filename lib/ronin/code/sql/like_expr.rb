@@ -28,9 +28,7 @@ module Ronin
     module SQL
       class LikeExpr < Expr
 
-        def initialize(program,op,left,right,escape=nil)
-          super(program)
-
+        def initialize(op,left,right,escape=nil)
           @op = op
           @left = left
           @right = right

@@ -30,9 +30,7 @@ module Ronin
 
         attr_accessor :expr
 
-        def initialize(program,expr)
-          super(program)
-
+        def initialize(expr)
           @expr = expr
         end
 

@@ -31,10 +31,6 @@ module Ronin
 
         include Emitable
 
-        def initialize(program)
-          @program = program
-        end
-
       end
     end
   end

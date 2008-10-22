@@ -28,14 +28,14 @@ module Ronin
     module SQL
       class As < Modifier
 
-        def initialize(program,field,name)
-          super(program,field,'AS')
+        def initialize(field,name)
+          super(field,'AS')
 
           @name = name
         end
 
         def emit
-          super + [emit_value(@name)]
+          super + emit_value(@name)
         end
 
       end

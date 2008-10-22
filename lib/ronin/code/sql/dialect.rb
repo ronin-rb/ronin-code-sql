@@ -32,13 +32,21 @@ module Ronin
     module SQL
       class Dialect
 
+        # Symbol Table for the dialect
+        attr_reader :symbols
+
+        # Statements used within the dialect
+        attr_reader :statements
+
         #
         # Creates a new Dialect object connected to the specified
         # _program_.
         #
-        def initialize(program,name)
-          @program = program
-          @name = name
+        def initialize(symbols={},&block)
+          @symbols = SymbolTable.new(symbols)
+          @statements = []
+
+          instance_eval(&block) if block
         end
 
         #
@@ -71,10 +79,6 @@ module Ronin
           return Dialect.dialects[name]
         end
 
-        def statements
-          self.class.statements
-        end
-
         def has_statement?(name)
           self.class.has_statement?(name)
         end
@@ -83,10 +87,17 @@ module Ronin
           name = name.to_sym
 
           unless has_statement?(name)
-            raise(UnknownStatement,"unknown statement #{name} in #{@name} dialect",caller)
+            raise(UnknownStatement,"unknown statement #{name} in #{dialect} dialect",caller)
           end
 
-          return statements[name].new(@program,*arguments,&block)
+          return self.class.statements[name].new(self,*arguments,&block)
+        end
+
+        def enqueue_statement(name,*arguments,&block)
+          stmt = statement(name,*arguments,&block)
+
+          @statements << stmt
+          return stmt
         end
 
         def has_clause?(name)
@@ -100,7 +111,32 @@ module Ronin
             end
           end
 
-          raise(UnknownClause,"unknown clause #{name} in #{@name} dialect",caller)
+          raise(UnknownClause,"unknown clause #{name} in #{dialect} dialect",caller)
+        end
+
+        def field(name)
+          sym = @symbols.symbol(name)
+          sym.value ||= Field.new(@symbols,name)
+
+          return sym
+        end
+
+        def all
+          Keyword.new('*')
+        end
+
+        def id
+          field('id')
+        end
+
+        def each_token(&block)
+          @statements.each do |stmt|
+            stmt.emit.each(&block)
+
+            block.call(Keyword.separator)
+          end
+
+          return self
         end
 
         protected
@@ -109,6 +145,10 @@ module Ronin
         # Defines a SQL Dialect with the specified _name_.
         #
         def self.dialect(name)
+          name = name.to_sym
+
+          class_def(:dialect) { name }
+
           Dialect.dialects[name.to_sym] = self
           return self
         end
@@ -152,7 +192,7 @@ module Ronin
         def self.functions(*names)
           names.each do |name|
             class_def(name) do |*fields|
-              Function.new(@program,name,*fields)
+              Function.new(name,*fields)
             end
           end
 
@@ -166,13 +206,16 @@ module Ronin
         def self.aggregators(*names)
           names.each do |name|
             class_def(name) do |field|
-              Function.new(@program,name,field)
+              Function.new(name,field)
             end
           end
 
           return self
         end
 
+        #
+        # Returns the Hash of defined Statements within the Dialect.
+        #
         def self.statements
           @@statements ||= {}
         end
@@ -192,7 +235,7 @@ module Ronin
 
           class_eval %{
             def #{name}(*arguments,&block)
-              statement(:#{name},*arguments,&block)
+              enqueue_statement(:#{name},*arguments,&block)
             end
           }
 
@@ -205,6 +248,14 @@ module Ronin
           end
 
           return false
+        end
+
+        def method_missing(name,*arguments,&block)
+          if (arguments.empty? && block.nil?)
+            return field(name)
+          end
+
+          raise(NoMethodError,name.id2name)
         end
 
       end

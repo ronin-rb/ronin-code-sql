@@ -28,11 +28,11 @@ module Ronin
     module SQL
       class DropTable < Statement
 
-        def initialize(program,table=nil,options={},&block)
+        def initialize(dialect,table=nil,options={},&block)
           @table = table
           @if_exists = options[:if_exists]
 
-          super(program,&block)
+          super(dialect,&block)
         end
 
         def table(value)

@@ -30,12 +30,12 @@ module Ronin
     module SQL
       class CreateView < Statement
 
-        def initialize(program,options={},&block)
+        def initialize(dialect,options={},&block)
           @temp = (options[:temp] || options[:temporary])
           @if_not_exists = options[:if_not_exists]
           @view = options[:view]
 
-          super(program,&block)
+          super(dialect,&block)
         end
 
         def temp

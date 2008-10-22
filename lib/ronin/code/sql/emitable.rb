@@ -80,7 +80,14 @@ module Ronin
         # Emits the specified SQL _row_.
         #
         def emit_row(row)
-          [Keyword.new('(')] + emit_list(row) + [Keyword.new(')')]
+          case row.length
+          when 0
+            return []
+          when 1
+            return emit_list(row)
+          else
+            return [Keyword.new('(')] + emit_list(row) + [Keyword.new(')')]
+          end
         end
       end
     end

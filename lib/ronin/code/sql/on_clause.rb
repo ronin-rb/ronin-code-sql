@@ -32,9 +32,7 @@ module Ronin
 
         attr_accessor :fields
 
-        def initialize(program,table,*fields)
-          super(program)
-
+        def initialize(table,*fields)
           @table = table
           @fields = fields
         end

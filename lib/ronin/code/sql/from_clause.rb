@@ -30,9 +30,7 @@ module Ronin
 
         attr_accessor :table
 
-        def initialize(program,table)
-          super(program)
-
+        def initialize(table)
           @table = table
         end
 

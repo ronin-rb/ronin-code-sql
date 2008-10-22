@@ -36,9 +36,7 @@ module Ronin
 
         attr_accessor :side
 
-        def initialize(program,table,options={})
-          super(program)
-
+        def initialize(table,options={})
           @table = table
 
           if options[:left]

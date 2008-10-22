@@ -28,9 +28,7 @@ module Ronin
     module SQL
       class Between < Expr
 
-        def initialize(program,expr,lower,higher)
-          super(program)
-
+        def initialize(expr,lower,higher)
           @expr = expr
           @lower = lower
           @higher = higher

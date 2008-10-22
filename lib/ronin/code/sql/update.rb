@@ -33,10 +33,10 @@ module Ronin
         clause :set, SetClause
         clause :where, WhereClause
 
-        def initialize(program,table=nil,options={},&block)
+        def initialize(dialect,table=nil,options={},&block)
           @table = table
 
-          super(program,options,&block)
+          super(dialect,options,&block)
         end
 
         def table(value)

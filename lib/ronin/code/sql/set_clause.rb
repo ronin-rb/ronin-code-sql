@@ -30,9 +30,7 @@ module Ronin
 
         attr_accessor :values
 
-        def initialize(program,*values)
-          super(program)
-
+        def initialize(*values)
           @values = values
         end
 

@@ -4,9 +4,9 @@ Manifest.txt
 README.txt
 Rakefile
 lib/ronin/code/sql.rb
+lib/ronin/code/sql/as.rb
 lib/ronin/code/sql/between.rb
 lib/ronin/code/sql/binary_expr.rb
-lib/ronin/code/sql/builder.rb
 lib/ronin/code/sql/code.rb
 lib/ronin/code/sql/common_dialect.rb
 lib/ronin/code/sql/create_index.rb
@@ -17,13 +17,14 @@ lib/ronin/code/sql/dialect.rb
 lib/ronin/code/sql/drop_table.rb
 lib/ronin/code/sql/exceptions.rb
 lib/ronin/code/sql/exceptions/unknown_dialect.rb
+lib/ronin/code/sql/exceptions/unknown_statement.rb
+lib/ronin/code/sql/exceptions/unknown_clause.rb
 lib/ronin/code/sql/expr.rb
 lib/ronin/code/sql/field.rb
 lib/ronin/code/sql/function.rb
 lib/ronin/code/sql/in.rb
+lib/ronin/code/sql/injected_statement.rb
 lib/ronin/code/sql/injection.rb
-lib/ronin/code/sql/injection_builder.rb
-lib/ronin/code/sql/injection_style.rb
 lib/ronin/code/sql/insert.rb
 lib/ronin/code/sql/keyword.rb
 lib/ronin/code/sql/like_expr.rb
@@ -31,7 +32,6 @@ lib/ronin/code/sql/program.rb
 lib/ronin/code/sql/replace.rb
 lib/ronin/code/sql/select.rb
 lib/ronin/code/sql/statement.rb
-lib/ronin/code/sql/style.rb
 lib/ronin/code/sql/unary_expr.rb
 lib/ronin/code/sql/update.rb
 lib/ronin/sql/extensions.rb

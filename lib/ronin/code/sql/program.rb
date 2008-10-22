@@ -49,9 +49,8 @@ module Ronin
         attr_accessor :newline
 
         def initialize(options={},&block)
-          dialect_name = (options[:dialect] || :common)
-
-          @dialect = Dialect.get(dialect_name).new(self,dialect_name)
+          options[:dialect] ||= :common
+          options[:symbols] ||= {}
 
           if options.has_key?(:multiline)
             @multiline = options[:multiline]
@@ -74,51 +73,36 @@ module Ronin
           @space = (options[:space] || ' ')
           @newline = (options[:newline] || "\n")
 
-          @symbol_table = SymbolTable.new
+          @dialect = Dialect.get(options[:dialect]).new(options[:symbols])
 
-          if options[:symbols]
-            @symbol_table.symbols = options[:symbols]
-          end
-
-          @statements = []
-
-          instance_eval(&block) if block
+          @dialect.instance_eval(&block) if block
         end
 
-        def symbol(name)
-          @symbol_table.symbol(name)
+        def self.compile(options={},&block)
+          self.new(options,&block).compile
         end
 
-        def field(name)
-          sym = symbol(name)
-          sym.value ||= Field.new(self,name)
-
-          return sym
+        def symbols
+          @dialect.symbols
         end
 
-        def all
-          field('*')
+        def select(*arguments,&block)
+          @dialect.statement(:select,*arguments,&block)
         end
 
         def compile
           sql = ''
 
-          each_formatted_token { |token| sql << token }
+          each_string do |prev,current|
+            sql << current
+          end
 
           return sql
         end
 
         alias to_s compile
 
-        def self.compile(options={},&block)
-          self.new(options,&block).compile
-        end
-
         protected
-
-        def select(options={},&block)
-          @dialect.statement(:select,options,&block)
-        end
 
         def space_token
           if @space.kind_of?(Array)
@@ -195,27 +179,29 @@ module Ronin
         end
 
         def each_token(&block)
-          @statements.each do |stmt|
-            stmt.emit.each(&block)
-
-            block.call(Keyword.separator)
+          @dialect.each_token do |token|
+            block.call(token)
           end
 
           return self
         end
 
-        def each_formatted_token(&block)
-          each_token { |token| block.call(format_token(token)) }
+        def each_string(&block)
+          prev = nil
+
+          each_token do |token|
+            current = format_token(token)
+
+            block.call(prev,current)
+            prev = current
+          end
+
+          return self
         end
 
         def method_missing(name,*arguments,&block)
-          if (@dialect.class.public_method_defined?(name))
-            stmt = @dialect.send(name,*arguments,&block)
-
-            @statements << stmt if stmt.kind_of?(Statement)
-            return stmt
-          elsif (arguments.empty? && block.nil?)
-            return field(name)
+          if @dialect.has_statement?(name)
+            return @dialect.enqueue_statement(name,*arguments,&block)
           end
 
           raise(NoMethodError,name.id2name)

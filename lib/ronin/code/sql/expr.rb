@@ -31,12 +31,8 @@ module Ronin
 
         include Emitable
 
-        def initialize(program)
-          @program = program
-        end
-
         def in?(*range)
-          In.new(@program,self,*range)
+          In.new(self,*range)
         end
 
         def ===(*range)
@@ -47,16 +43,12 @@ module Ronin
           in?(*range).not!
         end
 
-        def to_s
-          @program.compile_expr(self)
-        end
-
         protected
 
         def self.binary_op(op,*names)
           names.each do |name|
             class_def(name) do |expr|
-              BinaryExpr.new(@program,op,self,expr)
+              BinaryExpr.new(op,self,expr)
             end
           end
 
@@ -81,7 +73,7 @@ module Ronin
         def self.like_op(op,*names)
           names.each do |name|
             class_def(name) do |expr,escape|
-              LikeExpr.new(@program,op,self,expr,escape)
+              LikeExpr.new(op,self,expr,escape)
             end
           end
 
@@ -96,7 +88,7 @@ module Ronin
         def self.unary_op(op,*names)
           names.each do |name|
             class_def(name) do
-              UnaryExpr.new(@program,op,self)
+              UnaryExpr.new(op,self)
             end
           end
 
@@ -105,17 +97,6 @@ module Ronin
 
         unary_op 'NOT', :not!
         unary_op 'EXISTS', :exists?
-
-        #
-        # Returns the current SQL Dialect.
-        #
-        def dialect
-          @program.dialect
-        end
-
-        def symbol(name)
-          @program.symbol(name)
-        end
 
       end
     end

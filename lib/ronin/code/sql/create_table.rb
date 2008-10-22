@@ -31,11 +31,11 @@ module Ronin
 
         clause :fields, FieldsClause
 
-        def initialize(program,options={},&block)
+        def initialize(dialect,options={},&block)
           @temp = (options[:temp] || options[:temporary])
           @if_not_exists = options[:if_not_exists]
 
-          super(program,options,&block)
+          super(dialect,options,&block)
         end
 
         def temp

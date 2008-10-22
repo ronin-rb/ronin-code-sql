@@ -51,11 +51,15 @@ module Ronin
         clause :union, UnionClause
         clause :union_all, UnionAllClause
 
-        def initialize(program,options={},&block)
+        def initialize(dialect,options={},&block)
           @distinct_rows = options[:distinct_rows]
           @all_rows = options[:all_rows]
 
-          super(program,options,&block)
+          super(dialect,options)
+
+          fields(all)
+
+          instance_eval(&block) if block
         end
 
         def all_rows

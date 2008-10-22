@@ -31,9 +31,7 @@ module Ronin
         # Name of the function
         attr_reader :name
 
-        def initialize(program,name,*fields)
-          super(program)
-
+        def initialize(name,*fields)
           @style = style
           @name = name
           @fields = fields

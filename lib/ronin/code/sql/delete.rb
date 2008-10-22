@@ -31,10 +31,10 @@ module Ronin
 
         clause :where, WhereClause
 
-        def initialize(program,options={},&block)
+        def initialize(dialect,options={},&block)
           @table = options[:table]
 
-          super(program,options,&block)
+          super(dialect,options,&block)
         end
 
         def from(name)

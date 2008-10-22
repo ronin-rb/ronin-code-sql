@@ -35,10 +35,10 @@ module Ronin
         clause :default_values, DefaultValuesClause
         clause :values, ValuesClause
 
-        def initialize(program,options={},&block)
+        def initialize(dialect,options={},&block)
           @table = options[:table]
 
-          super(program,options,&block)
+          super(dialect,options,&block)
         end
 
         def table(name)

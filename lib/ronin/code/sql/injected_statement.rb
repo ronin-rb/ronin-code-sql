@@ -28,10 +28,10 @@ module Ronin
     module SQL
       class InjectedStatement < Statement
 
-        def initialize(program,&block)
+        def initialize(dialect,&block)
           @expressions = []
 
-          super(program,&block)
+          super(dialect,&block)
         end
 
         def inject_and(expr)
@@ -45,11 +45,11 @@ module Ronin
         end
 
         def all_rows(value=1)
-          inject_or(BinaryExpr.new(@program,'=',value,value))
+          inject_or(BinaryExpr.new('=',value,value))
         end
 
         def exact_rows(value=1)
-          inject_and(BinaryExpr.new(@program,'=',value,value))
+          inject_and(BinaryExpr.new('=',value,value))
         end
 
         def has_field?(name)

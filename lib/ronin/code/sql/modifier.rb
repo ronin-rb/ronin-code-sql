@@ -5,9 +5,7 @@ module Ronin
 
         include Emitable
 
-        def initialize(program,expr,name)
-          @program = program
-
+        def initialize(expr,name)
           @expr = expr
           @name = name
         end

@@ -30,9 +30,7 @@ module Ronin
 
         attr_accessor :select
 
-        def initialize(program,select)
-          super(program)
-
+        def initialize(select)
           @select = select
         end
 
