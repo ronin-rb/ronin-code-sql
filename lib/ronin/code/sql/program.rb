@@ -162,10 +162,12 @@ module Ronin
           keyword = keyword.to_s
 
           if @lowercase
-            return keyword.downcase!
+            keyword.downcase!
           else
-            return keyword.upcase!
+            keyword.upcase!
           end
+
+          return keyword
         end
 
         def format_token(token)
