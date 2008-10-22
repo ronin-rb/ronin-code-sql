@@ -114,6 +114,13 @@ module Ronin
           raise(UnknownClause,"unknown clause #{name} in #{dialect} dialect",caller)
         end
 
+        def symbol(name)
+          sym = @symbols.symbol(name)
+          sym.value ||= name
+
+          return sym
+        end
+
         def field(name)
           sym = @symbols.symbol(name)
           sym.value ||= Field.new(@symbols,name)
