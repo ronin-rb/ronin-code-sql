@@ -21,46 +21,20 @@
 #++
 #
 
-require 'ronin/code/sql/statement'
-require 'ronin/code/sql/select'
-require 'ronin/code/sql/as'
+require 'ronin/code/sql/create'
 
 module Ronin
   module Code
     module SQL
-      class CreateView < Statement
+      class CreateView < Create
 
-        def initialize(dialect,options={},&block)
-          @temp = (options[:temp] || options[:temporary])
-          @if_not_exists = options[:if_not_exists]
-          @view = options[:view]
-
-          super(dialect,&block)
+        def initialize(dialect,view=nil,options={},&block)
+          super(dialect,'VIEW',view,options,&block)
         end
 
-        def temp
-          @temp = true
+        def view(name)
+          @name = name
           return self
-        end
-
-        def if_not_exists
-          @if_not_exists = true
-          return self
-        end
-
-        def view(value)
-          @view = value
-          return self
-        end
-
-        def emit
-          tokens = emit_keyword('CREATE')
-
-          tokens += emit_keyword('TEMP') if @temp
-          tokens += emit_keyword('VIEW')
-          tokens += emit_keyword('IF NOT EXISTS') if @if_not_exists
-
-          return tokens + emit_value(@view)
         end
 
       end

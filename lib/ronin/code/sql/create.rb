@@ -21,23 +21,44 @@
 #++
 #
 
-require 'ronin/code/sql/create'
+require 'ronin/code/sql/statement'
 require 'ronin/code/sql/fields_clause'
 
 module Ronin
   module Code
     module SQL
-      class CreateTable < Create
+      class Create < Statement
 
-        clause :columns, FieldsClause
+        clause :fields, FieldsClause
 
-        def initialize(dialect,table=nil,options={},&block)
-          super(dialect,'TABLE',table,options,&block)
+        def initialize(dialect,type,name=nil,options={},&block)
+          @type = type
+          @name = name
+          @temp = (options[:temp] || options[:temporary])
+          @if_not_exists = options[:if_not_exists]
+
+          super(dialect,options,&block)
         end
 
-        def table(name)
-          @name = name
+        def temp
+          @temp = true
           return self
+        end
+
+        def if_not_exists
+          @if_not_exists = true
+          return self
+        end
+
+        def emit
+          tokens = emit_keyword('CREATE')
+
+          tokens += emit_keyword('TEMP') if @temp
+          tokens += emit_keyword(@type)
+          tokens += emit_keyword('IF NOT EXISTS') if @if_not_exists
+          tokens += emit_keyword(@name)
+
+          return tokens + super
         end
 
       end

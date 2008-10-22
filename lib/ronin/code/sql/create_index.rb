@@ -21,43 +21,23 @@
 #++
 #
 
-require 'ronin/code/sql/statement'
-require 'ronin/code/sql/fields_clause'
+require 'ronin/code/sql/create'
 require 'ronin/code/sql/on_clause'
 
 module Ronin
   module Code
     module SQL
-      class CreateIndex < Statement
+      class CreateIndex < Create
 
-        clause :fields, FieldsClause
         clause :on, OnClause
 
-        def initialize(dialect,options={},&block)
-          @temp = (options[:temp] || options[:temporary])
-          @if_not_exists = options[:if_not_exists]
-
-          super(dialect,options,&block)
+        def initialize(dialect,index=nil,options={},&block)
+          super(dialect,'INDEX',index,options,&block)
         end
 
-        def temp
-          @temp = true
+        def index(name)
+          @name = name
           return self
-        end
-
-        def if_not_exists
-          @if_not_exists = true
-          return self
-        end
-
-        def emit
-          tokens = emit_keyword('CREATE')
-
-          tokens += emit_keyword('TEMP') if @temp
-          tokens += emit_keyword('INDEX')
-          tokens += emit_keyword('IF NOT EXISTS') if @if_not_exists
-
-          return tokens + super
         end
 
       end
