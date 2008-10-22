@@ -52,6 +52,10 @@ module Ronin
           inject_and(BinaryExpr.new('=',value,value))
         end
 
+        def no_rows
+          inject_and(BinaryExpr.new('=',1,0))
+        end
+
         def has_field?(name)
           inject_or(field(name).is_not?(null))
         end
