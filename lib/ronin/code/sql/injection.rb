@@ -125,6 +125,8 @@ module Ronin
 
           if @expression
             @expression.emit.each(&block)
+
+            block.call(Keyword.separator)
           end
 
           return super(&block)
