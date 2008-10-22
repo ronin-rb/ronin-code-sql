@@ -26,13 +26,13 @@ require 'ronin/code/sql/drop'
 module Ronin
   module Code
     module SQL
-      class DropTable < Drop
+      class DropIndex < Drop
 
-        def initialize(dialect,table=nil,options={},&block)
-          super(dialect,'TABLE',table,options,&block)
+        def initialize(dialect,index=nil,options={},&block)
+          super(dialect,'INDEX',index,options,&block)
         end
 
-        def table(name)
+        def index(name)
           @name = name
           return self
         end

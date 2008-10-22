@@ -21,20 +21,35 @@
 #++
 #
 
-require 'ronin/code/sql/drop'
+require 'ronin/code/sql/statement'
 
 module Ronin
   module Code
     module SQL
-      class DropTable < Drop
+      class Drop < Statement
 
-        def initialize(dialect,table=nil,options={},&block)
-          super(dialect,'TABLE',table,options,&block)
+        def initialize(dialect,type,name=nil,options={},&block)
+          @type = type
+          @name = name
+          @table = options[:table]
+          @if_exists = options[:if_exists]
+
+          super(dialect,&block)
         end
 
-        def table(name)
-          @name = name
+        def if_exists
+          @if_exists = true
           return self
+        end
+
+        def emit
+          tokens = emit_keyword('DROP')
+          tokens += emit_keyword(@type)
+
+          tokens += emit_keyword('IF EXISTS') if @if_exists
+          tokens += emit_keyword(@name)
+
+          return tokens + emit_value(@table)
         end
 
       end

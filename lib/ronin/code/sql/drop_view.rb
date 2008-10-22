@@ -26,13 +26,13 @@ require 'ronin/code/sql/drop'
 module Ronin
   module Code
     module SQL
-      class DropTable < Drop
+      class DropView < Drop
 
-        def initialize(dialect,table=nil,options={},&block)
-          super(dialect,'TABLE',table,options,&block)
+        def initialize(dialect,view=nil,options={},&block)
+          super(dialect,'VIEW',view,options,&block)
         end
 
-        def table(name)
+        def view(name)
           @name = name
           return self
         end
