@@ -39,7 +39,7 @@ module Ronin
         end
 
         def field(name)
-          sym = @symbols.symbol("#{self}.#{name}")
+          sym = @symbols.symbol("#{path}.#{name}")
           sym.value ||= Field.new(@symbols,name,self)
 
           return sym
@@ -76,18 +76,18 @@ module Ronin
         end
 
         def emit
-          [self.to_s.to_sym]
+          [path.to_sym]
         end
 
-        def to_s
+        protected
+
+        def path
           if @prefix
             return "#{@prefix}.#{@name}"
           else
             return "#{@name}"
           end
         end
-
-        protected
 
         def method_missing(name,*arguments,&block)
           if (arguments.empty? && @prefix.nil? && block.nil?)
