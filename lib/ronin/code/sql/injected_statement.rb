@@ -64,6 +64,15 @@ module Ronin
           inject_and(select_from(table,:fields => count(all), :from => table) == 1)
         end
 
+        def uses_field?(name=nil)
+          if name
+            group_by(name)
+          end
+
+          having(BinaryExpr.new('=',1,1))
+          return self
+        end
+
         def uses_table?(table)
           inject_or(table.is_not?(null))
         end
