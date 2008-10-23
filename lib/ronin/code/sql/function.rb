@@ -31,14 +31,22 @@ module Ronin
         # Name of the function
         attr_reader :name
 
+        # Fields passed to the function
+        attr_reader :fields
+
         def initialize(name,*fields)
-          @style = style
           @name = name
           @fields = fields
         end
 
         def emit
-          emit_keyworld(@name) + emit_row(@fields)
+          tokens = emit_token(@name)
+          
+          tokens << Token.open_paren
+          tokens += emit_list(@fields)
+          tokens << Token.close_paren
+
+          return tokens
         end
 
       end
