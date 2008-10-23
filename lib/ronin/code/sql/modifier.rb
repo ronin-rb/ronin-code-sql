@@ -30,6 +30,12 @@ module Ronin
 
         include Emittable
 
+        # Modifier name
+        attr_reader :name
+
+        # Expression
+        attr_reader :expr
+
         def initialize(expr,name)
           @expr = expr
           @name = name
