@@ -43,7 +43,15 @@ module Ronin
         # otherwise _value_ will be returned.
         #
         def emit_value(value)
-          if value.kind_of?(Emittable)
+          if value.kind_of?(Statement)
+            tokens = []
+            
+            tokens << Token.open_paren
+            tokens += value.emit
+            tokens << Token.close_paren
+
+            return tokens
+          elsif value.kind_of?(Emittable)
             return value.emit
           else
             return [value]
