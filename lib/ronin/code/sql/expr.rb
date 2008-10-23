@@ -29,7 +29,7 @@ module Ronin
     module SQL
       class Expr
 
-        include Emitable
+        include Emittable
 
         def in?(*range)
           In.new(self,*range)

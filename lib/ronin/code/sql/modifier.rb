@@ -3,7 +3,7 @@ module Ronin
     module SQL
       class Modifier
 
-        include Emitable
+        include Emittable
 
         def initialize(expr,name)
           @expr = expr

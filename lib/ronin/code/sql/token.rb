@@ -28,7 +28,7 @@ module Ronin
     module SQL
       class Token
 
-        include Emitable
+        include Emittable
 
         #
         # Creates a new Token object with the specified _value_.

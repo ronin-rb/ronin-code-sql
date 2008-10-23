@@ -29,7 +29,7 @@ module Ronin
     module SQL
       class Clause
 
-        include Emitable
+        include Emittable
 
       end
     end
