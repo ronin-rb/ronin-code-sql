@@ -28,6 +28,9 @@ module Ronin
     module SQL
       class InjectedStatement < Statement
 
+        # Injected expressions
+        attr_reader :expressions
+
         def initialize(dialect,&block)
           @expressions = []
 
@@ -61,7 +64,7 @@ module Ronin
         end
 
         def has_table?(table)
-          inject_and(select_from(table,:fields => count(all), :from => table) == 1)
+          inject_and(select(:from => table,:fields => count(all)) == 1)
         end
 
         def uses_column?(*names)
@@ -86,8 +89,8 @@ module Ronin
         end
 
         def method_missing(name,*arguments,&block)
-          if (dialect.has_clause?(name) && block.nil?)
-            return dialect.clause(name,*arguments)
+          if (@dialect.has_clause?(name) && block.nil?)
+            return @dialect.clause(name,*arguments)
           end
 
           return super(name,*arguments,&block)
