@@ -28,6 +28,15 @@ module Ronin
     module SQL
       class Like < Expr
 
+        # Operator
+        attr_reader :op
+
+        # Left-hand side
+        attr_reader :left
+
+        # Right-hand side
+        attr_reader :right
+
         def initialize(op,left,right,escape=nil)
           @op = op
           @left = left
