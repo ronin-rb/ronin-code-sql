@@ -93,13 +93,13 @@ module Ronin
 
         def compile
           sql = []
-          stmt = []
+          stmt = ['']
           prev = nil
 
           each_string do |current|
             if current == ';'
               sql << stmt
-              stmt = []
+              stmt = ['']
             elsif current == '('
               next if @less_parens
 
@@ -126,19 +126,27 @@ module Ronin
           sql_string = ''
 
           sql.each_with_index do |stmt,stmt_index|
-            stmt.each_with_index do |token,token_index|
-              sql_string << token
+            stmt_string = ''
 
-              unless token_index == (stmt.length - 1)
-                sql_string << space_token
+            stmt.each_with_index do |token,token_index|
+              unless token.empty?
+                sql_string << token
+
+                unless token_index == (stmt.length - 1)
+                  sql_string << space_token
+                end
               end
             end
 
-            unless stmt_index == (sql.length - 1)
-              if @multiline
-                sql_string << newline_token
-              else
-                sql_string << space_token
+            unless stmt_string.empty?
+              sql_string << stmt_string
+
+              unless stmt_index == (sql.length - 1)
+                if @multiline
+                  sql_string << newline_token
+                else
+                  sql_string << space_token
+                end
               end
             end
           end
