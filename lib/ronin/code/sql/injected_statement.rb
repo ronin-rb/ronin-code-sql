@@ -64,10 +64,8 @@ module Ronin
           inject_and(select_from(table,:fields => count(all), :from => table) == 1)
         end
 
-        def uses_field?(name=nil)
-          if name
-            group_by(name)
-          end
+        def uses_field?(*names)
+          group_by(*names) unless names.empty?
 
           having(BinaryExpr.new('=',1,1))
           return self
