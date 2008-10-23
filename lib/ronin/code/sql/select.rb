@@ -54,12 +54,13 @@ module Ronin
         def initialize(dialect,options={},&block)
           @distinct_rows = options[:distinct_rows]
           @all_rows = options[:all_rows]
+          @dialect = dialect
 
-          super(dialect,options)
+          unless options[:fields]
+            fields(all)
+          end
 
-          fields(all)
-
-          instance_eval(&block) if block
+          super(dialect,options,&block)
         end
 
         def all_rows
