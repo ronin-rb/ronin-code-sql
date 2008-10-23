@@ -28,6 +28,15 @@ module Ronin
     module SQL
       class Between < Expr
 
+        # Expression
+        attr_reader :expr
+
+        # Lower bound
+        attr_reader :lower
+
+        # Higher bound
+        attr_reader :higher
+
         def initialize(expr,lower,higher)
           @expr = expr
           @lower = lower
