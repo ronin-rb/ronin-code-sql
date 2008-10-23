@@ -28,14 +28,17 @@ module Ronin
     module SQL
       class As < Modifier
 
-        def initialize(field,name)
+        # Alias name
+        attr_reader :alias_name
+
+        def initialize(field,alias_name)
           super(field,'AS')
 
-          @name = name
+          @alias_name = alias_name
         end
 
         def emit
-          super + emit_value(@name)
+          super + emit_value(@alias_name)
         end
 
       end
