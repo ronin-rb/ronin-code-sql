@@ -37,7 +37,16 @@ of Ronin.
 
 == FEATURES:
 
-* Provides an DSL for crafting normal SQL and SQL injections.
+* Provides an DSL for crafting normal SQL and SQL injections:
+
+  Code.sql {
+    select(:from => :users, :where => (name == 'bob'))
+  }
+
+  Code.sql_injection {
+    escape_string { has_table?(:users) }
+  }
+
 * Provides tests for finding SQL injections.
 
 == INSTALL:
