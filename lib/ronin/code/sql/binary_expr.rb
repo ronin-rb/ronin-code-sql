@@ -28,6 +28,15 @@ module Ronin
     module SQL
       class BinaryExpr < Expr
 
+        # Operator
+        attr_reader :op
+
+        # Left-hand side
+        attr_reader :left
+
+        # Right-hand side
+        attr_reader :right
+
         def initialize(op,left,right)
           @op = op
           @left = left

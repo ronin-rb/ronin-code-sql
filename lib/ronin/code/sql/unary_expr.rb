@@ -28,6 +28,12 @@ module Ronin
     module SQL
       class UnaryExpr < Expr
 
+        # Operator
+        attr_reader :op
+
+        # Expression
+        attr_reader :expr
+
         def initialize(op,expr)
           @op = op
           @expr = expr
