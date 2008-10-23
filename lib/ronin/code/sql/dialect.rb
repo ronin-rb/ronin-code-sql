@@ -101,8 +101,8 @@ module Ronin
         end
 
         def self.has_clause?(name)
-          self.statements.each do |stmt|
-            return true if stmt.has_cluase?(name)
+          self.statements.each_value do |stmt|
+            return true if stmt.has_clause?(name)
           end
 
           return false
