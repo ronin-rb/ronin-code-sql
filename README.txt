@@ -39,13 +39,17 @@ of Ronin.
 
 * Provides an DSL for crafting normal SQL and SQL injections:
 
-  Code.sql {
+  puts Code.sql {
     select(:from => :users, :where => (name == 'bob'))
   }
+  SELECT * FROM users WHERE name = 'bob'
+  => nil
 
-  Code.sql_injection {
+  puts Code.sql_injection {
     escape_string { has_table?(:users) }
   }
+  ' AND (SELECT count(*) FROM users) = 1
+  => nil
 
 * Provides tests for finding SQL injections.
 
