@@ -73,7 +73,7 @@ module Ronin
         def self.like_op(op,*names)
           names.each do |name|
             class_def(name) do |expr,escape|
-              LikeExpr.new(op,self,expr,escape)
+              Like.new(op,self,expr,escape)
             end
           end
 

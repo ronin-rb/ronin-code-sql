@@ -26,7 +26,7 @@ require 'ronin/code/sql/expr'
 module Ronin
   module Code
     module SQL
-      class LikeExpr < Expr
+      class Like < Expr
 
         def initialize(op,left,right,escape=nil)
           @op = op

@@ -26,7 +26,7 @@ require 'ronin/code/sql/token'
 require 'ronin/code/sql/field'
 require 'ronin/code/sql/binary_expr'
 require 'ronin/code/sql/unary_expr'
-require 'ronin/code/sql/like_expr'
+require 'ronin/code/sql/like'
 require 'ronin/code/sql/in'
 require 'ronin/extensions/meta'
 
