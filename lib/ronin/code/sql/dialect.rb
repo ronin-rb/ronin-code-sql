@@ -100,20 +100,6 @@ module Ronin
           return stmt
         end
 
-        def has_clause?(name)
-          self.class.has_clause?(name)
-        end
-
-        def clause(name,*arguments)
-          self.statements.each do |stmt|
-            if stmt.has_clause?(name)
-              return stmt.clauses[name].new(*arguments)
-            end
-          end
-
-          raise(UnknownClause,"unknown clause #{name} in #{dialect} dialect",caller)
-        end
-
         def symbol(name)
           sym = @symbols.symbol(name)
           sym.value ||= name
@@ -255,6 +241,26 @@ module Ronin
           end
 
           return false
+        end
+
+        def self.clauses
+          all_clauses = {}
+
+          self.statements.each do |stmt|
+            all_clauses.merge!(stmt.clauses)
+          end
+
+          return all_clauses
+        end
+
+        def self.get_clause(name)
+          name = name.to_sym
+
+          self.statements.each do |stmt|
+            return stmt.clauses[name] if stmt.has_cluase?(name)
+          end
+
+          raise(UnknownClause,"unknown clause #{name}",caller)
         end
 
         def method_missing(name,*arguments,&block)
