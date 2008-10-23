@@ -21,7 +21,7 @@
 #++
 #
 
-require 'ronin/code/sql/emitable'
+require 'ronin/code/sql/emittable'
 
 module Ronin
   module Code
