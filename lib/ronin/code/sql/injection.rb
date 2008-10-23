@@ -34,6 +34,9 @@ module Ronin
         # Swapcase-Obfusciation
         attr_accessor :case_evasion
 
+        # Injected expression
+        attr_reader :expression
+
         def initialize(options={},&block)
           if options.has_key?(:comment_evasion)
             @comment_evasion = options[:comment_evasion]
@@ -51,7 +54,7 @@ module Ronin
           @escape_token = nil
           @expression = nil
 
-          super(options)
+          super(options) {}
 
           instance_eval(&block) if block
         end
@@ -92,7 +95,7 @@ module Ronin
           injection = super.rstrip
 
           if (@escape_token && injection[-1..-1] == @escape_token)
-            return injection.chop!
+            return injection.chop
           else
             return [injection, '--'].join(space_token)
           end
@@ -118,11 +121,15 @@ module Ronin
           return token
         end
 
-        def each_token(&block)
+        def each_string(&block)
           if (@escape_value || @escape_token)
             block.call("#{@escape_value}#{@escape_token}")
           end
 
+          return super(&block)
+        end
+
+        def each_token(&block)
           if @expression
             @expression.emit.each(&block)
 
