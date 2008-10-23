@@ -48,7 +48,7 @@ of Ronin.
   puts Code.sql_injection {
     escape_string { has_table?(:users) }
   }
-  ' AND (SELECT count(*) FROM users) = 1
+  ' AND (SELECT count(*) FROM users) = 1 --
   => nil
 
 * Provides tests for finding SQL injections.
