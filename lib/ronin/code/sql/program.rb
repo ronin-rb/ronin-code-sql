@@ -167,7 +167,7 @@ module Ronin
         end
 
         def format_string(data)
-         "'" + data.to_s.sub!("'","''") + "'"
+         "'" + data.to_s.sub("'","''") + "'"
         end
 
         def format_token(token)
