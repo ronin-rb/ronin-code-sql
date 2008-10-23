@@ -48,7 +48,7 @@ module Ronin
         data_type :text
         data_type :record
 
-        aggregators :count, :min, :max, :sum, :avg
+        aggregators :avg, :count, :group_concat, :min, :max, :sum, :total
 
         statement :create_type, CreateTable
         statement :create_index, CreateIndex
