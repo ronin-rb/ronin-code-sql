@@ -87,7 +87,7 @@ module Ronin
 
         def method_missing(name,*arguments,&block)
           if (dialect.has_clause?(name) && block.nil?)
-            return caluse(name,*arguments)
+            return dialect.clause(name,*arguments)
           end
 
           return super(name,*arguments,&block)
