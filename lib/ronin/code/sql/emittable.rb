@@ -67,8 +67,8 @@ module Ronin
         def emit_list(values)
           tokens = []
 
-          (values.length - 1).times do |index|
-            tokens << values[i]
+          values.length.times do |index|
+            tokens << values[index]
             tokens << Token.new(',')
           end
 
