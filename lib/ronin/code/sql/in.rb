@@ -28,6 +28,12 @@ module Ronin
     module SQL
       class In < Expr
 
+        # Field
+        attr_reader :field
+
+        # Range
+        attr_reader :range
+
         def initialize(field,*range)
           @field = field
           @range = range
