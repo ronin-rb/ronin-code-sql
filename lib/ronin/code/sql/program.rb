@@ -23,7 +23,6 @@
 
 require 'ronin/code/sql/dialect'
 require 'ronin/code/sql/common_dialect'
-require 'ronin/code/symbol_table'
 require 'ronin/chars/char_set'
 
 module Ronin

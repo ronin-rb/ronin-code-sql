@@ -25,6 +25,7 @@ require 'ronin/code/sql/exceptions/unknown_dialect'
 require 'ronin/code/sql/exceptions/unknown_statement'
 require 'ronin/code/sql/exceptions/unknown_clause'
 require 'ronin/code/sql/function'
+require 'ronin/code/symbol_table'
 require 'ronin/extensions/meta'
 
 module Ronin
