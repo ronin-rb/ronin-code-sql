@@ -68,11 +68,11 @@ module Ronin
           tokens = []
 
           (values.length - 1).times do |index|
-            tokens << values[index]
+            tokens << emit_value(values[index])
             tokens << Token.new(',')
           end
 
-          tokens << values.last
+          tokens << emit_value(values.last)
           return tokens
         end
 
