@@ -100,10 +100,14 @@ module Ronin
             if current == ';'
               sql << stmt
               stmt = []
-            elsif (current == '(' || current == ')')
+            elsif current == '('
               next if @less_parens
 
               stmt << current
+            elsif current == ')'
+              next if @less_parens
+
+              stmt.last << current
             elsif (current == ',' || prev == '(')
               stmt.last << current
             elsif prev == ','
