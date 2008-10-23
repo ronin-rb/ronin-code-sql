@@ -79,6 +79,35 @@ module Ronin
           return Dialect.dialects[name]
         end
 
+        #
+        # Returns the Hash of defined Statements within the Dialect.
+        #
+        def self.statements
+          @@statements ||= {}
+        end
+
+        def self.has_statement?(name)
+          self.statements.has_key?(name.to_sym)
+        end
+
+        def self.clauses
+          all_clauses = {}
+
+          self.statements.each do |stmt|
+            all_clauses.merge!(stmt.clauses)
+          end
+
+          return all_clauses
+        end
+
+        def self.has_clause?(name)
+          self.statements.each do |stmt|
+            return true if stmt.has_cluase?(name)
+          end
+
+          return false
+        end
+
         def has_statement?(name)
           self.class.has_statement?(name)
         end
@@ -98,6 +127,22 @@ module Ronin
 
           @statements << stmt
           return stmt
+        end
+
+        def has_clause?(name)
+          self.class.has_clause?(name)
+        end
+
+        def clause(name,*arguments)
+          name = name.to_sym
+
+          self.class.statements.each do |stmt|
+            if stmt.has_cluase?(name)
+              return stmt.clauses[name].new(*arguments)
+            end
+          end
+
+          raise(UnknownClause,"unknown clause #{name}",caller)
         end
 
         def symbol(name)
@@ -207,17 +252,6 @@ module Ronin
         end
 
         #
-        # Returns the Hash of defined Statements within the Dialect.
-        #
-        def self.statements
-          @@statements ||= {}
-        end
-
-        def self.has_statement?(name)
-          self.statements.has_key?(name.to_sym)
-        end
-
-        #
         # Defines an SQL statement with the specified _name_ and _base_
         # class.
         #
@@ -233,34 +267,6 @@ module Ronin
           }
 
           return self
-        end
-
-        def self.has_clause?(name)
-          self.statements.each do |stmt|
-            return true if stmt.has_cluase?(name)
-          end
-
-          return false
-        end
-
-        def self.clauses
-          all_clauses = {}
-
-          self.statements.each do |stmt|
-            all_clauses.merge!(stmt.clauses)
-          end
-
-          return all_clauses
-        end
-
-        def self.get_clause(name)
-          name = name.to_sym
-
-          self.statements.each do |stmt|
-            return stmt.clauses[name] if stmt.has_cluase?(name)
-          end
-
-          raise(UnknownClause,"unknown clause #{name}",caller)
         end
 
         def method_missing(name,*arguments,&block)
