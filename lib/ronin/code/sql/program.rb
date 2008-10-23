@@ -170,7 +170,7 @@ module Ronin
           return token
         end
 
-        def format_token(token)
+        def format(token)
           if token.kind_of?(Token)
             return format_token(token)
           elsif token.kind_of?(String)
@@ -190,7 +190,7 @@ module Ronin
 
         def each_string(&block)
           each_token do |token|
-            block.call(format_token(token))
+            block.call(format(token))
           end
 
           return self
