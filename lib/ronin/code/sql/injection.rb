@@ -37,6 +37,12 @@ module Ronin
         # Injected expression
         attr_reader :expression
 
+        # Value to use within the escape String
+        attr_accessor :escape_value
+
+        # Token to use in the escape String
+        attr_accessor :escape_token
+
         def initialize(options={},&block)
           if options.has_key?(:comment_evasion)
             @comment_evasion = options[:comment_evasion]
@@ -100,6 +106,8 @@ module Ronin
             return [injection, '--'].join(space_token)
           end
         end
+
+        alias to_s compile
 
         protected
 
