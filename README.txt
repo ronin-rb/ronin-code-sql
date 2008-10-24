@@ -37,7 +37,17 @@ of Ronin.
 
 == FEATURES:
 
-* Provides an DSL for crafting normal SQL and SQL injections:
+* Provides an Domain Specific Language (DSL) for crafting normal SQL and
+  SQL injections.
+* Provides tests for finding SQL injections.
+
+== INSTALL:
+
+  $ sudo gem install ronin-sql
+
+== EXAMPLES:
+
+* Generate valid SQL using the Ronin SQL DSL.
 
   puts Code.sql {
     select(:from => :users, :where => (name == 'bob'))
@@ -45,17 +55,13 @@ of Ronin.
   SELECT * FROM users WHERE name = 'bob'
   => nil
 
+* Generate valid SQL injections using the Ronin SQL injection DSL.
+
   puts Code.sql_injection {
     escape_string { has_table?(:users) }
   }
   ' AND (SELECT count(*) FROM users) = 1 --
   => nil
-
-* Provides tests for finding SQL injections.
-
-== INSTALL:
-
-  $ sudo gem install ronin-sql
 
 == LICENSE:
 
