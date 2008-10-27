@@ -41,6 +41,10 @@ of Ronin.
   SQL injections.
 * Provides tests for finding SQL injections.
 
+== REQUIREMENTS:
+
+* Ronin >= 0.1.1
+
 == INSTALL:
 
   $ sudo gem install ronin-sql
