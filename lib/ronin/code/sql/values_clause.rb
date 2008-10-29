@@ -28,9 +28,13 @@ module Ronin
     module SQL
       class ValuesClause < Clause
 
+        # Values of the clause
         attr_accessor :values
 
-        def initialize(*values)
+        #
+        # Creates a new ValuesClause object with the specified _values_.
+        #
+        def initialize(values=[])
           @values = values
         end
 
