@@ -22,11 +22,12 @@
 #
 
 require 'ronin/code/sql/emittable'
+require 'ronin/code/token'
 
 module Ronin
   module Code
     module SQL
-      class Token
+      class Token < Code::Token
 
         include Emittable
 

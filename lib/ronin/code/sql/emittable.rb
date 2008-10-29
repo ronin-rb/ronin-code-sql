@@ -21,16 +21,13 @@
 #++
 #
 
+require 'ronin/code/emittable'
+
 module Ronin
   module Code
     module SQL
       module Emittable
-        #
-        # Default emit method which simply returns +nil+.
-        #
-        def emit
-          []
-        end
+        include Code::Emittable
 
         protected
 
@@ -38,10 +35,6 @@ module Ronin
           value.to_s.split(/\s/).map { |word| Token.new(word) }
         end
 
-        #
-        # Emits the specified _value_ if _value_ is a kind of Expr object,
-        # otherwise _value_ will be returned.
-        #
         def emit_value(value)
           if value.kind_of?(Statement)
             tokens = []
@@ -51,16 +44,11 @@ module Ronin
             tokens << Token.close_paren
 
             return tokens
-          elsif value.kind_of?(Emittable)
-            return value.emit
           else
-            return [value]
+            return super(value)
           end
         end
 
-        #
-        # Emits each of the specified _valueis_.
-        #
         def emit_values(values)
           tokens = []
 
