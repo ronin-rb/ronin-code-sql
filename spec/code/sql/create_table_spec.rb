@@ -11,14 +11,13 @@ describe CreateTable do
   it_should_behave_like "Create"
 
   it "should have a columns clause" do
-    @sql.columns :id, :name, :users
+    columns = [:id, :name, :users]
 
-    @sql.has_clause?(:columns).should == true
-    @sql.get_clause(:columns).fields.should == [
-      :id,
-      :name,
-      :users
-    ]
+    @sql.columns(*columns)
+
+    should_have_clause(@sql,:columns) do |clause|
+      clause.fields.should == columns
+    end
   end
 
   it "should have a table option" do

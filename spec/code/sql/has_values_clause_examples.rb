@@ -6,9 +6,10 @@ shared_examples_for "has a values clause" do
   it "should have a values clause" do
     values = [1,'bob','secret']
 
-    @sql.values values
+    @sql.values(*values)
 
-    @sql.has_clause?(:values)
-    @sql.get_clause(:values).values.should == values
+    should_have_clause(@sql,:values) do |clause|
+      clause.values.should == values
+    end
   end
 end

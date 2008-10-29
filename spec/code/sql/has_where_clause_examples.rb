@@ -8,7 +8,8 @@ shared_examples_for "has a where clause" do
       where name == 'bob'
     end
 
-    @sql.has_clause?(:where).should == true
-    @sql.get_clause(:where).expr.should_not be_nil
+    should_have_clause(@sql,:where) do |clause|
+      clause.expr.should_not be_nil
+    end
   end
 end

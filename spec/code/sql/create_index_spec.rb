@@ -12,11 +12,10 @@ describe CreateIndex do
   it "should have an on clause" do
     @sql.on :users, [:name]
 
-    @sql.has_clause?(:on).should == true
-
-    on = @sql.get_clause(:on)
-    on.table.should == :users
-    on.fields.should == [:name]
+    should_have_clause(@sql,:on) do |on|
+      on.table.should == :users
+      on.fields.should == [:name]
+    end
   end
 
   it "should have an index option" do

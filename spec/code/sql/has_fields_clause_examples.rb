@@ -4,13 +4,12 @@ require 'helpers/code'
 
 shared_examples_for "has a fields clause" do
   it "should have a fields clause" do
-    @sql.fields :id, :name, :users
+    fields = [:id, :name, :users]
 
-    @sql.has_clause?(:fields).should == true
-    @sql.get_clause(:fields).fields.should == [
-      :id,
-      :name,
-      :users
-    ]
+    @sql.fields(*fields)
+
+    should_have_clause(@sql,:fields) do |clause|
+      clause.fields.should == fields
+    end
   end
 end

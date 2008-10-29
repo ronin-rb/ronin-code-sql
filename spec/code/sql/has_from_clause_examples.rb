@@ -6,7 +6,8 @@ shared_examples_for "has a from clause" do
   it "should have a from clause" do
     @sql.from :users
 
-    @sql.has_clause?(:from).should == true
-    @sql.get_clause(:from).table.should == :users
+    should_have_clause(@sql,:from) do |from|
+      from.table.should == :users
+    end
   end
 end
