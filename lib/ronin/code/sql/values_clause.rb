@@ -34,7 +34,7 @@ module Ronin
         #
         # Creates a new ValuesClause object with the specified _values_.
         #
-        def initialize(values=[])
+        def initialize(*values)
           @values = values
         end
 
