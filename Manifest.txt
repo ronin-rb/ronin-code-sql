@@ -70,3 +70,4 @@ lib/ronin/sql/version.rb
 lib/ronin/sql.rb
 tasks/spec.rb
 spec/spec_helper.rb
+spec/sql_spec.rb
