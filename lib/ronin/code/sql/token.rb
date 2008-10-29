@@ -54,17 +54,6 @@ module Ronin
           Token.new(',')
         end
 
-        def emit
-          [self]
-        end
-
-        #
-        # Returns the value of the token in String form.
-        #
-        def to_s
-          @value.to_s
-        end
-
       end
     end
   end
