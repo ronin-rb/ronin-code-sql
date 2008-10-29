@@ -28,11 +28,17 @@ module Ronin
     module SQL
       class OnClause < Clause
 
+        # Table for the ON clause
         attr_accessor :table
 
+        # Fields for the ON clause
         attr_accessor :fields
 
-        def initialize(table,*fields)
+        #
+        # Creates a new OnClause object with the specified _table_ name
+        # and the given _fields_.
+        #
+        def initialize(table,fields=[])
           @table = table
           @fields = fields
         end
