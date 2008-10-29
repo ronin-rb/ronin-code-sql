@@ -28,16 +28,21 @@ module Ronin
     module SQL
       class JoinClause < Clause
 
+        # Table to join with
         attr_accessor :table
 
+        # Whether the join is natural or not
         attr_accessor :natural
 
+        # Direction of the join
         attr_accessor :direction
 
+        # Side of the join
         attr_accessor :side
 
         def initialize(table,options={})
           @table = table
+          @natural = options[:natural]
 
           if options[:left]
             @direction = :left
@@ -48,14 +53,12 @@ module Ronin
           end
 
           if options[:inner]
-            @direction = :inner
+            @side = :inner
           elsif options[:outer]
-            @direction = :outer
+            @side = :outer
           elsif options[:cross]
-            @direction = :cross
+            @side = :cross
           end
-
-          @natural = options[:natural]
         end
 
         def left
