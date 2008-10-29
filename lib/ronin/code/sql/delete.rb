@@ -22,6 +22,7 @@
 #
 
 require 'ronin/code/sql/statement'
+require 'ronin/code/sql/from_clause'
 require 'ronin/code/sql/where_clause'
 
 module Ronin
@@ -29,17 +30,13 @@ module Ronin
     module SQL
       class Delete < Statement
 
+        clause :from, FromClause
         clause :where, WhereClause
 
         def initialize(dialect,options={},&block)
           @table = options[:table]
 
           super(dialect,options,&block)
-        end
-
-        def from(name)
-          @table = name
-          return self
         end
 
         def emit
