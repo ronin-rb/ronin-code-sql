@@ -1,5 +1,4 @@
-require 'ronin/code/sql/create_table'
-require 'ronin/code/sql/program'
+require 'ronin/code/sql/create_index'
 
 require 'code/sql/create_examples'
 
