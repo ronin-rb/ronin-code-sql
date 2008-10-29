@@ -35,7 +35,7 @@ module Ronin
         end
 
         def emit
-          emit_token('UNION') + @select.emit
+          emit_token('UNION') + emit_statement(@select)
         end
 
       end
