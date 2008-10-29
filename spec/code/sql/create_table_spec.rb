@@ -20,4 +20,9 @@ describe CreateTable do
       :users
     ]
   end
+
+  it "should have a table option" do
+    @sql.table :users
+    @sql.instance_variable_get('@name').should == :users
+  end
 end

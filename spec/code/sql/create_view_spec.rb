@@ -8,4 +8,9 @@ describe CreateView do
   end
 
   it_should_behave_like "Create"
+
+  it "should have a view option" do
+    @sql.view :users
+    @sql.instance_variable_get('@name').should == :users
+  end
 end

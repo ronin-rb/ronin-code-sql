@@ -18,4 +18,9 @@ describe CreateIndex do
     on.table.should == :users
     on.fields.should == [:name]
   end
+
+  it "should have an index option" do
+    @sql.index :users
+    @sql.instance_variable_get('@name').should == :users
+  end
 end
