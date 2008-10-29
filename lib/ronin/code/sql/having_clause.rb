@@ -28,8 +28,12 @@ module Ronin
     module SQL
       class HavingClause < Clause
 
+        # Expression of the having clause
         attr_accessor :expr
 
+        #
+        # Creates a new HavingClause object with the specified _expr_.
+        #
         def initialize(expr)
           @expr = expr
         end

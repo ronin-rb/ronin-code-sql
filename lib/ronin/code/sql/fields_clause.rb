@@ -28,8 +28,12 @@ module Ronin
     module SQL
       class FieldsClause < Clause
 
+        # Fields of the clause
         attr_accessor :fields
 
+        #
+        # Creates a new FieldsClause object with the specified _fields_.
+        #
         def initialize(*fields)
           @fields = fields
         end

@@ -28,8 +28,12 @@ module Ronin
     module SQL
       class GroupByClause < Clause
 
+        # Fields to group
         attr_accessor :fields
 
+        #
+        # Creates a new GroupByClause object with the specified _fields_.
+        #
         def initialize(*fields)
           @fields = fields
         end
