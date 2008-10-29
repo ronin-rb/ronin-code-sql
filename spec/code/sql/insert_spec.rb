@@ -9,11 +9,7 @@ describe Insert do
   end
 
   it_should_behave_like "has a fields clause"
-
-  it "should have a default values clause" do
-    @sql.default_values
-    @sql.has_clause?(:default_values)
-  end
+  it_should_behave_like "has a default values clause"
 
   it "should have a values clause" do
     values = [1,'bob','secret']
