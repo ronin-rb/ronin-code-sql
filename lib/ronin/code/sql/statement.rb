@@ -81,8 +81,27 @@ module Ronin
           self.clauses.has_key?(name.to_sym)
         end
 
+        #
+        # Returns +true+ if the statement has a clause with the specified
+        # _name_, returns +false+ otherwise.
+        #
         def has_clause?(name)
-          @clauses.compact.any? { |clause| clause.name == name }
+          @clauses.each do |clause|
+            return true if (clause && clause.name == name)
+          end
+
+          return false
+        end
+
+        #
+        # Returns the clause with the specified _name_.
+        #
+        def get_clause(name)
+          @clauses.each do |clause|
+            return clause if (clause && clause.name == name)
+          end
+
+          return nil
         end
 
         #
