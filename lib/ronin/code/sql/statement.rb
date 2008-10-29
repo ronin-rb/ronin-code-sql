@@ -81,6 +81,10 @@ module Ronin
           self.clauses.has_key?(name.to_sym)
         end
 
+        def has_clause?(name)
+          @clauses.compact.any? { |clause| clause.name == name }
+        end
+
         #
         # Returns an Array of unformatted tokens that represent the
         # statement.
