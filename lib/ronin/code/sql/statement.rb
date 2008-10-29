@@ -86,22 +86,18 @@ module Ronin
         # _name_, returns +false+ otherwise.
         #
         def has_clause?(name)
-          @clauses.each do |clause|
-            return true if (clause && clause.name == name)
-          end
+          index = self.class.clause_order.index(name.to_sym)
 
-          return false
+          return !(@clauses[index].nil?)
         end
 
         #
         # Returns the clause with the specified _name_.
         #
         def get_clause(name)
-          @clauses.each do |clause|
-            return clause if (clause && clause.name == name)
-          end
+          index = self.class.clause_order.index(name.to_sym)
 
-          return nil
+          return @clauses[index]
         end
 
         #
