@@ -77,17 +77,17 @@ module Ronin
         end
 
         def inner
-          @direction = :inner
+          @side = :inner
           return self
         end
 
         def outer
-          @direction = :outer
+          @side = :outer
           return self
         end
 
         def cross
-          @direction = :cross
+          @side = :cross
           return self
         end
 
