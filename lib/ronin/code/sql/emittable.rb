@@ -85,6 +85,17 @@ module Ronin
             return [Token.new('(')] + emit_list(row) + [Token.new(')')]
           end
         end
+
+        #
+        # Emits the specified _statement_.
+        #
+        def emit_statement(statement)
+          if statement.kind_of?(Statement)
+            return statement.emit
+          else
+            return statement
+          end
+        end
       end
     end
   end
