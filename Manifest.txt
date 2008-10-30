@@ -67,6 +67,7 @@ lib/ronin/sql/extensions/uri/http.rb
 lib/ronin/sql/error.rb
 lib/ronin/sql/sql.rb
 lib/ronin/sql/version.rb
+lib/ronin/sql/config.rb
 lib/ronin/sql.rb
 tasks/spec.rb
 spec/spec_helper.rb
