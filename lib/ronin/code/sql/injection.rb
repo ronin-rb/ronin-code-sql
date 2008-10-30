@@ -60,6 +60,17 @@ module Ronin
           @escape_token = nil
           @expression = nil
 
+          case options[:escape]
+          when :string
+            @escape_token = "'"
+          when :parenthesis
+            @escape_token = ')'
+          when :statement
+            @escape_token = ';'
+          else
+            @escape_value = options[:escape]
+          end
+
           super(options) {}
 
           instance_eval(&block) if block
@@ -76,21 +87,15 @@ module Ronin
         end
 
         def escape_string(value='',&block)
-          @escape_token = "'"
-
-          return escape(value,&block)
+          escape(value,&block)
         end
 
         def escape_parenthesis(value='',&block)
-          @escape_token = ')'
-
-          return escape(nil,&block)
+          escape(nil,&block)
         end
 
         def escape_statement(&block)
-          @escape_token = ';'
-
-          return escape(nil,&block)
+          escape(nil,&block)
         end
 
         def sql(&block)
