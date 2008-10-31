@@ -34,9 +34,6 @@ module Ronin
         # Swapcase-Obfusciation
         attr_accessor :case_evasion
 
-        # Injected expression
-        attr_reader :expression
-
         # Value to use within the escape String
         attr_accessor :escape_value
 
@@ -76,9 +73,16 @@ module Ronin
           instance_eval(&block) if block
         end
 
-        def inject(&block)
-          @expression = InjectedStatement.new(@dialect,&block)
-          return self
+        #
+        # Returns the expression that will be injected into the effected 
+        # statement. If a _block_ is given, it will be evaluated within
+        # the expression.
+        #
+        def expression(&block)
+          @expression ||= InjectedStatement.new(@dialect)
+
+          @expression.instance_eval(&block) if block
+          return @expression
         end
 
         def escape(value=1,&block)
