@@ -1,4 +1,7 @@
-== DESIGN:
+== TODO:
 
-== IMPROVEMENTS:
+* Utilize Spidr to scan for SQL injection en-mass.
+* Add blind SQL Injection testing methods that perform modus poens on
+  an injectable URL.
+* Write more specs for the SQL/Injection DSL.
 
