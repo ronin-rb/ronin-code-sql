@@ -60,6 +60,16 @@ module Ronin
         end
       end
 
+      def ErrorPattern.match(data)
+        ErrorPattern.patterns.each_value do |pattern|
+          if (error = pattern.match(data))
+            return error
+          end
+        end
+
+        return nil
+      end
+
       #
       # Returns the first match between the error pattern and the specified
       # _data_. If no matches were found +nil+ will be returned.
