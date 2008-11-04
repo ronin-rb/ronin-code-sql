@@ -21,11 +21,15 @@
 #++
 #
 
-require 'ronin/code/sql/injection'
-
 module Ronin
   module SQL
     class Error
+
+      # The URL which is vulnerable
+      attr_reader :url
+
+      # The vulnerable query param
+      attr_accessor :param
 
       # SQL error type
       attr_reader :type
@@ -44,14 +48,6 @@ module Ronin
         @type = type
         @dialect = dialect
         @message = message
-      end
-
-      #
-      # Returns an SQL Injection object with the given _options_ and the
-      # given _block_.
-      #
-      def inject(options={},&block)
-        Code::Injection.new({:dialect => @dialect}.merge(options),&block)
       end
 
       #
