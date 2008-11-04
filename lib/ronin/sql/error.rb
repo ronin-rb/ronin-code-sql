@@ -21,6 +21,8 @@
 #++
 #
 
+require 'ronin/code/sql/injection'
+
 module Ronin
   module SQL
     class Error
@@ -28,16 +30,28 @@ module Ronin
       # SQL error type
       attr_reader :type
 
+      # SQL Dialect
+      attr_reader :dialect
+
       # SQL error message
       attr_reader :message
 
       #
-      # Creates a new SQL Error object with the specified _type_ and
-      # _message_.
+      # Creates a new SQL Error object with the specified _type_, 
+      # _dialect_ and _message_.
       #
-      def initialize(type,message)
+      def initialize(type,dialect,message)
         @type = type
+        @dialect = dialect
         @message = message
+      end
+
+      #
+      # Returns an SQL Injection object with the given _options_ and the
+      # given _block_.
+      #
+      def inject(options={},&block)
+        Code::Injection.new({:dialect => @dialect}.merge(options),&block)
       end
 
       #
