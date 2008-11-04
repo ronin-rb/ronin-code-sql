@@ -15,8 +15,8 @@ module Ronin
         attr_reader :patterns
 
         #
-        # Creates a new ErrorPattern object with the specified _name_. If a
-        # _block_ is given, it will be passed the newly created ErrorPattern
+        # Creates a new Pattern object with the specified _name_. If a
+        # _block_ is given, it will be passed the newly created Pattern
         # object.
         #
         def initialize(name,&block)
@@ -28,46 +28,46 @@ module Ronin
         end
 
         #
-        # Returns all defined SQL ErrorPattern objects.
+        # Returns all defined SQL Pattern objects.
         #
-        def ErrorPattern.patterns
+        def Pattern.patterns
           @@patterns ||= {}
         end
 
         #
-        # Defines a new SQL ErrorPattern object with the given _options_.
+        # Defines a new SQL Pattern object with the given _options_.
         #
-        def ErrorPattern.pattern(name,&block)
-          pattern = (ErrorPattern.patterns[name] ||= ErrorPattern.new(name))
+        def Pattern.pattern(name,&block)
+          pattern = (Pattern.patterns[name] ||= Pattern.new(name))
 
           block.call(pattern) if block
           return pattern
         end
 
         #
-        # Returns the SQL ErrorPattern objects with the specified _names_.
+        # Returns the SQL Pattern objects with the specified _names_.
         #
-        def ErrorPattern.patterns_for(*names)
-          names.map { |name| ErrorPattern.patterns[name] }.compact
+        def Pattern.patterns_for(*names)
+          names.map { |name| Pattern.patterns[name] }.compact
         end
 
         #
-        # Returns the SQL ErrorPattern objects for the dialect with the
+        # Returns the SQL Pattern objects for the dialect with the
         # specified _name_.
         #
-        def ErrorPattern.patterns_for_dialect(name)
-          ErrorPattern.patterns.values.select do |pattern|
+        def Pattern.patterns_for_dialect(name)
+          Pattern.patterns.values.select do |pattern|
             pattern.dialect == name
           end
         end
 
         #
         # Returns the first matching Error object to the specified _data_.
-        # If no ErrorPattern objects match the specified _data_, +nil+ will
+        # If no Pattern objects match the specified _data_, +nil+ will
         # be returned.
         #
-        def ErrorPattern.match(data)
-          ErrorPattern.patterns.each_value do |pattern|
+        def Pattern.match(data)
+          Pattern.patterns.each_value do |pattern|
             if (error = pattern.match(data))
               return error
             end
