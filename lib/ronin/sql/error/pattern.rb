@@ -77,8 +77,18 @@ module Ronin
         end
 
         #
-        # Returns the first match between the error pattern and the specified
-        # _data_. If no matches were found +nil+ will be returned.
+        # Add the specified _pattern_ to be used to recognize SQL error
+        # messages.
+        #
+        def recognize(pattern)
+          @patterns << pattern
+          return self
+        end
+
+        #
+        # Returns the first match between the error pattern and the
+        # specified _data_. If no matches were found +nil+ will be
+        # returned.
         #
         def match(data)
           @patterns.each do |pattern|
