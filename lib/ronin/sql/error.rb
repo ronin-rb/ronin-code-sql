@@ -23,4 +23,5 @@
 
 require 'ronin/sql/error/message'
 require 'ronin/sql/error/pattern'
+require 'ronin/sql/error/error'
 require 'ronin/sql/error/patterns'

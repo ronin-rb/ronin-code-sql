@@ -28,55 +28,6 @@ module Ronin
         end
 
         #
-        # Returns all defined SQL Pattern objects.
-        #
-        def Pattern.patterns
-          @@patterns ||= {}
-        end
-
-        #
-        # Defines a new SQL Pattern object with the given _options_.
-        #
-        def Pattern.pattern(name,&block)
-          pattern = (Pattern.patterns[name] ||= Pattern.new(name))
-
-          block.call(pattern) if block
-          return pattern
-        end
-
-        #
-        # Returns the SQL Pattern objects with the specified _names_.
-        #
-        def Pattern.patterns_for(*names)
-          names.map { |name| Pattern.patterns[name] }.compact
-        end
-
-        #
-        # Returns the SQL Pattern objects for the dialect with the
-        # specified _name_.
-        #
-        def Pattern.patterns_for_dialect(name)
-          Pattern.patterns.values.select do |pattern|
-            pattern.dialect == name
-          end
-        end
-
-        #
-        # Returns the first matching Error object to the specified _data_.
-        # If no Pattern objects match the specified _data_, +nil+ will
-        # be returned.
-        #
-        def Pattern.match(data)
-          Pattern.patterns.each_value do |pattern|
-            if (error = pattern.match(data))
-              return error
-            end
-          end
-
-          return nil
-        end
-
-        #
         # Add the specified _pattern_ to be used to recognize SQL error
         # messages.
         #
