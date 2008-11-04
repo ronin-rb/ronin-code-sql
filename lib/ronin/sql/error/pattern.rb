@@ -45,11 +45,7 @@ module Ronin
           data = data.to_s
 
           @patterns.each do |pattern|
-            if pattern.kind_of?(Regexp)
-              match = pattern.match(data)
-            else
-              match = data.include?(pattern.to_s)
-            end
+            match = data.match(pattern)
 
             return Message.new(@type,@dialect,match[0]) if match
           end
