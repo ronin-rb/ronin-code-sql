@@ -42,10 +42,16 @@ module Ronin
         # returned.
         #
         def match(data)
+          data = data.to_s
+
           @patterns.each do |pattern|
-            if (match = pattern.match(data))
-              return Message.new(@type,@dialect,match[0])
+            if pattern.kind_of?(Regexp)
+              match = pattern.match(data)
+            else
+              match = data.include?(pattern.to_s)
             end
+
+            return Message.new(@type,@dialect,match[0]) if match
           end
 
           return nil
