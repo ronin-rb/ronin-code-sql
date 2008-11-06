@@ -45,7 +45,7 @@ of Ronin.
 
 == REQUIREMENTS:
 
-* Ronin >= 0.1.1
+* Ronin >= 0.1.2
 
 == INSTALL:
 
