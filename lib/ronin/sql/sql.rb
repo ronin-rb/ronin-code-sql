@@ -26,41 +26,27 @@ require 'ronin/extensions/uri'
 
 module Ronin
   module SQL
-
-    # SQL error patterns
-    ERROR_PATTERNS = {
-      # sourced from sqid (http://sqid.rubyforge.org/).
-      :ms_sql => /Microsoft OLE DB Provider for (SQL Server|ODBC Drivers.*\[Microsoft\]\[ODBC (SQL Server|Access) Driver\])/,
-      :ms_access => /\[Microsoft\]\[ODBC Microsoft Access Driver\] Syntax error/,
-      :ms_jetdb => /Microsoft JET Database Engine/,
-      :ms_adodb => /ADODB.Command.*error/,
-      :asp_net => /Server Error.*System\.Data\.OleDb\.OleDbException/,
-      :mysql => /(Warning.*(supplied argument is not a valid MySQL result|mysql_.*\(\))|You have an error in your SQL syntax.*(on|at) line)/,
-      :php => /(Warning.*failed to open stream|Fatal Error.*(on|at) line)/,
-      :oracle => /ORA-[0-9][0-9][0-9][0-9]/,
-      :jdbc => /Invalid SQL statement or JDBC/,
-      :java_servlet => /javax\.servlet\.ServletException/,
-      :apache_tomcat => /org\.apache\.jasper\.JasperException/,
-      :vb_runtime => /Microsoft VBScript runtime/,
-      :vb_asp => /Type mismatch/
-    }
-
     #
     # Tests whether the _body_ contains an SQL error message using the
     # given _options_.
     #
     # _options_ may contain the following keys:
-    # <tt>:types</tt>:: A list of error types to test for. If not specified
-    #                   all the error patterns in ERROR_PATTERNS will be
-    #                   tested.
+    # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
+    # <tt>:types</tt>:: A list of error pattern types to test for.
     #
     def SQL.error(body,options={})
-      patterns = (options[:types] || ERROR_PATTERNS.keys)
+      if options[:dialect]
+        patterns = Error.patterns_for_dialect(options[:dialect])
+      elsif options[:types]
+        patterns = Error.patterns_for(*options[:types])
+      else
+        patterns = Error.patterns.values
+      end
 
-      patterns.each do |type|
-        match = ERROR_PATTERNS[type].match(body)
-
-        return Error.new(type,match[0].strip_html) if match
+      patterns.each do |pattern|
+        if (message = pattern.match(body))
+          return message
+        end
       end
 
       return nil
@@ -71,13 +57,11 @@ module Ronin
     # contains an SQL error, returns +false+ otherwise.
     #
     # _options_ may contain the following keys:
-    # <tt>:types</tt>:: A list of error types to test for. If not specified
-    #                   all the error patterns in ERROR_PATTERNS will be
-    #                   tested.
+    # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
+    # <tt>:types</tt>:: A list of error pattern types to test for.
     #
     def SQL.has_error?(body,options={})
       !(SQL.error(body,options).nil?)
     end
-
   end
 end

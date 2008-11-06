@@ -64,7 +64,10 @@ lib/ronin/code/sql/code.rb
 lib/ronin/sql/extensions.rb
 lib/ronin/sql/extensions/uri.rb
 lib/ronin/sql/extensions/uri/http.rb
-lib/ronin/sql/error_pattern.rb
+lib/ronin/sql/error/message.rb
+lib/ronin/sql/error/pattern.rb
+lib/ronin/sql/error/error.rb
+lib/ronin/sql/error/patterns.rb
 lib/ronin/sql/error.rb
 lib/ronin/sql/sql.rb
 lib/ronin/sql/version.rb

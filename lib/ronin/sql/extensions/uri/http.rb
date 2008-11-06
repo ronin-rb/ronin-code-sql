@@ -44,7 +44,11 @@ module URI
       injection = (options[:injection] || "'")
 
       return test_query_params(injection,options) do |param,injection_url|
-        body = Net.http_get_body(options.merge(:url => injection_url))
+        if options[:method] == :post
+          body = Net.http_post_body(options.merge(:url => injection_url))
+        else
+          body = Net.http_get_body(options.merge(:url => injection_url))
+        end
 
         Ronin::SQL.error(body,options)
       end
