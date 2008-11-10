@@ -22,7 +22,6 @@
 #
 
 require 'ronin/sql/error'
-require 'ronin/extensions/uri'
 
 module Ronin
   module SQL
