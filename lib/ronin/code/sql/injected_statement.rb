@@ -38,12 +38,12 @@ module Ronin
         end
 
         def inject_and(expr)
-          @expressions = [Token.new('AND'), expr]
+          @expressions += [Token.new('AND'), expr]
           return self
         end
 
         def inject_or(expr)
-          @expressions = [Token.new('OR'), expr]
+          @expressions += [Token.new('OR'), expr]
           return self
         end
 
