@@ -38,6 +38,10 @@ module Ronin
           @value = value
         end
 
+        def Token.quote
+          Token.new("'")
+        end
+
         def Token.separator
           Token.new(';')
         end
