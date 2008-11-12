@@ -31,7 +31,6 @@ module Ronin
         def initialize(dialect,type,name=nil,options={},&block)
           @type = type
           @name = name
-          @table = options[:table]
           @if_exists = options[:if_exists]
 
           super(dialect,&block)
@@ -47,9 +46,9 @@ module Ronin
           tokens += emit_token(@type)
 
           tokens += emit_token('IF EXISTS') if @if_exists
-          tokens += emit_token(@name)
+          tokens += emit_value(@name)
 
-          return tokens + emit_value(@table)
+          return tokens
         end
 
       end
