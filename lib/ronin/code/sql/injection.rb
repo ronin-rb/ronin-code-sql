@@ -155,11 +155,11 @@ module Ronin
             if escape_value[0..0] == "'"
               escape_value = escape_value[1..-1]
             else
-              escape_value << Token.quote
+              escape_value << Token.quote.to_s
             end
           end
            
-          escape_value << Token.close_paren if @close_parens
+          escape_value << Token.close_paren.to_s if @close_parens
 
           block.call(escape_value) unless escape_value.empty?
 
