@@ -34,11 +34,17 @@ module Ronin
         # Swapcase-Obfusciation
         attr_accessor :case_evasion
 
-        # Value to use within the escape String
-        attr_accessor :escape_value
+        # Data to escape a previous expression with
+        attr_accessor :escape
 
-        # Token to use in the escape String
-        attr_accessor :escape_token
+        # Specifies whether or not to close an open string
+        attr_accessor :close_string
+
+        # Specifies whether or not to close an open parenthesis
+        attr_accessor :close_parens
+
+        # Specifies whether or not to end a previous statement
+        attr_accessor :end_statement
 
         def initialize(options={},&block)
           if options.has_key?(:comment_evasion)
@@ -53,20 +59,27 @@ module Ronin
             @case_evasion = false
           end
 
-          @escape_value = nil
-          @escape_token = nil
-          @expression = nil
+          @escape = options[:escape]
 
-          case options[:escape]
-          when :string
-            @escape_token = "'"
-          when :parenthesis
-            @escape_token = ')'
-          when :statement
-            @escape_token = ';'
+          if options.has_key?(:close_string)
+            @close_string = options[:close_string]
           else
-            @escape_value = options[:escape]
+            @close_string = true
           end
+
+          if options.has_key?(:close_parens)
+            @close_parens = options[:close_parens]
+          else
+            @close_parens = false
+          end
+
+          if options.has_key?(:end_statement)
+            @end_statement = options[:end_statement]
+          else
+            @end_statement = false
+          end
+
+          @expression = InjectedStatement.new(@dialect)
 
           super(options) {}
 
@@ -79,27 +92,8 @@ module Ronin
         # the expression.
         #
         def expression(&block)
-          @expression ||= InjectedStatement.new(@dialect)
-
           @expression.instance_eval(&block) if block
           return @expression
-        end
-
-        def escape(value=1,&block)
-          @escape_value = value
-          return inject(&block)
-        end
-
-        def escape_string(value='',&block)
-          escape(value,&block)
-        end
-
-        def escape_parenthesis(value='',&block)
-          escape(nil,&block)
-        end
-
-        def escape_statement(&block)
-          escape(nil,&block)
         end
 
         def sql(&block)
@@ -109,11 +103,25 @@ module Ronin
         def compile
           injection = super.rstrip
 
-          if (@escape_token && injection[-1..-1] == @escape_token)
-            return injection.chop
-          else
-            return [injection, '--'].join(space_token)
+          comment = lambda { [injection, '--'].join(space_token) }
+
+          if (@close_parens && @close_string)
+            if injection =~ /'\s*\)$/
+              return injection.gsub(/'\s*\)$/,'')
+            else
+              return comment.call
+            end
           end
+
+          if @close_string
+            if injection[-1..-1] == "'"
+              return injection.chop
+            else
+              return comment.call
+            end
+          end
+
+          return injection
         end
 
         alias to_s compile
@@ -139,14 +147,28 @@ module Ronin
         end
 
         def each_string(&block)
-          if (@escape_value || @escape_token)
-            block.call("#{@escape_value}#{@escape_token}")
+          escape_value = ''
+
+          escape_value << format(@escape) if @escape
+
+          if @close_string
+            if escape_value[0..0] == "'"
+              escape_value = escape_value[1..-1]
+            else
+              escape_value << Token.quote
+            end
           end
+           
+          escape_value << Token.close_paren if @close_parens
+
+          block.call(escape_value) unless escape_value.empty?
 
           return super(&block)
         end
 
         def each_token(&block)
+          block.call(Token.separator) if @end_statement
+
           if @expression
             @expression.emit.each(&block)
 
@@ -154,6 +176,17 @@ module Ronin
           end
 
           return super(&block)
+        end
+
+        #
+        # Relays missed method calls to the injected expression.
+        #
+        def method_missing(name,*arguments,&block)
+          if @expression.public_methods(false).include?(name.to_s)
+            return @expression.send(name,*arguments,&block)
+          end
+
+          return super(name,*arguments,&block)
         end
 
       end
