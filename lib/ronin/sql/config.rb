@@ -21,7 +21,7 @@
 #++
 #
 
-require 'ronin/sql/error_pattern'
+require 'ronin/sql/error/patterns'
 require 'ronin/config'
 
 module Ronin
