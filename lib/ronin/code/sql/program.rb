@@ -209,6 +209,8 @@ module Ronin
         def method_missing(name,*arguments,&block)
           if @dialect.has_statement?(name)
             return @dialect.enqueue_statement(name,*arguments,&block)
+          elsif @dialect.methods.include?(name.to_s)
+            return @dialect.send(name,*arguments,&block)
           end
 
           raise(NoMethodError,name.id2name)
