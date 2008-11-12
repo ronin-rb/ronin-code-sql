@@ -137,15 +137,14 @@ module Ronin
               end
             end
 
-            unless stmt_string.empty?
-              sql_string << stmt_string
+            sql_string << stmt_string
 
-              unless stmt_index == (sql.length - 1)
-                if @multiline
-                  sql_string << newline_token
-                else
-                  sql_string << space_token
-                end
+            unless stmt_index == (sql.length - 1)
+              if @multiline
+                sql_string << newline_token
+              else
+                sql_string << ';'
+                sql_string << space_token
               end
             end
           end
