@@ -21,8 +21,8 @@
 #++
 #
 
-require 'ronin/sql/sql'
-require 'ronin/network/http'
+require 'ronin/sql/injection'
+require 'ronin/chars/extensions'
 
 require 'uri'
 
@@ -34,39 +34,57 @@ module URI
     # SQL errors.
     #
     # _options_ may contain the following keys:
-    # <tt>:injection</tt>:: The SQL injection to use. Defaults to
-    #                       <tt>"'"</tt>.
-    # <tt>:types</tt>:: A list of error types to test for. If not specified
-    #                   all the error patterns in ERROR_PATTERNS will be
-    #                   tested.
+    # <tt>:sql</tt>:: The SQL injection to use. Defaults to <tt>"'"</tt>.
     #
     def sql_errors(options={})
-      injection = (options[:injection] || "'")
+      options = {:sql => "'"}.merge(options)
 
-      return test_query_params(injection,options) do |param,injection_url|
-        if options[:method] == :post
-          body = Net.http_post_body(options.merge(:url => injection_url))
-        else
-          body = Net.http_get_body(options.merge(:url => injection_url))
-        end
-
-        Ronin::SQL.error(body,options)
+      return test_query_params(sql,options) do |param,test_url|
+        SQL::Injection.new(test_url,param).error(options)
       end
     end
 
     #
-    # Tests each +query_params+ of the HTTP URI with the given _options_ for
+    # each +query_params+ of the HTTP URI with the given _options_ for
     # SQL errors.
     #
     # _options_ may contain the following keys:
-    # <tt>:injection</tt>:: The SQL injection to use. Defaults to
-    #                       <tt>"'"</tt>.
-    # <tt>:types</tt>:: A list of error types to test for. If not specified
-    #                   all the error patterns in ERROR_PATTERNS will be
-    #                   tested.
+    # <tt>:sql</tt>:: The SQL injection to use. Defaults to <tt>"'"</tt>.
     #
     def has_sql_errors?(options={})
       !(sql_errors(options).empty?)
+    end
+
+    #
+    # Tests the +query_params+ of the HTTP URL with the given _options_ for
+    # blind SQL injections.
+    #
+    def sql_injections(options={})
+      integer_tests = [
+        {:escape => 1},
+        {:escape => 1, :close_parenthesis => true}
+      ]
+
+      string_tests = [
+        {:escape => '1', :close_string => true},
+        {:escape => '1', :close_string => true, :close_parenthesis => true}
+      ]
+
+      return test_query_params(sql,options) do |param,test_url|
+        original_value = self.query_param[param]
+
+        if (original_value && original_value.is_numeric?)
+          tests = integer_tests + string_tests
+        else
+          tests = string_tests + integer_tests
+        end
+
+        injections = tests.map do |test|
+          SQL::Injection.new(test_url,param,options.merge(test))
+        end
+        
+        injections.find { |injection| injection.vulnerable?(options) }
+      end
     end
 
   end
