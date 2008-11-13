@@ -37,11 +37,15 @@ module URI
     # <tt>:sql</tt>:: The SQL injection to use. Defaults to <tt>"'"</tt>.
     #
     def sql_errors(options={})
-      options = {:sql => "'"}.merge(options)
+      errors = {}
 
-      return test_query_params(sql,options) do |param,test_url|
-        SQL::Injection.new(test_url,param).error(options)
+      return each_query_param do |param,value|
+        error = SQL::Injection.new(self,param).error(options)
+
+        errors[param] = error if error
       end
+
+      return errors
     end
 
     #
@@ -70,21 +74,27 @@ module URI
         {:escape => '1', :close_string => true, :close_parenthesis => true}
       ]
 
-      return test_query_params(sql,options) do |param,test_url|
-        original_value = self.query_param[param]
+      injectable = []
 
-        if (original_value && original_value.is_numeric?)
+      each_query_param do |param,value|
+        if (value && value.is_numeric?)
           tests = integer_tests + string_tests
         else
           tests = string_tests + integer_tests
         end
 
         injections = tests.map do |test|
-          SQL::Injection.new(test_url,param,options.merge(test))
+          SQL::Injection.new(self,param,options.merge(test))
         end
         
-        injections.find { |injection| injection.vulnerable?(options) }
+        injection = injections.find do |injection|
+          injection.vulnerable?(options)
+        end
+
+        injectable << injection if injection
       end
+
+      return injectable
     end
 
     #
