@@ -149,7 +149,15 @@ module Ronin
         def each_string(&block)
           escape_value = ''
 
-          escape_value << format(@escape) if @escape
+          if @close_string
+            # format the escape string, since we are escaping out of a
+            # string
+            escape_value << format(@escape) if @escape
+          else
+            # do not format the escape string when we are not escaping out
+            # of a string
+            escape_value << @escape.to_s if @escape
+          end
 
           if @close_string
             if escape_value[0..0] == "'"
