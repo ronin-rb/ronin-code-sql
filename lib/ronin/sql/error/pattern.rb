@@ -47,7 +47,7 @@ module Ronin
           @patterns.each do |pattern|
             match = data.match(pattern)
 
-            return Message.new(@type,@dialect,match[0]) if match
+            return Message.new(@name,@dialect,match[0]) if match
           end
 
           return nil
