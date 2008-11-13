@@ -48,6 +48,10 @@ module URI
       return errors
     end
 
+    def sql_error(options={})
+      sql_errors(options).values.first
+    end
+
     #
     # Returns +true+ if any of the +query_params+ of the HTTP URI return
     # SQL errors using the given _options_, returns +false+ otherwise.
@@ -95,6 +99,10 @@ module URI
       end
 
       return injectable
+    end
+
+    def sql_injection(options={})
+      sql_injections(options).first
     end
 
     #
