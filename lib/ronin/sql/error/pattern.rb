@@ -57,7 +57,7 @@ module Ronin
           data = data.to_s
 
           @patterns.each do |pattern|
-            if (index = pattern =~ data)
+            if (index = (pattern =~ data))
               return index
             end
           end

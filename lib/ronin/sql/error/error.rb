@@ -83,7 +83,7 @@ module Ronin
         end
 
         patterns.each do |pattern|
-          if (index = pattern =~ body)
+          if (index = (pattern =~ body))
             return index
           end
         end
