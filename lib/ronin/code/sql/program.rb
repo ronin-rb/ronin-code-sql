@@ -75,7 +75,7 @@ module Ronin
 
           @dialect = Dialect.get(options[:dialect]).new(options[:symbols])
 
-          @dialect.instance_eval(&block) if block
+          instance_eval(&block) if block
         end
 
         def self.compile(options={},&block)
