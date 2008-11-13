@@ -25,42 +25,5 @@ require 'ronin/sql/error'
 
 module Ronin
   module SQL
-    #
-    # Tests whether the _body_ contains an SQL error message using the
-    # given _options_.
-    #
-    # _options_ may contain the following keys:
-    # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
-    # <tt>:types</tt>:: A list of error pattern types to test for.
-    #
-    def SQL.error(body,options={})
-      if options[:dialect]
-        patterns = Error.patterns_for_dialect(options[:dialect])
-      elsif options[:types]
-        patterns = Error.patterns_for(*options[:types])
-      else
-        patterns = Error.patterns.values
-      end
-
-      patterns.each do |pattern|
-        if (message = pattern.match(body))
-          return message
-        end
-      end
-
-      return nil
-    end
-
-    #
-    # Returns +true+ if the specified _body_ using the given _options_
-    # contains an SQL error, returns +false+ otherwise.
-    #
-    # _options_ may contain the following keys:
-    # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
-    # <tt>:types</tt>:: A list of error pattern types to test for.
-    #
-    def SQL.has_error?(body,options={})
-      !(SQL.error(body,options).nil?)
-    end
   end
 end
