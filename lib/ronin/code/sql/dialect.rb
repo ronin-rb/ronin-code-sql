@@ -43,11 +43,9 @@ module Ronin
         # Creates a new Dialect object connected to the specified
         # _program_.
         #
-        def initialize(symbols={},&block)
+        def initialize(symbols={})
           @symbols = SymbolTable.new(symbols)
           @statements = []
-
-          instance_eval(&block) if block
         end
 
         #
