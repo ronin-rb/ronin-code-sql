@@ -53,6 +53,18 @@ module Ronin
           return nil
         end
 
+        def =~(data)
+          data = data.to_s
+
+          @patterns.each do |pattern|
+            if (index = pattern =~ data)
+              return index
+            end
+          end
+
+          return nil
+        end
+
         #
         # Returns the name of the error pattern.
         #
