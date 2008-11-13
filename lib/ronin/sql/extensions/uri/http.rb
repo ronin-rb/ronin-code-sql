@@ -82,8 +82,12 @@ module URI
         ]
 
         if (value && value.is_numeric?)
+          # if the param value is numeric, we should try escaping a
+          # numeric value first.
           tests = integer_tests + string_tests
         else
+          # if the param value is a string, we should try escaping a
+          # string value first.
           tests = string_tests + integer_tests
         end
 
