@@ -68,19 +68,19 @@ module URI
     # blind SQL injections.
     #
     def sql_injections(options={})
-      integer_tests = [
-        {:escape => 1},
-        {:escape => 1, :close_parenthesis => true}
-      ]
-
-      string_tests = [
-        {:escape => '1', :close_string => true},
-        {:escape => '1', :close_string => true, :close_parenthesis => true}
-      ]
-
       injectable = []
 
       each_query_param do |param,value|
+        integer_tests = [
+          {:escape => param},
+          {:escape => param, :close_parenthesis => true}
+        ]
+
+        string_tests = [
+          {:escape => param, :close_string => true},
+          {:escape => param, :close_string => true, :close_parenthesis => true}
+        ]
+
         if (value && value.is_numeric?)
           tests = integer_tests + string_tests
         else
