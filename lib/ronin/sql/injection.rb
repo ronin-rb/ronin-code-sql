@@ -21,8 +21,10 @@
 #++
 #
 
+require 'ronin/code/sql'
 require 'ronin/sql/error'
 require 'ronin/extensions/uri'
+require 'ronin/web/extensions/hpricot'
 require 'ronin/sessions/http'
 
 module Ronin
@@ -39,28 +41,53 @@ module Ronin
 
       attr_reader :sql
 
+      #
+      # Creates a new Injection object with the specified _url_, _param_
+      # to inject upon and the given _options_ which will be used
+      # for crafting SQL injections.
+      #
       def initialize(url,param,options={})
         @url = url
         @param = param
-        @sql = {}
+        @sql = options
 
-        @sql.merge!(options[:sql]) if options[:sql]
-
-        super(options)
+        super()
       end
 
       def inject(options={},&block)
-        url = URI(@url.to_s)
-        url.query_param[@param] = Code.sql_injection(@sql.merge(options),&block)
+        if options[:sql]
+          sql = options[:sql]
+        else
+          sql = Code.sql_injection(@sql.merge(options),&block)
+        end
 
-        return http_get_body(options.merge(:url => url))
+        url = URI(@url.to_s)
+        url.query_params[@param.to_s] = sql
+
+        if options[:method] == :post
+          return http_post_body(options.merge(:url => url))
+        else
+          return http_get_body(options.merge(:url => url))
+        end
+      end
+
+      def inject_error(options={})
+        inject({:sql => "'"}.merge(options))
+      end
+
+      def error(options={})
+        Error.message(inject_error(options))
+      end
+
+      def has_error?(options={})
+        Error.has_message?(inject_error(options))
       end
 
       def vulnerable?(options={})
         no_rows = inject(options) { no_rows }
         all_rows = inject(options) { all_rows }
 
-        if (SQL.has_error?(no_rows) || SQL.has_error?(all_rows))
+        if (Error.has_message?(no_rows) || Error.has_message?(all_rows))
           return false
         end
 
