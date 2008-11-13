@@ -45,8 +45,8 @@ module URI
     end
 
     #
-    # each +query_params+ of the HTTP URI with the given _options_ for
-    # SQL errors.
+    # Returns +true+ if any of the +query_params+ of the HTTP URI return
+    # SQL errors using the given _options_, returns +false+ otherwise.
     #
     # _options_ may contain the following keys:
     # <tt>:sql</tt>:: The SQL injection to use. Defaults to <tt>"'"</tt>.
