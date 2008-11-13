@@ -92,7 +92,7 @@ module URI
         end
 
         injections = tests.map do |test|
-          SQL::Injection.new(self,param,options.merge(test))
+          Ronin::SQL::Injection.new(self,param,options.merge(test))
         end
         
         injection = injections.find do |injection|
