@@ -21,8 +21,8 @@
 #++
 #
 
-require 'ronin/code/sql'
 require 'ronin/sql/error'
+require 'ronin/code/sql/injection'
 require 'ronin/extensions/uri'
 require 'ronin/web/extensions/hpricot'
 require 'ronin/sessions/http'
@@ -39,7 +39,13 @@ module Ronin
       # The URL query param to inject into
       attr_reader :param
 
-      attr_reader :sql
+      # Options for crafting SQL injections
+      attr_reader :sql_options
+
+      # HTTP request method (either :get or :post)
+      parameter :http_method,
+                :default => :get,
+                :description => 'HTTP request method to use'
 
       #
       # Creates a new Injection object with the specified _url_, _param_
@@ -49,25 +55,33 @@ module Ronin
       def initialize(url,param,options={})
         @url = url
         @param = param
-        @sql = options
+        @sql_options = options
 
         super()
       end
 
+      #
+      # Creates a new Code::SQL::Injection object using the given _options_
+      # and _block_. The given _options_ will be merged with the injections
+      # sql_options, to create a tailored Code::SQL::Injection object.
+      #
+      def sql(options={},&block)
+        Code::SQL::Injection.new(@sql_options.merge(options),&block)
+      end
+
       def inject(options={},&block)
-        if options[:sql]
-          sql = options[:sql]
-        else
-          sql = Code.sql_injection(@sql.merge(options),&block)
-        end
+        injection = (options[:sql] || sql(options,&block))
 
-        url = URI(@url.to_s)
-        url.query_params[@param.to_s] = sql
+        injection_url = URI(@url.to_s)
+        injection_url.query_params[@param.to_s] = injection
 
-        if options[:method] == :post
-          return http_post_body(options.merge(:url => url))
+        request_method = (options[:method] || @http_method)
+        options = options.merge(:url => injection_url)
+
+        if request_method == :post
+          return http_post_body(options)
         else
-          return http_get_body(options.merge(:url => url))
+          return http_get_body(options)
         end
       end
 
@@ -84,17 +98,17 @@ module Ronin
       end
 
       def vulnerable?(options={})
-        no_rows = inject(options) { no_rows }
-        all_rows = inject(options) { all_rows }
+        body1 = inject(options) { no_rows }
+        body2 = inject(options) { all_rows }
 
-        if (Error.has_message?(no_rows) || Error.has_message?(all_rows))
+        if (Error.has_message?(body1) || Error.has_message?(body2))
           return false
         end
 
-        no_rows = Hpricot(no_rows)
-        all_rows = Hpricot(all_rows)
+        body1 = Hpricot(body1)
+        body2 = Hpricot(body2)
 
-        return no_rows < all_rows
+        return body1 < body2
       end
 
       def to_s
