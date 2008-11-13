@@ -154,8 +154,8 @@ module Ronin
             # string
             escape_value << format(@escape) if @escape
           else
-            # do not format the escape string when we are not escaping out
-            # of a string
+            # do not format the escape string when we are not escaping
+            # out of a string
             escape_value << @escape.to_s if @escape
           end
 
