@@ -53,11 +53,11 @@ module Ronin
       # for crafting SQL injections.
       #
       def initialize(url,param,options={})
+        super()
+
         @url = url
         @param = param
         @sql_options = options
-
-        super()
       end
 
       #
