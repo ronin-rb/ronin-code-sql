@@ -87,5 +87,14 @@ module URI
       end
     end
 
+    #
+    # Returns +true+ if any of the +query_params+ of the HTTP URL are
+    # vulnerable to blind SQL injection using the given _options_, returns
+    # +false+ otherwise.
+    #
+    def has_sql_injections?(options={})
+      !(sql_injections(options).empty?)
+    end
+
   end
 end
