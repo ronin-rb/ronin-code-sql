@@ -38,8 +38,10 @@ module Ronin
       end
 
       #
-      # Tests whether the _body_ contains an SQL error message using the
-      # given _options_.
+      # Returns an SQL error Message using the given _options_ if the
+      # specified _body_ contains a SQL error Pattern. If no SQL error
+      # Pattern can be found within the specified _body_, +nil+ will be
+      # returned.
       #
       # _options_ may contain the following keys:
       # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
@@ -57,6 +59,32 @@ module Ronin
         patterns.each do |pattern|
           if (message = pattern.match(body))
             return message
+          end
+        end
+
+        return nil
+      end
+
+      #
+      # Returns +true+ if the specified _body_ contains an SQL error Message
+      # using the given _options_, returns +false+ otherwise.
+      #
+      # _options_ may contain the following keys:
+      # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
+      # <tt>:types</tt>:: A list of error pattern types to test for.
+      #
+      def Error.has_message?(body,options={})
+        if options[:dialect]
+          patterns = Error.patterns_for_dialect(options[:dialect])
+        elsif options[:types]
+          patterns = Error.patterns_for(*options[:types])
+        else
+          patterns = Error.patterns.values
+        end
+
+        patterns.each do |pattern|
+          if (index = pattern =~ body)
+            return index
           end
         end
 
