@@ -53,6 +53,11 @@ module Ronin
           return nil
         end
 
+        #
+        # Returns the match index within the specified _data_ where a SQL
+        # error Pattern occurs. If no SQL error Pattern can be found within
+        # _data_, +nil+ will be returned.
+        #
         def =~(data)
           data = data.to_s
 
