@@ -111,6 +111,70 @@ module Ronin
         return body1 < body2
       end
 
+      def has_column?(column,options={})
+        body1 = inject(options)
+        body2 = inject(options.merge(:symbols => {:column => column})) do
+          has_column?(column)
+        end
+
+        if (Error.has_message?(body1) || Error.has_message?(body2))
+          return false
+        end
+
+        body1 = Hpricot(body1)
+        body2 = Hpricot(body2)
+
+        return body1 == body2
+      end
+
+      def has_table?(table,options={})
+        body1 = inject(options)
+        body2 = inject(options.merge(:symbols => {:table => table})) do
+          has_table?(table)
+        end
+
+        if (Error.has_message?(body1) || Error.has_message?(body2))
+          return false
+        end
+
+        body1 = Hpricot(body1)
+        body2 = Hpricot(body2)
+
+        return body1 == body2
+      end
+
+      def uses_column?(column,options={})
+        body1 = inject(options)
+        body2 = inject(options.merge(:symbols => {:column => column})) do
+          uses_column?(table)
+        end
+
+        if (Error.has_message?(body1) || Error.has_message?(body2))
+          return false
+        end
+
+        body1 = Hpricot(body1)
+        body2 = Hpricot(body2)
+
+        return body1 == body2
+      end
+
+      def uses_table?(table,options={})
+        body1 = inject(options)
+        body2 = inject(options.merge(:symbols => {:table => table})) do
+          uses_table?(table)
+        end
+
+        if (Error.has_message?(body1) || Error.has_message?(body2))
+          return false
+        end
+
+        body1 = Hpricot(body1)
+        body2 = Hpricot(body2)
+
+        return body1 == body2
+      end
+
       def to_s
         @url.to_s
       end
