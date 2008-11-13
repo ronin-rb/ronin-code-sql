@@ -66,8 +66,9 @@ module Ronin
       end
 
       #
-      # Returns +true+ if the specified _body_ contains an SQL error Message
-      # using the given _options_, returns +false+ otherwise.
+      # Returns +true+ if a SQL error Pattern can be found within the
+      # specified _data_ using the given _options_, returns +false+
+      # otherwise.
       #
       # _options_ may contain the following keys:
       # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
@@ -83,12 +84,12 @@ module Ronin
         end
 
         patterns.each do |pattern|
-          if (index = (pattern =~ body))
-            return index
+          if (pattern =~ body)
+            return true
           end
         end
 
-        return nil
+        return false
       end
     end
   end
