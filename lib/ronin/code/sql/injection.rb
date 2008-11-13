@@ -64,7 +64,7 @@ module Ronin
           if options.has_key?(:close_string)
             @close_string = options[:close_string]
           else
-            @close_string = true
+            @close_string = false
           end
 
           if options.has_key?(:close_parens)
@@ -79,9 +79,9 @@ module Ronin
             @end_statement = false
           end
 
-          @expression = InjectedStatement.new(@dialect)
-
-          super(options) {}
+          super(options) do
+            @expression = InjectedStatement.new(@dialect)
+          end
 
           instance_eval(&block) if block
         end
