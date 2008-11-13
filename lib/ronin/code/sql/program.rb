@@ -211,6 +211,10 @@ module Ronin
             return @dialect.enqueue_statement(name,*arguments,&block)
           elsif @dialect.methods.include?(name.to_s)
             return @dialect.send(name,*arguments,&block)
+          elsif (arguments.empty? && block.nil?)
+            if @dialect.symbols.has_symbol?(name)
+              return @dialect.symbols[name]
+            end
           end
 
           raise(NoMethodError,name.id2name)
