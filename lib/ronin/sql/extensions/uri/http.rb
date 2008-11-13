@@ -72,13 +72,13 @@ module URI
 
       each_query_param do |param,value|
         integer_tests = [
-          {:escape => param},
-          {:escape => param, :close_parenthesis => true}
+          {:escape => value},
+          {:escape => value, :close_parenthesis => true}
         ]
 
         string_tests = [
-          {:escape => param, :close_string => true},
-          {:escape => param, :close_string => true, :close_parenthesis => true}
+          {:escape => value, :close_string => true},
+          {:escape => value, :close_string => true, :close_parenthesis => true}
         ]
 
         if (value && value.is_numeric?)
@@ -91,15 +91,14 @@ module URI
           tests = string_tests + integer_tests
         end
 
-        injections = tests.map do |test|
-          Ronin::SQL::Injection.new(self,param,options.merge(test))
-        end
-        
-        injection = injections.find do |injection|
-          injection.vulnerable?(options)
-        end
+        tests.each do |test|
+          inj = Ronin::SQL::Injection.new(self,param,options.merge(test))
 
-        injectable << injection if injection
+          if inj.vulnerable?(options)
+            injectable << inj
+            break
+          end
+        end
       end
 
       return injectable
