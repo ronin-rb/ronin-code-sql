@@ -23,9 +23,10 @@
 
 require 'ronin/sql/error'
 require 'ronin/code/sql/injection'
+require 'ronin/sessions/http'
 require 'ronin/extensions/uri'
 require 'ronin/web/extensions/hpricot'
-require 'ronin/sessions/http'
+require 'ronin/web/web'
 
 module Ronin
   module SQL
@@ -58,6 +59,21 @@ module Ronin
         @url = url
         @param = param
         @sql_options = options
+      end
+
+      def Injection.scan(url,options={},&block)
+        injections = []
+
+        Web.spider_site(url,options) do |spider|
+          spider.every_url_like(/\?[a-za-Z0-9]/) do |url|
+            inj = url.sql_injections
+
+            inj.each(&block)
+            injections += inj
+          end
+        end
+
+        return injections
       end
 
       #
