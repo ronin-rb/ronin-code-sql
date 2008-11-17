@@ -23,11 +23,16 @@
 
 require 'ronin/sql/injection'
 require 'ronin/chars/extensions'
+require 'ronin/vulnerable'
 
 require 'uri'
 
 module URI
   class HTTP < Generic
+
+    include Vulnerable
+
+    vulnerable_to :sql_injection => :sql_injections
 
     #
     # Tests the +query_params+ of the HTTP URL with the given _options_ for
