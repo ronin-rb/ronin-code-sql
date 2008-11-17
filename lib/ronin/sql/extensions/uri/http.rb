@@ -30,7 +30,7 @@ require 'uri'
 module URI
   class HTTP < Generic
 
-    include Vulnerable
+    include Ronin::Vulnerable
 
     vulnerable_to :sql_injection => :sql_injections
 
