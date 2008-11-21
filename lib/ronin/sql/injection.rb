@@ -79,10 +79,10 @@ module Ronin
 
         Web.spider_site(url,options) do |spider|
           spider.every_url_like(/\?[a-zA-Z0-9_]/) do |vuln_url|
-            inj = vuln_url.sql_injections
+            found = vuln_url.sql_injections
 
-            inj.each(&block) if block
-            injections += inj
+            found.each(&block) if block
+            injections += found
           end
         end
 
