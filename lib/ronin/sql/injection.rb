@@ -65,7 +65,7 @@ module Ronin
         injections = []
 
         Web.spider_site(url,options) do |spider|
-          spider.every_url_like(/\?[a-zA-Z0-9]/) do |url|
+          spider.every_url_like(/\?[a-zA-Z0-9_]/) do |url|
             inj = url.sql_injections
 
             inj.each(&block) if block
