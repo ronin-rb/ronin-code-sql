@@ -67,10 +67,12 @@ module Ronin
       # Injection. If a _block_ is given, it will be passed vulnerable SQL
       # Injection objects as they are found.
       #
+      #   Injection.scan('http://www.target.com/contact/')
+      #   # => [...]
+      #
       #   Injection.scan('http://www.target.com/') do |injection|
       #     ...
       #   end
-      #   # => [...]
       #
       def Injection.scan(url,options={},&block)
         injections = []
