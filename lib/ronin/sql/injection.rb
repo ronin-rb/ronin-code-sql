@@ -61,6 +61,17 @@ module Ronin
         @sql_options = options
       end
 
+      #
+      # Spider a site starting at the specified _url_ using the given
+      # _options_ and return an Array of URLs which are vulnerable to SQL
+      # Injection. If a _block_ is given, it will be passed vulnerable SQL
+      # Injection objects as they are found.
+      #
+      #   Injection.scan('http://www.target.com/') do |injection|
+      #     ...
+      #   end
+      #   # => [...]
+      #
       def Injection.scan(url,options={},&block)
         injections = []
 
