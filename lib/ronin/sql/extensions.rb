@@ -21,4 +21,5 @@
 #++
 #
 
+require 'ronin/sql/extensions/string'
 require 'ronin/sql/extensions/uri'
