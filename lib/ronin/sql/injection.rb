@@ -119,7 +119,7 @@ module Ronin
       end
 
       def error(options={})
-        Error.message(inject_error(options))
+        inject_error(options).sql_error
       end
 
       def has_error?(options={})
