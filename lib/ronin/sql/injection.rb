@@ -130,7 +130,7 @@ module Ronin
         body1 = inject(options) { no_rows }
         body2 = inject(options) { all_rows }
 
-        if (Error.has_message?(body1) || Error.has_message?(body2))
+        if (body1.sql_error? || body2.sql_error?)
           return false
         end
 
@@ -146,7 +146,7 @@ module Ronin
           has_column?(column)
         end
 
-        if (Error.has_message?(body1) || Error.has_message?(body2))
+        if (body1.sql_error? || body2.sql_error?)
           return false
         end
 
@@ -162,7 +162,7 @@ module Ronin
           has_table?(table)
         end
 
-        if (Error.has_message?(body1) || Error.has_message?(body2))
+        if (body1.sql_error? || body2.sql_error?)
           return false
         end
 
@@ -178,7 +178,7 @@ module Ronin
           uses_column?(table)
         end
 
-        if (Error.has_message?(body1) || Error.has_message?(body2))
+        if (body1.sql_error? || body2.sql_error?)
           return false
         end
 
@@ -194,7 +194,7 @@ module Ronin
           uses_table?(table)
         end
 
-        if (Error.has_message?(body1) || Error.has_message?(body2))
+        if (body1.sql_error? || body2.sql_error?)
           return false
         end
 
