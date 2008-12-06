@@ -1,7 +1,7 @@
 = Ronin SQL
 
 * http://ronin.rubyforge.org/sql/
-* https://github.com/postmodern/ronin-sql
+* http://github.com/postmodern/ronin-sql
 * irc.freenode.net ##ronin
 * Postmodern (postmodern.mod3 at gmail.com)
 
