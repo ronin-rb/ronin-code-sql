@@ -94,4 +94,27 @@ class String
     return hex_string
   end
 
+  #
+  # Returns the SQL decoded form of the String.
+  #
+  #   "Conan O''Brian".sql_decode
+  #   # => "Conan O'Brian"
+  #
+  #  "0x2f6574632f706173737764".sql_decode
+  #  # => "/etc/passwd"
+  #
+  def sql_decode
+    unless ((self[0...2] == '0x') && (length % 2 == 0))
+      return self.gsub(/''/,"'")
+    end
+
+    raw = ''
+
+    self[2..-1].scan(/[0-9a-fA-F]{2}/).each do |hex_char|
+      raw << hex_char.hex.chr
+    end
+
+    return raw
+  end
+
 end
