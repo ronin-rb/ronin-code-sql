@@ -104,17 +104,19 @@ class String
   #  # => "/etc/passwd"
   #
   def sql_decode
-    unless ((self[0...2] == '0x') && (length % 2 == 0))
-      return self.gsub(/''/,"'")
+    if ((self[0...2] == '0x') && (length % 2 == 0))
+      raw = ''
+
+      self[2..-1].scan(/[0-9a-fA-F]{2}/).each do |hex_char|
+        raw << hex_char.hex.chr
+      end
+
+      return raw
+    elsif (self[0..0] == "'" && self[-1..-1] == "'")
+      self[1..-2].gsub(/\\'/,"'").gsub(/''/,"'")
+    else
+      return self
     end
-
-    raw = ''
-
-    self[2..-1].scan(/[0-9a-fA-F]{2}/).each do |hex_char|
-      raw << hex_char.hex.chr
-    end
-
-    return raw
   end
 
 end
