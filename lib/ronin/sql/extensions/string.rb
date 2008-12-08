@@ -76,4 +76,22 @@ class String
     return false
   end
 
+  #
+  # Returns the SQL hex-string encoded form of the String.
+  #
+  #   "/etc/passwd".sql_hex
+  #   # => "0x2f6574632f706173737764"
+  #
+  def sql_hex
+    return '' if empty?
+
+    hex_string = '0x'
+
+    each_byte do |b|
+      hex_string << ('%.2x' % b)
+    end
+
+    return hex_string
+  end
+
 end
