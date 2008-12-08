@@ -79,10 +79,10 @@ class String
   #
   # Returns the SQL hex-string encoded form of the String.
   #
-  #   "/etc/passwd".sql_hex
+  #   "/etc/passwd".sql_encode
   #   # => "0x2f6574632f706173737764"
   #
-  def sql_hex
+  def sql_encode
     return '' if empty?
 
     hex_string = '0x'
