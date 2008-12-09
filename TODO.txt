@@ -1,6 +1,8 @@
 == TODO:
 
-* Utilize Spidr (http://spidr.rubyforge.org) to scan for SQL injection
-  en-mass.
+=== Ronin SQL 0.1.2:
+
 * Write specs for the SQL/Injection DSLs which test formatting.
+* Make certain Injection methods class methods.
+* Make SQL::Injection inherite from the new Exploits::WebExploit class.
 
