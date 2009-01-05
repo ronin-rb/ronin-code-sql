@@ -23,8 +23,7 @@
 
 require 'ronin/sql/injection'
 require 'ronin/chars/extensions'
-
-require 'uri'
+require 'ronin/extensions/uri/http'
 
 module URI
   class HTTP < Generic
