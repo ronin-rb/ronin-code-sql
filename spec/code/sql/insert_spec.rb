@@ -2,6 +2,8 @@ require 'ronin/code/sql/insert'
 
 require 'helpers/code'
 require 'code/sql/has_fields_clause_examples'
+require 'code/sql/has_default_values_clause_examples'
+require 'code/sql/has_values_clause_examples'
 
 describe Insert do
   before(:each) do
