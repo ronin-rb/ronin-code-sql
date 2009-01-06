@@ -22,8 +22,8 @@
 #
 
 require 'ronin/sql/injection'
-require 'ronin/chars/extensions'
 require 'ronin/extensions/uri/http'
+require 'ronin/chars'
 
 module URI
   class HTTP < Generic
@@ -80,7 +80,7 @@ module URI
           {:escape => value, :close_string => true, :close_parenthesis => true}
         ]
 
-        if (value && value.is_numeric?)
+        if (value && Chars.numeric =~ value)
           # if the param value is numeric, we should try escaping a
           # numeric value first.
           tests = integer_tests + string_tests
