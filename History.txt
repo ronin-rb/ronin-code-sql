@@ -1,3 +1,44 @@
+=== 0.1.2 / 2009-01-05
+
+* Refactored Code::SQL.
+  * Implemented a token emitter system.
+  * Support common SQL expression modifiers.
+  * Support common SQL clauses.
+  * Allow for injecting arbitrary SQL clauses.
+  * Added more SQL Injection test generators.
+    * all_rows:
+
+         OR 1 = 1
+
+    * exact_rows:
+
+         AND 1 = 1
+
+    * no_rows:
+
+         AND 1 = 0
+
+    * has_column?(column):
+
+         OR column IS NOT NULL
+
+    * has_table?(table):
+
+         AND (SELECT FROM table count(*) == 1)
+
+    * uses_column?(column):
+
+         GROUP BY column HAVING 1 = 1
+
+    * uses_table?(table):
+
+         OR table IS NOT NULL
+
+* Added RSpec tests.
+  * Specs for most of Code::SQL.
+  * Specs on SQL::Error and the SQL encoding/decoding extensions for the
+    String class.
+
 === 0.1.1 / 2008-09-28
 
 * Trivial bug fix to URI::HTTP#sql_errors.
