@@ -97,7 +97,7 @@ class String
   #
   # Returns the SQL decoded form of the String.
   #
-  #   "Conan O''Brian".sql_decode
+  #   "'Conan O''Brian'".sql_decode
   #   # => "Conan O'Brian"
   #
   #  "0x2f6574632f706173737764".sql_decode

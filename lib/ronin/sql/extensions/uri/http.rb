@@ -103,6 +103,10 @@ module URI
       return injectable
     end
 
+    #
+    # Returns the first vulnerable SQL injection object found in the
+    # HTTP URL.
+    #
     def sql_injection(options={})
       sql_injections(options).first
     end
