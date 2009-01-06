@@ -29,5 +29,5 @@ require 'ronin/sql/version'
 require 'ronin/config'
 
 module Ronin
-  Config.load 'sql'
+  Config.load :sql
 end
