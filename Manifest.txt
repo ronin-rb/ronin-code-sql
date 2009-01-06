@@ -76,7 +76,7 @@ lib/ronin/sql.rb
 tasks/spec.rb
 spec/spec_helper.rb
 spec/sql_spec.rb
-spec/code/helpers/code.rb
+spec/helpers/code.rb
 spec/code/sql/has_default_values_clause_examples.rb
 spec/code/sql/has_fields_clause_examples.rb
 spec/code/sql/has_from_clause_examples.rb
@@ -95,3 +95,4 @@ spec/code/sql/select_spec.rb
 spec/code/sql/update_spec.rb
 spec/code/sql/replace_spec.rb
 spec/code/sql/delete_spec.rb
+spec/sql/error_spec.rb
