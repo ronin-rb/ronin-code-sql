@@ -26,4 +26,8 @@ require 'ronin/sql/extensions'
 require 'ronin/sql/error'
 require 'ronin/sql/injection'
 require 'ronin/sql/version'
-require 'ronin/sql/config'
+require 'ronin/config'
+
+module Ronin
+  Config.load 'sql'
+end
