@@ -1,5 +1,6 @@
 === 0.1.2 / 2009-01-05
 
+* Require Ronin >= 0.1.3.
 * Refactored Code::SQL.
   * Implemented a token emitter system.
   * Support common SQL expression modifiers.
@@ -34,7 +35,8 @@
 
          OR table IS NOT NULL
 
-* Added RSpec tests.
+* Removed references to Ronin::Vulnerable.
+* Added more specs:
   * Specs for most of Code::SQL.
   * Specs on SQL::Error and the SQL encoding/decoding extensions for the
     String class.
