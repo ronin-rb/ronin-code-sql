@@ -1,7 +1,7 @@
 === 0.1.2 / 2009-01-05
 
 * Require Ronin >= 0.1.3.
-* Refactored Code::SQL.
+* Refactored Ronin::Code::SQL.
   * Implemented a token emitter system.
   * Support common SQL expression modifiers.
   * Support common SQL clauses.
@@ -37,9 +37,9 @@
 
 * Removed references to Ronin::Vulnerable.
 * Added more specs:
-  * Specs for most of Code::SQL.
-  * Specs on SQL::Error and the SQL encoding/decoding extensions for the
-    String class.
+  * Specs for most of Ronin::Code::SQL.
+  * Specs on Ronin::SQL::Error and the SQL encoding/decoding extensions for
+    the String class.
 
 === 0.1.1 / 2008-09-28
 
