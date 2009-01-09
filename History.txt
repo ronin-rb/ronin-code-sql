@@ -1,4 +1,4 @@
-=== 0.1.2 / 2009-01-05
+=== 0.2.0 / 2009-01-08
 
 * Require Ronin >= 0.1.3.
 * Refactored Ronin::Code::SQL.
