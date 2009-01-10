@@ -1,8 +1,11 @@
 == TODO:
 
-=== Ronin SQL 0.1.2:
+=== Ronin SQL 0.2.2:
+
+* Make certain Injection methods class methods.
+
+=== Ronin SQL 0.3.0:
 
 * Write specs for the SQL/Injection DSLs which test formatting.
-* Make certain Injection methods class methods.
 * Make SQL::Injection inherite from the new Exploits::WebExploit class.
 
