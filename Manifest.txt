@@ -64,13 +64,14 @@ lib/ronin/code/sql/update.rb
 lib/ronin/code/sql/values_clause.rb
 lib/ronin/code/sql/where_clause.rb
 lib/ronin/sql/extensions.rb
+lib/ronin/sql/extensions/string.rb
 lib/ronin/sql/extensions/uri.rb
 lib/ronin/sql/extensions/uri/http.rb
+lib/ronin/sql/error.rb
 lib/ronin/sql/error/message.rb
 lib/ronin/sql/error/pattern.rb
 lib/ronin/sql/error/error.rb
 lib/ronin/sql/error/patterns.rb
-lib/ronin/sql/error.rb
 lib/ronin/sql/injection.rb
 lib/ronin/sql/version.rb
 lib/ronin/sql.rb
