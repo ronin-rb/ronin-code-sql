@@ -26,7 +26,7 @@ require 'ronin/code/sql/injection'
 require 'ronin/sessions/http'
 require 'ronin/extensions/uri'
 require 'ronin/web/extensions/hpricot'
-require 'ronin/web/web'
+require 'ronin/web/spider'
 
 module Ronin
   module SQL
@@ -77,7 +77,7 @@ module Ronin
       def Injection.spider(url,options={},&block)
         injections = []
 
-        Web.spider_site(url,options) do |spider|
+        Web::Spider.site(url,options) do |spider|
           spider.every_url_like(/\?[a-zA-Z0-9_]/) do |vuln_url|
             found = vuln_url.sql_injections
 
