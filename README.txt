@@ -45,7 +45,8 @@ of Ronin.
 
 == REQUIREMENTS:
 
-* Ronin >= 0.1.2
+* ronin >= 0.1.2
+* ronin-web >= 0.1.0
 
 == INSTALL:
 
