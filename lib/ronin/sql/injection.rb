@@ -25,7 +25,7 @@ require 'ronin/sql/error'
 require 'ronin/code/sql/injection'
 require 'ronin/sessions/http'
 require 'ronin/extensions/uri'
-require 'ronin/web/extensions/hpricot'
+require 'ronin/web/extensions/nokogiri'
 require 'ronin/web/spider'
 
 module Ronin
@@ -134,10 +134,10 @@ module Ronin
           return false
         end
 
-        body1 = Hpricot(body1)
-        body2 = Hpricot(body2)
+        body1 = Nokogiri::HTML(body1)
+        body2 = Nokogiri::HTML(body2)
 
-        return body1 < body2
+        return body1.total_children < body2.total_children
       end
 
       def has_column?(column,options={})
@@ -150,10 +150,10 @@ module Ronin
           return false
         end
 
-        body1 = Hpricot(body1)
-        body2 = Hpricot(body2)
+        body1 = Nokogiri::HTML(body1)
+        body2 = Nokogiri::HTML(body2)
 
-        return body1 == body2
+        return body1.total_children == body2.total_children
       end
 
       def has_table?(table,options={})
@@ -166,10 +166,10 @@ module Ronin
           return false
         end
 
-        body1 = Hpricot(body1)
-        body2 = Hpricot(body2)
+        body1 = Nokogiri::HTML(body1)
+        body2 = Nokogiri::HTML(body2)
 
-        return body1 == body2
+        return body1.total_children == body2.total_children
       end
 
       def uses_column?(column,options={})
@@ -182,10 +182,10 @@ module Ronin
           return false
         end
 
-        body1 = Hpricot(body1)
-        body2 = Hpricot(body2)
+        body1 = Nokogiri::HTML(body1)
+        body2 = Nokogiri::HTML(body2)
 
-        return body1 == body2
+        return body1.total_children == body2.total_children
       end
 
       def uses_table?(table,options={})
@@ -198,10 +198,10 @@ module Ronin
           return false
         end
 
-        body1 = Hpricot(body1)
-        body2 = Hpricot(body2)
+        body1 = Nokogiri::HTML(body1)
+        body2 = Nokogiri::HTML(body2)
 
-        return body1 == body2
+        return body1.total_children == body2.total_children
       end
 
       def to_s
