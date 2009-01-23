@@ -1,3 +1,10 @@
+=== 0.2.2 / 2009-01-22
+
+* Depend on the new ronin-web library.
+* Replace Hpricot with Nokogiri.
+* Use the new Ronin::Web::Spider, instead of directly using Spidr.
+* Use the new Nokogiri extensions from ronin-web.
+
 === 0.2.1 / 2009-01-09
 
 * Added missing files to the Manifest.
