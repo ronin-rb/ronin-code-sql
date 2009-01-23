@@ -28,6 +28,8 @@ require 'ronin/extensions/uri'
 require 'ronin/web/extensions/nokogiri'
 require 'ronin/web/spider'
 
+require 'nokogiri'
+
 module Ronin
   module SQL
     class Injection
