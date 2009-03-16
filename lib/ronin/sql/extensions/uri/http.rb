@@ -79,7 +79,7 @@ module URI
           {:escape => value, :close_string => true, :close_parenthesis => true}
         ]
 
-        if (value && value =~ /^[0-9]+$/
+        if (value && value =~ /^[0-9]+$/)
           # if the param value is numeric, we should try escaping a
           # numeric value first.
           tests = integer_tests + string_tests
