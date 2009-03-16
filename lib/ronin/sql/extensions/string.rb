@@ -62,11 +62,11 @@ class String
   #
   def sql_error?(options={})
     if options[:dialect]
-      patterns = Error.patterns_for_dialect(options[:dialect])
+      patterns = Ronin::SQL::Error.patterns_for_dialect(options[:dialect])
     elsif options[:types]
-      patterns = Error.patterns_for(*options[:types])
+      patterns = Ronin::SQL::Error.patterns_for(*options[:types])
     else
-      patterns = Error.patterns.values
+      patterns = Ronin::SQL::Error.patterns.values
     end
 
     patterns.each do |pattern|
