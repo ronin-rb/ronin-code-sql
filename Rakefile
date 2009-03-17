@@ -10,7 +10,7 @@ Hoe.new('ronin-sql', Ronin::SQL::VERSION) do |p|
   p.developer('Postmodern','postmodern.mod3@gmail.com')
   p.remote_rdoc_dir = 'docs/ronin-sql'
   p.extra_deps = [
-    ['ronin', '>=0.1.4'],
+    ['ronin', '>=0.2.2'],
     ['ronin-web', '>=0.1.0']
   ]
 end
