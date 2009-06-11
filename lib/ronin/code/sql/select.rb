@@ -52,6 +52,8 @@ module Ronin
         clause :union_all, UnionAllClause
 
         def initialize(dialect,options={},&block)
+          super(dialect,options)
+
           if options[:distinct_rows]
             self.distinct_rows!
           end
@@ -59,8 +61,6 @@ module Ronin
           if options[:all_rows]
             self.all_rows!
           end
-
-          super(dialect,options)
 
           unless options[:fields]
             fields(all)
