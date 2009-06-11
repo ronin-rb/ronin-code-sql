@@ -63,6 +63,9 @@ lib/ronin/code/sql/union_clause.rb
 lib/ronin/code/sql/update.rb
 lib/ronin/code/sql/values_clause.rb
 lib/ronin/code/sql/where_clause.rb
+lib/ronin/formatting/sql.rb
+lib/ronin/formatting/extensions/sql.rb
+lib/ronin/formatting/extensions/sql/string.rb
 lib/ronin/sql/extensions.rb
 lib/ronin/sql/extensions/string.rb
 lib/ronin/sql/extensions/uri.rb

@@ -76,47 +76,4 @@ class String
     return false
   end
 
-  #
-  # Returns the SQL hex-string encoded form of the String.
-  #
-  #   "/etc/passwd".sql_encode
-  #   # => "0x2f6574632f706173737764"
-  #
-  def sql_encode
-    return '' if empty?
-
-    hex_string = '0x'
-
-    each_byte do |b|
-      hex_string << ('%.2x' % b)
-    end
-
-    return hex_string
-  end
-
-  #
-  # Returns the SQL decoded form of the String.
-  #
-  #   "'Conan O''Brian'".sql_decode
-  #   # => "Conan O'Brian"
-  #
-  #  "0x2f6574632f706173737764".sql_decode
-  #  # => "/etc/passwd"
-  #
-  def sql_decode
-    if ((self[0...2] == '0x') && (length % 2 == 0))
-      raw = ''
-
-      self[2..-1].scan(/[0-9a-fA-F]{2}/).each do |hex_char|
-        raw << hex_char.hex.chr
-      end
-
-      return raw
-    elsif (self[0..0] == "'" && self[-1..-1] == "'")
-      self[1..-2].gsub(/\\'/,"'").gsub(/''/,"'")
-    else
-      return self
-    end
-  end
-
 end
