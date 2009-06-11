@@ -97,5 +97,6 @@ spec/code/sql/select_spec.rb
 spec/code/sql/update_spec.rb
 spec/code/sql/replace_spec.rb
 spec/code/sql/delete_spec.rb
+spec/code/sql/common_dialect_spec.rb
 spec/sql/error_spec.rb
 spec/sql/extensions/string_spec.rb
