@@ -64,14 +64,22 @@ module Ronin
           instance_eval(&block) if block
         end
 
-        def all_rows
+        def all_rows!
           @all_rows = true
           return self
         end
 
-        def distinct_rows
+        def all_rows?
+          @all_rows == true
+        end
+
+        def distinct_rows!
           @distinct_rows = true
           return self
+        end
+
+        def distinct_rows?
+          @distinct_rows == true
         end
 
         def emit
