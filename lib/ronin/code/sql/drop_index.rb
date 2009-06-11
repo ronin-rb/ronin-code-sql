@@ -32,9 +32,9 @@ module Ronin
           super(dialect,'INDEX',index,options,&block)
         end
 
-        def index(name)
-          @name = name
-          return self
+        def index(name=nil)
+          @name = name if name
+          return @name
         end
 
       end

@@ -32,9 +32,9 @@ module Ronin
           super(dialect,'TABLE',table,options,&block)
         end
 
-        def table(name)
-          @name = name
-          return self
+        def table(name=nil)
+          @name = name if name
+          return @name
         end
 
       end
