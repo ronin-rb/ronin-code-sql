@@ -36,12 +36,8 @@ module Ronin
         end
 
         def table(name=nil)
-          if name
-            @name = name
-            return self
-          else
-            return @name
-          end
+          @name = name if name
+          return @name
         end
 
       end

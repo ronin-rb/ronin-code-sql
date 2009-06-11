@@ -40,12 +40,8 @@ module Ronin
         end
 
         def table(name=nil)
-          if name
-            @table = name
-            return self
-          else
-            return @table
-          end
+          @table = name if name
+          return @table
         end
 
         def emit
