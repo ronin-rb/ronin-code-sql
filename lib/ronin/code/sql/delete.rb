@@ -33,10 +33,15 @@ module Ronin
         clause :from, FromClause
         clause :where, WhereClause
 
-        def initialize(dialect,options={},&block)
-          @table = options[:table]
+        def initialize(dialect,table=nil,options={},&block)
+          @table = table
 
           super(dialect,options,&block)
+        end
+
+        def table(name=nil)
+          @table = name if name
+          return @table
         end
 
         def emit
