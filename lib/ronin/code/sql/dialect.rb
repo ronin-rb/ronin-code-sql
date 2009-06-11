@@ -212,7 +212,9 @@ module Ronin
           type_name = name.upcase
           supports_length = options[:length]
 
-          class_def(name) do |length|
+          class_def(name) do |*arguments|
+            length = arguments.first
+
             if (supports_length && length)
               Token.new("#{type_name}(#{length})")
             else
