@@ -1,4 +1,4 @@
-require 'ronin/sql/extensions/string'
+require 'ronin/formatting/extensions/sql/string'
 
 require 'spec_helper'
 
