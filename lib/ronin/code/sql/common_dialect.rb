@@ -50,7 +50,7 @@ module Ronin
 
         aggregators :avg, :count, :group_concat, :min, :max, :sum, :total
 
-        statement :create_type, CreateTable
+        statement :create_table, CreateTable
         statement :create_index, CreateIndex
         statement :create_view, CreateView
         statement :alter_table, AlterTable
