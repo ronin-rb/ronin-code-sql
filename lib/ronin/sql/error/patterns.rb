@@ -28,6 +28,7 @@ module Ronin
     module Error
       Error.pattern :ms_sql do |p|
         p.dialect = :ms
+        p.recognize /Microsoft SQL Native Client/
         p.recognize /Microsoft OLE DB Provider for SQL Server/
         p.recognize /Microsoft OLE DB Provider for ODBC Drivers.*\[Microsoft\]\[ODBC SQL Server Driver\]/
       end
