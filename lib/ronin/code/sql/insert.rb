@@ -35,8 +35,8 @@ module Ronin
         clause :default_values, DefaultValuesClause
         clause :values, ValuesClause
 
-        def initialize(dialect,options={},&block)
-          @table = options[:table]
+        def initialize(dialect,table=nil,options={},&block)
+          @table = table
 
           super(dialect,options,&block)
         end
