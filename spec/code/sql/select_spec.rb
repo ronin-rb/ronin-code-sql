@@ -94,12 +94,12 @@ describe Select do
   end
 
   it "should have an all rows option" do
-    @sql.all_rows
-    @sql.instance_variable_get('@all_rows').should == true
+    @sql.all_rows!
+    @sql.should be_all_rows
   end
 
   it "should have an distinct rows option" do
-    @sql.distinct_rows
-    @sql.instance_variable_get('@distinct_rows').should == true
+    @sql.distinct_rows!
+    @sql.should be_distinct_rows
   end
 end
