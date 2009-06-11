@@ -33,15 +33,19 @@ module Ronin
         clause :rename_to, RenameToClause
         clause :add_column, AddColumnClause
 
-        def initialize(options={},&block)
-          @table = options[:table]
+        def initialize(dialect,table=nil,options={},&block)
+          @table = table
 
-          super(options,&block)
+          super(dialect,options,&block)
         end
 
-        def table(name)
-          @table = name
-          return self
+        def table(name=nil)
+          if name
+            @table = name
+            return self
+          else
+            return @table
+          end
         end
 
         def emit
