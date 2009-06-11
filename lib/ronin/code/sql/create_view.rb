@@ -32,9 +32,13 @@ module Ronin
           super(dialect,'VIEW',view,options,&block)
         end
 
-        def view(name)
-          @name = name
-          return self
+        def view(name=nil)
+          if name
+            @name = name
+            return self
+          else
+            return @name
+          end
         end
 
       end
