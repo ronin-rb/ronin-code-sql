@@ -3,9 +3,22 @@ require 'ronin/formatting/extensions/sql/string'
 require 'spec_helper'
 
 describe String do
+  before(:all) do
+    @string = '/etc/passwd'
+    @sql_encoded = '0x2f6574632f706173737764'
+  end
+
+  it "should provide the #sql_encode method" do
+    @string.respond_to?('sql_encode').should == true
+  end
+
+  it "should provide the #sql_decode method" do
+    @string.respond_to?('sql_decode').should == true
+  end
+
   describe "SQL-hex encoding" do
     it "should be able to be SQL-hex encoded" do
-      '/etc/passwd'.sql_encode.should == '0x2f6574632f706173737764'
+      @string.sql_encode.should == @sql_encoded
     end
 
     it "should return an empty String if empty" do
@@ -15,10 +28,10 @@ describe String do
 
   describe "SQL-hex decoding" do
     it "should be able to be SQL-hex decoded" do
-      encoded = '/etc/passwd'.sql_encode
+      encoded = @string.sql_encode
 
-      encoded.should == '0x2f6574632f706173737764'
-      encoded.sql_decode.should == '/etc/passwd'
+      encoded.should == @sql_encoded
+      encoded.sql_decode.should == @string
     end
 
     it "should be able to decode SQL comma-escaping" do
