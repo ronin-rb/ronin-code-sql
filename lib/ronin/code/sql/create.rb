@@ -40,14 +40,22 @@ module Ronin
           super(dialect,options,&block)
         end
 
-        def temp
+        def temp!
           @temp = true
           return self
         end
 
-        def if_not_exists
+        def temp?
+          @temp == true
+        end
+
+        def if_not_exists!
           @if_not_exists = true
           return self
+        end
+
+        def if_not_exists?
+          @if_not_exists == true
         end
 
         def emit
