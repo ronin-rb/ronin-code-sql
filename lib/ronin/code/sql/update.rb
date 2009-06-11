@@ -39,9 +39,9 @@ module Ronin
           super(dialect,options,&block)
         end
 
-        def table(value)
-          @table = value
-          return self
+        def table(name=nil)
+          @table = name if name
+          return @table
         end
 
         def emit
