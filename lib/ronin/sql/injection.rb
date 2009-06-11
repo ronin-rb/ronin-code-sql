@@ -28,12 +28,14 @@ require 'ronin/extensions/uri'
 require 'ronin/web/extensions/nokogiri'
 require 'ronin/web/spider'
 
+require 'parameters'
 require 'nokogiri'
 
 module Ronin
   module SQL
     class Injection
 
+      include Parameters
       include Sessions::HTTP
 
       # The URL to inject upon
