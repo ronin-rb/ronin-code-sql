@@ -35,9 +35,13 @@ module Ronin
           super(dialect,'INDEX',index,options,&block)
         end
 
-        def index(name)
-          @name = name
-          return self
+        def index(name=nil)
+          if name
+            @name = name
+            return self
+          else
+            return @name
+          end
         end
 
       end
