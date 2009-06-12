@@ -50,7 +50,10 @@ of Ronin.
 
 == INSTALL:
 
-  $ sudo gem install ronin-sql
+  $ sudo gem install --no-rdoc ronin-sql
+
+* Due to a bug in RDoc ronin-sql must be installed with RDoc documentation
+  disabled.
 
 == EXAMPLES:
 
