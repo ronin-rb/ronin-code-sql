@@ -69,7 +69,7 @@ module URI
     # blind SQL injections.
     #
     scanner(:sqli) do |url,results,options|
-      each_query_param do |param,value|
+      url.each_query_param do |param,value|
         integer_tests = [
           {:escape => value},
           {:escape => value, :close_parenthesis => true}
@@ -91,7 +91,7 @@ module URI
         end
 
         tests.each do |test|
-          inj = Ronin::SQL::Injection.new(self,param,options.merge(test))
+          inj = Ronin::SQL::Injection.new(url,param,options.merge(test))
 
           if inj.vulnerable?(options)
             results.call(inj)
