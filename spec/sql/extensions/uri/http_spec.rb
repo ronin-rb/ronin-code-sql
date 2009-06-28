@@ -7,10 +7,6 @@ describe URI::HTTP do
     @url = URI('http://testasp.acunetix.com/showthread.asp?id=2')
   end
 
-  it "should include URI::QueryParams" do
-    @url.class.include?(URI::QueryParams)
-  end
-
   it "should determine which query params have SQL errors" do
     @url.sql_errors.should == {'id' => '2'}
   end
