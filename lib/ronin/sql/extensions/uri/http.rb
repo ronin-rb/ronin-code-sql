@@ -102,7 +102,7 @@ module URI
     end
 
     alias sql_injections sqli_scan
-    alias sql_injection get_sqli
+    alias sql_injection first_sqli
     alias has_sql_injections? has_sqli?
 
   end
