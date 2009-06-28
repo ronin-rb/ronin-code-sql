@@ -38,9 +38,9 @@ module URI
       errors = {}
 
       return each_query_param do |param,value|
-        error = Ronin::SQL::Injection.new(self,param).error(options)
+        mesg = Ronin::SQL::Injection.new(self,param).error(options)
 
-        errors[param] = error if error
+        errors[param] = mesg if mesg
       end
 
       return errors
