@@ -102,29 +102,8 @@ module URI
     end
 
     alias sql_injections sqli_scan
-
-    #
-    # Returns the first vulnerable SQL injection object found in the
-    # HTTP URL.
-    #
-    def sql_injection(options={})
-      sqli_scan(options) do |injection|
-        return injection
-      end
-    end
-
-    #
-    # Returns +true+ if any of the +query_params+ of the HTTP URL are
-    # vulnerable to blind SQL injection using the given _options_, returns
-    # +false+ otherwise.
-    #
-    def has_sql_injections?(options={})
-      sqli_scan(options) do |injection|
-        return true
-      end
-
-      return false
-    end
+    alias sql_injection get_sqli
+    alias has_sql_injections? has_sqli?
 
   end
 end
