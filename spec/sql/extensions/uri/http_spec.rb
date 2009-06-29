@@ -11,10 +11,24 @@ describe URI::HTTP do
     @url.sql_errors.should == {'id' => '2'}
   end
 
-  it "should determine which query params have SQL injection" do
-    inj = @url.sql_injection
+  it "should find all SQL injections" do
+    injections = @url.sql_injections
+    injection = injections.first
 
-    inj.param.should == 'id'
-    inj.sql_options[:escape].should == '2'
+    injections.length.should == 1
+
+    injection.param.should == 'id'
+    injection.sql_options[:escape].should == '2'
+  end
+
+  it "should find the first working SQL injection" do
+    injection = @url.sql_injection
+
+    injection.param.should == 'id'
+    injection.sql_options[:escape].should == '2'
+  end
+
+  it "should determine if a URL is vulnerable to SQL injection" do
+    @url.has_sql_injections?.should == true
   end
 end

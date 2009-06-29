@@ -22,10 +22,13 @@
 #
 
 require 'ronin/sql/injection'
+require 'ronin/scanners/scanner'
 require 'ronin/extensions/uri/http'
 
 module URI
   class HTTP < Generic
+
+    include Ronin::Scanners::Scanner
 
     #
     # Tests the +query_params+ of the HTTP URL with the given _options_ for
@@ -65,10 +68,8 @@ module URI
     # Tests the +query_params+ of the HTTP URL with the given _options_ for
     # blind SQL injections.
     #
-    def sql_injections(options={})
-      injectable = []
-
-      each_query_param do |param,value|
+    scanner(:sqli) do |url,results,options|
+      url.each_query_param do |param,value|
         integer_tests = [
           {:escape => value},
           {:escape => value, :close_parenthesis => true}
@@ -90,34 +91,19 @@ module URI
         end
 
         tests.each do |test|
-          inj = Ronin::SQL::Injection.new(self,param,options.merge(test))
+          inj = Ronin::SQL::Injection.new(url,param,options.merge(test))
 
           if inj.vulnerable?(options)
-            injectable << inj
+            results.call(inj)
             break
           end
         end
       end
-
-      return injectable
     end
 
-    #
-    # Returns the first vulnerable SQL injection object found in the
-    # HTTP URL.
-    #
-    def sql_injection(options={})
-      sql_injections(options).first
-    end
-
-    #
-    # Returns +true+ if any of the +query_params+ of the HTTP URL are
-    # vulnerable to blind SQL injection using the given _options_, returns
-    # +false+ otherwise.
-    #
-    def has_sql_injections?(options={})
-      !(sql_injections(options).empty?)
-    end
+    alias sql_injections sqli_scan
+    alias sql_injection first_sqli
+    alias has_sql_injections? has_sqli?
 
   end
 end
