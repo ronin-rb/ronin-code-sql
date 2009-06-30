@@ -4,7 +4,6 @@ require 'rubygems'
 require 'hoe'
 require 'hoe/signing'
 require './tasks/spec.rb'
-require './lib/ronin/sql/version.rb'
 
 Hoe.spec('ronin-sql') do
   self.rubyforge_name = 'ronin'
