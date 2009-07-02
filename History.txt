@@ -1,3 +1,12 @@
+=== 0.2.3 / 2009-07-02
+
+* Use Hoe >= 2.0.0.
+* Require ronin >= 0.2.4.
+* Require ronin-web >= 0.1.3.
+* Use Ronin::Scanners::Scanner to define the scanner for finding
+  Ronin::SQL::Injection objects for URI::HTTP urls.
+* Added more specs.
+
 === 0.2.2 / 2009-01-22
 
 * Depend on the new ronin-web library.
