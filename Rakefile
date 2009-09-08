@@ -13,6 +13,10 @@ Hoe.spec('ronin-sql') do
     ['ronin', '>=0.2.4'],
     ['ronin-web', '>=0.1.3']
   ]
+
+  self.extra_dev_deps = [
+    ['rspec', '>=1.1.12']
+  ]
 end
 
 # vim: syntax=Ruby
