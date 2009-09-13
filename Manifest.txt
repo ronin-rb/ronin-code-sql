@@ -80,6 +80,7 @@ lib/ronin/sql/injection.rb
 lib/ronin/sql/version.rb
 lib/ronin/sql.rb
 tasks/spec.rb
+tasks/yard.rb
 spec/spec_helper.rb
 spec/sql_spec.rb
 spec/helpers/code.rb
