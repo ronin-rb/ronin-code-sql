@@ -57,19 +57,19 @@ install or update Overlays.
 
 * Generate valid SQL using the Ronin SQL DSL.
 
-  puts Code.sql {
-    select(:from => :users, :where => (name == 'bob'))
-  }
-  SELECT * FROM users WHERE name = 'bob'
-  => nil
+    puts Code.sql {
+      select(:from => :users, :where => (name == 'bob'))
+    }
+    SELECT * FROM users WHERE name = 'bob'
+    => nil
 
 * Generate valid SQL injections using the Ronin SQL injection DSL.
 
-  puts Code.sql_injection {
-    escape_string { has_table?(:users) }
-  }
-  ' AND (SELECT count(*) FROM users) = 1 --
-  => nil
+    puts Code.sql_injection {
+      escape_string { has_table?(:users) }
+    }
+    ' AND (SELECT count(*) FROM users) = 1 --
+    => nil
 
 == LICENSE:
 
