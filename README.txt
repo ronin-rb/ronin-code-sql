@@ -76,13 +76,13 @@ install or update Overlays.
 
 * Get the first viable SQLi vulnerability:
 
-    url.sqli
-    # => #<Ronin::SQL::Injection: ...>
+    url.first_sqli
+    # => #<Ronin::SQL::Injection:0x67d6d38cba60 @http_method=:get, @url=#<URI::HTTP:0x67d6d8697190 URL:http://redteatrosalternativos.com/_05enlaces/links/phpHoo3.php?viewCat=1>, @params={:http_method=>:get}, @sql_options={:escape=>"1"}, @param="viewCat">
 
 * Scan a URL for SQLi vulnerabilities:
 
     url.sqli_scan
-    # => [#<Ronin::SQL::Injection: ...>, ...]
+    # => [#<Ronin::SQL::Injection:0x67d6d38792d8 @http_method=:get, @url=#<URI::HTTP:0x67d6d8697190 URL:http://redteatrosalternativos.com/_05enlaces/links/phpHoo3.php?viewCat=1>, @params={:http_method=>:get}, @sql_options={:escape=>"1"}, @param="viewCat">]
 
 == LICENSE:
 
