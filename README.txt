@@ -52,14 +52,14 @@ install or update Overlays.
 
 == EXAMPLES:
 
-* Generate valid SQL using the Ronin SQL DSL.
+* Generate valid SQL using the Ronin SQL DSL:
 
     Code.sql {
       select(:from => :users, :where => (name == 'bob'))
     }.to_s
     # => "SELECT * FROM users WHERE name = 'bob'"
 
-* Generate valid SQL injections using the Ronin SQL injection DSL.
+* Generate valid SQL injections using the Ronin SQL injection DSL:
 
     Code.sql_injection {
       escape_string { has_table?(:users) }
