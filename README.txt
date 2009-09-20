@@ -50,6 +50,10 @@ install or update Overlays.
 
   $ sudo gem install ronin-sql
 
+== SYNOPSIS:
+
+  $ ronin-sql
+
 == EXAMPLES:
 
 * Generate valid SQL using the Ronin SQL DSL:
