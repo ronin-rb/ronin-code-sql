@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+
+lib_dir = File.expand_path(File.join(File.dirname(__FILE__),'..','lib'))
+unless $LOAD_PATH.include?(lib_dir)
+  $LOAD_PATH << lib_dir
+end
+
+require 'ronin/ui/command_line/commands/console'
+require 'ronin/ui/console'
+
+Ronin::UI::Console.auto_load << 'ronin/sql'
+Ronin::UI::CommandLine::Commands::Console.start

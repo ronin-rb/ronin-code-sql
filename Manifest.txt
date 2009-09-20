@@ -3,6 +3,7 @@ COPYING.txt
 Manifest.txt
 README.txt
 Rakefile
+bin/ronin-sql
 lib/ronin/code/sql.rb
 lib/ronin/code/sql/exceptions.rb
 lib/ronin/code/sql/exceptions/unknown_dialect.rb
