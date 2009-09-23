@@ -12,7 +12,7 @@ Hoe.spec('ronin-sql') do
   self.remote_rdoc_dir = 'docs/ronin-sql'
   self.extra_deps = [
     ['ronin', '>=0.3.0'],
-    ['ronin-web', '>=0.1.3']
+    ['ronin-web', '>=0.2.0']
   ]
 
   self.extra_dev_deps = [
