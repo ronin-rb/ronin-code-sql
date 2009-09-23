@@ -83,8 +83,8 @@ install or update Overlays.
 
 == REQUIREMENTS:
 
-* {ronin}[http://ronin.rubyforge.org/] >= 0.1.2
-* {ronin-web}[http://ronin.rubyforge.org/web/] >= 0.1.0
+* {ronin}[http://ronin.rubyforge.org/] >= 0.3.0
+* {ronin-web}[http://ronin.rubyforge.org/web/] >= 0.2.0
 
 == INSTALL:
 
