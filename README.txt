@@ -41,15 +41,6 @@ install or update Overlays.
   SQL injections.
 * Provides tests for finding SQL injections.
 
-== REQUIREMENTS:
-
-* {ronin}[http://ronin.rubyforge.org/] >= 0.1.2
-* {ronin-web}[http://ronin.rubyforge.org/web/] >= 0.1.0
-
-== INSTALL:
-
-  $ sudo gem install ronin-sql
-
 == SYNOPSIS:
 
 * Start the Ronin Console with Ronin SQL preloaded:
@@ -89,6 +80,15 @@ install or update Overlays.
 
     url.sqli_scan
     # => [#<Ronin::SQL::Injection:0x67d6d38792d8 @http_method=:get, @url=#<URI::HTTP:0x67d6d8697190 URL:http://redteatrosalternativos.com/_05enlaces/links/phpHoo3.php?viewCat=1>, @params={:http_method=>:get}, @sql_options={:escape=>"1"}, @param="viewCat">]
+
+== REQUIREMENTS:
+
+* {ronin}[http://ronin.rubyforge.org/] >= 0.1.2
+* {ronin-web}[http://ronin.rubyforge.org/web/] >= 0.1.0
+
+== INSTALL:
+
+  $ sudo gem install ronin-sql
 
 == LICENSE:
 
