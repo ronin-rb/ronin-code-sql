@@ -52,7 +52,9 @@ install or update Overlays.
 
 == SYNOPSIS:
 
-  $ ronin-sql
+* Start the Ronin Console with Ronin SQL preloaded:
+
+    $ ronin-sql
 
 == EXAMPLES:
 
