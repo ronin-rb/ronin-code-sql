@@ -2,8 +2,9 @@
 
 * http://ronin.rubyforge.org/sql/
 * http://github.com/postmodern/ronin-sql
+* http://github.com/postmodern/ronin-sql/issues
+* http://groups.google.com/group/ronin-ruby
 * irc.freenode.net #ronin
-* Postmodern (postmodern.mod3 at gmail.com)
 
 == DESCRIPTION:
 
