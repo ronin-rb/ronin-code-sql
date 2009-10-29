@@ -84,7 +84,7 @@ tasks/spec.rb
 tasks/yard.rb
 spec/spec_helper.rb
 spec/sql_spec.rb
-spec/code/sql/helpers/code.rb
+spec/code/sql/helpers/sql.rb
 spec/code/sql/has_default_values_clause_examples.rb
 spec/code/sql/has_fields_clause_examples.rb
 spec/code/sql/has_from_clause_examples.rb
