@@ -78,6 +78,7 @@ lib/ronin/sql/error/pattern.rb
 lib/ronin/sql/error/error.rb
 lib/ronin/sql/error/patterns.rb
 lib/ronin/sql/injection.rb
+lib/ronin/sql/scanner.rb
 lib/ronin/sql/version.rb
 lib/ronin/sql.rb
 tasks/spec.rb

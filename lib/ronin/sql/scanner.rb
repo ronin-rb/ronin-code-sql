@@ -19,13 +19,13 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/extensions'
-require 'ronin/sql/error'
-require 'ronin/sql/injection'
-require 'ronin/sql/scanner'
-require 'ronin/sql/version'
-require 'ronin/config'
+require 'ronin/sql/extensions/uri/http'
+require 'ronin/scanners/web'
 
 module Ronin
-  Config.load :sql
+  module Scanners
+    Web.scanner(:sqli) do |page,results,options|
+      page.url.sqli_scan(options,&results)
+    end
+  end
 end
