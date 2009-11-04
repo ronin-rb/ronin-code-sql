@@ -1,8 +1,11 @@
 require 'ronin/code/sql/fields_clause'
 
-require 'helpers/code'
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 
 shared_examples_for "has a fields clause" do
+  include Helpers
+
   it "should have a fields clause" do
     fields = [:id, :name, :users]
 

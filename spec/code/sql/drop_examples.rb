@@ -1,6 +1,6 @@
 require 'ronin/code/sql/drop'
 
-require 'helpers/code'
+require 'spec_helper'
 
 shared_examples_for "Drop" do
   it "should have an if_exists option" do

@@ -1,12 +1,15 @@
 require 'ronin/code/sql/select'
 
-require 'helpers/code'
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 require 'code/sql/has_from_clause_examples'
 require 'code/sql/has_where_clause_examples'
 
-describe Select do
+describe Code::SQL::Select do
+  include Helpers
+
   before(:each) do
-    @sql = Select.new(common_dialect)
+    @sql = Code::SQL::Select.new(common_dialect)
   end
 
   it_should_behave_like "has a fields clause"

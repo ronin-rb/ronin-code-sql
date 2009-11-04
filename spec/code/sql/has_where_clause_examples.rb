@@ -1,8 +1,11 @@
 require 'ronin/code/sql/where_clause'
 
-require 'helpers/code'
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 
 shared_examples_for "has a where clause" do
+  include Helpers
+
   it "should have a where clause" do
     @sql.instance_eval do
       where name == 'bob'

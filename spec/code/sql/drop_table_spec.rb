@@ -1,10 +1,14 @@
 require 'ronin/code/sql/drop_table'
 
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 require 'code/sql/drop_examples'
 
-describe DropTable do
+describe Code::SQL::DropTable do
+  include Helpers
+
   before(:each) do
-    @sql = DropTable.new(common_dialect)
+    @sql = Code::SQL::DropTable.new(common_dialect)
   end
 
   it_should_behave_like "Drop"

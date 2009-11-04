@@ -1,11 +1,14 @@
 require 'ronin/code/sql/update'
 
-require 'helpers/code'
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 require 'code/sql/has_where_clause_examples'
 
-describe Update do
+describe Code::SQL::Update do
+  include Helpers
+
   before(:each) do
-    @sql = Update.new(common_dialect)
+    @sql = Code::SQL::Update.new(common_dialect)
   end
 
   it_should_behave_like "has a where clause"

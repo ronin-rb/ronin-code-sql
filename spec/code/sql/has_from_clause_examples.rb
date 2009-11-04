@@ -1,8 +1,11 @@
 require 'ronin/code/sql/from_clause'
 
-require 'helpers/code'
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 
 shared_examples_for "has a from clause" do
+  include Helpers
+
   it "should have a from clause" do
     @sql.from :users
 

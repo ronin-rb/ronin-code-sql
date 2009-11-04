@@ -1,10 +1,14 @@
 require 'ronin/code/sql/create_index'
 
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 require 'code/sql/create_examples'
 
-describe CreateIndex do
+describe Code::SQL::CreateIndex do
+  include Helpers
+
   before(:each) do
-    @sql = CreateIndex.new(common_dialect)
+    @sql = Code::SQL::CreateIndex.new(common_dialect)
   end
 
   it_should_behave_like "Create"

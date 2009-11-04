@@ -1,12 +1,15 @@
 require 'ronin/code/sql/delete'
 
-require 'helpers/code'
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 require 'code/sql/has_from_clause_examples'
 require 'code/sql/has_where_clause_examples'
 
-describe Delete do
+describe Code::SQL::Delete do
+  include Helpers
+
   before(:each) do
-    @sql = Delete.new(common_dialect)
+    @sql = Code::SQL::Delete.new(common_dialect)
   end
 
   it_should_behave_like "has a from clause"

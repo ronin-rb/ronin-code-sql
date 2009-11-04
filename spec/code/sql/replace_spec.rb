@@ -1,13 +1,16 @@
 require 'ronin/code/sql/replace'
 
-require 'helpers/code'
+require 'spec_helper'
+require 'code/sql/helpers/sql'
 require 'code/sql/has_fields_clause_examples'
 require 'code/sql/has_default_values_clause_examples'
 require 'code/sql/has_values_clause_examples'
 
-describe Replace do
+describe Code::SQL::Replace do
+  include Helpers
+
   before(:each) do
-    @sql = Replace.new(common_dialect)
+    @sql = Code::SQL::Replace.new(common_dialect)
   end
 
   it_should_behave_like 'has a fields clause'

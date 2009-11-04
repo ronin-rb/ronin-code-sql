@@ -2,8 +2,6 @@ require 'ronin/code/sql/create'
 
 require 'code/sql/has_fields_clause_examples'
 
-require 'helpers/code'
-
 shared_examples_for "Create" do
   it_should_behave_like "has a fields clause"
 
