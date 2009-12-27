@@ -9,7 +9,10 @@ require './tasks/yard.rb'
 Hoe.spec('ronin-sql') do
   self.rubyforge_name = 'ronin'
   self.developer('Postmodern','postmodern.mod3@gmail.com')
+  self.readme_file = 'README.rdoc'
+  self.history_file = 'History.rdoc'
   self.remote_rdoc_dir = 'docs/ronin-sql'
+
   self.extra_deps = [
     ['ronin', '>=0.3.0'],
     ['ronin-web', '>=0.2.2']
