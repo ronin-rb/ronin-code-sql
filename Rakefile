@@ -3,7 +3,8 @@
 require 'rubygems'
 require 'hoe'
 require 'hoe/signing'
-require './tasks/yard.rb'
+
+Hoe.plugin :yard
 
 Hoe.spec('ronin-sql') do
   self.rubyforge_name = 'ronin'
@@ -11,9 +12,9 @@ Hoe.spec('ronin-sql') do
 
   self.rspec_options += ['--colour', '--format', 'specdoc']
 
-  self.readme_file = 'README.rdoc'
-  self.history_file = 'History.rdoc'
-  self.remote_rdoc_dir = 'docs/ronin-sql'
+  self.yard_title = 'Ronin SQL Documentation'
+  self.yard_options += ['--protected']
+  self.remote_yard_dir = 'docs/ronin-sql'
 
   self.extra_deps = [
     ['ronin', '>=0.3.0'],
@@ -24,8 +25,6 @@ Hoe.spec('ronin-sql') do
     ['rspec', '>=1.2.8'],
     ['yard', '>=0.5.2']
   ]
-
-  self.spec_extras = {:has_rdoc => 'yard'}
 end
 
 # vim: syntax=Ruby
