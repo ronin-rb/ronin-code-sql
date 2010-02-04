@@ -59,7 +59,7 @@ module Ronin
 
         #
         # Returns the first match between the error pattern and the
-        # specified _data_. If no matches were found +nil+ will be
+        # specified _data_. If no matches were found `nil` will be
         # returned.
         #
         def match(data)
@@ -77,7 +77,7 @@ module Ronin
         #
         # Returns the match index within the specified _data_ where a SQL
         # error Pattern occurs. If no SQL error Pattern can be found within
-        # _data_, +nil+ will be returned.
+        # _data_, `nil` will be returned.
         #
         def =~(data)
           data = data.to_s

@@ -29,11 +29,11 @@ module URI
     include Ronin::Scanners::Scanner
 
     #
-    # Tests the +query_params+ of the HTTP URL with the given _options_ for
+    # Tests the `query_params` of the HTTP URL with the given _options_ for
     # SQL errors.
     #
     # _options_ may contain the following keys:
-    # <tt>:sql</tt>:: The SQL injection to use. Defaults to <tt>"'"</tt>.
+    # <tt>:sql</tt>:: The SQL injection to use. Defaults to `"'"`.
     #
     def sql_errors(options={})
       errors = {}
@@ -52,18 +52,18 @@ module URI
     end
 
     #
-    # Returns +true+ if any of the +query_params+ of the HTTP URI return
-    # SQL errors using the given _options_, returns +false+ otherwise.
+    # Returns `true` if any of the `query_params` of the HTTP URI return
+    # SQL errors using the given _options_, returns `false` otherwise.
     #
     # _options_ may contain the following keys:
-    # <tt>:sql</tt>:: The SQL injection to use. Defaults to <tt>"'"</tt>.
+    # <tt>:sql</tt>:: The SQL injection to use. Defaults to `"'"`.
     #
     def has_sql_errors?(options={})
       !(sql_errors(options).empty?)
     end
 
     #
-    # Tests the +query_params+ of the HTTP URL with the given _options_ for
+    # Tests the `query_params` of the HTTP URL with the given _options_ for
     # blind SQL injections.
     #
     scanner(:sqli) do |url,results,options|

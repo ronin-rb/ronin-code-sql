@@ -13,7 +13,7 @@ Hoe.spec('ronin-sql') do
   self.rspec_options += ['--colour', '--format', 'specdoc']
 
   self.yard_title = 'Ronin SQL Documentation'
-  self.yard_options += ['--protected']
+  self.yard_options += ['--markup', 'markdown', '--protected']
   self.remote_yard_dir = 'docs/ronin-sql'
 
   self.extra_deps = [

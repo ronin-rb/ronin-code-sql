@@ -26,7 +26,7 @@ class String
   #
   # Returns an SQL error Message using the given _options_ if the
   # String contains a SQL error Pattern. If no SQL error Pattern can be
-  # found within the String, +nil+ will be returned.
+  # found within the String, `nil` will be returned.
   #
   # _options_ may contain the following keys:
   # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
@@ -51,8 +51,8 @@ class String
   end
 
   #
-  # Returns +true+ if a SQL error Pattern can be found within the
-  # String using the given _options_, returns +false+ otherwise.
+  # Returns `true` if a SQL error Pattern can be found within the
+  # String using the given _options_, returns `false` otherwise.
   #
   # _options_ may contain the following keys:
   # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
