@@ -88,6 +88,21 @@ module Ronin
         end
 
         #
+        # Creates a new fragment.
+        #
+        # @param [Array] elements
+        #   The elements to populate the fragment with.
+        #
+        # @return [Fragment]
+        #   The newly created fragment.
+        #
+        # @since 0.3.0
+        #
+        def self.[](*elements)
+          self.new(elements)
+        end
+
+        #
         # Appends the given elements to the fragment.
         #
         # @param [Array] elements
