@@ -5,6 +5,7 @@ README.md
 Rakefile
 bin/ronin-sql
 lib/ronin/code/sql.rb
+lib/ronin/code/sql/fragment.rb
 lib/ronin/formatting/sql.rb
 lib/ronin/formatting/extensions/sql.rb
 lib/ronin/formatting/extensions/sql/string.rb
@@ -23,6 +24,8 @@ lib/ronin/sql/scanner.rb
 lib/ronin/sql/version.rb
 lib/ronin/sql.rb
 spec/spec_helper.rb
-spec/sql_spec.rb
+spec/code/sql/helpers/fragment.rb
+spec/code/sql/fragment_spec.rb
 spec/sql/error_spec.rb
 spec/sql/extensions/uri/http_spec.rb
+spec/sql_spec.rb
