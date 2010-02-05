@@ -125,11 +125,9 @@ module Ronin
             when Float
               tokens << encode_float(element)
             when NilClass
-              tokens << encode_keyword(:null)
-            when TrueClass
-              tokens << encode_keyword(:true)
-            when FalseClass
-              tokens << encode_keyword(:false)
+              tokens << encode_null()
+            when TrueClass, FalseClass
+              tokens << encode_boolean(element)
             else
               raise(RuntimeError,"invalid data #{element.inspect} passed to #{self}.tokenize",caller)
             end
@@ -162,6 +160,18 @@ module Ronin
           else
             name
           end
+        end
+
+        #
+        # Encodes a NULL keyword.
+        #
+        # @return [String]
+        #   The encoded SQL NULL value.
+        #
+        # @since 0.3.0
+        #
+        def encoder_null
+          encode_keyword(:null)
         end
 
         #

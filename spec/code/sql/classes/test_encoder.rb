@@ -8,6 +8,10 @@ class TestEncoder
     encode_keyword(keyword)
   end
 
+  def test_null
+    encode_null
+  end
+
   def test_boolean(bool)
     encode_boolean(bool)
   end

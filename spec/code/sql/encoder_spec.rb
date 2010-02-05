@@ -13,6 +13,10 @@ describe Code::SQL::Encoder do
       @encoder.test_keyword(:id).should == "id"
     end
 
+    it "should encode a NULL keyword" do
+      @encoder.test_null().should == 'null'
+    end
+
     it "should encode a true value" do
       @encoder.test_boolean(true).should == 'true'
     end
