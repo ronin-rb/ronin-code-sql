@@ -9,6 +9,7 @@ lib/ronin/code/sql/encoder.rb
 lib/ronin/code/sql/fragment.rb
 lib/ronin/code/sql/function.rb
 lib/ronin/code/sql/factory.rb
+lib/ronin/code/sql/code.rb
 lib/ronin/formatting/sql.rb
 lib/ronin/formatting/extensions/sql.rb
 lib/ronin/formatting/extensions/sql/string.rb
