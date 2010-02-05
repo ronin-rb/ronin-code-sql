@@ -109,7 +109,7 @@ module Ronin
           elements.each do |element|
             case element
             when Encoder
-              tokens += element.tokens()
+              tokens << element.to_sql
             when Hash
               tokens << encode_hash(element)
             when Array
