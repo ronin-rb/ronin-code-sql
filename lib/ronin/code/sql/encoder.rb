@@ -170,7 +170,7 @@ module Ronin
         #
         # @since 0.3.0
         #
-        def encoder_null
+        def encode_null
           encode_keyword(:null)
         end
 
