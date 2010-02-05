@@ -53,6 +53,8 @@ module Ronin
           @arguments = arguments
         end
 
+        protected
+
         #
         # Encodes the function into SQL tokens.
         #

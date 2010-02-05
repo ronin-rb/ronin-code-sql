@@ -80,6 +80,8 @@ module Ronin
           return self
         end
 
+        protected
+
         #
         # Encodes the elements of the fragment into SQL tokens.
         #

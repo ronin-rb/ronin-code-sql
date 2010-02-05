@@ -59,18 +59,6 @@ module Ronin
         end
 
         #
-        # Default method to return tokens for encoding.
-        #
-        # @return [Array<String>]
-        #   The tokens to be encoded.
-        #
-        # @since 0.3.0
-        #
-        def tokens
-          []
-        end
-
-        #
         # Default encoder method to create SQL code.
         #
         # @return [String]
@@ -91,6 +79,18 @@ module Ronin
         alias to_s to_sql
 
         protected
+
+        #
+        # Default method to return tokens for encoding.
+        #
+        # @return [Array<String>]
+        #   The tokens to be encoded.
+        #
+        # @since 0.3.0
+        #
+        def tokens
+          []
+        end
 
         #
         # Converts an Array of Ruby primatives into an Array of SQL tokens.
