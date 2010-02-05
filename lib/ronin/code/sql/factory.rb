@@ -56,8 +56,9 @@ module Ronin
         # @option options [Boolean] :hex_escape
         #   Forces all Strings to be hex-escaped.
         #
-        # @option options [Boolean] :less_parens
+        # @option options [Symbol] :parens
         #   Reduces the amount of parenthesis when tokenizing lists.
+        #   May be either `:less`, `:more`.
         #
         # @since 0.3.0
         #

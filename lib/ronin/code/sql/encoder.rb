@@ -40,6 +40,21 @@ module Ronin
         # @param [Hash] options
         #   Encoding options.
         #
+        # @option options [Symbol] :case
+        #   Controls the case of keywords. May be either `:lower`,
+        #   `:upper` or `:random`
+        #
+        # @option options [Symbol] :quotes
+        #   Controls the quoting style of strings. May be either `:single`
+        #   or `:double`.
+        #
+        # @option options [Boolean] :hex_escape
+        #   Forces all Strings to be hex-escaped.
+        #
+        # @option options [Symbol] :parens
+        #   Reduces the amount of parenthesis when tokenizing lists.
+        #   May be either `:less`, `:more`.
+        #
         # @since 0.3.0
         #
         def initialize(options={})
@@ -256,16 +271,18 @@ module Ronin
         def wrap_list(tokens)
           value = case tokens.length
                   when 0
-                    '()'
+                    ''
                   when 1
                     tokens.first
                   else
-                    value = tokens.join(',')
-
-                    unless options[:less_parens]
-                      value = "(#{value})"
-                    end
+                    tokens.join(',')
                   end
+
+          return '()' if value.empty?
+
+          if options[:parens] == :more
+            value = "(#{value})"
+          end
 
           return value
         end
