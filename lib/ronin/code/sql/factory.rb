@@ -85,6 +85,14 @@ module Ronin
         # @return [Function]
         #   The new SQL function call.
         #
+        # @example Create SQL function calls
+        #   sql.max(:id).to_s
+        #   # => "max(id)
+        #
+        # @example Nesting SQL function calls
+        #   sql.ascii(sql.substring(:name,1,10)).to_s
+        #   # => "ascii(substring(name,1,10))
+        #
         # @since 0.3.0
         #
         def method_missing(name,*arguments,&block)
