@@ -32,6 +32,12 @@ module Ronin
     # @return [SQL::Factory]
     #   The new SQL factory object.
     #
+    # @example
+    #   sql = Code.sql
+    #
+    #   sql[:and, 1, :eq, 1].to_s
+    #   # => "and 1 = 1"
+    #
     # @since 0.3.0
     #
     def Code.sql(options={})
