@@ -317,7 +317,7 @@ module Ronin
         # @since 0.3.0
         #
         def join_elements(*elements)
-          separater = if @spaces == false
+          separator = if @spaces == false
                         '/**/'
                       else
                         ' '
