@@ -39,6 +39,14 @@ module Ronin
         # @return [Fragment]
         #   The new fragment object.
         #
+        # @example Create SQL fragments
+        #   sql[:and, 1, :eq, 1].to_s
+        #   # => "and 1 = 1"
+        #
+        # @example Nesting SQL fragments
+        #   sql[:union, [sql[:select, [1,2,3,4,:id], :from, :users]]].to_s
+        #   # => "union (select (1,2,3,4,id) from users)"
+        #
         # @since 0.3.0
         #
         def [](*elements)
