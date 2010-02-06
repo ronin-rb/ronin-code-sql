@@ -22,6 +22,32 @@
 class String
 
   #
+  # Escapes an String for SQL.
+  #
+  # @param [Symbol] quotes (:single)
+  #   Specifies whether to create a single or double quoted string.
+  #   May be either `:single` or `:double`.
+  #
+  # @return [String]
+  #   The escaped String.
+  #
+  # @raise [RuntimeError]
+  #   The quotes argument was neither `:single` nor `:double`.
+  #
+  # @since 0.3.0
+  #
+  def sql_escape(quotes=:single)
+    case quotes
+    when :single
+      "'" + self.gsub(/'/,"''") + "'"
+    when :double
+      '"' + self.gsub(/"/,'""') + '"'
+    else
+      raise(RuntimeError,"invalid quoting style #{quotes.inspect}",caller)
+    end
+  end
+
+  #
   # Returns the SQL hex-string encoded form of the String.
   #
   #   "/etc/passwd".sql_encode

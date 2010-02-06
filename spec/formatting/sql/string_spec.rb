@@ -6,14 +6,29 @@ describe String do
   before(:all) do
     @string = '/etc/passwd'
     @sql_encoded = '0x2f6574632f706173737764'
+    @string_with_quotes = %{"O'Brian"}
+  end
+
+  it "should provide the #sql_escape method" do
+    @string.should respond_to(:sql_escape)
   end
 
   it "should provide the #sql_encode method" do
-    @string.respond_to?('sql_encode').should == true
+    @string.should respond_to(:sql_encode)
   end
 
   it "should provide the #sql_decode method" do
-    @string.respond_to?('sql_decode').should == true
+    @string.should respond_to(:sql_decode)
+  end
+
+  describe "SQL escaping" do
+    it "should be able to single-quote escape" do
+      @string_with_quotes.sql_escape(:single).should == %{'"O''Brian"'}
+    end
+
+    it "should be able to double-quote escape" do
+      @string_with_quotes.sql_escape(:double).should == %{"""O'Brian"""}
+    end
   end
 
   describe "SQL-hex encoding" do
