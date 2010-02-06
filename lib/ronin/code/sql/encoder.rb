@@ -35,7 +35,7 @@ module Ronin
         }
 
         # Default case preference
-        DEFAULT_CASE = :lower
+        DEFAULT_CASE = :none
 
         # Default quoting preference
         DEFAULT_QUOTES = :single
@@ -50,7 +50,7 @@ module Ronin
         #   Encoding options.
         #
         # @option options [Symbol] :case (DEFAULT_CASE)
-        #   Controls the case of keywords. May be either `:lower`,
+        #   Controls the case of keywords. May be either `:none`, `:lower`,
         #   `:upper` or `:random`
         #
         # @option options [Symbol] :quotes (DEFAULT_QUOTES)

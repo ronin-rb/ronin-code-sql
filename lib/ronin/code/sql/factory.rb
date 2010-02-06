@@ -46,7 +46,7 @@ module Ronin
         #   Additional options.
         #
         # @option options [Symbol] :case (Encoder::DEFAULT_CASE)
-        #   Controls the case of keywords. May be either `:lower`,
+        #   Controls the case of keywords. May be either `:none`, `:lower`,
         #   `:upper` or `:random`
         #
         # @option options [Symbol] :quotes (Encoder::DEFAULT_QUOTE)
