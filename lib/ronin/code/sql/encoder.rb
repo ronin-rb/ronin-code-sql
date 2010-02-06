@@ -220,7 +220,7 @@ module Ronin
         #
         def encode_string(text)
           if @hex_escape
-            encode_keyword(name) + "(#{text.sql_encode})"
+            encode_keyword(:hex) + "(#{text.sql_encode})"
           else
             text.sql_escape(@quotes)
           end
