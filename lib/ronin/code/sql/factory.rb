@@ -58,7 +58,8 @@ module Ronin
             :case => @case,
             :quotes => @quotes,
             :hex_escape => @hex_escape,
-            :less_parens => @less_parens
+            :parens => @parens,
+            :spaces => @spaces
           }
         end
 
