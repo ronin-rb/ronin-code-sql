@@ -267,10 +267,10 @@ module Ronin
         #
         def encode_string(text)
           if options[:hex_escape]
-            return encode_keyword(name) + "(#{text.sql_encode})"
+            encode_keyword(name) + "(#{text.sql_encode})"
+          else
+            text.sql_escape(options[:quotes])
           end
-
-          return text.sql_escape(options[:quotes])
         end
 
         #
