@@ -19,6 +19,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'ronin/formatting/sql'
+
 module Ronin
   module Code
     module SQL
@@ -268,7 +270,7 @@ module Ronin
             return encode_keyword(name) + "(#{text.sql_encode})"
           end
 
-          return text.dump
+          return text.sql_escape(options[:quotes])
         end
 
         #

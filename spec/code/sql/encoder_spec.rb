@@ -34,7 +34,7 @@ describe Code::SQL::Encoder do
     end
 
     it "should encode a String" do
-      @encoder.test_string('hello').should == "\"hello\""
+      @encoder.test_string('hello').should == "'hello'"
     end
 
     it "should encode an empty Array" do
@@ -60,7 +60,7 @@ describe Code::SQL::Encoder do
     it "should encode a single Hash" do
       update = {:user => 'bob', :password => 'lol'}
 
-      @encoder.test_hash(update).should == "(user=\"bob\",password=\"lol\")"
+      @encoder.test_hash(update).should == "(user='bob',password='lol')"
     end
 
     it "should encode multiple elements" do
