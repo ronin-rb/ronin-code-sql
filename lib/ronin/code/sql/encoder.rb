@@ -271,6 +271,21 @@ module Ronin
         end
 
         #
+        # Wraps a value in parenthesis.
+        #
+        # @param [String] value
+        #   The value to wrap.
+        #
+        # @return [String]
+        #   The wrapped value.
+        #
+        # @since 0.3.0
+        #
+        def wrap_parens(value)
+          "(#{value})"
+        end
+
+        #
         # Wraps a list of tokens in parenthesis.
         #
         # @param [Array<String>] tokens
@@ -282,19 +297,10 @@ module Ronin
         # @since 0.3.0
         #
         def wrap_list(tokens)
-          value = case tokens.length
-                  when 0
-                    ''
-                  when 1
-                    tokens.first
-                  else
-                    tokens.join(',')
-                  end
+          value = tokens.join(',')
 
-          return '()' if value.empty?
-
-          if options[:parens] == :more
-            value = "(#{value})"
+          if (options[:parens] == :more || tokens.length != 1)
+            value = wrap_parens(value)
           end
 
           return value
@@ -327,8 +333,8 @@ module Ronin
         #
         def encode_hash(hash)
           wrap_list(hash.to_a.map { |name,value|
-            name = encode_list(name)
-            value = encode_list(value)
+            name = encode(name)
+            value = encode(value)
 
             "#{name}=#{value}"
           })

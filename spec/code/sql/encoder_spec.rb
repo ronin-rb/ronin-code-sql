@@ -42,7 +42,7 @@ describe Code::SQL::Encoder do
     end
 
     it "should encode a singleton Array" do
-      @encoder.test_list(1).should == "1"
+      @encoder.test_list(1).should == "(1)"
     end
 
     it "should encode an Array" do
@@ -54,7 +54,7 @@ describe Code::SQL::Encoder do
     end
 
     it "should encode a singleton Hash" do
-      @encoder.test_hash({:count => 5}).should == "count=5"
+      @encoder.test_hash({:count => 5}).should == "(count=5)"
     end
 
     it "should encode a single Hash" do
