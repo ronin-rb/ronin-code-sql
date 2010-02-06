@@ -40,4 +40,8 @@ class TestEncoder
     encode(*elements)
   end
 
+  def test_join(*elements)
+    join_elements(*encode(*elements))
+  end
+
 end
