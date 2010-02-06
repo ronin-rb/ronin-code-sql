@@ -255,7 +255,7 @@ module Ronin
         def wrap_list(tokens)
           value = tokens.join(',')
 
-          if (@parens == :more || tokens.length != 1)
+          if (@parens == :more || (@parens == :less && tokens.length == 0))
             value = wrap_parens(value)
           end
 
