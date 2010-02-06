@@ -41,7 +41,7 @@ class TestEncoder
   end
 
   def test_join(*elements)
-    join_elements(*encode(*elements))
+    encode_elements(*elements)
   end
 
 end
