@@ -43,6 +43,9 @@ module Ronin
 
         # Controls the amount of parenthesis surrounding lists
         attr_accessor :parens
+        
+        # Controls whether spaces are used to separate keywords
+        attr_accessor :spaces
 
         #
         # Sets the style options.
@@ -65,6 +68,10 @@ module Ronin
         #   Reduces the amount of parenthesis when tokenizing lists.
         #   May be either `:less`, `:more`.
         #
+        # @option options [Boolean] :spaces (true)
+        #   Controls whether spaces are used to separate keywords,
+        #   or other kinds of white-space.
+        #
         # @since 0.3.0
         #
         def initialize(options={})
@@ -72,6 +79,11 @@ module Ronin
           @quotes = (options[:quotes] || DEFAULT_QUOTES)
           @hex_escape = (options[:hex_escape] || false)
           @parens = (options[:parens] || DEFAULT_PARENS)
+          @spaces = true
+
+          if options.has_key?(:spaces)
+            @spaces = options[:spaces]
+          end
         end
       end
     end
