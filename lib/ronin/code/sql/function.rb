@@ -44,6 +44,25 @@ module Ronin
         # @param [Hash] options
         #   Encoding options.
         #
+        # @option options [Symbol] :case (Style::DEFAULT_CASE)
+        #   Controls the case of keywords. May be either `:lower`,
+        #   `:upper` or `:random`
+        #
+        # @option options [Symbol] :quotes (Style::DEFAULT_QUOTES)
+        #   Controls the quoting style of strings. May be either `:single`
+        #   or `:double`.
+        #
+        # @option options [Boolean] :hex_escape (false)
+        #   Forces all Strings to be hex-escaped.
+        #
+        # @option options [Symbol] :parens (Style::DEFAULT_PARENS)
+        #   Reduces the amount of parenthesis when tokenizing lists.
+        #   May be either `:less`, `:more`.
+        #
+        # @option options [Boolean] :spaces (true)
+        #   Controls whether spaces are used to separate keywords,
+        #   or other kinds of white-space.
+        #
         # @since 0.3.0
         #
         def initialize(name,arguments=[],options={})
