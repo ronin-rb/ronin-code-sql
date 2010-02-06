@@ -19,6 +19,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'ronin/code/sql/style'
 require 'ronin/code/sql/fragment'
 require 'ronin/code/sql/function'
 
@@ -27,47 +28,7 @@ module Ronin
     module SQL
       class Factory
 
-        # Controls the casing of keywords
-        attr_accessor :case
-
-        # Controls the quoting of strings
-        attr_accessor :quotes
-
-        # Controls whether all strings will be hex-escaped
-        attr_accessor :hex_escape
-
-        # Controls the amount of parenthesis surrounding lists
-        attr_accessor :parens
-
-        #
-        # Creates a new SQL Encoder object.
-        #
-        # @param [Hash] options
-        #   Additional options.
-        #
-        # @option options [Symbol] :case (Encoder::DEFAULT_CASE)
-        #   Controls the case of keywords. May be either `:none`, `:lower`,
-        #   `:upper` or `:random`
-        #
-        # @option options [Symbol] :quotes (Encoder::DEFAULT_QUOTE)
-        #   Controls the quoting style of strings. May be either `:single`
-        #   or `:double`.
-        #
-        # @option options [Boolean] :hex_escape (false)
-        #   Forces all Strings to be hex-escaped.
-        #
-        # @option options [Symbol] :parens (Encoder::DEFAULT_PARENS)
-        #   Reduces the amount of parenthesis when tokenizing lists.
-        #   May be either `:less`, `:more`.
-        #
-        # @since 0.3.0
-        #
-        def initialize(options={})
-          @case = (options[:case] || Encoder::DEFAULT_CASE)
-          @quotes = (options[:quotes] || Encoder::DEFAULT_QUOTES)
-          @hex_escape = (options[:hex_escape] || false)
-          @less_parens = (options[:parens] || Encoder::DEFAULT_PARENS)
-        end
+        include Style
 
         #
         # Creates a new Fragment object.

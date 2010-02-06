@@ -5,6 +5,7 @@ README.md
 Rakefile
 bin/ronin-sql
 lib/ronin/code/sql.rb
+lib/ronin/code/sql/style.rb
 lib/ronin/code/sql/encoder.rb
 lib/ronin/code/sql/fragment.rb
 lib/ronin/code/sql/function.rb

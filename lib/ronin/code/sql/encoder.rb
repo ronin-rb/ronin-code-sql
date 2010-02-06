@@ -19,12 +19,15 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'ronin/code/sql/style'
 require 'ronin/formatting/sql'
 
 module Ronin
   module Code
     module SQL
       module Encoder
+        include Style
+
         # aliased keywords
         ALIASES = {
           :all => '*',
@@ -35,59 +38,6 @@ module Ronin
           :gt => '>',
           :ge => '>='
         }
-
-        # Default case preference
-        DEFAULT_CASE = :none
-
-        # Default quoting preference
-        DEFAULT_QUOTES = :single
-
-        # Default parenthesis preference
-        DEFAULT_PARENS = :more
-
-        #
-        # Initializes the encoder.
-        #
-        # @param [Hash] options
-        #   Encoding options.
-        #
-        # @option options [Symbol] :case (DEFAULT_CASE)
-        #   Controls the case of keywords. May be either `:none`, `:lower`,
-        #   `:upper` or `:random`
-        #
-        # @option options [Symbol] :quotes (DEFAULT_QUOTES)
-        #   Controls the quoting style of strings. May be either `:single`
-        #   or `:double`.
-        #
-        # @option options [Boolean] :hex_escape (false)
-        #   Forces all Strings to be hex-escaped.
-        #
-        # @option options [Symbol] :parens (DEFAULT_PARENS)
-        #   Reduces the amount of parenthesis when tokenizing lists.
-        #   May be either `:less`, `:more`.
-        #
-        # @since 0.3.0
-        #
-        def initialize(options={})
-          @options = {
-            :case => DEFAULT_CASE,
-            :quotes => DEFAULT_QUOTES,
-            :hex_escape => false,
-            :parens => DEFAULT_PARENS
-          }.merge(options)
-        end
-
-        #
-        # The encoding options.
-        #
-        # @return [Hash]
-        #   The encoding options.
-        #
-        # @since 0.3.0
-        #
-        def options
-          @options
-        end
 
         #
         # Default encoder method to create SQL code.
@@ -100,7 +50,7 @@ module Ronin
         def to_sql
           encoded_tokens = tokens()
 
-          if options[:spaces] == false
+          if @spaces == false
             return tokens.join('/**/')
           else
             return tokens.join(' ')
@@ -131,6 +81,9 @@ module Ronin
         #
         # @return [Array<String>]
         #   The SQL tokens.
+        #
+        # @raise [RuntimeError]
+        #   An unknown type of object was passed as an argument to encode.
         #
         # @since 0.3.0
         #
@@ -181,7 +134,7 @@ module Ronin
         def encode_keyword(name)
           name = name.to_s
 
-          case options[:case]
+          case @case
           when :lower
             name.downcase
           when :upper
@@ -266,10 +219,10 @@ module Ronin
         # @since 0.3.0
         #
         def encode_string(text)
-          if options[:hex_escape]
+          if @hex_escape
             encode_keyword(name) + "(#{text.sql_encode})"
           else
-            text.sql_escape(options[:quotes])
+            text.sql_escape(@quotes)
           end
         end
 
@@ -302,7 +255,7 @@ module Ronin
         def wrap_list(tokens)
           value = tokens.join(',')
 
-          if (options[:parens] == :more || tokens.length != 1)
+          if (@parens == :more || tokens.length != 1)
             value = wrap_parens(value)
           end
 
