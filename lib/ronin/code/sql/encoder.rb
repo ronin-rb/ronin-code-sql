@@ -48,13 +48,7 @@ module Ronin
         # @since 0.3.0
         #
         def to_sql
-          encoded_tokens = tokens()
-
-          if @spaces == false
-            return tokens.join('/**/')
-          else
-            return tokens.join(' ')
-          end
+          join_elements(*tokens)
         end
 
         alias to_s to_sql
@@ -309,6 +303,27 @@ module Ronin
         #
         def encode_function(name,arguments)
           encode_keyword(name) + encode_list(*arguments)
+        end
+
+        #
+        # Joins a series of elements with spaces.
+        #
+        # @param [Array<String>] elements
+        #   The elements to join.
+        #
+        # @return [String]
+        #   The joined elements.
+        #
+        # @since 0.3.0
+        #
+        def join_elements(*elements)
+          separater = if @spaces == false
+                        '/**/'
+                      else
+                        ' '
+                      end
+
+          return elements.join(separator)
         end
       end
     end
