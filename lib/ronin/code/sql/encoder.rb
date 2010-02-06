@@ -57,7 +57,7 @@ module Ronin
         #   Controls the quoting style of strings. May be either `:single`
         #   or `:double`.
         #
-        # @option options [Boolean] :hex_escape
+        # @option options [Boolean] :hex_escape (false)
         #   Forces all Strings to be hex-escaped.
         #
         # @option options [Symbol] :parens (DEFAULT_PARENS)
@@ -70,6 +70,7 @@ module Ronin
           @options = {
             :case => DEFAULT_CASE,
             :quotes => DEFAULT_QUOTES,
+            :hex_escape => false,
             :parens => DEFAULT_PARENS
           }.merge(options)
         end
