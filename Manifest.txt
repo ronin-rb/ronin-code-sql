@@ -32,6 +32,7 @@ spec/spec_helper.rb
 spec/code/sql/classes/test_encoder.rb
 spec/code/sql/encoder_spec.rb
 spec/code/sql/fragment_spec.rb
+spec/code/sql/function_spec.rb
 spec/code/sql/factory_spec.rb
 spec/sql/error_spec.rb
 spec/sql/extensions/uri/http_spec.rb
