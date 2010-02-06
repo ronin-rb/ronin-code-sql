@@ -37,7 +37,7 @@ module Ronin
         attr_accessor :hex_escape
 
         # Controls the amount of parenthesis surrounding lists
-        attr_accessor :less_parens
+        attr_accessor :parens
 
         #
         # Creates a new SQL Encoder object.
@@ -45,28 +45,28 @@ module Ronin
         # @param [Hash] options
         #   Additional options.
         #
-        # @option options [Symbol] :case
+        # @option options [Symbol] :case (Encoder::DEFAULT_CASE)
         #   Controls the case of keywords. May be either `:lower`,
         #   `:upper` or `:random`
         #
-        # @option options [Symbol] :quotes
+        # @option options [Symbol] :quotes (Encoder::DEFAULT_QUOTE)
         #   Controls the quoting style of strings. May be either `:single`
         #   or `:double`.
         #
-        # @option options [Boolean] :hex_escape
+        # @option options [Boolean] :hex_escape (false)
         #   Forces all Strings to be hex-escaped.
         #
-        # @option options [Symbol] :parens
+        # @option options [Symbol] :parens (Encoder::DEFAULT_PARENS)
         #   Reduces the amount of parenthesis when tokenizing lists.
         #   May be either `:less`, `:more`.
         #
         # @since 0.3.0
         #
         def initialize(options={})
-          @case = options[:case]
-          @quotes = options[:quotes]
-          @hex_escape = options[:hex_escape]
-          @less_parens = options[:less_parens]
+          @case = (options[:case] || Encoder::DEFAULT_CASE)
+          @quotes = (options[:quotes] || Encoder::DEFAULT_QUOTES)
+          @hex_escape = (options[:hex_escape] || false)
+          @less_parens = (options[:parens] || Encoder::DEFAULT_PARENS)
         end
 
         #
