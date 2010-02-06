@@ -160,7 +160,7 @@ module Ronin
             when TrueClass, FalseClass
               tokens << encode_boolean(element)
             else
-              raise(RuntimeError,"invalid data #{element.inspect} passed to #{self}.tokenize",caller)
+              raise(RuntimeError,"invalid data #{element.inspect} passed to #{self}.encode",caller)
             end
           end
 
