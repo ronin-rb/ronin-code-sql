@@ -34,31 +34,44 @@ module Ronin
           :ge => '>='
         }
 
+        # Default case preference
+        DEFAULT_CASE = :lower
+
+        # Default quoting preference
+        DEFAULT_QUOTES = :single
+
+        # Default parenthesis preference
+        DEFAULT_PARENS = :more
+
         #
         # Initializes the encoder.
         #
         # @param [Hash] options
         #   Encoding options.
         #
-        # @option options [Symbol] :case
+        # @option options [Symbol] :case (DEFAULT_CASE)
         #   Controls the case of keywords. May be either `:lower`,
         #   `:upper` or `:random`
         #
-        # @option options [Symbol] :quotes
+        # @option options [Symbol] :quotes (DEFAULT_QUOTES)
         #   Controls the quoting style of strings. May be either `:single`
         #   or `:double`.
         #
         # @option options [Boolean] :hex_escape
         #   Forces all Strings to be hex-escaped.
         #
-        # @option options [Symbol] :parens
+        # @option options [Symbol] :parens (DEFAULT_PARENS)
         #   Reduces the amount of parenthesis when tokenizing lists.
         #   May be either `:less`, `:more`.
         #
         # @since 0.3.0
         #
         def initialize(options={})
-          @options = options
+          @options = {
+            :case => DEFAULT_CASE,
+            :quotes => DEFAULT_QUOTES,
+            :parens => DEFAULT_PARENS
+          }.merge(options)
         end
 
         #
