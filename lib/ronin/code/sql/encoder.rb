@@ -325,6 +325,23 @@ module Ronin
 
           return elements.join(separator)
         end
+
+        #
+        # Encodes and joins the given elements.
+        #
+        # @param [Array] elements
+        #   The elements to encode then join.
+        #
+        # @return [String]
+        #   The join elements.
+        #
+        # @see join_elements
+        #
+        # @since 0.3.0
+        #
+        def encode_elements(*elements)
+          join_elements(*encode(*elements))
+        end
       end
     end
   end
