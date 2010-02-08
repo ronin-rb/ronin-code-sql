@@ -59,7 +59,10 @@ describe Code::SQL::Encoder do
   it "should encode a single Hash" do
     update = {:user => 'bob', :password => 'lol'}
 
-    @encoder.test_hash(update).should == "(user='bob',password='lol')"
+    @encoder.test_hash(update)[1..-2].split(',').should =~ [
+      "user='bob'",
+      "password='lol'"
+    ]
   end
 
   it "should encode multiple elements" do
