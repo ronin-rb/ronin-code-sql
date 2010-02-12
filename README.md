@@ -1,12 +1,12 @@
 # Ronin SQL
 
-* http://ronin.rubyforge.org/sql/
-* http://github.com/postmodern/ronin-sql
-* http://github.com/postmodern/ronin-sql/issues
-* http://groups.google.com/group/ronin-ruby
+* [ronin.rubyforge.org/sql](http://ronin.rubyforge.org/sql/)
+* [github.com/postmodern/ronin-sql](http://github.com/postmodern/ronin-sql/)
+* [github.com/postmodern/ronin-sql/issues](http://github.com/postmodern/ronin-sql/issues)
+* [groups.google.com/group/ronin-ruby](http://groups.google.com/group/ronin-ruby)
 * irc.freenode.net #ronin
 
-## DESCRIPTION:
+## Description
 
 Ronin SQL is a Ruby library for Ronin that provids support for SQL related
 security tasks.
@@ -36,19 +36,19 @@ data via Overlays. Overlays are directories of code and data that can be
 hosted on any SVN, Hg, Git or Rsync server. Ronin makes it easy to create,
 install or update Overlays.
 
-## FEATURES:
+## Features
 
 * Provides an Domain Specific Language (DSL) for crafting normal SQL and
   SQL injections.
 * Provides tests for finding SQL injections.
 
-## SYNOPSIS:
+## Synopsis
 
 Start the Ronin Console with Ronin SQL preloaded:
 
     $ ronin-sql
 
-## EXAMPLES:
+## Examples
 
 Generate valid SQL using the Ronin SQL DSL:
 
@@ -82,21 +82,21 @@ Scan a URL for SQLi vulnerabilities:
     url.sqli_scan
     # => [#<Ronin::SQL::Injection:0x67d6d38792d8 @http_method=:get, @url=#<URI::HTTP:0x67d6d8697190 URL:http://redteatrosalternativos.com/_05enlaces/links/phpHoo3.php?viewCat=1>, @params={:http_method=>:get}, @sql_options={:escape=>"1"}, @param="viewCat">]
 
-## REQUIREMENTS:
+## Requirements
 
 * [ronin](http://ronin.rubyforge.org/) >= 0.3.0
 * [ronin-web](http://ronin.rubyforge.org/web/) >= 0.2.0
 
-## INSTALL:
+## Install
 
     $ sudo gem install ronin-sql
 
-## LICENSE:
+## License
 
 Ronin SQL - A Ruby library for Ronin that provids support for SQL related
 security tasks.
 
-Copyright (c) 2006-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
+Copyright (c) 2006-2010 Hal Brodigan (postmodern.mod3 at gmail.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
