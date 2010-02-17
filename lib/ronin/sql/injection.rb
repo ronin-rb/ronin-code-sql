@@ -21,7 +21,7 @@
 
 require 'ronin/sql/error'
 require 'ronin/code/sql/injection'
-require 'ronin/network/helpers/http'
+require 'ronin/network/mixins/http'
 require 'ronin/extensions/uri'
 require 'ronin/web/extensions/nokogiri'
 require 'ronin/web/spider'
@@ -34,7 +34,7 @@ module Ronin
     class Injection
 
       include Parameters
-      include Network::Helpers::HTTP
+      include Network::Mixins::HTTP
 
       # The URL to inject upon
       attr_reader :url
