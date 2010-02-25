@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-02-11}
+  s.date = %q{2010-02-24}
   s.default_executable = %q{ronin-sql}
   s.description = %q{Ronin SQL is a Ruby library for Ronin that provids support for SQL related security tasks.}
   s.email = %q{postmodern.mod3@gmail.com}
@@ -52,6 +52,7 @@ Gem::Specification.new do |s|
     "lib/ronin/sql/injection.rb",
     "lib/ronin/sql/scanner.rb",
     "lib/ronin/sql/version.rb",
+    "ronin-sql.gemspec",
     "spec/code/sql/classes/test_encoder.rb",
     "spec/code/sql/encoder_spec.rb",
     "spec/code/sql/factory_spec.rb",
@@ -69,7 +70,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/ronin-ruby/ronin-sql}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{A Ruby library for Ronin that provids support for SQL related security tasks.}
   s.test_files = [
     "spec/spec_helper.rb",
