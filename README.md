@@ -1,8 +1,8 @@
 # Ronin SQL
 
 * [ronin.rubyforge.org/sql](http://ronin.rubyforge.org/sql/)
-* [github.com/postmodern/ronin-sql](http://github.com/postmodern/ronin-sql/)
-* [github.com/postmodern/ronin-sql/issues](http://github.com/postmodern/ronin-sql/issues)
+* [github.com/ronin-ruby/ronin-sql](http://github.com/ronin-ruby/ronin-sql/)
+* [github.com/ronin-ruby/ronin-sql/issues](http://github.com/ronin-ruby/ronin-sql/issues)
 * [groups.google.com/group/ronin-ruby](http://groups.google.com/group/ronin-ruby)
 * irc.freenode.net #ronin
 
