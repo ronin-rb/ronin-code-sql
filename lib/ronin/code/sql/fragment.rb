@@ -85,6 +85,63 @@ module Ronin
           return self
         end
 
+        #
+        # Encoder method which first creates SQL code, then escapes it
+        # for use in SQL Injections.
+        #
+        # @param [Hash] options
+        #   Additional options.
+        #
+        # @option options [Symbol] :escape
+        #   The type of escape strategy to use. May be either `:integer`,
+        #   `:string` or `:statement`.
+        #
+        # @option options [String, Integer] :value
+        #   The value to pre-append to the SQL Injection.
+        #
+        # @option options [Boolean] :terminate
+        #   Specifies whether or not to terminate the SQL Injection with
+        #   a SQL single-line comment (`--`).
+        #
+        # @return [String]
+        #   The encoded SQL Injection.
+        #
+        # @since 0.3.0
+        #
+        def to_sqli(options={})
+          case options[:escape]
+          when :integer
+            inj = join_elements(encode_integer(options[:value]), *tokens)
+          when :string
+            inj = join_elements(encode_string(options[:value]), *tokens)
+
+            unless options[:terminate]
+              if inj[-1..-1] == inj[0..0]
+                # remove the last quote
+                inj = inj[0..-2]
+              else
+                # no last quote present, so comment out the rest
+                inj << '--'
+              end
+            end
+
+            # remove the first quote
+            inj = inj[1..-1]
+          when :statement
+            # break out of the statement, and comment the rest out
+            inj = ";#{self}"
+          else
+            inj = self.to_sql
+          end
+
+          if (options[:terminate] && (inj[-2..-1] != '--'))
+            # comment terminate the injection, if we already haven't
+            inj << '--'
+          end
+
+          return inj
+        end
+
         protected
 
         #
