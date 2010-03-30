@@ -174,7 +174,7 @@ module Ronin
         #
         # Encodes the integer.
         #
-        # @param [Integer] integer
+        # @param [Integer, String] integer
         #   The integer to encode.
         #
         # @return [String]
@@ -183,13 +183,13 @@ module Ronin
         # @since 0.3.0
         #
         def encode_integer(integer)
-          integer.to_s
+          integer.to_i.to_s
         end
 
         #
         # Encodes the floating point number.
         #
-        # @param [Float] float
+        # @param [Float, Integer, String] float
         #   The floating point number to encode.
         #
         # @return [String]
@@ -198,13 +198,13 @@ module Ronin
         # @since 0.3.0
         #
         def encode_float(float)
-          float.to_s
+          float.to_f.to_s
         end
 
         #
         # Encodes the string.
         #
-        # @param [String] text
+        # @param [String, Integer] text
         #   The string to encode.
         #
         # @return [String]
@@ -213,6 +213,8 @@ module Ronin
         # @since 0.3.0
         #
         def encode_string(text)
+          text = text.to_s
+
           if @hex_escape
             encode_keyword(:hex) + "(#{text.sql_encode})"
           else
