@@ -1,6 +1,14 @@
 require 'rubygems'
 require 'bundler'
 
+begin
+  Bundler.setup(:runtime, :development)
+rescue Bundler::BundlerError => e
+  STDERR.puts e.message
+  STDERR.puts "Run `bundle install` to install missing gems"
+  exit e.status_code
+end
+
 require 'rake'
 require 'jeweler'
 require './lib/ronin/sql/version.rb'
