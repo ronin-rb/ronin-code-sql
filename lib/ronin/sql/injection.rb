@@ -20,7 +20,7 @@
 #
 
 require 'ronin/sql/error'
-require 'ronin/code/sql/injection'
+require 'ronin/code/sql'
 require 'ronin/network/mixins/http'
 require 'ronin/extensions/uri'
 require 'ronin/web/extensions/nokogiri'
