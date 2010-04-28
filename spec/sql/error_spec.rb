@@ -1,6 +1,5 @@
-require 'ronin/sql/error'
-
 require 'spec_helper'
+require 'ronin/sql/error'
 
 describe SQL::Error do
   it "should provide error patterns" do

@@ -1,6 +1,5 @@
-require 'ronin/formatting/extensions/sql/string'
-
 require 'spec_helper'
+require 'ronin/formatting/extensions/sql/string'
 
 describe String do
   before(:all) do

@@ -1,6 +1,5 @@
-require 'ronin/code/sql/fragment'
-
 require 'spec_helper'
+require 'ronin/code/sql/fragment'
 
 describe Code::SQL::Fragment do
   it "should encode fragments with no elements" do

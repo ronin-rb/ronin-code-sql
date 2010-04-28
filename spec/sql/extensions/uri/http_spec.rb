@@ -1,6 +1,5 @@
-require 'ronin/sql/extensions/uri/http'
-
 require 'spec_helper'
+require 'ronin/sql/extensions/uri/http'
 
 describe URI::HTTP do
   before(:all) do

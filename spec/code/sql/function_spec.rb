@@ -1,6 +1,5 @@
-require 'ronin/code/sql/function'
-
 require 'spec_helper'
+require 'ronin/code/sql/function'
 
 describe Code::SQL::Function do
   it "should encode functions with no arguments" do

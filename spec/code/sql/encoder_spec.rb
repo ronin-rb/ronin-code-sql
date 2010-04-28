@@ -1,6 +1,6 @@
+require 'spec_helper'
 require 'ronin/code/sql/encoder'
 
-require 'spec_helper'
 require 'code/sql/classes/test_encoder'
 
 describe Code::SQL::Encoder do

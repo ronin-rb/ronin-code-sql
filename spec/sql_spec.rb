@@ -1,6 +1,5 @@
-require 'ronin/sql/version'
-
 require 'spec_helper'
+require 'ronin/sql/version'
 
 describe SQL do
   it "should have a version" do

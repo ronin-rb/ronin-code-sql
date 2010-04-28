@@ -1,6 +1,5 @@
-require 'ronin/code/sql/factory'
-
 require 'spec_helper'
+require 'ronin/code/sql/factory'
 
 describe Code::SQL::Factory do
   before(:all) do
