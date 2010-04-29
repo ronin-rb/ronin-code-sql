@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 ronin_ruby = 'git://github.com/ronin-ruby'
 
 group :runtime do
-  gem 'ronin-ext',	'~> 0.1.0', :git => "#{ronin_ruby}/ronin-ext.git"
+  gem 'ronin-support',	'~> 0.1.0', :git => "#{ronin_ruby}/ronin-support.git"
   gem 'ronin-web',	'~> 0.2.2', :git => "#{ronin_ruby}/ronin-web.git"
   gem 'ronin-gen',	'~> 0.3.0', :git => "#{ronin_ruby}/ronin-gen.git"
   gem 'ronin-exploits',	'~> 0.4.0', :git => "#{ronin_ruby}/ronin-exploits.git"
