@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-07-09}
+  s.date = %q{2010-08-06}
   s.default_executable = %q{ronin-sql}
   s.description = %q{Ronin SQL is a Ruby library for Ronin that provids support for SQL related security tasks.}
   s.email = %q{postmodern.mod3@gmail.com}
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
     "COPYING.txt",
     "ChangeLog.md",
     "Gemfile",
+    "Gemfile.lock",
     "README.md",
     "Rakefile",
     "bin/ronin-sql",
@@ -99,6 +100,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<ronin-gen>, ["~> 0.3.0"])
       s.add_runtime_dependency(%q<ronin-exploits>, ["~> 0.4.0"])
       s.add_runtime_dependency(%q<ronin>, ["~> 0.4.0"])
+      s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<rake>, ["~> 0.8.7"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.4.0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.0.0.beta.16"])
@@ -108,6 +110,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<ronin-gen>, ["~> 0.3.0"])
       s.add_dependency(%q<ronin-exploits>, ["~> 0.4.0"])
       s.add_dependency(%q<ronin>, ["~> 0.4.0"])
+      s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<rake>, ["~> 0.8.7"])
       s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
       s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.16"])
@@ -118,6 +121,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<ronin-gen>, ["~> 0.3.0"])
     s.add_dependency(%q<ronin-exploits>, ["~> 0.4.0"])
     s.add_dependency(%q<ronin>, ["~> 0.4.0"])
+    s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<rake>, ["~> 0.8.7"])
     s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
     s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.16"])
