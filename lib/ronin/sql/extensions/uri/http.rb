@@ -21,7 +21,8 @@
 
 require 'ronin/sql/injection'
 require 'ronin/scanners/scanner'
-require 'ronin/extensions/uri/http'
+
+require 'uri/query_params'
 
 module URI
   class HTTP < Generic

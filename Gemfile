@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 RONIN = 'http://github.com/ronin-ruby'
 
+gem 'uri-query_params',	'~> 0.4.0'
 gem 'ronin-support',	'~> 0.1.0', :git => "#{RONIN}/ronin-support.git"
 gem 'ronin-web',	'~> 0.2.2', :git => "#{RONIN}/ronin-web.git"
 gem 'ronin-gen',	'~> 0.3.0', :git => "#{RONIN}/ronin-gen.git"
