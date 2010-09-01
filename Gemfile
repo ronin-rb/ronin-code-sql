@@ -10,7 +10,6 @@ gem 'ronin-exploits',	'~> 0.4.0', :git => "#{RONIN}/ronin-exploits.git"
 gem 'ronin',		'~> 0.4.0', :git => "#{RONIN}/ronin.git"
 
 group(:development) do
-  gem 'bundler',	'~> 1.0.0'
   gem 'rake',		'~> 0.8.7'
   gem 'jeweler',	'~> 1.5.0.pre'
 end
