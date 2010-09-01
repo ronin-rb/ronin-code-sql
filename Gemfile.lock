@@ -151,7 +151,7 @@ GEM
     tzinfo (0.3.23)
     uri-query_params (0.4.0)
     uuidtools (2.1.1)
-    yard (0.5.8)
+    yard (0.6.0)
 
 PLATFORMS
   ruby
@@ -167,4 +167,4 @@ DEPENDENCIES
   ronin-web (~> 0.2.2)!
   rspec (~> 2.0.0.beta.20)
   uri-query_params (~> 0.4.0)
-  yard (~> 0.5.3)
+  yard (~> 0.6.0)
