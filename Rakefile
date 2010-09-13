@@ -19,7 +19,7 @@ Jeweler::Tasks.new do |gem|
   gem.licenses = ['GPL-2']
   gem.summary = %Q{A Ruby library for Ronin that provids support for SQL related security tasks.}
   gem.description = %Q{Ronin SQL is a Ruby library for Ronin that provids support for SQL related security tasks.}
-  gem.email = 'postmodern.mod3@gmail.com'
+  gem.email = 'ronin-ruby@googlegroups.com'
   gem.homepage = 'http://github.com/ronin-ruby/ronin-sql'
   gem.authors = ['Postmodern']
   gem.has_rdoc = 'yard'
