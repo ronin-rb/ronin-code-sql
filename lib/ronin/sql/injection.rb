@@ -122,34 +122,6 @@ module Ronin
       end
 
       #
-      # Spider a site starting at the specified _url_ using the given
-      # _options_ and return an Array of URLs which are vulnerable to SQL
-      # Injection. If a _block_ is given, it will be passed vulnerable SQL
-      # Injection objects as they are found.
-      #
-      #   Injection.spider('http://www.target.com/contact/')
-      #   # => [...]
-      #
-      #   Injection.spider('http://www.target.com/') do |injection|
-      #     ...
-      #   end
-      #
-      def Injection.spider(url,options={},&block)
-        injections = []
-
-        Web::Spider.site(url,options) do |spider|
-          spider.every_url_like(/\?[a-zA-Z0-9_]/) do |vuln_url|
-            found = vuln_url.sql_injections
-
-            found.each(&block) if block
-            injections += found
-          end
-        end
-
-        return injections
-      end
-
-      #
       # Creates a new Code::SQL::Injection object using the given _options_
       # and _block_. The given _options_ will be merged with the injections
       # sql_options, to create a tailored Code::SQL::Injection object.
