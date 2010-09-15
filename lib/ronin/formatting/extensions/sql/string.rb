@@ -31,7 +31,7 @@ class String
   # @return [String]
   #   The escaped String.
   #
-  # @raise [RuntimeError]
+  # @raise [ArgumentError]
   #   The quotes argument was neither `:single` nor `:double`.
   #
   # @since 0.3.0
@@ -43,7 +43,7 @@ class String
     when :double
       '"' + self.gsub(/"/,'""') + '"'
     else
-      raise(RuntimeError,"invalid quoting style #{quotes.inspect}",caller)
+      raise(ArgumentError,"invalid quoting style #{quotes.inspect}",caller)
     end
   end
 
