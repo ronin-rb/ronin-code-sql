@@ -286,7 +286,7 @@ module Ronin
         def encode_hash(hash)
           wrap_list(hash.to_a.map { |name,value|
             name = encode_keyword(name)
-            value = encode(value)
+            value = encode(value).first
 
             "#{name}=#{value}"
           })
