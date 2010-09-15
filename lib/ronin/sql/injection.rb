@@ -64,6 +64,64 @@ module Ronin
       end
 
       #
+      # Scans the URL for SQL Injection vulnerabilities.
+      #
+      # @param [URI::HTTP, String] url
+      #   The URL to scan.
+      #
+      # @param [Hash] options
+      #   Additional options.
+      #
+      # @yield [sqli]
+      #   The given block will be passed each discovered SQL Injection
+      #   vulnerability.
+      #
+      # @yieldparam [Injection] sqli
+      #   A discovered SQL Injection vulnerability.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an enumerator object will be returned.
+      #
+      # @since 0.3.0
+      #
+      def Injection.scan(url,options={})
+        return enum_for(:scan,url,options) unless block_given?
+
+        url = URI(url.to_s) unless url.kind_of?(URI)
+
+        url.each_query_param do |param,value|
+          integer_tests = [
+            {:escape => value},
+            {:escape => value, :close_parenthesis => true}
+          ]
+
+          string_tests = [
+            {:escape => value, :close_string => true},
+            {:escape => value, :close_string => true, :close_parenthesis => true}
+          ]
+
+          if (value && value =~ /^[0-9]+$/)
+            # if the param value is numeric, we should try escaping a
+            # numeric value first.
+            tests = integer_tests + string_tests
+          else
+            # if the param value is a string, we should try escaping a
+            # string value first.
+            tests = string_tests + integer_tests
+          end
+
+          tests.each do |test|
+            inj = Injection.new(url,param,options.merge(test))
+
+            if inj.vulnerable?(options)
+              yield inj
+              break
+            end
+          end
+        end
+      end
+
+      #
       # Spider a site starting at the specified _url_ using the given
       # _options_ and return an Array of URLs which are vulnerable to SQL
       # Injection. If a _block_ is given, it will be passed vulnerable SQL
