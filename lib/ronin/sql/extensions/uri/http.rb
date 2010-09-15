@@ -20,21 +20,54 @@
 #
 
 require 'ronin/sql/injection'
-require 'ronin/scanners/scanner'
-
-require 'uri/query_params'
 
 module URI
   class HTTP < Generic
 
-    include Ronin::Scanners::Scanner
+    #
+    # @see Ronin::SQL::Injection.scan
+    #
+    def sqli_scan(options={})
+      Ronin::SQL::Injection.scan(self,options)
+    end
 
     #
-    # Tests the `query_params` of the HTTP URL with the given _options_ for
-    # SQL errors.
+    # Attempts to find the first SQL Injection vulnerability in the URL.
     #
-    # _options_ may contain the following keys:
-    # <tt>:sql</tt>:: The SQL injection to use. Defaults to `"'"`.
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @return [Ronin::SQL::Injection, nil]
+    #   The first SQL Injection vulnerability found.
+    #
+    def first_sqli(options={})
+      sqli_scan(options).first
+    end
+
+    #
+    # Determines if the URL is vulnerable to SQL Injection.
+    #
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @return [Boolean]
+    #   Specifies whether the URL is vulnerable to SQL Injection.
+    #
+    def has_sqli?(options={})
+      !(first_sqli.nil?)
+    end
+
+    #
+    # Attempts to generate SQL Errors from the URL.
+    #
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [String] :sql ("'")
+    #   The SQL to inject.
+    #
+    # @return [Boolean]
+    #   Specifies whether the URL has SQL Errors.
     #
     def sql_errors(options={})
       errors = {}
@@ -48,61 +81,58 @@ module URI
       return errors
     end
 
+    #
+    # Attempts to generate the first SQL Error from the URL.
+    #
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [String] :sql ("'")
+    #   The SQL to inject.
+    #
+    # @return [Boolean]
+    #   Specifies whether the URL has SQL Errors.
+    #
     def sql_error(options={})
       sql_errors(options).values.first
     end
 
     #
-    # Returns `true` if any of the `query_params` of the HTTP URI return
-    # SQL errors using the given _options_, returns `false` otherwise.
+    # Determines if the URL has SQL Errors.
     #
-    # _options_ may contain the following keys:
-    # <tt>:sql</tt>:: The SQL injection to use. Defaults to `"'"`.
+    # @param [Hash] options
+    #   Additional options.
+    #
+    # @option options [String] :sql ("'")
+    #   The SQL to inject.
+    #
+    # @return [Boolean]
+    #   Specifies whether the URL has SQL Errors.
     #
     def has_sql_errors?(options={})
-      !(sql_errors(options).empty?)
+      !(sql_error(options).nil?)
     end
 
     #
-    # Tests the `query_params` of the HTTP URL with the given _options_ for
-    # blind SQL injections.
+    # @deprecated Use {#sqli_scan} instead.
     #
-    scanner(:sqli) do |url,results,options|
-      url.each_query_param do |param,value|
-        integer_tests = [
-          {:escape => value},
-          {:escape => value, :close_parenthesis => true}
-        ]
-
-        string_tests = [
-          {:escape => value, :close_string => true},
-          {:escape => value, :close_string => true, :close_parenthesis => true}
-        ]
-
-        if (value && value =~ /^[0-9]+$/)
-          # if the param value is numeric, we should try escaping a
-          # numeric value first.
-          tests = integer_tests + string_tests
-        else
-          # if the param value is a string, we should try escaping a
-          # string value first.
-          tests = string_tests + integer_tests
-        end
-
-        tests.each do |test|
-          inj = Ronin::SQL::Injection.new(url,param,options.merge(test))
-
-          if inj.vulnerable?(options)
-            results.call(inj)
-            break
-          end
-        end
-      end
+    def sql_injections
+      sqli_scan
     end
 
-    alias sql_injections sqli_scan
-    alias sql_injection first_sqli
-    alias has_sql_injections? has_sqli?
+    #
+    # @deprecated Use {#first_sqli} instead.
+    #
+    def sql_injection
+      first_sqli
+    end
+
+    #
+    # @deprecated Use {#has_sqli?} instead.
+    #
+    def has_sql_injections?
+      has_sqli?
+    end
 
   end
 end
