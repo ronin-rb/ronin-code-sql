@@ -22,11 +22,11 @@
 require 'ronin/sql/error'
 require 'ronin/code/sql'
 require 'ronin/network/mixins/http'
-require 'ronin/extensions/uri'
 require 'ronin/web/extensions/nokogiri'
 require 'ronin/web/spider'
 
 require 'parameters'
+require 'uri/query_params'
 require 'nokogiri'
 
 module Ronin
