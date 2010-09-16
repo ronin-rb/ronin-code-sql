@@ -19,7 +19,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/errors/message'
+require 'ronin/sql/errors/error'
 
 module Ronin
   module SQL
@@ -68,7 +68,7 @@ module Ronin
           @patterns.each do |pattern|
             match = data.match(pattern)
 
-            return Message.new(@name,@dialect,match[0]) if match
+            return Error.new(@name,@dialect,match[0]) if match
           end
 
           return nil

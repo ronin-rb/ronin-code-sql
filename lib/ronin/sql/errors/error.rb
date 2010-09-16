@@ -22,7 +22,7 @@
 module Ronin
   module SQL
     module Errors
-      class Message
+      class Error
 
         # The URL which is vulnerable
         attr_reader :url
