@@ -24,54 +24,23 @@ require 'ronin/sql/errors/errors'
 class String
 
   #
-  # Returns an SQL error Message using the given _options_ if the
-  # String contains a SQL error Pattern. If no SQL error Pattern can be
-  # found within the String, `nil` will be returned.
+  # Attempts to find the first SQL Error in the String.
   #
-  # _options_ may contain the following keys:
-  # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
-  # <tt>:types</tt>:: A list of error pattern types to test for.
+  # @return [Ronin::SQL::Error, nil]
+  #   The first detected SQL Error.
   #
-  def sql_error(options={})
-    if options[:dialect]
-      patterns = Ronin::SQL::Errors.patterns_for_dialect(options[:dialect])
-    elsif options[:types]
-      patterns = Ronin::SQL::Errors.patterns_for(*options[:types])
-    else
-      patterns = Ronin::SQL::Errors.patterns.values
-    end
-
-    patterns.each do |pattern|
-      if (message = pattern.match(self))
-        return message
-      end
-    end
-
-    return nil
+  def sql_error
+    Ronin::SQL::Errors.find(self)
   end
 
   #
-  # Returns `true` if a SQL error Pattern can be found within the
-  # String using the given _options_, returns `false` otherwise.
+  # Determines if there are SQL Errors in the String.
   #
-  # _options_ may contain the following keys:
-  # <tt>:dialect</tt>:: The SQL dialect whos error messages to test for.
-  # <tt>:types</tt>:: A list of error pattern types to test for.
+  # @return [Boolean]
+  #   Specifies whether there are SQL Errors in the String.
   #
-  def sql_error?(options={})
-    if options[:dialect]
-      patterns = Ronin::SQL::Errors.patterns_for_dialect(options[:dialect])
-    elsif options[:types]
-      patterns = Ronin::SQL::Errors.patterns_for(*options[:types])
-    else
-      patterns = Ronin::SQL::Errors.patterns.values
-    end
-
-    patterns.each do |pattern|
-      return true if pattern =~ self
-    end
-
-    return false
+  def sql_error?
+    !(sql_error.nil?)
   end
 
 end
