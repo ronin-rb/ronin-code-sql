@@ -65,8 +65,9 @@ Gem::Specification.new do |s|
     "spec/formatting/sql/string_spec.rb",
     "spec/helpers/database.rb",
     "spec/spec_helper.rb",
-    "spec/sql/error_spec.rb",
+    "spec/sql/errors/error_spec.rb",
     "spec/sql/extensions/uri/http_spec.rb",
+    "spec/sql/injection_spec.rb",
     "spec/sql_spec.rb"
   ]
   s.has_rdoc = %q{yard}
@@ -85,7 +86,7 @@ Gem::Specification.new do |s|
     "spec/formatting/sql/string_spec.rb",
     "spec/helpers/database.rb",
     "spec/spec_helper.rb",
-    "spec/sql/error_spec.rb",
+    "spec/sql/errors/error_spec.rb",
     "spec/sql/extensions/uri/http_spec.rb",
     "spec/sql/injection_spec.rb",
     "spec/sql_spec.rb"
