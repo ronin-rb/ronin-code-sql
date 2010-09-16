@@ -28,6 +28,7 @@ require 'ronin/web/spider'
 require 'parameters'
 require 'uri/query_params'
 require 'nokogiri'
+require 'set'
 
 module Ronin
   module SQL
@@ -35,6 +36,9 @@ module Ronin
 
       include Parameters
       include Network::Mixins::HTTP
+
+      # Strings which can cause errors in SQL expressions
+      ERROR_STRINGS = Set["'", "\"", "`", "(", ")", "--"]
 
       # The URL to inject upon
       attr_reader :url
@@ -61,6 +65,45 @@ module Ronin
         @url = url
         @param = param
         @sql_options = options
+      end
+
+      #
+      # Tests the URL for SQL Errors.
+      #
+      # @param [URI::HTTP, String] url
+      #   The URL to test.
+      #
+      # @param [Hash] options
+      #   Additional options.
+      #
+      # @yield [param, error]
+      #   The given block will be passed each query parameter name and
+      #   SQL Error.
+      #
+      # @yieldparam [String] param
+      #   The name of the query parameter the error occurred on.
+      #
+      # @yieldparam [Error] error
+      #   The SQL Error.
+      #
+      # @return [Enumerator]
+      #   If no block is given, an enumerator object will be returned.
+      #
+      # @since 0.3.0
+      #
+      def Injection.errors(url,options={})
+        return enum_for(:errors,url,options) unless block_given?
+
+        url = URI(url.to_s) unless url.kind_of?(URI)
+
+        url.each_query_param do |param,value|
+          injection = Injection.new(url,param,options)
+          error = injection.error
+
+          yield(param,error) if error
+        end
+
+        return nil
       end
 
       #
@@ -146,16 +189,34 @@ module Ronin
         end
       end
 
-      def inject_error(options={})
-        inject({:sql => "'"}.merge(options))
-      end
-
+      #
+      # Attempts to generate a SQL Error from the URL.
+      #
+      # @param [Hash] options
+      #   Additional options.
+      #
+      # @return [Error, nil]
+      #   The SQL Error generated from the URL.
+      #
       def error(options={})
-        inject_error(options).sql_error
+        ERROR_STRINGS.each do |string|
+          body = inject_error(options.merge(:sql => string))
+          error = Errors.find(body)
+
+          return error if error
+        end
+
+        return nil
       end
 
+      #
+      # Determines if the URL has SQL Errors.
+      #
+      # @return [Boolean]
+      #   Specifies whether the URL has SQL Errors.
+      #
       def has_error?(options={})
-        Error.has_message?(inject_error(options))
+        error(options).nil?
       end
 
       def vulnerable?(options={})

@@ -72,10 +72,8 @@ module URI
     def sql_errors(options={})
       errors = {}
 
-      return each_query_param do |param,value|
-        mesg = Ronin::SQL::Injection.new(self,param).error(options)
-
-        errors[param] = mesg if mesg
+      Ronin::SQL::Injection.errors(self) do |param,error|
+        errors[param] = error
       end
 
       return errors
@@ -87,14 +85,11 @@ module URI
     # @param [Hash] options
     #   Additional options.
     #
-    # @option options [String] :sql ("'")
-    #   The SQL to inject.
-    #
     # @return [Boolean]
     #   Specifies whether the URL has SQL Errors.
     #
     def sql_error(options={})
-      sql_errors(options).values.first
+      Ronin::SQL::Injection.errors(self) { |param,error| return error }
     end
 
     #
@@ -102,9 +97,6 @@ module URI
     #
     # @param [Hash] options
     #   Additional options.
-    #
-    # @option options [String] :sql ("'")
-    #   The SQL to inject.
     #
     # @return [Boolean]
     #   Specifies whether the URL has SQL Errors.
