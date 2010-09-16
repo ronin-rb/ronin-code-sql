@@ -19,11 +19,11 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/error/message'
+require 'ronin/sql/errors/message'
 
 module Ronin
   module SQL
-    module Error
+    module Errors
       class Pattern
 
         # Name of the pattern

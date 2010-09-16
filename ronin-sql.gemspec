@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Postmodern"]
-  s.date = %q{2010-09-13}
+  s.date = %q{2010-09-15}
   s.default_executable = %q{ronin-sql}
   s.description = %q{Ronin SQL is a Ruby library for Ronin that provids support for SQL related security tasks.}
   s.email = %q{ronin-ruby@googlegroups.com}
@@ -42,13 +42,13 @@ Gem::Specification.new do |s|
     "lib/ronin/formatting/extensions/sql/string.rb",
     "lib/ronin/formatting/sql.rb",
     "lib/ronin/sql.rb",
-    "lib/ronin/sql/error.rb",
-    "lib/ronin/sql/error/error.rb",
-    "lib/ronin/sql/error/extensions.rb",
-    "lib/ronin/sql/error/extensions/string.rb",
-    "lib/ronin/sql/error/message.rb",
-    "lib/ronin/sql/error/pattern.rb",
-    "lib/ronin/sql/error/patterns.rb",
+    "lib/ronin/sql/errors.rb",
+    "lib/ronin/sql/errors/errors.rb",
+    "lib/ronin/sql/errors/extensions.rb",
+    "lib/ronin/sql/errors/extensions/string.rb",
+    "lib/ronin/sql/errors/message.rb",
+    "lib/ronin/sql/errors/pattern.rb",
+    "lib/ronin/sql/errors/patterns.rb",
     "lib/ronin/sql/extensions.rb",
     "lib/ronin/sql/extensions/uri.rb",
     "lib/ronin/sql/extensions/uri/http.rb",
@@ -87,6 +87,7 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb",
     "spec/sql/error_spec.rb",
     "spec/sql/extensions/uri/http_spec.rb",
+    "spec/sql/injection_spec.rb",
     "spec/sql_spec.rb"
   ]
 

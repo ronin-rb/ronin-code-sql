@@ -19,44 +19,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-module Ronin
-  module SQL
-    module Error
-      class Message
-
-        # The URL which is vulnerable
-        attr_reader :url
-
-        # The vulnerable query param
-        attr_accessor :param
-
-        # SQL error type
-        attr_reader :type
-
-        # SQL Dialect
-        attr_reader :dialect
-
-        # SQL error message
-        attr_reader :message
-
-        #
-        # Creates a new SQL Error object with the specified _type_, 
-        # _dialect_ and _message_.
-        #
-        def initialize(type,dialect,message)
-          @type = type
-          @dialect = dialect
-          @message = message
-        end
-
-        #
-        # Returns the message in String form.
-        #
-        def to_s
-          @message.to_s
-        end
-
-      end
-    end
-  end
-end
+require 'ronin/sql/errors/message'
+require 'ronin/sql/errors/pattern'
+require 'ronin/sql/errors/errors'
+require 'ronin/sql/errors/patterns'
+require 'ronin/sql/errors/extensions'

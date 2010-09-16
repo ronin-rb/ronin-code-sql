@@ -19,7 +19,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/error/error'
+require 'ronin/sql/errors/errors'
 
 class String
 
@@ -34,11 +34,11 @@ class String
   #
   def sql_error(options={})
     if options[:dialect]
-      patterns = Ronin::SQL::Error.patterns_for_dialect(options[:dialect])
+      patterns = Ronin::SQL::Errors.patterns_for_dialect(options[:dialect])
     elsif options[:types]
-      patterns = Ronin::SQL::Error.patterns_for(*options[:types])
+      patterns = Ronin::SQL::Errors.patterns_for(*options[:types])
     else
-      patterns = Ronin::SQL::Error.patterns.values
+      patterns = Ronin::SQL::Errors.patterns.values
     end
 
     patterns.each do |pattern|
@@ -60,11 +60,11 @@ class String
   #
   def sql_error?(options={})
     if options[:dialect]
-      patterns = Ronin::SQL::Error.patterns_for_dialect(options[:dialect])
+      patterns = Ronin::SQL::Errors.patterns_for_dialect(options[:dialect])
     elsif options[:types]
-      patterns = Ronin::SQL::Error.patterns_for(*options[:types])
+      patterns = Ronin::SQL::Errors.patterns_for(*options[:types])
     else
-      patterns = Ronin::SQL::Error.patterns.values
+      patterns = Ronin::SQL::Errors.patterns.values
     end
 
     patterns.each do |pattern|

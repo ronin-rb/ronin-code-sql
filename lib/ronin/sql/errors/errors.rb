@@ -19,22 +19,22 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/error/pattern'
+require 'ronin/sql/errors/pattern'
 
 module Ronin
   module SQL
-    module Error
+    module Errors
       #
       # Returns all defined SQL Pattern objects.
       #
-      def Error.patterns
+      def Errors.patterns
         @@ronin_sql_error_patterns ||= {}
       end
 
       #
       # Defines a new SQL Pattern object with the given _options_.
       #
-      def Error.pattern(name,&block)
+      def Errors.pattern(name,&block)
         pattern = (Error.patterns[name] ||= Pattern.new(name))
 
         block.call(pattern) if block
@@ -44,7 +44,7 @@ module Ronin
       #
       # Returns the SQL Pattern objects with the specified _names_.
       #
-      def Error.patterns_for(*names)
+      def Errors.patterns_for(*names)
         names.map { |name| Error.patterns[name] }.compact
       end
 
@@ -52,7 +52,7 @@ module Ronin
       # Returns the SQL Pattern objects for the dialect with the
       # specified _name_.
       #
-      def Error.patterns_for_dialect(name)
+      def Errors.patterns_for_dialect(name)
         Error.patterns.values.select do |pattern|
           pattern.dialect == name
         end
