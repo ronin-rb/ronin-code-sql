@@ -49,6 +49,27 @@ module Ronin
       def Errors.signature(&block)
         Errors.signatures << Signature.new(&block)
       end
+
+      #
+      # Finds the first SQL Error that matches a known SQL Error Signature.
+      #
+      # @param [String] data
+      #   The data to apply SQL Error Signatures to.
+      #
+      # @return [Error, nil]
+      #   The first detected SQL Error.
+      #
+      # @since 0.3.0
+      #
+      def Errors.find(data)
+        Errors.signatures.each do |sig|
+          error = sig.match(data)
+
+          return error if error
+        end
+
+        return nil
+      end
     end
   end
 end
