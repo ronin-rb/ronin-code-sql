@@ -19,43 +19,35 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/errors/pattern'
+require 'ronin/sql/errors/signature'
 
 module Ronin
   module SQL
     module Errors
       #
-      # Returns all defined SQL Pattern objects.
+      # All defined SQL Error Signatures.
       #
-      def Errors.patterns
-        @@ronin_sql_error_patterns ||= {}
+      # @return [Array<Signature>]
+      #
+      # @since 0.3.0
+      #
+      def Errors.signatures
+        @@ronin_sql_error_signatures ||= []
       end
 
       #
-      # Defines a new SQL Pattern object with the given _options_.
+      # Defines a new SQL Error Signature.
       #
-      def Errors.pattern(name,&block)
-        pattern = (Error.patterns[name] ||= Pattern.new(name))
-
-        block.call(pattern) if block
-        return pattern
-      end
-
+      # @yield [sig]
+      #   The given block will be passed the new SQL Error Signature.
       #
-      # Returns the SQL Pattern objects with the specified _names_.
+      # @yieldparam [Signature] sig
+      #   The new SQL Error Signature.
       #
-      def Errors.patterns_for(*names)
-        names.map { |name| Error.patterns[name] }.compact
-      end
-
+      # @since 0.3.0
       #
-      # Returns the SQL Pattern objects for the dialect with the
-      # specified _name_.
-      #
-      def Errors.patterns_for_dialect(name)
-        Error.patterns.values.select do |pattern|
-          pattern.dialect == name
-        end
+      def Errors.signature(&block)
+        Errors.signatures << Signature.new(&block)
       end
     end
   end

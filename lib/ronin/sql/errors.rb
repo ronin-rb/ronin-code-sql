@@ -19,8 +19,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/errors/message'
-require 'ronin/sql/errors/pattern'
-require 'ronin/sql/errors/errors'
-require 'ronin/sql/errors/patterns'
 require 'ronin/sql/errors/extensions'
+require 'ronin/sql/errors/error'
+require 'ronin/sql/errors/signature'
+require 'ronin/sql/errors/signatures'
+require 'ronin/sql/errors/errors'
