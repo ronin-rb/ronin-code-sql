@@ -1,6 +1,5 @@
 # Ronin SQL
 
-* [ronin.rubyforge.org/docs/ronin-sql](http://ronin.rubyforge.org/docs/ronin-sql/)
 * [github.com/ronin-ruby/ronin-sql](http://github.com/ronin-ruby/ronin-sql/)
 * [github.com/ronin-ruby/ronin-sql/issues](http://github.com/ronin-ruby/ronin-sql/issues)
 * [groups.google.com/group/ronin-ruby](http://groups.google.com/group/ronin-ruby)
