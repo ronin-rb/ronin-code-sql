@@ -43,7 +43,7 @@ class String
     when :double
       '"' + self.gsub(/"/,'""') + '"'
     else
-      raise(ArgumentError,"invalid quoting style #{quotes.inspect}",caller)
+      raise(ArgumentError,"invalid quoting style #{quotes.inspect}")
     end
   end
 

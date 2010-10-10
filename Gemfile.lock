@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-exploits.git
-  revision: 1e5347cea2f5d0e688a6e0726bd03638dec4e60a
+  revision: 4971738b85ecb3ce41b425f237a4187d131a8314
   specs:
     ronin-exploits (0.4.0)
       data_paths (~> 0.2.1)
@@ -26,27 +26,28 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-gen.git
-  revision: 556a1657c81daa1645372d0a3216423e481cd7fd
+  revision: 115692b7c2e9fc752d1977b53859d22ad20537a5
   specs:
     ronin-gen (0.3.0)
       data_paths (~> 0.2.1)
       open_namespace (~> 0.3.0)
       ronin (~> 0.4.0)
       ronin-support (~> 0.1.0)
-      thor (~> 0.14.0)
+      thor (~> 0.14.2)
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-support.git
-  revision: 084bcc0b11560f3f68e74213de3706baba02c96d
+  revision: 1fdb061e7027cf9f13d24c1d655a266fc0aa4204
   specs:
     ronin-support (0.1.0)
       chars (~> 0.1.2)
+      combinatorics (~> 0.2.0)
       data_paths (~> 0.2.1)
       uri-query_params (~> 0.4.0)
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-web.git
-  revision: c2a573fa7302e69abf81a0494498d269b15f5217
+  revision: 95d06391920e4a968a0848c390e393bc045e7343
   specs:
     ronin-web (0.3.0)
       data_paths (~> 0.2.1)
@@ -59,7 +60,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin.git
-  revision: 5c07e2565f022442e68f463968ce0c6de55a3e6c
+  revision: 014a7b8d84f1136a16c0a54d243fe81010fc976c
   specs:
     ronin (0.4.0)
       activesupport (~> 3.0.0)
@@ -81,7 +82,7 @@ GIT
       parameters (~> 0.2.2)
       pullr (~> 0.1.2)
       ronin-support (~> 0.1.0)
-      thor (~> 0.14.0)
+      thor (~> 0.14.2)
       tzinfo (~> 0.3.22)
       uri-query_params (~> 0.4.0)
 
@@ -92,6 +93,7 @@ GEM
     addressable (2.2.1)
     chars (0.1.2)
       yard (>= 0.2.3.5)
+    combinatorics (0.2.0)
     data_objects (0.10.2)
       addressable (~> 2.1)
     data_paths (0.2.1)
@@ -159,7 +161,7 @@ GEM
       rack (>= 1.0)
     spidr (0.2.7)
     stringex (1.1.0)
-    thor (0.14.0)
+    thor (0.14.3)
     tzinfo (0.3.23)
     uri-query_params (0.4.0)
     uuidtools (2.1.1)
