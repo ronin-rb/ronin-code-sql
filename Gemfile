@@ -8,7 +8,6 @@ RONIN = 'http://github.com/ronin-ruby'
 gem 'uri-query_params',	'~> 0.4.0'
 gem 'ronin-support',	'~> 0.1.0', :git => "#{RONIN}/ronin-support.git"
 gem 'ronin',		'~> 0.4.0', :git => "#{RONIN}/ronin.git"
-gem 'ronin-gen',	'~> 0.3.0', :git => "#{RONIN}/ronin-gen.git"
 gem 'ronin-web',	'~> 0.3.0', :git => "#{RONIN}/ronin-web.git"
 gem 'ronin-exploits',	'~> 0.4.0', :git => "#{RONIN}/ronin-exploits.git"
 
@@ -17,6 +16,7 @@ group(:edge) do
   gem 'dm-migrations',	DM_VERSION, :git => 'http://github.com/postmodern/dm-migrations.git', :branch => 'runner'
 
   gem 'contextify',	'~> 0.1.6', :git => 'http://github.com/postmodern/contextify.git'
+  gem 'ronin-gen',	'~> 0.3.0', :git => "#{RONIN}/ronin-gen.git"
 end
 
 group(:development) do
