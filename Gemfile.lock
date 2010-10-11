@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-exploits.git
-  revision: 4971738b85ecb3ce41b425f237a4187d131a8314
+  revision: f5dea67bce44390121032b44b5182d75f4701618
   specs:
     ronin-exploits (0.4.0)
       data_paths (~> 0.2.1)
@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-gen.git
-  revision: 115692b7c2e9fc752d1977b53859d22ad20537a5
+  revision: 0a5efba63221c62198fba688a2c2c0cd6ff120d6
   specs:
     ronin-gen (0.3.0)
       data_paths (~> 0.2.1)
@@ -37,7 +37,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-support.git
-  revision: 1fdb061e7027cf9f13d24c1d655a266fc0aa4204
+  revision: a7d96dda391dea15f7fc6934953624e7afb0ba4a
   specs:
     ronin-support (0.1.0)
       chars (~> 0.1.2)
@@ -47,7 +47,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-web.git
-  revision: 95d06391920e4a968a0848c390e393bc045e7343
+  revision: 92c5ffac98f1297c180825e84a5447dd0a7a09cd
   specs:
     ronin-web (0.3.0)
       data_paths (~> 0.2.1)
@@ -60,7 +60,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin.git
-  revision: 014a7b8d84f1136a16c0a54d243fe81010fc976c
+  revision: 88994579a4ed5bcc75f6b7a2d728e18eec7c4bd3
   specs:
     ronin (0.4.0)
       activesupport (~> 3.0.0)
@@ -147,16 +147,16 @@ GEM
     rack (1.2.1)
     rake (0.8.7)
     rdiscount (1.6.5)
-    rspec (2.0.0.rc)
-      rspec-core (= 2.0.0.rc)
-      rspec-expectations (= 2.0.0.rc)
-      rspec-mocks (= 2.0.0.rc)
-    rspec-core (2.0.0.rc)
-    rspec-expectations (2.0.0.rc)
+    rspec (2.0.0)
+      rspec-core (= 2.0.0)
+      rspec-expectations (= 2.0.0)
+      rspec-mocks (= 2.0.0)
+    rspec-core (2.0.0)
+    rspec-expectations (2.0.0)
       diff-lcs (>= 1.1.2)
-    rspec-mocks (2.0.0.rc)
-      rspec-core (= 2.0.0.rc)
-      rspec-expectations (= 2.0.0.rc)
+    rspec-mocks (2.0.0)
+      rspec-core (= 2.0.0)
+      rspec-expectations (= 2.0.0)
     sinatra (1.0)
       rack (>= 1.0)
     spidr (0.2.7)
@@ -181,6 +181,6 @@ DEPENDENCIES
   ronin-gen (~> 0.3.0)!
   ronin-support (~> 0.1.0)!
   ronin-web (~> 0.3.0)!
-  rspec (~> 2.0.0.rc)
+  rspec (~> 2.0.0)
   uri-query_params (~> 0.4.0)
   yard (~> 0.6.0)
