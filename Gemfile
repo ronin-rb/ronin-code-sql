@@ -26,8 +26,8 @@ group :development do
     gem 'rdiscount',	'~> 1.6.3'
   end
 
-  gem 'ore'
-  gem 'ore-tasks'
+  gem 'ore-core',	'~> 0.1.0'
+  gem 'ore-tasks',	'~> 0.2.0'
 
   gem 'rspec',	'~> 2.0.0'
 end
