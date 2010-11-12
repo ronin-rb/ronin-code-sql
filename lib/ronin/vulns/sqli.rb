@@ -141,7 +141,6 @@ module Ronin
       def raw_injection?
         never_changes?(
           {:append => '--'},
-          {:prepend => 'ifnull(', :append => ',null)'},
           {:prepend => 'nullif(', :append => ',0)'}
         )
       end
