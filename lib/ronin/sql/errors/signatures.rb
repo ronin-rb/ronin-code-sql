@@ -56,7 +56,7 @@ module Ronin
         sig.vendor = 'Microsoft'
         sig.dialect = :mssql
 
-        sig.recognize /ADODB.Command.*error/
+        sig.recognize /ADODB\.(Field|Command).*error\s+'[0-9a-f]+'/
       end
 
       Errors.signature do |sig|
