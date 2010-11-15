@@ -64,11 +64,11 @@ module Ronin
         return "#{string} "
       end
 
-      def injection_value(injection)
-        if (injection.kind_of?(Hash) && injection[:escape])
-          super(:append => (escape_string + injection[:escape].to_s))
+      def exploit_value(options)
+        if (options.kind_of?(Hash) && options[:escape])
+          super(:append => (escape_string + options[:escape].to_s))
         else
-          super(injection)
+          super(options)
         end
       end
 
