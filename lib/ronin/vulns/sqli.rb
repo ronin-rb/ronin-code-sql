@@ -25,8 +25,8 @@ require 'ronin/vulns/web'
 module Ronin
   module Vulns
     #
-    # The {SQLi} class represents SQL Injection vulnerabilities and implements
-    # various tests for detecting them.
+    # The {SQLi} class represents SQL Injection vulnerabilities and
+    # implements various tests for detecting them.
     #
     # @see https://github.com/ronin-ruby/ronin-sql/wiki/SQL-Injection-Tests
     #
