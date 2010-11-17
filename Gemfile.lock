@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-exploits.git
-  revision: bcd85aac58343c44c20241062e7de92d23ef3720
+  revision: 955d72234135a4d5aa662def620a5e6a5ffd487c
   specs:
     ronin-exploits (0.4.0)
       data_paths (~> 0.2.1)
@@ -17,7 +17,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-gen.git
-  revision: 72dcb3054b425729cbe5e5077c32c7b80cab9270
+  revision: 354fd9ece23dabd6efebc080bf188044c6edae10
   specs:
     ronin-gen (0.3.0)
       data_paths (~> 0.2.1)
@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-support.git
-  revision: 91f9ece6bbe6a85dadb31dca29758b084b18f424
+  revision: 6c89950e62383dbeffca9a2a5c698b1650d27503
   specs:
     ronin-support (0.1.0)
       chars (~> 0.2.0)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin-web.git
-  revision: ae98c3989ec4bdb8979730cbf973d1f7533bae1b
+  revision: 2c52e8b3f6b0c618ac138d4ad4239613520165f5
   specs:
     ronin-web (0.3.0)
       data_paths (~> 0.2.1)
@@ -47,9 +47,9 @@ GIT
 
 GIT
   remote: http://github.com/ronin-ruby/ronin.git
-  revision: cbd515f29ebbde15a7257f295b84efdeea3ad37c
+  revision: f1bf2907a2172741783c2063a3dcae2bc575b4af
   specs:
-    ronin (0.4.0)
+    ronin (1.0.0)
       activesupport (~> 3.0.0)
       contextify (~> 0.2.0)
       data_paths (~> 0.2.1)
@@ -64,6 +64,7 @@ GIT
       dm-timestamps (~> 1.0.2)
       dm-types (~> 1.0.2)
       dm-validations (~> 1.0.2)
+      i18n (~> 0.4.1)
       nokogiri (~> 1.4.1)
       open_namespace (~> 0.3.0)
       parameters (~> 0.2.3)
@@ -81,7 +82,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (3.0.1)
+    activesupport (3.0.3)
     addressable (2.2.2)
     chars (0.2.0)
     combinatorics (0.3.1)
@@ -127,10 +128,11 @@ GEM
       data_objects (= 0.10.2)
     extlib (0.9.15)
     fastercsv (1.5.3)
+    i18n (0.4.2)
     json_pure (1.4.6)
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
-    nokogiri (1.4.3.1)
+    nokogiri (1.4.4)
     open_namespace (0.3.0)
     ore-core (0.1.0)
     ore-tasks (0.2.0)
@@ -172,7 +174,7 @@ DEPENDENCIES
   ore-tasks (~> 0.2.0)
   rake (~> 0.8.7)
   rdiscount (~> 1.6.3)
-  ronin (~> 0.4.0)!
+  ronin (~> 1.0.0)!
   ronin-exploits (~> 0.4.0)!
   ronin-gen (~> 0.3.0)!
   ronin-sql!
