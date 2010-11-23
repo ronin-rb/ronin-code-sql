@@ -49,7 +49,8 @@ module Ronin
       property :escape, String, :set => %w[integer string statement]
 
       # The style of string quoting to escape
-      property :escape_quotes, String, :set => %w[single double back_tick]
+      property :escape_quotes, String, :set => %w[single double back_tick],
+                                       :required => false
 
       def escape_string
         string = if self.escape == 'string'
