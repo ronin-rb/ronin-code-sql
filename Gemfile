@@ -7,27 +7,28 @@ RONIN = 'http://github.com/ronin-ruby'
 gemspec
 
 # DataMapper dependencies
-gem 'dm-migrations',	DM_VERSION, :git => 'http://github.com/postmodern/dm-migrations.git', :branch => 'runner'
+gem 'dm-migrations',	DM_VERSION, :git => 'http://github.com/postmodern/dm-migrations.git',
+                                  :branch => 'runner'
 
 # Ronin dependencies
 gem 'ronin-support',	'~> 0.1.0', :git => "#{RONIN}/ronin-support.git"
-gem 'ronin',		'~> 1.0.0', :git => "#{RONIN}/ronin.git"
-gem 'ronin-web',	'~> 0.3.0', :git => "#{RONIN}/ronin-web.git"
-gem 'ronin-gen',	'~> 0.3.0', :git => "#{RONIN}/ronin-gen.git"
+gem 'ronin',		      '~> 1.0.0', :git => "#{RONIN}/ronin.git"
+gem 'ronin-web',	    '~> 0.3.0', :git => "#{RONIN}/ronin-web.git"
+gem 'ronin-gen',	    '~> 0.3.0', :git => "#{RONIN}/ronin-gen.git"
 gem 'ronin-exploits',	'~> 0.4.0', :git => "#{RONIN}/ronin-exploits.git"
 
 group :development do
-  gem 'rake',		'~> 0.8.7'
+  gem 'rake',		      '~> 0.8.7'
 
   case RUBY_PLATFORM
   when 'java'
-    gem 'maruku',	'~> 0.6.0'
+    gem 'maruku',	    '~> 0.6.0'
   else
     gem 'rdiscount',	'~> 1.6.3'
   end
 
-  gem 'ore-core',	'~> 0.1.0'
-  gem 'ore-tasks',	'~> 0.2.0'
+  gem 'ore-core',	    '~> 0.1.0'
+  gem 'ore-tasks',	  '~> 0.2.0'
 
-  gem 'rspec',	'~> 2.0.0'
+  gem 'rspec',	      '~> 2.0.0'
 end
