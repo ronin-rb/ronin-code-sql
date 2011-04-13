@@ -5,7 +5,7 @@ describe SQL::Injection do
   describe "scan" do
     subject { SQL::Injection }
 
-    let(:url) { URI('http://testasp.acunetix.com/showthread.asp?id=2') }
+    let(:url) { URI('http://testasp.vulnweb.com/showthread.asp?id=2') }
 
     it "should find all SQL injections" do
       injections = subject.scan(url).to_a
