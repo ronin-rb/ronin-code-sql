@@ -142,6 +142,18 @@ module Ronin
           return inj
         end
 
+        #
+        # Converts the fragment to an Array.
+        #
+        # @return [Array]
+        #   The elements of the fragment.
+        #
+        # @since 0.3.0
+        #
+        def to_a
+          @elements
+        end
+
         protected
 
         #
