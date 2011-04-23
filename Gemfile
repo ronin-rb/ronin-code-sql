@@ -16,9 +16,8 @@ gem 'ronin-exploits',	'~> 0.4.0', :git => "#{RONIN_URI}/ronin-exploits.git"
 group :development do
   gem 'rake',		      '~> 0.8.7'
 
-  gem 'ore-core',	    '~> 0.1.0'
-  gem 'ore-tasks',	  '~> 0.2.0'
-  gem 'rspec',	      '~> 2.0.0'
+  gem 'ore-tasks',	  '~> 0.4'
+  gem 'rspec',	      '~> 2.4'
 
-  gem 'kramdown',     '~> 0.12.0'
+  gem 'kramdown',     '~> 0.12'
 end
