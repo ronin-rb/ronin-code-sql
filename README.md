@@ -85,11 +85,11 @@ Scan a URL for SQLi vulnerabilities:
 ## Requirements
 
 * [uri-query_params](http://github.com/postmodern/uri-query_params) ~> 0.4.0
-* [ronin-support](http://github.com/ronin-ruby/ronin-support) ~> 0.1.0
-* [ronin](http://github.com/ronin-ruby/ronin) ~> 0.4.0
-* [ronin-gen](http://github.com/ronin-ruby/ronin-gen) ~> 0.3.0
-* [ronin-web](http://github.com/ronin-ruby/ronin-web) ~> 0.3.0
-* [ronin-exploits](http://github.com/ronin-ruby/ronin-exploits) ~> 0.4.0
+* [ronin-support](http://github.com/ronin-ruby/ronin-support) ~> 0.2
+* [ronin](http://github.com/ronin-ruby/ronin) ~> 1.1
+* [ronin-gen](http://github.com/ronin-ruby/ronin-gen) ~> 1.0
+* [ronin-web](http://github.com/ronin-ruby/ronin-web) ~> 0.3
+* [ronin-exploits](http://github.com/ronin-ruby/ronin-exploits) ~> 1.0
 
 ## Install
 

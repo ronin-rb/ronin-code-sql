@@ -13,11 +13,11 @@ has_yard: true
 dependencies:
   uri-query_params: ~> 0.5.2
   # Ronin dependencies:
-  # ronin-support: ~> 0.1.0
-  # ronin: ~> 1.0.0
-  ronin-gen: ~> 1.0.0
-  # ronin-web: ~> 0.3.0
-  # ronin-exploits: ~> 1.0.0
+  # ronin-support: ~> 0.2
+  # ronin: ~> 1.1
+  # ronin-gen: ~> 1.0
+  # ronin-web: ~> 0.3
+  # ronin-exploits: ~> 1.0
 
 development_dependencies:
   bundler: ~> 1.0.0
