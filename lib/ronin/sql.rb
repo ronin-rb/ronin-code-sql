@@ -1,8 +1,9 @@
 #
-# Ronin SQL - A Ronin library providing support for SQL related security
-# tasks.
+# Ronin SQL - A Ruby DSL for crafting SQL Injections.
 #
-# Copyright (c) 2007-2009 Hal Brodigan (postmodern.mod3 at gmail.com)
+# Copyright (c) 2007-2012 Hal Brodigan (postmodern.mod3 at gmail.com)
+#
+# This file is part of Ronin SQL.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,13 +20,4 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/extensions'
-require 'ronin/sql/error'
-require 'ronin/sql/injection'
-require 'ronin/sql/scanner'
-require 'ronin/sql/version'
-require 'ronin/config'
-
-module Ronin
-  Config.load :sql
-end
+require 'ronin/sql/sql'

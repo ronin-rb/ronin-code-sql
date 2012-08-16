@@ -20,9 +20,59 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'ronin/sql/formatter'
+
 module Ronin
   module SQL
-    # Ronin SQL version
-    VERSION = '0.3.0'
+    module Formattable
+      #
+      # Formats the object.
+      #
+      # @param [Formatter] formatter
+      #   The formatter to use.
+      #
+      # @return [String]
+      #   The formatted SQL.
+      #
+      # @abstract
+      #
+      def format(formatter)
+      end
+
+      #
+      # Converts the object to SQL.
+      #
+      # @param [Hash] options
+      #   Additional formatting options.
+      #
+      # @return [String]
+      #   The resulting SQL.
+      #
+      def to_sql(options={})
+        format(Formatter.new(options))
+      end
+
+      #
+      # @see #to_sql
+      #
+      def to_s
+        to_sql
+      end
+
+      #
+      # @see #to_s
+      #
+      def to_str
+        to_s
+      end
+
+      #
+      # @see #to_sql
+      #
+      def inspect
+        to_sql
+      end
+
+    end
   end
 end

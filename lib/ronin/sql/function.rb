@@ -20,9 +20,47 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'ronin/sql/formattable'
+
 module Ronin
   module SQL
-    # Ronin SQL version
-    VERSION = '0.3.0'
+    class Function
+
+      include Formattable
+
+      # The name of the function
+      attr_reader :name
+
+      # The arguments of the function
+      attr_reader :arguments
+
+      #
+      # Creates a new Function object.
+      #
+      # @param [Symbol] name
+      #   The name of the function.
+      #
+      # @param [Array] arguments
+      #   The arguments of the function.
+      #
+      def initialize(name,arguments=[])
+        @name      = name
+        @arguments = arguments
+      end
+
+      #
+      # Formats the function.
+      #
+      # @param [Formatter] formatter
+      #   The formatter to use.
+      #
+      # @return [String]
+      #   The formatted SQL function.
+      #
+      def format(formatter)
+        formatter.function(@name,*@arguments)
+      end
+
+    end
   end
 end

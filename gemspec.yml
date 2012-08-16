@@ -1,25 +1,18 @@
 name: ronin-sql
-summary: A Ruby library for Ronin that provids support for SQL related security tasks.
+summary: A Ruby DSL for crafting SQL Injections.
 description:
-  Ronin SQL is a Ruby library for Ronin that provids support for SQL related
-  security tasks.
+  Ronin SQL is a a Ruby DSL for crafting SQL Injections.
 
-license: GPL-2
+license: GPL-3
 authors: Postmodern
 email: postmodern.mod3@gmail.com
-homepage: http://github.com/ronin-ruby/ronin-gen
+homepage: http://github.com/ronin-ruby/ronin-sql
 has_yard: true
 
 dependencies:
-  uri-query_params: ~> 0.5.2
   # Ronin dependencies:
-  # ronin-support: ~> 0.2
-  ronin-support: ~> 0.2.0.rc1
-  # ronin: ~> 1.1
-  # ronin-gen: ~> 1.0
-  # ronin-web: ~> 0.3
-  # ronin-exploits: ~> 1.0
+  ronin-support: ~> 0.2
 
 development_dependencies:
-  bundler: ~> 1.0.0
-  yard: ~> 0.7.0
+  bundler: ~> 1.0
+  yard: ~> 0.7
