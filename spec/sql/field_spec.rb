@@ -3,6 +3,10 @@ require 'ronin/sql/field'
 
 describe SQL::Field do
   describe "#initialize" do
+    it "should convert name to a String" do
+      described_class.new(:table).name.should == 'table'
+    end
+
     it "should default parent to nil" do
       described_class.new('table').parent.should be_nil
     end

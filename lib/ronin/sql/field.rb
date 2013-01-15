@@ -41,7 +41,7 @@ module Ronin
       #   The parent of the field.
       #
       def initialize(name,parent=nil)
-        super(name,parent)
+        super(name.to_s,parent)
       end
 
       #
@@ -95,7 +95,7 @@ module Ronin
         end
 
         if (self.parent.nil? || self.parent.parent.nil?)
-          Field.new(name.to_s,self)
+          Field.new(name,self)
         else
           raise(NoMethodError,"cannot access coumns from other columns")
         end
