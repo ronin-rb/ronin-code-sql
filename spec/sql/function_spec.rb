@@ -3,21 +3,23 @@ require 'spec_helper'
 require 'ronin/sql/function'
 
 describe SQL::Function do
-  it "should encode functions with no arguments" do
-    func = described_class.new('now')
+  describe "#initialize" do
+    context "with no arguments" do
+      subject { described_class.new(:f) }
 
-    func.to_s.should == 'now()'
-  end
+      it "should set arguments to []" do
+        subject.arguments.should == []
+      end
+    end
 
-  it "should encode functions with one argument" do
-    func = described_class.new('max',[:id])
+    context "with multiple arguments" do
+      let(:arguments) { [1,2,3] }
 
-    func.to_s.should == 'max(id)'
-  end
+      subject { described_class.new(:f,*arguments) }
 
-  it "should encode functions with more than one argument" do
-    func = described_class.new('mid',[:city,1,4])
-
-    func.to_s.should == 'mid(city,1,4)'
+      it "should set arguments" do
+        subject.arguments.should == arguments
+      end
+    end
   end
 end
