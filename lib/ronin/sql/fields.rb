@@ -20,43 +20,29 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/program'
-require 'ronin/sql/injection'
+require 'ronin/sql/field'
 
 module Ronin
   module SQL
+    module Fields
+      protected
 
-    #
-    # Creates a new SQL program.
-    #
-    # @return [Program]
-    #   The new SQL program.
-    #
-    def sql
-      Program.new
+      #
+      # Allows specifying databases, tables or columns.
+      #
+      # @example
+      #   db.users
+      #
+      # @example
+      #   users.id
+      #
+      def method_missing(name,*arguments,&block)
+        if (arguments.empty? && block.nil?)
+          Field.new(name)
+        else
+          raise(NoMethodError,"unknown SQL function: #{name}")
+        end
+      end
     end
-
-    #
-    # Creates a new SQL injection (SQLi)
-    #
-    # @param [Hash] options
-    #   Additional injection options.
-    #
-    # @option options [:integer, :decimal, :string, :column] :escape
-    #   The type of element to escape out of.
-    #
-    # @option options [Boolean] :terminate
-    #   Specifies whether to terminate the SQLi with a comment.
-    #
-    # @option options [String, Symbol, Integer] :place_holder
-    #   Place-holder data.
-    #
-    # @return [Injection]
-    #   The new SQL injection.
-    #
-    def sqli(options={},&block)
-      Injection.new(options,&block)
-    end
-
   end
 end

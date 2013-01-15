@@ -20,59 +20,59 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/formatter'
+require 'ronin/sql/statement'
 
 module Ronin
   module SQL
-    module Formattable
+    module Statements
       #
-      # Formats the object.
+      # Creates a new `SELECT` statement.
       #
-      # @param [Formatter] formatter
-      #   The formatter to use.
+      # @param [Array<Field, Symbol>] columns
+      #   The columns to select.
       #
-      # @return [String]
-      #   The formatted SQL.
+      # @return [Statement]
+      #   The new statement.
       #
-      # @abstract
-      #
-      def format(formatter)
+      def select(*columns,&block)
+        Statement.new(:SELECT,columns,&block)
       end
 
       #
-      # Converts the object to SQL.
+      # Creates a new `INSERT` statement.
       #
-      # @param [Hash] options
-      #   Additional formatting options.
+      # @return [Statement]
+      #   The new statement.
       #
-      # @return [String]
-      #   The resulting SQL.
-      #
-      def to_sql(options={})
-        format(Formatter.new(options))
+      def insert(&block)
+        Statement.new(:"INSERT INTO",&block)
       end
 
       #
-      # @see #to_sql
+      # Creates a new `UPDATE` statement.
       #
-      def to_s
-        to_sql
+      # @param [Field, Symbol] table
+      #   The table to update.
+      #
+      # @return [Statement]
+      #   The new statement.
+      #
+      def update(table,&block)
+        Statement.new(:UPDATE,table,&block)
       end
 
       #
-      # @see #to_s
+      # Creates a new `DELETE` statement.
       #
-      def to_str
-        to_s
+      # @param [Field, Symbol] table
+      #   The table to delete from.
+      #
+      # @return [Statement]
+      #   The new statement.
+      #
+      def delete(table,&block)
+        Statement.new(:"DELETE FROM",table,&block)
       end
-
-      #
-      # @see #to_sql
-      #
-      def inspect
-        to_sql
-      end
-
     end
   end
 end

@@ -20,43 +20,23 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/program'
-require 'ronin/sql/injection'
-
 module Ronin
   module SQL
+    #
+    # Represents a unary-expression in SQL.
+    #
+    class UnaryExpr < Struct.new(:op,:expr)
 
-    #
-    # Creates a new SQL program.
-    #
-    # @return [Program]
-    #   The new SQL program.
-    #
-    def sql
-      Program.new
+      #
+      # Converts the binary expression to SQL.
+      #
+      def to_sql(options={})
+        Emitter.new(options).emit_expression(self)
+      end
+
+      alias to_s   to_sql
+      alias to_str to_sql
+
     end
-
-    #
-    # Creates a new SQL injection (SQLi)
-    #
-    # @param [Hash] options
-    #   Additional injection options.
-    #
-    # @option options [:integer, :decimal, :string, :column] :escape
-    #   The type of element to escape out of.
-    #
-    # @option options [Boolean] :terminate
-    #   Specifies whether to terminate the SQLi with a comment.
-    #
-    # @option options [String, Symbol, Integer] :place_holder
-    #   Place-holder data.
-    #
-    # @return [Injection]
-    #   The new SQL injection.
-    #
-    def sqli(options={},&block)
-      Injection.new(options,&block)
-    end
-
   end
 end

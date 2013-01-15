@@ -20,33 +20,49 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/operators'
+require 'ronin/sql/fields'
+require 'ronin/sql/functions'
 require 'ronin/sql/emitter'
 
 module Ronin
   module SQL
     #
-    # Represents a SQL function call.
+    # Represents a SQL Clause.
     #
-    class Function < Struct.new(:name,:arguments)
+    class Clause < Struct.new(:keyword,:argument)
 
-      include Operators
+      include Fields
+      include Functions
 
       #
-      # Creates a new Function object.
+      # Initializes the SQL clause.
       #
-      # @param [Symbol] name
-      #   The name of the function.
+      # @param [Symbol] keyword
+      #   The name of the clause.
       #
-      # @param [Array] arguments
-      #   The arguments of the function.
+      # @param [Object] argument
+      #   Additional argument for the clause.
       #
-      def initialize(name,*arguments)
-        super(name,arguments)
+      # @yield [(clause)]
+      #   If a block is given, the return value will be used as the argument.
+      #
+      # @yieldparam [Clause] clause
+      #   If the block accepts an argument, it will be passed the new clause.
+      #   Otherwise the block will be evaluated within the clause.
+      #
+      def initialize(keyword,argument=nil,&block)
+        if block
+          argument = case block.arity
+                     when 1 then yield(self)
+                     else        instance_eval(&block)
+                     end
+        end
+
+        super(keyword,argument)
       end
 
       #
-      # Converts the function into raw SQL.
+      # Converts the clause into raw SQL.
       #
       # @param [Hash] options
       #   Additional syntax options.
@@ -55,7 +71,7 @@ module Ronin
       #   The raw SQL.
       #
       def to_sql(options={})
-        Emitter.new(options).emit_function(self)
+        Emitter.new(options).emit_clause(self)
       end
 
       alias to_s   to_sql

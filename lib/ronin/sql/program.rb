@@ -20,68 +20,54 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/formattable'
+require 'ronin/sql/statements'
+require 'ronin/sql/emitter'
 
 module Ronin
   module SQL
-    class Fragment
+    #
+    # Represents a SQL Program.
+    #
+    class Program
 
-      include Formattable
+      include Fields
+      include Functions
+      include Statements
 
-      # Elements of the fragment
-      attr_accessor :elements
+      # The statements of the program
+      attr_reader :statements
 
       #
-      # Creates a new Fragment object.
+      # Initializes a new SQL program.
       #
-      # @param [Array] elements
-      #   Initial elements of the fragment.
-      #
-      # @since 0.3.0
-      #
-      def initialize(elements=[])
-        @elements = elements
+      def initialize
+        @statements = []
       end
 
       #
-      # Appends a single element.
+      # Appends a statement to the program.
       #
-      # @param [Object] element
-      #   The element to append.
+      # @param [Statement] statement
+      #   The SQL statement.
       #
-      # @return [Fragment]
-      #   The fragment with the appended element.
+      # @return [self]
       #
-      # @since 0.3.0
-      #
-      def <<(element)
-        @elements << element
+      def <<(statement)
+        @statements << statement
         return self
       end
 
       #
-      # Converts the fragment to an Array.
+      # Converts the SQL program into raw SQL.
       #
-      # @return [Array]
-      #   The elements of the fragment.
-      #
-      # @since 0.3.0
-      #
-      def to_a
-        @elements
-      end
-
-      #
-      # Formats the fragment.
-      #
-      # @param [Formatter] formatter
-      #   The formatter to use.
+      # @param [Hash] options
+      #   Additional syntax options.
       #
       # @return [String]
-      #   The formatted SQL.
+      #   The raw SQL.
       #
-      def format(formatter)
-        formatter.format_elements(*@elements)
+      def to_sql(options={})
+        Emitter.new(options).emit_program(self)
       end
 
     end
