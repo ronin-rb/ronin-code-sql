@@ -1,17 +1,18 @@
 require 'spec_helper'
-
 require 'ronin/sql/sql'
 
 describe SQL do
-  it "should allow creating fragments" do
-    frag = subject[1, :eq, 1]
+  subject { Object.new.extend(described_class) }
 
-    frag.should be_kind_of(SQL::Fragment)
+  describe "#sql" do
+    it "should return a new SQL::Program" do
+      subject.sql.should be_kind_of(SQL::Program)
+    end
   end
 
-  it "should allow creating functions" do
-    func = subject.max(:users)
-
-    func.should be_kind_of(SQL::Function)
+  describe "#sqli" do
+    it "should return a new SQL::Injection" do
+      subject.sqli.should be_kind_of(SQL::Injection)
+    end
   end
 end
