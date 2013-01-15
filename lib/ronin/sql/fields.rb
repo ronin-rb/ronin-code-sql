@@ -40,7 +40,7 @@ module Ronin
         if (arguments.empty? && block.nil?)
           Field.new(name)
         else
-          raise(NoMethodError,"unknown SQL function: #{name}")
+          super(name,*arguments,&block)
         end
       end
     end
