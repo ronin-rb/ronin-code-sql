@@ -22,6 +22,7 @@
 
 require 'ronin/sql/clause'
 require 'ronin/sql/clauses'
+require 'ronin/sql/operators'
 require 'ronin/sql/emitter'
 
 module Ronin
@@ -31,6 +32,7 @@ module Ronin
     #
     class Statement < Struct.new(:keyword,:argument)
 
+      include Operators
       include Clauses
 
       #
