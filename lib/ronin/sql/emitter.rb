@@ -227,7 +227,11 @@ module Ronin
         when Array                 then emit_list(object)
         when BinaryExpr, UnaryExpr then emit_expression(object)
         else
-          raise(ArgumentError,"cannot emit #{object.class}")
+          if object.respond_to?(:to_sql)
+            object.to_sql
+          else
+            raise(ArgumentError,"cannot emit #{object.class}")
+          end
         end
       end
 
