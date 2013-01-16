@@ -20,6 +20,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'ronin/sql/fields'
+require 'ronin/sql/functions'
 require 'ronin/sql/statements'
 require 'ronin/sql/emitter'
 
