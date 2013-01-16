@@ -33,6 +33,14 @@ module Ronin
 
       include Clauses
 
+      # Default place holder values.
+      PLACE_HOLDERS = {
+        :integer => 1,
+        :decimal => 1.0,
+        :string => '1',
+        :column => :id
+      }
+
       #
       # Initializes a new SQL injection.
       #
@@ -53,12 +61,7 @@ module Ronin
         @terminate = options[:terminate]
 
         @place_holder = options.fetch(:place_holder) do
-          case @escape
-          when :integer then 1
-          when :decimal then 1.0
-          when :string  then '1'
-          when :column  then :id
-          end
+          PLACE_HOLDERS.fetch(@escape)
         end
 
         @expression = nil
