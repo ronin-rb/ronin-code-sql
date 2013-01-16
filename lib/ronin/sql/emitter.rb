@@ -207,6 +207,7 @@ module Ronin
       #
       def emit(object)
         case object
+        when NilClass              then emit_keyword(:null)
         when TrueClass             then emit_true
         when FalseClass            then emit_false
         when Integer               then emit_integer(object)
