@@ -47,7 +47,7 @@ module Ronin
       # @param [Hash] options
       #   Additional injection options.
       #
-      # @option options [:integer, :decimal, :string, :column] :escape
+      # @option options [:integer, :decimal, :string, :column] :escape (:column)
       #   The type of element to escape out of.
       #
       # @option options [Boolean] :terminate
@@ -57,7 +57,7 @@ module Ronin
       #   Place-holder data.
       #
       def initialize(options={})
-        @escape    = options[:escape]
+        @escape    = options.fetch(:escape,:column)
         @terminate = options[:terminate]
 
         @place_holder = options.fetch(:place_holder) do
