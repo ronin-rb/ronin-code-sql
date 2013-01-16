@@ -76,6 +76,15 @@ module Ronin
       end
 
       #
+      # Emits the `NULL` value.
+      #
+      # @return ["NULL"]
+      #
+      def emit_null
+        emit_keyword(:null)
+      end
+
+      #
       # Emits a `false` value.
       #
       # @return [String]
@@ -207,7 +216,7 @@ module Ronin
       #
       def emit(object)
         case object
-        when NilClass              then emit_keyword(:null)
+        when NilClass              then emit_null
         when TrueClass             then emit_true
         when FalseClass            then emit_false
         when Integer               then emit_integer(object)
