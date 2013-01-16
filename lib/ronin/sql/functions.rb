@@ -171,7 +171,7 @@ module Ronin
       #   The new function.
       #
       def atan2(y,x)
-        Function.new(:atan2,y,x)
+        Function.new(:ATAN2,y,x)
       end
 
       #
@@ -342,16 +342,6 @@ module Ronin
       #
       def mod(n,m)
         Function.new(:MOD,n,m)
-      end
-
-      #
-      # The `OCT` function.
-      #
-      # @return [Function]
-      #   The new function.
-      #
-      def oct(n)
-        Function.new(:OCT,n)
       end
 
       #
@@ -526,8 +516,8 @@ module Ronin
       # @return [Function]
       #   The new function.
       #
-      def char(*arguments)
-        Function.new(:CHAR,*arguments)
+      def char(*bytes)
+        Function.new(:CHAR,*bytes)
       end
 
       #
@@ -917,7 +907,7 @@ module Ronin
       #   The new function.
       #
       def strcmp(string1,string2)
-        Function.new(:STRING,string1,string2)
+        Function.new(:STRCMP,string1,string2)
       end
 
       #
