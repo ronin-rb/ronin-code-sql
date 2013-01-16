@@ -22,6 +22,7 @@
 
 require 'ronin/sql/fields'
 require 'ronin/sql/functions'
+require 'ronin/sql/statements'
 require 'ronin/sql/emitter'
 
 module Ronin
@@ -33,6 +34,7 @@ module Ronin
 
       include Fields
       include Functions
+      include Statements
 
       #
       # Initializes the SQL clause.
