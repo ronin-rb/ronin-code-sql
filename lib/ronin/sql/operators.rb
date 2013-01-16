@@ -247,6 +247,16 @@ module Ronin
       end
 
       #
+      # `REGEXP` comparison.
+      #
+      # @return [BinaryExpr]
+      #   The new binary expression.
+      #
+      def in(other)
+        BinaryExpr.new(self,:IN,other)
+      end
+
+      #
       # Unary minus.
       #
       # @return [UnaryExpr]
