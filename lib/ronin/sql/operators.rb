@@ -213,7 +213,7 @@ module Ronin
       #   The new binary expression.
       #
       def like(other)
-        BinaryExpr.new(self,:"LIKE",other)
+        BinaryExpr.new(self,:LIKE,other)
       end
 
       #
@@ -223,7 +223,7 @@ module Ronin
       #   The new binary expression.
       #
       def glob(other)
-        BinaryExpr.new(self,:"GLOB",other)
+        BinaryExpr.new(self,:GLOB,other)
       end
 
       #
@@ -233,7 +233,7 @@ module Ronin
       #   The new binary expression.
       #
       def match(other)
-        BinaryExpr.new(self,:"MATCH",other)
+        BinaryExpr.new(self,:MATCH,other)
       end
 
       #
@@ -243,7 +243,7 @@ module Ronin
       #   The new binary expression.
       #
       def regexp(other)
-        BinaryExpr.new(self,:"REGEXP",other)
+        BinaryExpr.new(self,:REGEXP,other)
       end
 
       #
