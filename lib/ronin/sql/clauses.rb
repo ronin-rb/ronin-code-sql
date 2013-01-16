@@ -104,8 +104,11 @@ module Ronin
       #
       # Appends a `GROUP BY` clause.
       #
-      def group_by(&block)
-        clauses << Clause.new(:"GROUP BY",&block)
+      # @param [Array<Field, Symbol>] columns
+      #   The columns for `GROUP BY`.
+      #
+      def group_by(*columns,&block)
+        clauses << Clause.new(:"GROUP BY",columns,&block)
         return self
       end
 
@@ -145,23 +148,23 @@ module Ronin
       # Appends a `INTO` clause.
       #
       def into(table=nil)
-        clauses << Clause.new(:INTO,table,&block)
+        clauses << Clause.new(:INTO,table)
         return self
       end
 
       #
       # Appends a `VALUES` clause.
       #
-      def values(&block)
-        clauses << Clause.new(:VALUES,&block)
+      def values(*values)
+        clauses << Clause.new(:VALUES,values)
         return self
       end
 
       #
       # Appends a `DEFAULT VALUES` clause.
       #
-      def default_values(&block)
-        clauses << Clause.new(:"DEFAULT VALUES",&block)
+      def default_values
+        clauses << Clause.new(:"DEFAULT VALUES")
         return self
       end
 
@@ -176,8 +179,8 @@ module Ronin
       #
       # Appends a `INDEXED BY` clause.
       #
-      def indexed_by(&block)
-        clauses << Clause.new(:"INDEXED BY",&block)
+      def indexed_by(name,&block)
+        clauses << Clause.new(:"INDEXED BY",name,&block)
         return self
       end
 
