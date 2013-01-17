@@ -179,11 +179,19 @@ module Ronin
       #   The raw SQL.
       #
       def emit_expression(expr)
+        op = emit_operator(expr.op)
+
         case expr
         when BinaryExpr
-          "#{emit(expr.left)} #{emit_operator(expr.op)} #{emit(expr.right)}"
+          case op
+          when /^[A-Z]+/ then "#{emit(expr.left)} #{op} #{emit(expr.right)}"
+          else                "#{emit(expr.left)}#{op}#{emit(expr.right)}"
+          end
         when UnaryExpr
-          "#{emit_operator(expr.op)} #{emit(expr.expr)}"
+          case op
+          when /^[A-Z]+/ then "#{op} #{emit(expr.expr)}"
+          else                "#{op}#{emit(expr.expr)}"
+          end
         end
       end
 
