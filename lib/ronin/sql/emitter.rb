@@ -209,9 +209,10 @@ module Ronin
       #   The raw SQL.
       #
       def emit_function(function)
-        emit_keyword(function.name) << function.arguments.map { |argument|
-          emit(argument)
-        }.join(',')
+        name      = emit_keyword(function.name)
+        arguments = function.arguments.map { |argument| emit(argument) }
+
+        return "#{name}(#{arguments.join(',')})"
       end
 
       #
