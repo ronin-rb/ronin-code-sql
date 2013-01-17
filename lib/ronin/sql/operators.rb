@@ -297,6 +297,16 @@ module Ronin
       end
 
       #
+      # Logical `NOT`.
+      #
+      # @return [UnaryExpr]
+      #   The new binary expression.
+      #
+      def not
+        UnaryExpr.new(:NOT,self)
+      end
+
+      #
       # `AND`.
       #
       # @return [BinaryExpr]
