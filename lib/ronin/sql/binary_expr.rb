@@ -27,7 +27,7 @@ module Ronin
     #
     # Represents a binary expression in SQL.
     #
-    class BinaryExpr < Struct.new(:left,:op,:right)
+    class BinaryExpr < Struct.new(:left,:operator,:right)
 
       include Operators
 

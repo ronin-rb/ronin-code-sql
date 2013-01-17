@@ -25,7 +25,7 @@ module Ronin
     #
     # Represents a unary-expression in SQL.
     #
-    class UnaryExpr < Struct.new(:op,:expr)
+    class UnaryExpr < Struct.new(:operator,:operand)
 
       #
       # Converts the binary expression to SQL.
