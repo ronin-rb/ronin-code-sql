@@ -66,6 +66,8 @@ module Ronin
       #   Place-holder data.
       #
       def initialize(options={})
+        super()
+
         @escape       = options.fetch(:escape,:column)
         @place_holder = options.fetch(:place_holder) do
           PLACE_HOLDERS.fetch(@escape)
@@ -127,15 +129,25 @@ module Ronin
       #
       def to_sql(options={})
         emitter = Emitter.new(options)
-        sql    = ''
+        sql     = ''
 
         sql << emitter.emit_expression(@expression) if @expression
+
+        unless clauses.empty?
+          sql << ' ' << emitter.emit_clauses(clauses)
+        end
+
+        unless statements.empty?
+          sql << '; ' << emitter.emit_program(self)
+        end
 
         case @escape
         when :string
           if (options[:terminate] || (sql[0,1] != sql[-1,1]))
             # terminate the expression
             sql << ';--'
+          else
+            sql = sql[0..-2]
           end
 
           # balance the quotes
@@ -149,6 +161,7 @@ module Ronin
 
         return sql
       end
+
     end
   end
 end
