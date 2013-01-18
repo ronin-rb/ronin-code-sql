@@ -1,4 +1,7 @@
 require 'spec_helper'
+require 'ronin/sql/unary_expr'
+require 'ronin/sql/binary_expr'
+require 'ronin/sql/field'
 require 'ronin/sql/emitter'
 
 describe SQL::Emitter do
