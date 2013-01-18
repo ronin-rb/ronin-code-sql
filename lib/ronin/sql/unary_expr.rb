@@ -20,6 +20,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
+require 'ronin/sql/emittable'
+
 module Ronin
   module SQL
     #
@@ -27,15 +29,14 @@ module Ronin
     #
     class UnaryExpr < Struct.new(:operator,:operand)
 
+      include Emittable
+
       #
       # Converts the binary expression to SQL.
       #
       def to_sql(options={})
         Emitter.new(options).emit_expression(self)
       end
-
-      alias to_s   to_sql
-      alias to_str to_sql
 
     end
   end

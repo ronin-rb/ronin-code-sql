@@ -24,7 +24,7 @@ require 'ronin/sql/fields'
 require 'ronin/sql/functions'
 require 'ronin/sql/statement'
 require 'ronin/sql/statements'
-require 'ronin/sql/emitter'
+require 'ronin/sql/emittable'
 
 module Ronin
   module SQL
@@ -36,6 +36,7 @@ module Ronin
       include Fields
       include Functions
       include Statements
+      include Emittable
 
       # The statements of the program
       attr_reader :statements
@@ -98,9 +99,6 @@ module Ronin
       def to_sql(options={})
         Emitter.new(options).emit_program(self)
       end
-
-      alias to_s   to_sql
-      alias to_str to_sql
 
     end
   end

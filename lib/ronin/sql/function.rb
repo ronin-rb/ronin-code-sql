@@ -21,7 +21,7 @@
 #
 
 require 'ronin/sql/operators'
-require 'ronin/sql/emitter'
+require 'ronin/sql/emittable'
 
 module Ronin
   module SQL
@@ -31,6 +31,7 @@ module Ronin
     class Function < Struct.new(:name,:arguments)
 
       include Operators
+      include Emittable
 
       #
       # Creates a new Function object.
@@ -57,9 +58,6 @@ module Ronin
       def to_sql(options={})
         Emitter.new(options).emit_function(self)
       end
-
-      alias to_s   to_sql
-      alias to_str to_sql
 
     end
   end

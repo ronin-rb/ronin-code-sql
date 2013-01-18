@@ -20,26 +20,47 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/operators'
-require 'ronin/sql/emittable'
+require 'ronin/sql/emitter'
 
 module Ronin
   module SQL
-    #
-    # Represents a binary expression in SQL.
-    #
-    class BinaryExpr < Struct.new(:left,:operator,:right)
-
-      include Operators
-      include Emittable
-
+    module Emittable
       #
-      # Converts the binary expression to SQL.
+      # Emits SQL.
+      #
+      # @param [Hash] options
+      #   Additional options for {Emitter}.
+      #
+      # @raise [NotImplementedError]
+      #   This method must be implemented.
       #
       def to_sql(options={})
-        Emitter.new(options).emit_expression(self)
+        raise(NotImplementedError,"#{self.class}#to_sql is not implemented")
       end
 
+      #
+      # @see #to_sql
+      #
+      def to_s
+        to_sql
+      end
+
+      #
+      # @see #to_sql
+      #
+      def to_str
+        to_sql
+      end
+
+      #
+      # Inspects the object.
+      #
+      # @return [String]
+      #   The inspected object.
+      #
+      def inspect
+        "#<#{self.class}: #{to_sql}>"
+      end
     end
   end
 end

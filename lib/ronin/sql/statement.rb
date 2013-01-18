@@ -23,7 +23,7 @@
 require 'ronin/sql/clause'
 require 'ronin/sql/clauses'
 require 'ronin/sql/operators'
-require 'ronin/sql/emitter'
+require 'ronin/sql/emittable'
 
 module Ronin
   module SQL
@@ -34,6 +34,7 @@ module Ronin
 
       include Operators
       include Clauses
+      include Emittable
 
       #
       # Initializes a new SQL statement.
@@ -74,9 +75,6 @@ module Ronin
       def to_sql(options={})
         Emitter.new(options).emit_statement(self)
       end
-
-      alias to_s   to_sql
-      alias to_str to_s
 
     end
   end
