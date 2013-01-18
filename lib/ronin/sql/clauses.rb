@@ -28,75 +28,89 @@ module Ronin
       end
 
       #
+      # Appends an arbitrary clause.
+      #
+      # @param [Symbol] keyword
+      #   The name of the clause.
+      #
+      # @param [Object] argument
+      #   Additional argument for the clause.
+      #
+      # @yield [(clause)]
+      #   If a block is given, the return value will be used as the argument.
+      #
+      # @yieldparam [Clause] clause
+      #   If the block accepts an argument, it will be passed the new clause.
+      #   Otherwise the block will be evaluated within the clause.
+      #
+      # @return [self]
+      #
+      def clause(keyword,argument=nil,&block)
+        clauses << Clause.new(keyword,argument,&block)
+        return self
+      end
+
+      #
       # Appends a `FROM` clause.
       #
       def from(table=nil,&block)
-        clauses << Clause.new(:FROM,table,&block)
-        return self
+        clause(:FROM,table,&block)
       end
 
       #
       # Appends a `WHERE` clause.
       #
       def where(&block)
-        clauses << Clause.new(:WHERE,&block)
-        return self
+        clause(:WHERE,&block)
       end
 
       #
       # Appends a `JOIN` clause.
       #
       def join(table=nil,&block)
-        clauses << Clause.new(:JOIN,table,&block)
-        return self
+        clause(:JOIN,table,&block)
       end
 
       #
       # Appends a `INNER JOIN` clause.
       #
       def inner_join(table=nil,&block)
-        clauses << Clause.new(:"INNER JOIN",table,&block)
-        return self
+        clause(:"INNER JOIN",table,&block)
       end
 
       #
       # Appends a `LEFT JOIN` clause.
       #
       def left_join(table=nil,&block)
-        clauses << Clause.new(:"LEFT JOIN",table,&block)
-        return self
+        clause(:"LEFT JOIN",table,&block)
       end
 
       #
       # Appends a `RIGHT JOIN` clause.
       #
       def right_join(table=nil,&block)
-        clauses << Clause.new(:"RIGHT JOIN",table,&block)
-        return self
+        clause(:"RIGHT JOIN",table,&block)
       end
 
       #
       # Appends a `FULL JOIN` clause.
       #
       def full_join(table=nil,&block)
-        clauses << Clause.new(:"FULL JOIN",table,&block)
-        return self
+        clause(:"FULL JOIN",table,&block)
       end
 
       #
       # Appends a `ON` clause.
       #
       def on(&block)
-        clauses << Clause.new(:ON,&block)
-        return self
+        clause(:ON,&block)
       end
 
       #
       # Appends a `UNION` clause.
       #
       def union(&block)
-        clauses << Clause.new(:UNION,&block)
-        return self
+        clause(:UNION,&block)
       end
 
       #
@@ -106,88 +120,77 @@ module Ronin
       #   The columns for `GROUP BY`.
       #
       def group_by(*columns,&block)
-        clauses << Clause.new(:"GROUP BY",columns,&block)
-        return self
+        clause(:"GROUP BY",columns,&block)
       end
 
       #
       # Appends a `HAVING` clause.
       #
       def having(&block)
-        clauses << Clause.new(:HAVING,&block)
-        return self
+        clause(:HAVING,&block)
       end
 
       #
       # Appends a `LIMIT` clause.
       #
       def limit(value=nil,&block)
-        clauses << Clause.new(:LIMIT,value,&block)
-        return self
+        clause(:LIMIT,value,&block)
       end
 
       #
       # Appends a `OFFSET` clause.
       #
       def offset(value=nil,&block)
-        clauses << Clause.new(:OFFSET,value,&block)
-        return self
+        clause(:OFFSET,value,&block)
       end
 
       #
       # Appends a `TOP` clause.
       #
       def top(value=nil,&block)
-        clauses << Clause.new(:TOP,value,&block)
-        return self
+        clause(:TOP,value,&block)
       end
 
       #
       # Appends a `INTO` clause.
       #
       def into(table=nil)
-        clauses << Clause.new(:INTO,table)
-        return self
+        clause(:INTO,table)
       end
 
       #
       # Appends a `VALUES` clause.
       #
       def values(*values)
-        clauses << Clause.new(:VALUES,values)
-        return self
+        clause(:VALUES,values)
       end
 
       #
       # Appends a `DEFAULT VALUES` clause.
       #
       def default_values
-        clauses << Clause.new(:"DEFAULT VALUES")
-        return self
+        clause(:"DEFAULT VALUES")
       end
 
       #
       # Appends a `SET` clause.
       #
       def set(values={})
-        clauses << Clause.new(:SET,values)
-        return self
+        clause(:SET,values)
       end
 
       #
       # Appends a `INDEXED BY` clause.
       #
       def indexed_by(name,&block)
-        clauses << Clause.new(:"INDEXED BY",name,&block)
-        return self
+        clause(:"INDEXED BY",name,&block)
       end
 
       #
       # Appends a `NOT INDEXED` clause.
       #
       def not_indexed
-        clauses << Clause.new(:"NOT INDEXED")
-        return self
+        clause(:"NOT INDEXED")
       end
     end
   end
