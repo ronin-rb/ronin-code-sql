@@ -186,15 +186,15 @@ module Ronin
           left, right = emit(expr.left), emit(expr.right)
 
           case op
-          when /^[A-Z]+/ then "#{left} #{op} #{right}"
-          else                "#{left}#{op}#{right}"
+          when /^\w+$/ then "#{left} #{op} #{right}"
+          else              "#{left}#{op}#{right}"
           end
         when UnaryExpr
           operand = emit(expr.operand)
 
           case op
-          when /^[A-Z]+/ then "#{op} #{operand}"
-          else                "#{op}#{operand}"
+          when /^\w+$/ then "#{op} #{operand}"
+          else              "#{op}#{operand}"
           end
         end
       end
