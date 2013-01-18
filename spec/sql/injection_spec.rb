@@ -4,8 +4,8 @@ require 'ronin/sql/injection'
 describe SQL::Injection do
   describe "#initialize" do
     context "with no arguments" do
-      its(:escape)       { should == :column }
-      its(:place_holder) { should == :id     }
+      its(:escape)       { should == :integer }
+      its(:place_holder) { should == 1 }
     end
   end
 
@@ -100,7 +100,7 @@ describe SQL::Injection do
       end
 
       it "should emit the expression" do
-        subject.to_sql.should == 'id OR 1=1'
+        subject.to_sql.should == '1 OR 1=1'
       end
 
       context "with clauses" do
@@ -111,7 +111,7 @@ describe SQL::Injection do
         end
 
         it "should emit the clauses" do
-          subject.to_sql.should == 'id OR 1=1 LIMIT 100 OFFSET 10'
+          subject.to_sql.should == '1 OR 1=1 LIMIT 100 OFFSET 10'
         end
       end
 
@@ -123,7 +123,7 @@ describe SQL::Injection do
         end
 
         it "should emit the clauses" do
-          subject.to_sql.should == 'id OR 1=1; SELECT 1,2,3'
+          subject.to_sql.should == '1 OR 1=1; SELECT 1,2,3'
         end
       end
     end
@@ -168,13 +168,13 @@ describe SQL::Injection do
 
     context "when terminating" do
       subject do
-        sqli = described_class.new
+        sqli = described_class.new(:escape => :integer)
         sqli.or { 1 == 1 }
         sqli
       end 
 
       it "should terminate the SQL statement" do
-        subject.to_sql(:terminate => true).should == "id OR 1=1;--"
+        subject.to_sql(:terminate => true).should == "1 OR 1=1;--"
       end
     end
   end
