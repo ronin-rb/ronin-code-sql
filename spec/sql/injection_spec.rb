@@ -112,36 +112,36 @@ describe SQL::Injection do
       context "when the place-holder and last operand are Strings" do
         subject do
           sqli = described_class.new(:escape => :string)
-          sqli.or { name != '' }
+          sqli.or { string(1) == string(1) }
           sqli
         end 
 
         it "should balance the quotes" do
-          subject.to_sql.should == "1' OR name!='"
+          subject.to_sql.should == "1' OR '1'='1"
         end
       end
 
       context "when the place-holder and last operand are not both Strings" do
         subject do
           sqli = described_class.new(:escape => :string)
-          sqli.or { id != 0 }
+          sqli.or { int(1) == int(1) }
           sqli
         end 
 
         it "should terminate the SQL statement" do
-          subject.to_sql.should == "1' OR id!=0;--"
+          subject.to_sql.should == "1' OR 1=1;--"
         end
       end
 
       context "when terminating" do
         subject do
           sqli = described_class.new(:escape => :string)
-          sqli.or { name != '1' }
+          sqli.or { string(1) == string(1) }
           sqli
         end 
 
         it "should terminate the SQL statement" do
-          subject.to_sql(:terminate => true).should == "1' OR name!='1';--"
+          subject.to_sql(:terminate => true).should == "1' OR '1'='1';--"
         end
       end
     end
