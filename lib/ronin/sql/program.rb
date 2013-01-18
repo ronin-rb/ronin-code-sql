@@ -99,6 +99,9 @@ module Ronin
         Emitter.new(options).emit_program(self)
       end
 
+      alias to_s   to_sql
+      alias to_str to_sql
+
     end
   end
 end
