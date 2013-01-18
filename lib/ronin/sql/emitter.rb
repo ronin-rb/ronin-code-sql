@@ -236,7 +236,6 @@ module Ronin
         when Float                 then emit_decimal(object)
         when String                then emit_string(object)
         when Field, Symbol         then emit_field(object)
-        when Field                 then emit_field(object)
         when Array                 then emit_list(object)
         when BinaryExpr, UnaryExpr then emit_expression(object)
         else
