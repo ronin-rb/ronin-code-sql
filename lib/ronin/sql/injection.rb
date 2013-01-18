@@ -41,6 +41,12 @@ module Ronin
         :column => :id
       }
 
+      # The type of element to escape out of
+      attr_reader :escape
+
+      # The place holder data
+      attr_reader :place_holder
+
       #
       # Initializes a new SQL injection.
       #
@@ -57,9 +63,7 @@ module Ronin
       #   Place-holder data.
       #
       def initialize(options={})
-        @escape    = options.fetch(:escape,:column)
-        @terminate = options[:terminate]
-
+        @escape       = options.fetch(:escape,:column)
         @place_holder = options.fetch(:place_holder) do
           PLACE_HOLDERS.fetch(@escape)
         end
@@ -112,7 +116,7 @@ module Ronin
       #
       # Converts the SQL injection to SQL.
       #
-      # @param [Hash]
+      # @param [Hash] options
       #   Additional syntax options.
       #
       # @return [String]
@@ -126,7 +130,7 @@ module Ronin
 
         case @escape
         when :string
-          if (@terminate || (sql[0,1] != sql[-1,1]))
+          if (options[:terminate] || (sql[0,1] != sql[-1,1]))
             # terminate the expression
             sql << ';--'
           end
@@ -134,7 +138,7 @@ module Ronin
           # balance the quotes
           sql = sql[1..-1]
         else
-          if @terminate
+          if options[:terminate]
             # terminate the expression
             sql << ';--'
           end
