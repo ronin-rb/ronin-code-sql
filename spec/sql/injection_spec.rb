@@ -72,6 +72,26 @@ describe SQL::Injection do
   end
 
   describe "#to_sql" do
+    context "without an expression" do
+      subject { described_class.new(:place_holder => 1) }
+
+      it "should still emit the place-holder value" do
+        subject.to_sql.should == '1'
+      end
+
+      context "with clauses" do
+        subject do
+          sqli = described_class.new(:place_holder => 1)
+          sqli.limit(100).offset(10)
+          sqli
+        end
+
+        it "should emit the clauses" do
+          subject.to_sql.should == '1 LIMIT 100 OFFSET 10'
+        end
+      end
+    end
+
     context "with an expression" do
       subject do
         sqli = described_class.new

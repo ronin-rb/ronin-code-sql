@@ -75,7 +75,7 @@ module Ronin
           PLACE_HOLDERS.fetch(@escape)
         end
 
-        @expression = nil
+        @expression = @place_holder
       end
 
       #
@@ -90,12 +90,7 @@ module Ronin
       def and(&block)
         value = instance_eval(&block)
 
-        @expression = if @expression
-                        BinaryExpr.new(@expression,:AND,value)
-                      else
-                        BinaryExpr.new(@place_holder,:AND,value)
-                      end
-
+        @expression = BinaryExpr.new(@expression,:AND,value)
         return self
       end
 
@@ -111,12 +106,7 @@ module Ronin
       def or(&block)
         value = instance_eval(&block)
 
-        @expression = if @expression
-                        BinaryExpr.new(@expression,:OR,value)
-                      else
-                        BinaryExpr.new(@place_holder,:OR,value)
-                      end
-
+        @expression = BinaryExpr.new(@expression,:OR,value)
         return self
       end
 
@@ -133,7 +123,7 @@ module Ronin
         emitter = Emitter.new(options)
         sql     = ''
 
-        sql << emitter.emit_expression(@expression) if @expression
+        sql << emitter.emit(@expression)
 
         unless clauses.empty?
           sql << ' ' << emitter.emit_clauses(clauses)
