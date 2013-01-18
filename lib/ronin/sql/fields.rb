@@ -32,6 +32,12 @@ module Ronin
         true
       end
 
+      #
+      # @return [(self)]
+      #
+      def to_ary
+      end
+
       protected
 
       #
