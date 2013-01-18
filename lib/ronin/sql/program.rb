@@ -22,6 +22,7 @@
 
 require 'ronin/sql/fields'
 require 'ronin/sql/functions'
+require 'ronin/sql/statement'
 require 'ronin/sql/statements'
 require 'ronin/sql/emitter'
 
@@ -57,6 +58,32 @@ module Ronin
       def <<(statement)
         @statements << statement
         return self
+      end
+
+      #
+      # Appends an arbitrary statement to the program.
+      #
+      # @param [Symbol] keyword
+      #   Name of the statement.
+      #
+      # @param [Object] argument
+      #   Additional argument for the statement.
+      #
+      # @yield [(statement)]
+      #   If a block is given, it will be called.
+      #
+      # @yieldparam [Statement] statement
+      #   If the block accepts an argument, it will be passed the new statement.
+      #   Otherwise the block will be evaluated within the statement.
+      #
+      # @return [Statement]
+      #   The newly created statement.
+      #
+      def statement(keyword,argument=nil,&block)
+        new_statement = super(keyword,argument,&block)
+
+        self << new_statement
+        return new_statement
       end
 
       #

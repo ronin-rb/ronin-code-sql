@@ -24,6 +24,29 @@ module Ronin
   module SQL
     module Statements
       #
+      # Creates an arbitrary statement.
+      #
+      # @param [Symbol] keyword
+      #   Name of the statement.
+      #
+      # @param [Object] argument
+      #   Additional argument for the statement.
+      #
+      # @yield [(statement)]
+      #   If a block is given, it will be called.
+      #
+      # @yieldparam [Statement] statement
+      #   If the block accepts an argument, it will be passed the new statement.
+      #   Otherwise the block will be evaluated within the statement.
+      #
+      # @return [Statement]
+      #   The new statement.
+      #
+      def statement(keyword,argument=nil,&block)
+        Statement.new(keyword,argument,&block)
+      end
+
+      #
       # Creates a new `SELECT` statement.
       #
       # @param [Array<Field, Symbol>] columns
@@ -33,7 +56,7 @@ module Ronin
       #   The new statement.
       #
       def select(*columns,&block)
-        Statement.new(:SELECT,columns,&block)
+        statement(:SELECT,columns,&block)
       end
 
       #
@@ -43,7 +66,7 @@ module Ronin
       #   The new statement.
       #
       def insert(&block)
-        Statement.new(:"INSERT INTO",&block)
+        statement(:"INSERT INTO",&block)
       end
 
       #
@@ -56,7 +79,7 @@ module Ronin
       #   The new statement.
       #
       def update(table,&block)
-        Statement.new(:UPDATE,table,&block)
+        statement(:UPDATE,table,&block)
       end
 
       #
@@ -69,7 +92,7 @@ module Ronin
       #   The new statement.
       #
       def delete(table,&block)
-        Statement.new(:"DELETE FROM",table,&block)
+        statement(:"DELETE FROM",table,&block)
       end
     end
   end
