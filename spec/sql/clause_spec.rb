@@ -28,4 +28,12 @@ describe SQL::Clause do
       end
     end
   end
+
+  describe "#to_sql" do
+    subject { described_class.new(:LIMIT,100) }
+
+    it "should emit the statement" do
+      subject.to_sql.should == 'LIMIT 100'
+    end
+  end
 end
