@@ -28,4 +28,12 @@ describe SQL::Statement do
       end
     end
   end
+
+  describe "#to_sql" do
+    subject { described_class.new(:SELECT,[1,2,3]) }
+
+    it "should emit the statement" do
+      subject.to_sql.should == 'SELECT 1,2,3'
+    end
+  end
 end
