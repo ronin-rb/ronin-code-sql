@@ -72,10 +72,11 @@ describe SQL::Operators do
   pending "need to figure out how to send a unary operator" do
     include_examples "UnaryExpr", :-
     include_examples "UnaryExpr", :+
-    include_examples "UnaryExpr", :~
-    include_examples "UnaryExpr", :!
-    include_examples "UnaryExpr", :not, :NOT
   end
+
+  include_examples "UnaryExpr", :~
+  include_examples "UnaryExpr", :!
+  include_examples "UnaryExpr", :not, :NOT
 
   include_examples "BinaryExpr", :and, :AND
   include_examples "BinaryExpr", :or, :OR
