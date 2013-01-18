@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'ronin/sql/binary_expr'
+require 'ronin/sql/unary_expr'
 require 'ronin/sql/operators'
 
 shared_examples_for "BinaryExpr" do |method,operator=method|
@@ -22,7 +24,7 @@ end
 
 shared_examples_for "UnaryExpr" do |method,operator=method|
   describe "##{method}" do
-    let(:expr)    { subject.send(method) }
+    let(:expr) { subject.send(method) }
 
     it "should be a UnaryExpr" do
       expr.should be_kind_of(SQL::UnaryExpr)
