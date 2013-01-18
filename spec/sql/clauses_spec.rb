@@ -7,6 +7,16 @@ describe SQL::Clauses do
   let(:clause) { subject.clauses.last }
   its(:clauses) { should be_empty }
 
+  describe "#clause" do
+    let(:keyword) { :EXEC }
+
+    before { subject.clause(keyword) }
+
+    it "should add an arbitrary clause" do
+      clause.keyword.should == keyword
+    end
+  end
+
   describe "#from" do
     let(:table) { :users }
 
