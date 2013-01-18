@@ -25,6 +25,13 @@ require 'ronin/sql/field'
 module Ronin
   module SQL
     module Fields
+      #
+      # @return [true]
+      #
+      def respond_to_missing?(name)
+        true
+      end
+
       protected
 
       #
