@@ -67,7 +67,7 @@ module Ronin
       # @option options [String, Symbol, Integer] :place_holder
       #   Place-holder data.
       #
-      def initialize(options={})
+      def initialize(options={},&block)
         super()
 
         @escape       = options.fetch(:escape,:integer)
@@ -76,6 +76,8 @@ module Ronin
         end
 
         @expression = @place_holder
+
+        instance_eval(&block) if block
       end
 
       #

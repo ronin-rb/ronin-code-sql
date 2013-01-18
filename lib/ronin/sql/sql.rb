@@ -32,8 +32,8 @@ module Ronin
     # @return [Program]
     #   The new SQL program.
     #
-    def sql
-      Program.new
+    def sql(&block)
+      Program.new(&block)
     end
 
     #
