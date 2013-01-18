@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'ronin/sql/literal'
 require 'ronin/sql/unary_expr'
 require 'ronin/sql/binary_expr'
 require 'ronin/sql/field'
@@ -181,6 +182,14 @@ describe SQL::Emitter do
     context "when passed a String" do
       it "should emit a string" do
         subject.emit("O'Brian").should == "'O''Brian'"
+      end
+    end
+
+    context "when passed a Literal" do
+      let(:literal) { SQL::Literal.new(42) }
+
+      it "should emit the value" do
+        subject.emit(literal).should == '42'
       end
     end
 

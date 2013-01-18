@@ -20,9 +20,10 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/statement'
+require 'ronin/sql/literals'
 require 'ronin/sql/fields'
 require 'ronin/sql/functions'
+require 'ronin/sql/statement'
 require 'ronin/sql/statements'
 require 'ronin/sql/emittable'
 
@@ -33,6 +34,7 @@ module Ronin
     #
     class Clause < Struct.new(:keyword,:argument)
 
+      include Literals
       include Fields
       include Functions
       include Statements

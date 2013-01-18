@@ -21,6 +21,7 @@
 #
 
 require 'ronin/sql/binary_expr'
+require 'ronin/sql/literals'
 require 'ronin/sql/clauses'
 require 'ronin/sql/program'
 
@@ -31,6 +32,7 @@ module Ronin
     #
     class Injection < Program
 
+      include Literals
       include Clauses
 
       # Default place holder values.

@@ -20,62 +20,30 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/literals'
-require 'ronin/sql/clause'
-require 'ronin/sql/clauses'
-require 'ronin/sql/operators'
 require 'ronin/sql/emittable'
+require 'ronin/sql/operators'
 
 module Ronin
   module SQL
     #
-    # Represents a SQL Statement.
+    # Represents SQL literals.
     #
-    class Statement < Struct.new(:keyword,:argument)
+    class Literal < Struct.new(:value)
 
-      include Literals
       include Operators
-      include Clauses
       include Emittable
 
       #
-      # Initializes a new SQL statement.
-      #
-      # @param [Symbol] keyword
-      #   Name of the statement.
-      #
-      # @param [Object] argument
-      #   Additional argument for the statement.
-      #
-      # @yield [(statement)]
-      #   If a block is given, it will be called.
-      #
-      # @yieldparam [Statement] statement
-      #   If the block accepts an argument, it will be passed the new statement.
-      #   Otherwise the block will be evaluated within the statement.
-      #
-      def initialize(keyword,argument=nil,&block)
-        super(keyword,argument)
-
-        if block
-          case block.arity
-          when 1 then block.call(self)
-          else        instance_eval(&block)
-          end
-        end
-      end
-
-      #
-      # Converts the statement into raw SQL.
+      # Emits the literal.
       #
       # @param [Hash] options
       #   Additional syntax options.
       #
       # @return [String]
-      #   The raw SQL.
+      #   The SQL literal.
       #
       def to_sql(options={})
-        Emitter.new(options).emit_statement(self)
+        Emitter.new(options).emit(value)
       end
 
     end

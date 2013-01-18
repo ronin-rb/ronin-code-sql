@@ -231,6 +231,7 @@ module Ronin
         when Integer               then emit_integer(object)
         when Float                 then emit_decimal(object)
         when String                then emit_string(object)
+        when Literal               then emit(object.value)
         when Field, Symbol         then emit_field(object)
         when Array                 then emit_list(object)
         when BinaryExpr, UnaryExpr then emit_expression(object)
