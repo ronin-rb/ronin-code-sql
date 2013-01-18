@@ -47,6 +47,9 @@ module Ronin
       # The place holder data
       attr_reader :place_holder
 
+      # The expression that will be injected
+      attr_reader :expression
+
       #
       # Initializes a new SQL injection.
       #
@@ -83,11 +86,11 @@ module Ronin
       def and(&block)
         value = instance_eval(&block)
 
-        if @expression
-          @expression.right = BinaryExpr.new(@expression.right,:AND,value)
-        else
-          @expression       = BinaryExpr.new(@place_holder,:AND,value)
-        end
+        @expression = if @expression
+                        BinaryExpr.new(@expression,:AND,value)
+                      else
+                        BinaryExpr.new(@place_holder,:AND,value)
+                      end
 
         return self
       end
@@ -104,11 +107,11 @@ module Ronin
       def or(&block)
         value = instance_eval(&block)
 
-        if @expression
-          @expression.right = BinaryExpr.new(@expression.right,:OR,value)
-        else
-          @expression       = BinaryExpr.new(@place_holder,:OR,value)
-        end
+        @expression = if @expression
+                        BinaryExpr.new(@expression,:OR,value)
+                      else
+                        BinaryExpr.new(@place_holder,:OR,value)
+                      end
 
         return self
       end
