@@ -23,6 +23,12 @@
 module Ronin
   module SQL
     module Clauses
+      #
+      # The defined clauses of the statement.
+      #
+      # @return [Array<Clause>]
+      #   The clauses defined thus far.
+      #
       def clauses
         @clauses ||= []
       end
