@@ -267,6 +267,19 @@ module Ronin
       end
 
       #
+      # Emits multiple SQL Clauses.
+      #
+      # @param [Array<Clause>] clauses
+      #   The clauses to emit.
+      #
+      # @return [String]
+      #   The emitted clauses.
+      #
+      def emit_clauses(clauses)
+        clauses.map { |clause| emit_clause(clause) }.join(' ')
+      end
+
+      #
       # Emits a SQL Statement.
       #
       # @param [Statement] stmt
@@ -282,8 +295,8 @@ module Ronin
           sql << ' ' << emit(stmt.argument)
         end
 
-        stmt.clauses.each do |clause|
-          sql << ' ' << emit_clause(clause)
+        unless stmt.clauses.empty?
+          sql << ' ' << emit_clauses(stmt.clauses)
         end
 
         return sql

@@ -257,6 +257,19 @@ describe SQL::Emitter do
     end
   end
 
+  describe "#emit_clauses" do
+    let(:clauses) do
+      [
+        SQL::Clause.new(:LIMIT, 100),
+        SQL::Clause.new(:OFFSET, 10)
+      ]
+    end
+
+    it "should emit multiple clauses" do
+      subject.emit_clauses(clauses).should == 'LIMIT 100 OFFSET 10'
+    end
+  end
+
   describe "#emit_statement" do
     let(:stmt) { SQL::Statement.new(:SELECT) }
 
