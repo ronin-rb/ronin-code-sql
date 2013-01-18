@@ -61,6 +61,7 @@ describe SQL::Clauses do
   end
 
   include_examples "Clause", :from, :FROM, :users
+  include_examples "Clause", :into, :INTO, :users
   include_examples "Clause", :where, :WHERE, proc { id == 1 }
   include_examples "Clause", :join, :JOIN, :users
   include_examples "Clause", :inner_join, :"INNER JOIN", :users

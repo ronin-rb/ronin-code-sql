@@ -66,7 +66,7 @@ module Ronin
       #   The new statement.
       #
       def insert(&block)
-        statement(:"INSERT INTO",&block)
+        statement(:INSERT,&block)
       end
 
       #

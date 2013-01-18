@@ -52,7 +52,7 @@ describe SQL::Statements do
   end
 
   include_examples "Statement", :select, :SELECT, [1,2,3,:id]
-  include_examples "Statement", :insert, :"INSERT INTO"
+  include_examples "Statement", :insert, :INSERT
   include_examples "Statement", :update, :UPDATE, :table
   include_examples "Statement", :delete, :"DELETE FROM", :table
 end

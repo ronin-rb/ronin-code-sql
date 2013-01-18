@@ -64,6 +64,13 @@ module Ronin
       end
 
       #
+      # Appends an `INTO` clause.
+      #
+      def into(table=nil,&block)
+        clause(:INTO,table,&block)
+      end
+
+      #
       # Appends a `WHERE` clause.
       #
       def where(&block)
