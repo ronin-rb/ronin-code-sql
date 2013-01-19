@@ -50,7 +50,7 @@ module Ronin
       # Converts the function into raw SQL.
       #
       # @param [Hash] options
-      #   Additional syntax options.
+      #   Additional options for {Emitter#initialize}.
       #
       # @return [String]
       #   The raw SQL.

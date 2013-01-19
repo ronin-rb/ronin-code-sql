@@ -99,7 +99,7 @@ module Ronin
       # Converts the SQL program into raw SQL.
       #
       # @param [Hash] options
-      #   Additional syntax options.
+      #   Additional options for {Emitter#initialize}.
       #
       # @return [String]
       #   The raw SQL.

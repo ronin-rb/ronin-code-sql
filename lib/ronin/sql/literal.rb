@@ -37,7 +37,7 @@ module Ronin
       # Emits the literal.
       #
       # @param [Hash] options
-      #   Additional syntax options.
+      #   Additional options for {Emitter#initialize}.
       #
       # @return [String]
       #   The SQL literal.

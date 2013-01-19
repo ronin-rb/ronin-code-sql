@@ -29,7 +29,7 @@ module Ronin
       # Emits SQL.
       #
       # @param [Hash] options
-      #   Additional options for {Emitter}.
+      #   Additional options for {Emitter#initialize}.
       #
       # @raise [NotImplementedError]
       #   This method must be implemented.

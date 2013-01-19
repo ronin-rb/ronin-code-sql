@@ -116,7 +116,10 @@ module Ronin
       # Converts the SQL injection to SQL.
       #
       # @param [Hash] options
-      #   Additional syntax options.
+      #   Additional options for {Emitter#initialize}.
+      #
+      # @option options [Boolean] :terminate
+      #   Specifies whether to terminate the injection with `;--`.
       #
       # @return [String]
       #   The raw SQL.
