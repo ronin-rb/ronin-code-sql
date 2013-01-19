@@ -3,6 +3,8 @@ require 'ronin/sql/literal'
 require 'ronin/sql/unary_expr'
 require 'ronin/sql/binary_expr'
 require 'ronin/sql/field'
+require 'ronin/sql/statement'
+require 'ronin/sql/program'
 require 'ronin/sql/emitter'
 
 describe SQL::Emitter do
