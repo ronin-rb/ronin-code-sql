@@ -31,6 +31,12 @@ module Ronin
       #
       # Initializes the SQL Emitter.
       #
+      # @param [Hash] options
+      #   Emitter options.
+      #
+      # @option options [:lower, :upper] :case (:upper)
+      #   Case for keywords.
+      #
       def initialize(options={})
         @case = options.fetch(:case,:upper)
       end
