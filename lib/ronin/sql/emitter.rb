@@ -65,7 +65,7 @@ module Ronin
         case @case
         when :upper  then keyword.upcase
         when :lower  then keyword.downcase
-        when :random then keyword.random_case
+        when :random then keyword.random_case(:probability => 0.75)
         end
       end
 
