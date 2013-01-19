@@ -27,6 +27,7 @@ module Ronin
   module SQL
     class Emitter
 
+      # The case to use when emitting keywords
       attr_reader :case
 
       #
