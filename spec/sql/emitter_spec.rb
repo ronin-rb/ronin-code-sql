@@ -106,6 +106,14 @@ describe SQL::Emitter do
     it "should emit a String" do
       subject.emit_string("O'Brian").should == "'O''Brian'"
     end
+
+    context "when :quote is :double" do
+      subject { described_class.new(:quote => :double) }
+
+      it "should double quote Strings" do
+        subject.emit_string("O'Brian").should == "\"O'Brian\""
+      end
+    end
   end
 
   describe "#emit_field" do
