@@ -128,6 +128,14 @@ describe SQL::Emitter do
     end
   end
 
+  describe "#emit_assignments" do
+    let(:values) { {x: 1, y: 2} }
+
+    it "should emit a list of column names and values" do
+      subject.emit_assignments(values).should == 'X=1,Y=2'
+    end
+  end
+
   describe "#emit_expression" do
     context "when the expression is a BinaryExpr" do
       context "when the operator is upper-case alpha" do
@@ -275,6 +283,12 @@ describe SQL::Emitter do
     context "when passed an Array" do
       it "should emit a list" do
         subject.emit([1,2,3,'foo']).should == "1,2,3,'foo'"
+      end
+    end
+
+    context "when passed a Hash" do
+      it "should emit a list of assignments" do
+        subject.emit(x: 1, y: 2).should == 'X=1,Y=2'
       end
     end
 

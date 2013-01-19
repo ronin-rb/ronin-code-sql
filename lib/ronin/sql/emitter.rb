@@ -188,6 +188,21 @@ module Ronin
       end
 
       #
+      # Emits a list of columns and assigned values.
+      #
+      # @param [Hash{Field,Symbol => Object}] values
+      #   The column names and values.
+      #
+      # @return [String]
+      #   The raw SQL.
+      #
+      def emit_assignments(values)
+        values.map { |key,value|
+          "#{emit_keyword(key)}=#{emit(value)}"
+        }.join(',')
+      end
+
+      #
       # Emits a SQL expression.
       #
       # @param [BinaryExpr, UnaryExpr] expr
@@ -260,6 +275,7 @@ module Ronin
         when Literal               then emit(object.value)
         when Field, Symbol         then emit_field(object)
         when Array                 then emit_list(object)
+        when Hash                  then emit_assignments(object)
         when BinaryExpr, UnaryExpr then emit_expression(object)
         else
           if object.respond_to?(:to_sql)
