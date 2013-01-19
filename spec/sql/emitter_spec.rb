@@ -30,6 +30,14 @@ describe SQL::Emitter do
         subject.emit_keyword(keyword).should == 'select'
       end
     end
+
+    context "when case is :random" do
+      subject { described_class.new(:case => :random) }
+
+      it "should random_case the keyword" do
+        subject.emit_keyword(keyword).should_not =~ /select|SELECT/
+      end
+    end
   end
 
   describe "#emit_operator" do

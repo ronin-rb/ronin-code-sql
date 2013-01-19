@@ -21,6 +21,7 @@
 #
 
 require 'ronin/formatting/sql'
+require 'ronin/formatting/text'
 
 module Ronin
   module SQL
@@ -34,7 +35,7 @@ module Ronin
       # @param [Hash] options
       #   Emitter options.
       #
-      # @option options [:lower, :upper] :case (:upper)
+      # @option options [:lower, :upper, :random] :case (:upper)
       #   Case for keywords.
       #
       def initialize(options={})
@@ -54,8 +55,9 @@ module Ronin
         keyword = keyword.to_s
 
         case @case
-        when :upper then keyword.upcase
-        when :lower then keyword.downcase
+        when :upper  then keyword.upcase
+        when :lower  then keyword.downcase
+        when :random then keyword.random_case
         end
       end
 
