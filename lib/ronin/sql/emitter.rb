@@ -30,6 +30,9 @@ module Ronin
       # The case to use when emitting keywords
       attr_reader :case
 
+      # String to use for white-space
+      attr_reader :space
+
       #
       # Initializes the SQL Emitter.
       #
@@ -39,8 +42,12 @@ module Ronin
       # @option options [:lower, :upper, :random] :case (:upper)
       #   Case for keywords.
       #
+      # @option options [String] :space (' ')
+      #   String to use for white-space.
+      #
       def initialize(options={})
-        @case = options.fetch(:case,:upper)
+        @case  = options.fetch(:case,:upper)
+        @space = options.fetch(:space,' ')
       end
 
       #
@@ -266,7 +273,7 @@ module Ronin
         sql = emit_keyword(clause.keyword)
 
         unless clause.argument.nil?
-          sql << ' ' << emit(clause.argument)
+          sql << @space << emit(clause.argument)
         end
 
         return sql
@@ -282,7 +289,7 @@ module Ronin
       #   The emitted clauses.
       #
       def emit_clauses(clauses)
-        clauses.map { |clause| emit_clause(clause) }.join(' ')
+        clauses.map { |clause| emit_clause(clause) }.join(@space)
       end
 
       #
@@ -298,11 +305,11 @@ module Ronin
         sql = emit_keyword(stmt.keyword)
 
         unless stmt.argument.nil?
-          sql << ' ' << emit(stmt.argument)
+          sql << @space << emit(stmt.argument)
         end
 
         unless stmt.clauses.empty?
-          sql << ' ' << emit_clauses(stmt.clauses)
+          sql << @space << emit_clauses(stmt.clauses)
         end
 
         return sql
@@ -318,7 +325,9 @@ module Ronin
       #   The raw SQL.
       #
       def emit_program(program)
-        program.statements.map { |stmt| emit_statement(stmt) }.join('; ')
+        program.statements.map { |stmt|
+          emit_statement(stmt)
+        }.join(";#{@space}")
       end
 
     end

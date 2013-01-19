@@ -277,6 +277,16 @@ describe SQL::Emitter do
         subject.emit_clause(clause).should == "LIMIT #{argument}"
       end
     end
+
+    context "with custom :space" do
+      subject { described_class.new(:space => '/**/') }
+
+      let(:clause)   { SQL::Clause.new(:LIMIT,100) }
+
+      it "should emit the custom white-space deliminater" do
+        subject.emit_clause(clause).should == 'LIMIT/**/100'
+      end
+    end
   end
 
   describe "#emit_clauses" do
@@ -289,6 +299,14 @@ describe SQL::Emitter do
 
     it "should emit multiple clauses" do
       subject.emit_clauses(clauses).should == 'LIMIT 100 OFFSET 10'
+    end
+
+    context "with custom :space" do
+      subject { described_class.new(:space => '/**/') }
+
+      it "should emit the custom white-space deliminater" do
+        subject.emit_clauses(clauses).should == 'LIMIT/**/100/**/OFFSET/**/10'
+      end
     end
   end
 
@@ -305,6 +323,14 @@ describe SQL::Emitter do
       it "should emit the statment argument" do
         subject.emit_statement(stmt).should == 'SELECT 1'
       end
+
+      context "with custom :space" do
+        subject { described_class.new(:space => '/**/') }
+
+        it "should emit the custom white-space deliminater" do
+          subject.emit_statement(stmt).should == 'SELECT/**/1'
+        end
+      end
     end
 
     context "with clauses" do
@@ -312,6 +338,14 @@ describe SQL::Emitter do
 
       it "should emit the statment argument" do
         subject.emit_statement(stmt).should == 'SELECT 1 OFFSET 1 LIMIT 100'
+      end
+
+      context "with custom :space" do
+        subject { described_class.new(:space => '/**/') }
+
+        it "should emit the custom white-space deliminater" do
+          subject.emit_statement(stmt).should == 'SELECT/**/1/**/OFFSET/**/1/**/LIMIT/**/100'
+        end
       end
     end
   end
@@ -325,10 +359,15 @@ describe SQL::Emitter do
     end
 
     it "should emit multiple statements separated by '; '" do
-      subject.emit_program(program).should == [
-        'SELECT 1',
-        'DROP TABLE users'
-      ].join('; ')
+      subject.emit_program(program).should == 'SELECT 1; DROP TABLE users'
+    end
+
+    context "with custom :space" do
+      subject { described_class.new(:space => '/**/') }
+
+      it "should emit the custom white-space deliminater" do
+        subject.emit_program(program).should == 'SELECT/**/1;/**/DROP/**/TABLE/**/users'
+      end
     end
   end
 end
