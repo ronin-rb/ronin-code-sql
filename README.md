@@ -72,14 +72,14 @@ Statements:
     sqli = Ronin::SQL::Injection.new
     sqli.union { select(1,2,3,4,id).from(users) }
     puts sqli
-    # 1 UNION SELECT 1,2,3,4,id FROM users
+    # 1 UNION SELECT (1,2,3,4,id) FROM users
 
 Filter evasion:
 
     sqli = Ronin::SQL::Injection.new
     sqli.union { select(1,2,3,4,id).from(users) }
     puts sqli.to_sql(:space => '/**/')
-    # 1/**/UNION/**/SELECT/**/1,2,3,4,id/**/FROM/**/users
+    # 1/**/UNION/**/SELECT/**/(1,2,3,4,id)/**/FROM/**/users
 
 ## License
 

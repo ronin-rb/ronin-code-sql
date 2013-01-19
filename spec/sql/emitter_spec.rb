@@ -124,7 +124,7 @@ describe SQL::Emitter do
 
   describe "#emit_list" do
     it "should emit a ',' separated list" do
-      subject.emit_list([1,2,3,'foo']).should == "1,2,3,'foo'"
+      subject.emit_list([1,2,3,'foo']).should == "(1,2,3,'foo')"
     end
   end
 
@@ -282,7 +282,7 @@ describe SQL::Emitter do
 
     context "when passed an Array" do
       it "should emit a list" do
-        subject.emit([1,2,3,'foo']).should == "1,2,3,'foo'"
+        subject.emit([1,2,3,'foo']).should == "(1,2,3,'foo')"
       end
     end
 

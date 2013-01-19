@@ -184,7 +184,7 @@ module Ronin
       #   The raw SQL.
       #
       def emit_list(list)
-        list.map { |element| emit(element) }.join(',')
+        '(' + list.map { |element| emit(element) }.join(',') + ')'
       end
 
       #

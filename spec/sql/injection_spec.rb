@@ -123,7 +123,7 @@ describe SQL::Injection do
         end
 
         it "should emit the clauses" do
-          subject.to_sql.should == '1 OR 1=1; SELECT 1,2,3'
+          subject.to_sql.should == '1 OR 1=1; SELECT (1,2,3)'
         end
       end
     end
