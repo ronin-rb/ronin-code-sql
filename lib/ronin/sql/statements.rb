@@ -92,7 +92,7 @@ module Ronin
       #   The new statement.
       #
       def delete(table,&block)
-        statement(:"DELETE FROM",table,&block)
+        statement([:DELETE, :FROM],table,&block)
       end
     end
   end

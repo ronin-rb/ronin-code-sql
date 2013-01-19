@@ -41,7 +41,7 @@ module Ronin
       #
       # Initializes a new SQL statement.
       #
-      # @param [Symbol] keyword
+      # @param [Symbol, Array<Symbol>] keyword
       #   Name of the statement.
       #
       # @param [Object] argument

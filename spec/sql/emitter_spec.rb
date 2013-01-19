@@ -370,7 +370,7 @@ describe SQL::Emitter do
     let(:program) do
       sql = SQL::Program.new
       sql << SQL::Statement.new(:SELECT, 1)
-      sql << SQL::Statement.new(:"DROP TABLE", :users)
+      sql << SQL::Statement.new([:DROP, :TABLE], :users)
       sql
     end
 

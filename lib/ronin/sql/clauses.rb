@@ -88,28 +88,28 @@ module Ronin
       # Appends a `INNER JOIN` clause.
       #
       def inner_join(table=nil,&block)
-        clause(:"INNER JOIN",table,&block)
+        clause([:INNER, :JOIN],table,&block)
       end
 
       #
       # Appends a `LEFT JOIN` clause.
       #
       def left_join(table=nil,&block)
-        clause(:"LEFT JOIN",table,&block)
+        clause([:LEFT, :JOIN],table,&block)
       end
 
       #
       # Appends a `RIGHT JOIN` clause.
       #
       def right_join(table=nil,&block)
-        clause(:"RIGHT JOIN",table,&block)
+        clause([:RIGHT, :JOIN],table,&block)
       end
 
       #
       # Appends a `FULL JOIN` clause.
       #
       def full_join(table=nil,&block)
-        clause(:"FULL JOIN",table,&block)
+        clause([:FULL, :JOIN],table,&block)
       end
 
       #
@@ -133,7 +133,7 @@ module Ronin
       #   The columns for `GROUP BY`.
       #
       def group_by(*columns,&block)
-        clause(:"GROUP BY",columns,&block)
+        clause([:GROUP, :BY],columns,&block)
       end
 
       #
@@ -182,7 +182,7 @@ module Ronin
       # Appends a `DEFAULT VALUES` clause.
       #
       def default_values
-        clause(:"DEFAULT VALUES")
+        clause([:DEFAULT, :VALUES])
       end
 
       #
@@ -196,14 +196,14 @@ module Ronin
       # Appends a `INDEXED BY` clause.
       #
       def indexed_by(name,&block)
-        clause(:"INDEXED BY",name,&block)
+        clause([:INDEXED, :BY],name,&block)
       end
 
       #
       # Appends a `NOT INDEXED` clause.
       #
       def not_indexed
-        clause(:"NOT INDEXED")
+        clause([:NOT, :INDEXED])
       end
     end
   end
