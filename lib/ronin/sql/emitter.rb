@@ -203,12 +203,16 @@ module Ronin
         when BinaryExpr
           left, right = emit(expr.left), emit(expr.right)
 
+          left  = "(#{left})"  if expr.left.kind_of?(Statement)
+          right = "(#{right})" if expr.right.kind_of?(Statement)
+
           case op
           when /^\w+$/ then "#{left} #{op} #{right}"
           else              "#{left}#{op}#{right}"
           end
         when UnaryExpr
           operand = emit(expr.operand)
+          operand = "(#{operand})" if expr.operand.kind_of?(Statement)
 
           case op
           when /^\w+$/ then "#{op} #{operand}"

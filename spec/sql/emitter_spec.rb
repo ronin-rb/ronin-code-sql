@@ -145,6 +145,26 @@ describe SQL::Emitter do
           subject.emit_expression(expr).should == 'id=1'
         end
       end
+
+      context "when the left-hand operand is a Statement" do
+        let(:expr) do
+          SQL::BinaryExpr.new(SQL::Statement.new(:SELECT,1),:"=",1)
+        end
+
+        it "should wrap the left-hand operand in parenthesis" do
+          subject.emit_expression(expr).should == '(SELECT 1)=1'
+        end
+      end
+
+      context "when the right-hand operand is a Statement" do
+        let(:expr) do
+          SQL::BinaryExpr.new(1,:"=",SQL::Statement.new(:SELECT,1))
+        end
+
+        it "should wrap the left-hand operand in parenthesis" do
+          subject.emit_expression(expr).should == '1=(SELECT 1)'
+        end
+      end
     end
 
     context "when the expression is a UnaryExpr" do
@@ -161,6 +181,16 @@ describe SQL::Emitter do
 
         it "should emit the operand and operator without spaces" do
           subject.emit_expression(expr).should == '-1'
+        end
+      end
+
+      context "when the operand is a Statement" do
+        let(:expr) do
+          SQL::UnaryExpr.new(:NOT,SQL::Statement.new(:SELECT,1))
+        end
+
+        it "should wrap the operand in parenthesis" do
+          subject.emit_expression(expr).should == 'NOT (SELECT 1)'
         end
       end
     end
