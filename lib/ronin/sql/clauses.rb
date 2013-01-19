@@ -59,12 +59,22 @@ module Ronin
       #
       # Appends a `FROM` clause.
       #
+      # @param [Field, Symbol] table
+      #   The table to select from.
+      #
+      # @return [self]
+      #
       def from(table=nil,&block)
         clause(:FROM,table,&block)
       end
 
       #
       # Appends an `INTO` clause.
+      #
+      # @param [Field, Symbol] table
+      #   The table to insert into.
+      #
+      # @return [self]
       #
       def into(table=nil,&block)
         clause(:INTO,table,&block)
@@ -73,12 +83,19 @@ module Ronin
       #
       # Appends a `WHERE` clause.
       #
+      # @return [self]
+      #
       def where(&block)
         clause(:WHERE,&block)
       end
 
       #
       # Appends a `JOIN` clause.
+      #
+      # @param [Field, Symbol] table
+      #   The table to join.
+      #
+      # @return [self]
       #
       def join(table=nil,&block)
         clause(:JOIN,table,&block)
@@ -87,12 +104,22 @@ module Ronin
       #
       # Appends a `INNER JOIN` clause.
       #
+      # @param [Field, Symbol] table
+      #   The table to join.
+      #
+      # @return [self]
+      #
       def inner_join(table=nil,&block)
         clause([:INNER, :JOIN],table,&block)
       end
 
       #
       # Appends a `LEFT JOIN` clause.
+      #
+      # @param [Field, Symbol] table
+      #   The table to join.
+      #
+      # @return [self]
       #
       def left_join(table=nil,&block)
         clause([:LEFT, :JOIN],table,&block)
@@ -101,12 +128,22 @@ module Ronin
       #
       # Appends a `RIGHT JOIN` clause.
       #
+      # @param [Field, Symbol] table
+      #   The table to join.
+      #
+      # @return [self]
+      #
       def right_join(table=nil,&block)
         clause([:RIGHT, :JOIN],table,&block)
       end
 
       #
       # Appends a `FULL JOIN` clause.
+      #
+      # @param [Field, Symbol] table
+      #   The table to join.
+      #
+      # @return [self]
       #
       def full_join(table=nil,&block)
         clause([:FULL, :JOIN],table,&block)
@@ -115,12 +152,16 @@ module Ronin
       #
       # Appends a `ON` clause.
       #
+      # @return [self]
+      #
       def on(&block)
         clause(:ON,&block)
       end
 
       #
       # Appends a `UNION` clause.
+      #
+      # @return [self]
       #
       def union(&block)
         clause(:UNION,&block)
@@ -132,12 +173,16 @@ module Ronin
       # @param [Array<Field, Symbol>] columns
       #   The columns for `GROUP BY`.
       #
+      # @return [self]
+      #
       def group_by(*columns,&block)
         clause([:GROUP, :BY],columns,&block)
       end
 
       #
       # Appends a `HAVING` clause.
+      #
+      # @return [self]
       #
       def having(&block)
         clause(:HAVING,&block)
@@ -146,33 +191,58 @@ module Ronin
       #
       # Appends a `LIMIT` clause.
       #
-      def limit(value=nil,&block)
+      # @param [Integer] value
+      #   The maximum number of rows to select.
+      #
+      # @return [self]
+      #
+      def limit(value,&block)
         clause(:LIMIT,value,&block)
       end
 
       #
       # Appends a `OFFSET` clause.
       #
-      def offset(value=nil,&block)
+      # @param [Integer] value
+      #   The index to start selecting at within the result set.
+      #
+      # @return [self]
+      #
+      def offset(value,&block)
         clause(:OFFSET,value,&block)
       end
 
       #
       # Appends a `TOP` clause.
       #
-      def top(value=nil,&block)
+      # @param [Integer] value
+      #   The number of top rows to select. 
+      #
+      # @return [self]
+      #
+      def top(value,&block)
         clause(:TOP,value,&block)
       end
 
       #
       # Appends a `INTO` clause.
       #
-      def into(table=nil)
+      # @param [Field, Symbol] table
+      #   The table to insert/replace into.
+      #
+      # @return [self]
+      #
+      def into(table)
         clause(:INTO,table)
       end
 
       #
       # Appends a `VALUES` clause.
+      #
+      # @param [Array] values
+      #   The values to insert.
+      #
+      # @return [self]
       #
       def values(*values)
         clause(:VALUES,values)
@@ -181,12 +251,19 @@ module Ronin
       #
       # Appends a `DEFAULT VALUES` clause.
       #
+      # @return [self]
+      #
       def default_values
         clause([:DEFAULT, :VALUES])
       end
 
       #
       # Appends a `SET` clause.
+      #
+      # @param [Hash{Field,Symbol => Object}] values
+      #   The columns and values to update.
+      #
+      # @return [self]
       #
       def set(values={})
         clause(:SET,values)
@@ -195,12 +272,19 @@ module Ronin
       #
       # Appends a `INDEXED BY` clause.
       #
+      # @param [Field, Symbol] name
+      #   The name of the index.
+      #
+      # @return [self]
+      #
       def indexed_by(name,&block)
         clause([:INDEXED, :BY],name,&block)
       end
 
       #
       # Appends a `NOT INDEXED` clause.
+      #
+      # @return [self]
       #
       def not_indexed
         clause([:NOT, :INDEXED])
