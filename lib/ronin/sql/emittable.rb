@@ -26,10 +26,20 @@ module Ronin
   module SQL
     module Emittable
       #
-      # Emits SQL.
+      # Creates a new emitter.
       #
       # @param [Hash] options
       #   Additional options for {Emitter#initialize}.
+      #   
+      def emitter(options={})
+        Emitter.new(options)
+      end
+
+      #
+      # Emits SQL.
+      #
+      # @param [Hash] options
+      #   Additional emitter options.
       #
       # @raise [NotImplementedError]
       #   This method must be implemented.

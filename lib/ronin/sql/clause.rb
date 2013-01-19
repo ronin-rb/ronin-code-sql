@@ -77,7 +77,7 @@ module Ronin
       #   The raw SQL.
       #
       def to_sql(options={})
-        Emitter.new(options).emit_clause(self)
+        emitter(options).emit_clause(self)
       end
 
     end

@@ -43,7 +43,7 @@ module Ronin
       #   The SQL literal.
       #
       def to_sql(options={})
-        Emitter.new(options).emit(value)
+        emitter(options).emit(value)
       end
 
     end

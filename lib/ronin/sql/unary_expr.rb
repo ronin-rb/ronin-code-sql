@@ -41,7 +41,7 @@ module Ronin
       #   The emitted SQL expression.
       #
       def to_sql(options={})
-        Emitter.new(options).emit_expression(self)
+        emitter(options).emit_expression(self)
       end
 
     end
