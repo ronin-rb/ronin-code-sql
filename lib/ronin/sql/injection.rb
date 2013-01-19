@@ -39,7 +39,8 @@ module Ronin
       PLACE_HOLDERS = {
         :integer => 1,
         :decimal => 1.0,
-        :string => '1',
+        :string  => '1',
+        :list    => [nil],
         :column => :id
       }
 
@@ -139,7 +140,7 @@ module Ronin
         end
 
         case @escape
-        when :string
+        when :string, :list
           if (options[:terminate] || (sql[0,1] != sql[-1,1]))
             # terminate the expression
             sql << ';--'
