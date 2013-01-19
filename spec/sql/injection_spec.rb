@@ -73,7 +73,7 @@ describe SQL::Injection do
 
   describe "#to_sql" do
     context "without an expression" do
-      subject { described_class.new(:place_holder => 1) }
+      subject { described_class.new(place_holder: 1) }
 
       it "should still emit the place-holder value" do
         subject.to_sql.should == '1'
@@ -81,7 +81,7 @@ describe SQL::Injection do
 
       context "with clauses" do
         subject do
-          sqli = described_class.new(:place_holder => 1)
+          sqli = described_class.new(place_holder: 1)
           sqli.limit(100).offset(10)
           sqli
         end
@@ -131,7 +131,7 @@ describe SQL::Injection do
     context "when escaping a string value" do
       context "when the place-holder and last operand are Strings" do
         subject do
-          sqli = described_class.new(:escape => :string)
+          sqli = described_class.new(escape: :string)
           sqli.or { string(1) == string(1) }
           sqli
         end 
@@ -143,7 +143,7 @@ describe SQL::Injection do
 
       context "when the place-holder and last operand are not both Strings" do
         subject do
-          sqli = described_class.new(:escape => :string)
+          sqli = described_class.new(escape: :string)
           sqli.or { int(1) == int(1) }
           sqli
         end 
@@ -155,26 +155,26 @@ describe SQL::Injection do
 
       context "when terminating" do
         subject do
-          sqli = described_class.new(:escape => :string)
+          sqli = described_class.new(escape: :string)
           sqli.or { string(1) == string(1) }
           sqli
         end 
 
         it "should terminate the SQL statement" do
-          subject.to_sql(:terminate => true).should == "1' OR '1'='1';--"
+          subject.to_sql(terminate: true).should == "1' OR '1'='1';--"
         end
       end
     end
 
     context "when terminating" do
       subject do
-        sqli = described_class.new(:escape => :integer)
+        sqli = described_class.new(escape: :integer)
         sqli.or { 1 == 1 }
         sqli
       end 
 
       it "should terminate the SQL statement" do
-        subject.to_sql(:terminate => true).should == "1 OR 1=1;--"
+        subject.to_sql(terminate: true).should == "1 OR 1=1;--"
       end
     end
   end

@@ -37,11 +37,11 @@ module Ronin
 
       # Default place holder values.
       PLACE_HOLDERS = {
-        :integer => 1,
-        :decimal => 1.0,
-        :string  => '1',
-        :list    => [nil],
-        :column => :id
+        integer: 1,
+        decimal: 1.0,
+        string:  '1',
+        list:    [nil],
+        column:  :id
       }
 
       # The type of element to escape out of

@@ -25,7 +25,7 @@ describe SQL::Emitter do
       end
 
       context "when :space is set" do
-        subject { described_class.new(:space => '/**/') }
+        subject { described_class.new(space: '/**/') }
 
         it "should join the keywords" do
           subject.emit_keyword(keywords).should == "DROP/**/TABLE"
@@ -34,7 +34,7 @@ describe SQL::Emitter do
     end
 
     context "when case is :upper" do
-      subject { described_class.new(:case => :upper) }
+      subject { described_class.new(case: :upper) }
 
       it "should upcase the keyword" do
         subject.emit_keyword(keyword).should == 'SELECT'
@@ -42,7 +42,7 @@ describe SQL::Emitter do
     end
 
     context "when case is :lower" do
-      subject { described_class.new(:case => :lower) }
+      subject { described_class.new(case: :lower) }
 
       it "should upcase the keyword" do
         subject.emit_keyword(keyword).should == 'select'
@@ -50,7 +50,7 @@ describe SQL::Emitter do
     end
 
     context "when case is :random" do
-      subject { described_class.new(:case => :random) }
+      subject { described_class.new(case: :random) }
 
       it "should random_case the keyword" do
         subject.emit_keyword(keyword).should_not =~ /select|SELECT/
@@ -108,7 +108,7 @@ describe SQL::Emitter do
     end
 
     context "when :quote is :double" do
-      subject { described_class.new(:quote => :double) }
+      subject { described_class.new(quote: :double) }
 
       it "should double quote Strings" do
         subject.emit_string("O'Brian").should == "\"O'Brian\""
@@ -303,7 +303,7 @@ describe SQL::Emitter do
     end
 
     context "with custom :space" do
-      subject { described_class.new(:space => '/**/') }
+      subject { described_class.new(space: '/**/') }
 
       let(:clause)   { SQL::Clause.new(:LIMIT,100) }
 
@@ -326,7 +326,7 @@ describe SQL::Emitter do
     end
 
     context "with custom :space" do
-      subject { described_class.new(:space => '/**/') }
+      subject { described_class.new(space: '/**/') }
 
       it "should emit the custom white-space deliminater" do
         subject.emit_clauses(clauses).should == 'LIMIT/**/100/**/OFFSET/**/10'
@@ -349,7 +349,7 @@ describe SQL::Emitter do
       end
 
       context "with custom :space" do
-        subject { described_class.new(:space => '/**/') }
+        subject { described_class.new(space: '/**/') }
 
         it "should emit the custom white-space deliminater" do
           subject.emit_statement(stmt).should == 'SELECT/**/1'
@@ -365,7 +365,7 @@ describe SQL::Emitter do
       end
 
       context "with custom :space" do
-        subject { described_class.new(:space => '/**/') }
+        subject { described_class.new(space: '/**/') }
 
         it "should emit the custom white-space deliminater" do
           subject.emit_statement(stmt).should == 'SELECT/**/1/**/OFFSET/**/1/**/LIMIT/**/100'
@@ -387,7 +387,7 @@ describe SQL::Emitter do
     end
 
     context "with custom :space" do
-      subject { described_class.new(:space => '/**/') }
+      subject { described_class.new(space: '/**/') }
 
       it "should emit the custom white-space deliminater" do
         subject.emit_program(program).should == 'SELECT/**/1;/**/DROP/**/TABLE/**/users'

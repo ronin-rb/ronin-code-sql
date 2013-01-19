@@ -78,7 +78,7 @@ describe SQL::Clauses do
   include_examples "Clause", :into, :INTO, :table
   include_examples "Clause", :values, :VALUES, [1,2,3,4]
   include_examples "Clause", :default_values, [:DEFAULT, :VALUES]
-  include_examples "Clause", :set, :SET, {:x => 1, :y => 2}
+  include_examples "Clause", :set, :SET, {x: 1, y: 2}
   include_examples "Clause", :indexed_by, [:INDEXED, :BY], :index_name
   include_examples "Clause", :not_indexed, [:NOT, :INDEXED]
 end
