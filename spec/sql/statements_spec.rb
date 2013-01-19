@@ -55,4 +55,5 @@ describe SQL::Statements do
   include_examples "Statement", :insert, :INSERT
   include_examples "Statement", :update, :UPDATE, :table
   include_examples "Statement", :delete, [:DELETE, :FROM], :table
+  include_examples "Statement", :drop_table, [:DROP, :TABLE], :table
 end

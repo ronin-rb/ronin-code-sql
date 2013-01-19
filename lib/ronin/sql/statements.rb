@@ -94,6 +94,19 @@ module Ronin
       def delete(table,&block)
         statement([:DELETE, :FROM],table,&block)
       end
+
+      #
+      # Creates a new `DROP TABLE` statement.
+      #
+      # @param [Field, Symbol] table
+      #   The table to drop.
+      #
+      # @return [Statement]
+      #   The new statement.
+      #
+      def drop_table(table,&block)
+        statement([:DROP, :TABLE],table,&block)
+      end
     end
   end
 end
