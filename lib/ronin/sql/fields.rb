@@ -33,7 +33,7 @@ module Ronin
       end
 
       #
-      # @return [(self)]
+      # @return [nil]
       #
       def to_ary
       end
