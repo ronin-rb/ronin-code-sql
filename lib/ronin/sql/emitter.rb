@@ -53,14 +53,14 @@ module Ronin
       #
       # Emits a SQL keyword.
       #
-      # @param [Symbol] keyword
+      # @param [Symbol, Array<Symbol>] keyword
       #   The SQL keyword.
       #
       # @return [String]
       #   The raw SQL.
       #
       def emit_keyword(keyword)
-        keyword = keyword.to_s
+        keyword = Array(keyword).join(@space)
 
         case @case
         when :upper  then keyword.upcase

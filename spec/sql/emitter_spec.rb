@@ -17,6 +17,22 @@ describe SQL::Emitter do
   describe "#emit_keyword" do
     let(:keyword) { :select }
 
+    context "when passed an Array of Symbols" do
+      let(:keywords) { [:DROP, :TABLE] }
+
+      it "should join the keywords" do
+        subject.emit_keyword(keywords).should == "DROP TABLE"
+      end
+
+      context "when :space is set" do
+        subject { described_class.new(:space => '/**/') }
+
+        it "should join the keywords" do
+          subject.emit_keyword(keywords).should == "DROP/**/TABLE"
+        end
+      end
+    end
+
     context "when case is :upper" do
       subject { described_class.new(:case => :upper) }
 
