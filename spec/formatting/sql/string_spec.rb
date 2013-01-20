@@ -2,12 +2,6 @@ require 'spec_helper'
 require 'ronin/formatting/extensions/sql/string'
 
 describe String do
-  subject { "O'Briand" }
-
-  let(:single_quoted_string) { %{"O'Brian"} }
-  let(:double_quoted_string) { %{'O''Brian'} }
-  let(:tick_mark_quoted_string) { %{`O'Brian`} }
-
   it "should provide the #sql_escape method" do
     subject.should respond_to(:sql_escape)
   end
@@ -66,6 +60,14 @@ describe String do
         it "should escape existing tick-mark quotes" do
           subject.sql_escape(:tick).should == '`the ``thing```'
         end
+      end
+    end
+
+    context "otherwise" do
+      subject { "hello" }
+
+      it "should raise an ArgumentError" do
+        lambda { subject.sql_escape(:foo) }.should raise_error(ArgumentError)
       end
     end
   end
