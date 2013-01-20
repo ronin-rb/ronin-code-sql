@@ -69,10 +69,8 @@ describe SQL::Operators do
   include_examples "BinaryExpr", :regexp, :REGEXP
   include_examples "BinaryExpr", :in, :IN
 
-  pending "need to figure out how to send a unary operator" do
-    include_examples "UnaryExpr", :-
-    include_examples "UnaryExpr", :+
-  end
+  include_examples "UnaryExpr", :-@, :-
+  include_examples "UnaryExpr", :+@, :+
 
   include_examples "UnaryExpr", :~
   include_examples "UnaryExpr", :!
