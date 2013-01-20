@@ -26,7 +26,7 @@ describe String do
         subject { "O'Brian" }
 
         it "should escape existing single-quotes" do
-          subject.sql_escape(:single).should == "O''Brian"
+          subject.sql_escape(:single).should == "'O''Brian'"
         end
       end
     end
@@ -145,7 +145,7 @@ describe String do
   end
 
   describe "#sql_decode" do
-    subject { '0x2f6574632f706173737764' }
+    subject { '2f6574632f706173737764' }
 
     let(:decoded_string) { '/etc/passwd' }
 
@@ -153,13 +153,11 @@ describe String do
       subject.sql_decode.should == decoded_string
     end
 
-    context "when the String is a SQL string" do
+    context "when the String is a SQL escaped string" do
       subject { "'Conan O''Brian'" }
 
-      let(:decoded_string) { "Conan O'Brian" }
-
       it "should unescape the SQL String" do
-        subject.sql_decode.should == decoded_string
+        subject.sql_decode.should == "Conan O'Brian"
       end
     end
   end

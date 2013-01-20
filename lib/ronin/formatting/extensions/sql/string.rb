@@ -102,22 +102,22 @@ class String
   #   # => "Conan O'Brian"
   #
   # @example
-  #  "0x2f6574632f706173737764".sql_decode
+  #  "2f6574632f706173737764".sql_decode
   #  # => "/etc/passwd"
   #
+  # @see #sql_unescape
+  #
   def sql_decode
-    if (start_with?('0x') && (length % 2 == 0))
+    if (self =~ /^[0-9a-f]{2,}$/ && (length % 2 == 0))
       raw = ''
 
-      self[2..-1].scan(/../) do |hex_char|
+      scan(/../) do |hex_char|
         raw << hex_char.to_i(16).chr
       end
 
       return raw
-    elsif (start_with?("'") && end_with?("'"))
-      self[1..-2].gsub(/\\'|''/,"'")
     else
-      return self
+      sql_unescape
     end
   end
 
