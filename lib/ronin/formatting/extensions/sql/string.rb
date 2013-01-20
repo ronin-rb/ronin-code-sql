@@ -98,36 +98,4 @@ class String
     end
   end
 
-  #
-  # Prepares the String for injection into a SQL expression.
-  #
-  # @return [String]
-  #   The SQL injection ready String.
-  #
-  # @example
-  #   "'1' OR '1'='1'".sql_inject
-  #   # => "1' OR '1'='1"
-  #
-  # @example
-  #   "'1' OR 1=1".sql_inject
-  #   # => "1' OR 1=1 OR '"
-  #
-  # @example
-  #   "'1' OR 1=1".sql_inject(:terminate => true)
-  #   # => "1' OR 1=1 --"
-  #
-  # @api public
-  #
-  # @since 0.4.0
-  #
-  def sql_inject
-    if (start_with?("'") || start_with?('"') || start_with?('`'))
-      if self[0,1] == self[-1,1] then self[1..-2]
-      else                            "#{self[1..-1]}--"
-      end
-    else
-      self
-    end
-  end
-
 end
