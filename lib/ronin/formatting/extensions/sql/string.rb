@@ -38,6 +38,8 @@ class String
   #   "O'Brian".sql_escape
   #   # => "'O''Brian'"
   #
+  # @api public
+  #
   def sql_escape(quotes=:single)
     char = case quotes
            when :single then "'"
@@ -59,6 +61,8 @@ class String
   # @raise
   #   The String was not quoted with single, double or tick-mark quotes.
   #
+  # @api public
+  #
   # @since 1.0.0
   #
   def sql_unescape
@@ -79,6 +83,8 @@ class String
   # @example
   #   "/etc/passwd".sql_encode
   #   # => "0x2f6574632f706173737764"
+  #
+  # @api public
   #
   def sql_encode
     return '' if empty?
@@ -107,6 +113,8 @@ class String
   #   The String is neither hex encoded or SQL escaped.
   #
   # @see #sql_unescape
+  #
+  # @api public
   #
   def sql_decode
     if (self =~ /^[0-9a-f]{2,}$/ && (length % 2 == 0))
