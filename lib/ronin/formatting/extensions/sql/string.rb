@@ -38,8 +38,6 @@ class String
   #   "O'Brian".sql_escape
   #   # => "'O''Brian'"
   #
-  # @since 0.3.0
-  #
   def sql_escape(quotes=:single)
     char = case quotes
            when :single then "'"
