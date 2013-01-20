@@ -105,6 +105,9 @@ class String
   #  "2f6574632f706173737764".sql_decode
   #  # => "/etc/passwd"
   #
+  # @raise
+  #   The String is neither hex encoded or SQL escaped.
+  #
   # @see #sql_unescape
   #
   def sql_decode
