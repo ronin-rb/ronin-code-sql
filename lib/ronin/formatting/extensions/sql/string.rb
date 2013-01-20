@@ -32,7 +32,7 @@ class String
   #   The escaped String.
   #
   # @raise [ArgumentError]
-  #   The quotes argument was neither `:single` nor `:double`.
+  #   The quotes argument was neither `:single`, `:double` nor `:tick`.
   #
   # @example
   #   "O'Brian".sql_escape
