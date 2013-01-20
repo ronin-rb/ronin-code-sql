@@ -2,39 +2,81 @@ require 'spec_helper'
 require 'ronin/formatting/extensions/sql/string'
 
 describe String do
-  let(:string) {'/etc/passwd' }
-  let(:sql_encoded) { '0x2f6574632f706173737764' }
-  let(:string_with_quotes) { %{"O'Brian"} }
+  subject { "O'Briand" }
+
+  let(:single_quoted_string) { %{"O'Brian"} }
+  let(:double_quoted_string) { %{'O''Brian'} }
+  let(:tick_mark_quoted_string) { %{`O'Brian`} }
 
   it "should provide the #sql_escape method" do
-    string.should respond_to(:sql_escape)
+    subject.should respond_to(:sql_escape)
   end
 
   it "should provide the #sql_encode method" do
-    string.should respond_to(:sql_encode)
+    subject.should respond_to(:sql_encode)
   end
 
   it "should provide the #sql_decode method" do
-    string.should respond_to(:sql_decode)
+    subject.should respond_to(:sql_decode)
   end
 
   describe "#sql_escape" do
-    it "should be able to single-quote escape" do
-      string_with_quotes.sql_escape(:single).should == %{'"O''Brian"'}
+    context "with :single" do
+      subject { "hello" }
+
+      it "should wrap the String in single-quotes" do
+        subject.sql_escape(:single).should == "'hello'"
+      end
+
+      context "when the String already contains single-quotes" do
+        subject { "O'Brian" }
+
+        it "should escape existing single-quotes" do
+          subject.sql_escape(:single).should == "O''Brian"
+        end
+      end
     end
 
-    it "should be able to double-quote escape" do
-      string_with_quotes.sql_escape(:double).should == %{"""O'Brian"""}
+    context "with :double" do
+      subject { "hello" }
+
+      it "should wrap the String in double-quotes" do
+        subject.sql_escape(:double).should == '"hello"'
+      end
+
+      context "when the String already contains double-quotes" do
+        subject { 'the "thing"' }
+
+        it "should escape existing double-quotes" do
+          subject.sql_escape(:double).should == '"the ""thing"""'
+        end
+      end
     end
 
-    it "should be able to tick-mark escape" do
-      string_with_quotes.sql_escape(:tick).should == %{`"O'Brian"`}
+    context "with :tick" do
+      subject { "hello" }
+
+      it "should wrap the String in tick-mark quotes" do
+        subject.sql_escape(:tick).should == "`hello`"
+      end
+
+      context "when the String already contains tick-marks" do
+        subject { "the `thing`" }
+
+        it "should escape existing tick-mark quotes" do
+          subject.sql_escape(:tick).should == '`the ``thing```'
+        end
+      end
     end
   end
 
   describe "#sql_encode" do
+    subject { "/etc/passwd" }
+
+    let(:encoded_string) { '0x2f6574632f706173737764' }
+
     it "should be able to be SQL-hex encoded" do
-      string.sql_encode.should == sql_encoded
+      subject.sql_encode.should == encoded_string
     end
 
     it "should return an empty String if empty" do
@@ -43,15 +85,22 @@ describe String do
   end
 
   describe "#sql_decode" do
-    it "should be able to be SQL-hex decoded" do
-      encoded = string.sql_encode
+    subject { '0x2f6574632f706173737764' }
 
-      encoded.should == sql_encoded
-      encoded.sql_decode.should == string
+    let(:decoded_string) { '/etc/passwd' }
+
+    it "should be able to be SQL-hex decoded" do
+      subject.sql_decode.should == decoded_string
     end
 
-    it "should be able to decode SQL comma-escaping" do
-      "'Conan O''Brian'".sql_decode.should == "Conan O'Brian"
+    context "when the String is a SQL string" do
+      subject { "'Conan O''Brian'" }
+
+      let(:decoded_string) { "Conan O'Brian" }
+
+      it "should unescape the SQL String" do
+        subject.sql_decode.should == decoded_string
+      end
     end
   end
 end
