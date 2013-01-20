@@ -70,6 +70,64 @@ describe String do
     end
   end
 
+  describe "#sql_unescape" do
+    context "when the String is single-quoted" do
+      subject { "'hello'" }
+
+      it "should remove leading and tailing single-quotes" do
+        subject.sql_unescape.should == "hello"
+      end
+
+      context "when the String contains escaped single-quotes" do
+        subject { "'O''Brian'" }
+
+        it "should unescape the single-quotes" do
+          subject.sql_unescape.should == "O'Brian"
+        end
+      end
+    end
+
+    context "when the String is double-quoted" do
+      subject { '"hello"' }
+
+      it "should remove leading and tailing double-quotes" do
+        subject.sql_unescape.should == 'hello'
+      end
+
+      context "when the String contains escaped double-quotes" do
+        subject { '"the ""thing"""' }
+
+        it "should unescape the double-quotes" do
+          subject.sql_unescape.should == 'the "thing"'
+        end
+      end
+    end
+
+    context "when the String is tick-mark quoted" do
+      subject { '`hello`' }
+
+      it "should remove leading and tailing tick-mark quotes" do
+        subject.sql_unescape.should == 'hello'
+      end
+
+      context "when the String contains escaped tick-mark quotes" do
+        subject { '`the ``thing```' }
+
+        it "should unescape the tick-mark quotes" do
+          subject.sql_unescape.should == 'the `thing`'
+        end
+      end
+    end
+
+    context "when the String is not quoted" do
+      subject { "hello" }
+
+      it "should raise an exception" do
+        lambda { subject.sql_unescape }.should raise_error
+      end
+    end
+  end
+
   describe "#sql_encode" do
     subject { "/etc/passwd" }
 

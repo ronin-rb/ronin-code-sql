@@ -53,6 +53,29 @@ class String
   end
 
   #
+  # Unescapes a SQL String.
+  #
+  # @return [String]
+  #   The unescaped String.
+  #
+  # @raise
+  #   The String was not quoted with single, double or tick-mark quotes.
+  #
+  # @since 1.0.0
+  #
+  def sql_unescape
+    char = case [self[0,1], self[-1,1]]
+           when ["'", "'"] then "'"
+           when ['"', '"'] then '"'
+           when ['`', '`'] then '`'
+           else
+             raise("#{self.inspect} is not properly quoted")
+           end
+
+    return self[1..-2].gsub(char * 2,char)
+  end
+
+  #
   # Returns the SQL hex-string encoded form of the String.
   #
   # @example
