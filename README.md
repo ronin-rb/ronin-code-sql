@@ -16,14 +16,6 @@
 * Provides an Domain Specific Language (DSL) for crafting normal SQL and
   SQL injections.
 
-## Requirements
-
-* [Ruby] >= 1.9.1
-
-## Install
-
-    $ gem install ronin-sql
-
 ## Examples
 
 ### Convenience Methods
@@ -85,6 +77,14 @@ Filter evasion:
     sqli.union { select(1,2,3,4,id).from(users) }
     puts sqli.to_sql(:space => '/**/')
     # 1/**/UNION/**/SELECT/**/(1,2,3,4,id)/**/FROM/**/users
+
+## Requirements
+
+* [Ruby] >= 1.9.1
+
+## Install
+
+    $ gem install ronin-sql
 
 ## License
 
