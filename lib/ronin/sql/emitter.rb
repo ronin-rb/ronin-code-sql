@@ -41,7 +41,7 @@ module Ronin
       # @param [Hash] options
       #   Emitter options.
       #
-      # @option options [:lower, :upper, :random] :case (:upper)
+      # @option options [:lower, :upper, :random, nil] :case
       #   Case for keywords.
       #
       # @option options [String] :space (' ')
@@ -50,7 +50,7 @@ module Ronin
       # @option options [:single, :double] :quote (:single)
       #
       def initialize(options={})
-        @case  = options.fetch(:case,:upper)
+        @case  = options[:case]
         @space = options.fetch(:space,' ')
         @quote = options.fetch(:quote,:single)
       end
