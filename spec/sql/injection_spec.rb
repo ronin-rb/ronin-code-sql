@@ -2,10 +2,42 @@ require 'spec_helper'
 require 'ronin/sql/injection'
 
 describe SQL::Injection do
+  describe "PLACE_HOLDERS" do
+    subject { described_class::PLACE_HOLDERS }
+
+    it { should include(integer: 1)   }
+    it { should include(decimal: 1.0) }
+    it { should include(string: '1')  }
+    it { should include(list: [nil])  }
+    it { should include(column: :id)  }
+  end
+
   describe "#initialize" do
     context "with no arguments" do
       its(:escape)       { should == :integer }
       its(:place_holder) { should == 1 }
+    end
+
+    context "with :escape" do
+      context "with no :place_holder" do
+        let(:place_holders) { described_class::PLACE_HOLDERS }
+        let(:escape) { :string }
+
+        subject { described_class.new(:escape => escape) }
+
+        it "should default the place_holder based on the :escape type" do
+          subject.place_holder.should == place_holders[escape]
+        end
+      end
+    end
+
+    context "with :place_holder" do
+      let(:data) { 'A' }
+
+      subject { described_class.new(:place_holder => data) }
+
+      its(:place_holder) { should == data }
+      its(:expression)   { should == data }
     end
   end
 

@@ -13,4 +13,34 @@ describe SQL::Emittable do
       subject.emitter(:case => :lower).case.should == :lower
     end
   end
+
+  describe "#to_sql" do
+    it "should raise NotImplementedError" do
+      lambda { subject.to_sql }.should raise_error(NotImplementedError)
+    end
+  end
+
+  describe "#to_s" do
+    it "should call #to_sql with no arguments" do
+      subject.should_receive(:to_sql).with()
+
+      subject.to_s
+    end
+  end
+
+  describe "#to_str" do
+    it "should call #to_sql with no arguments" do
+      subject.should_receive(:to_sql).with()
+
+      subject.to_str
+    end
+  end
+
+  describe "#inspect" do
+    it "should call #to_sql with no arguments" do
+      subject.should_receive(:to_sql).with()
+
+      subject.inspect
+    end
+  end
 end

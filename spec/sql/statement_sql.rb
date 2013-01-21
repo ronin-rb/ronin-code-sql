@@ -24,6 +24,13 @@ describe SQL::Statement do
 
       context "that accepts an argument" do
         it "should yield itself" do
+          yielded_statement = nil
+
+          described_class.new(:STATEMENT) do |stmt|
+            yielded_statement = stmt
+          end
+
+          yielded_statement.should be_kind_of(described_class)
         end
       end
     end
