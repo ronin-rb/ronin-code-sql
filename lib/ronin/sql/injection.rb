@@ -90,15 +90,19 @@ module Ronin
       #
       # Appends an `AND` expression to the injection.
       #
-      # @yield []
+      # @yield [(injection)]
       #   The return value of the block will be used as the right-hand side
-      #   operand.
+      #   operand.  If the block accepts an argument, it will be called with
+      #   the injection.
+      #
+      # @yieldparam [Injection] injection
       #
       # @return [self]
       #
       def and(&block)
-        value = if block.arity == 0 then instance_eval(&block)
-                else                     block.call(self)
+        value = case block.arity
+                when 0 then instance_eval(&block)
+                else        block.call(self)
                 end
 
         @expression = BinaryExpr.new(@expression,:AND,value)
@@ -108,15 +112,19 @@ module Ronin
       #
       # Appends an `OR` expression to the injection.
       #
-      # @yield []
+      # @yield [(injection)]
       #   The return value of the block will be used as the right-hand side
-      #   operand.
+      #   operand. If the block accepts an argument, it will be called with
+      #   the injection.
+      #
+      # @yieldparam [Injection] injection
       #
       # @return [self]
       #
       def or(&block)
-        value = if block.arity == 0 then instance_eval(&block)
-                else                     block.call(self)
+        value = case block.arity
+                when 0 then instance_eval(&block)
+                else        block.call(self)
                 end
 
         @expression = BinaryExpr.new(@expression,:OR,value)
