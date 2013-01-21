@@ -39,9 +39,17 @@ describe SQL::Injection do
       its(:place_holder) { should == data }
       its(:expression)   { should == data }
     end
+
+    context "when a block is given" do
+      subject { described_class.new { @x = 1 } }
+
+      it "should instance_eval the block" do
+        subject.instance_variable_get(:@x).should == 1
+      end
+    end
   end
 
-  describe "#add" do
+  describe "#and" do
     context "on first call" do
       before { subject.and { 1 } }
 
