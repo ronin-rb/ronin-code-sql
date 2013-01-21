@@ -47,13 +47,23 @@ module Ronin
       #
       # Initializes a new SQL program.
       #
-      # @yield []
+      # @yield [(program)]
       #   If a block is given, it will be evaluated within the program.
+      #   If the block accepts an argument, the block will be called with the
+      #   new program.
+      #
+      # @yieldparam [Program] program
+      #   The new program.
       #
       def initialize(&block)
         @statements = []
 
-        instance_eval(&block) if block
+        if block
+          case block.arity
+          when 1 then block.call(self)
+          else   then instance_eval(&block)
+          end
+        end
       end
 
       #

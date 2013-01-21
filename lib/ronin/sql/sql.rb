@@ -29,6 +29,14 @@ module Ronin
     #
     # Creates a new SQL program.
     #
+    # @yield [(program)]
+    #   If a block is given, it will be evaluated within the program.
+    #   If the block accepts an argument, the block will be called with the
+    #   new program.
+    #
+    # @yieldparam [Program] program
+    #   The new program.
+    #
     # @return [Program]
     #   The new SQL program.
     #
