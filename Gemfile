@@ -7,8 +7,7 @@ gemspec
 gem 'jruby-openssl',	'~> 0.7', :platforms => :jruby
 
 # Ronin dependencies:
-gem 'ronin-support',  '~> 0.6', :git    => "#{RONIN_URI}/ronin-support.git",
-                                :branch => '0.6.0'
+# gem 'ronin-support',  '~> 0.6',   :git => "#{RONIN_URI}/ronin-support.git"
 # gem 'ronin',          '~> 1.5.0', :git => "#{RONIN_URI}/ronin.git"
 
 group :development do

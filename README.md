@@ -18,7 +18,6 @@
 ## Requirements
 
 * [Ruby] >= 1.9.1
-* [ronin-support] ~> 0.5
 
 ## Install
 
