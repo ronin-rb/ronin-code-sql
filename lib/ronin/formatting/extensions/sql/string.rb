@@ -39,7 +39,7 @@ class String
   #   # => "'O''Brian'"
   #
   # @example Encode with double-quotes:
-  #   "O'Briand".sql_escape(:double)
+  #   "O'Brian".sql_escape(:double)
   #   # => "\"O'Brian\""
   #
   # @api public
@@ -67,7 +67,7 @@ class String
   #
   # @example
   #   "'O''Brian'".sql_unescape
-  #   # => "O'Briand"
+  #   # => "O'Brian"
   #
   # @api public
   #
