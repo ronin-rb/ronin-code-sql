@@ -33,6 +33,11 @@ Escape a String:
     "O'Brian".sql_escape
     # => "'O''Brian'"
 
+Unescapes a SQL String:
+
+    "'O''Brian'".sql_unescape
+    # => "O'Briand"
+
 Hex encode a String:
 
     "exploit".sql_encode

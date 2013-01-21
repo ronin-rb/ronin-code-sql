@@ -61,6 +61,10 @@ class String
   # @raise
   #   The String was not quoted with single, double or tick-mark quotes.
   #
+  # @example
+  #   "'O''Brian'".sql_unescape
+  #   # => "O'Briand"
+  #
   # @api public
   #
   # @since 1.0.0
