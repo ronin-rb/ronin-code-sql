@@ -97,7 +97,9 @@ module Ronin
       # @return [self]
       #
       def and(&block)
-        value = instance_eval(&block)
+        value = if block.arity == 0 then instance_eval(&block)
+                else                     block.call(self)
+                end
 
         @expression = BinaryExpr.new(@expression,:AND,value)
         return self
@@ -113,7 +115,9 @@ module Ronin
       # @return [self]
       #
       def or(&block)
-        value = instance_eval(&block)
+        value = if block.arity == 0 then instance_eval(&block)
+                else                     block.call(self)
+                end
 
         @expression = BinaryExpr.new(@expression,:OR,value)
         return self
