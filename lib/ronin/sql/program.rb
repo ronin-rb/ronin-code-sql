@@ -61,7 +61,7 @@ module Ronin
         if block
           case block.arity
           when 1 then block.call(self)
-          else   then instance_eval(&block)
+          else        instance_eval(&block)
           end
         end
       end
