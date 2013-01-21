@@ -153,6 +153,14 @@ describe String do
       subject.sql_decode.should == decoded_string
     end
 
+    context "with upper-case hexadecimal" do
+      subject { '2F6574632F706173737764' }
+
+      it "should be able to be SQL-hex decoded" do
+        subject.sql_decode.should == decoded_string
+      end
+    end
+
     context "when the String is a SQL escaped string" do
       subject { "'Conan O''Brian'" }
 

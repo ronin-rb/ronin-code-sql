@@ -124,7 +124,7 @@ class String
   # @api public
   #
   def sql_decode
-    if (self =~ /^[0-9a-f]{2,}$/ && (length % 2 == 0))
+    if (self =~ /^[0-9a-fA-F]{2,}$/ && (length % 2 == 0))
       raw = ''
 
       scan(/../) do |hex_char|
