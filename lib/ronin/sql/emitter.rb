@@ -21,7 +21,6 @@
 #
 
 require 'ronin/formatting/sql'
-require 'ronin/formatting/text'
 
 module Ronin
   module SQL
@@ -71,7 +70,13 @@ module Ronin
         case @case
         when :upper  then keyword.upcase
         when :lower  then keyword.downcase
-        when :random then keyword.random_case(probability: 0.75)
+        when :random
+          keyword.tap do
+            (keyword.length / 2).times do
+              index = rand(keyword.length)
+              keyword[index] = keyword[index].swapcase
+            end
+          end
         end
       end
 

@@ -52,8 +52,8 @@ describe SQL::Emitter do
     context "when case is :random" do
       subject { described_class.new(case: :random) }
 
-      it "should random_case the keyword" do
-        subject.emit_keyword(keyword).should_not =~ /select|SELECT/
+      it "should contain at least one upper-case character" do
+        subject.emit_keyword(keyword).should =~ /[SELECT]/
       end
     end
   end
