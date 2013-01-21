@@ -1,3 +1,21 @@
+### 1.0.0 / 2013-01-20
+
+* Require [Ruby] >= 1.9.1.
+* No longer require ronin.
+* No longer require ronin-web.
+* Added {String#sql_unescape}.
+* Moved {String#sql_escape}, {String#sql_encode} and {String#sql_decode}
+  from [ronin-support].
+* Refactored the {Ronin::SQL SQL} DSL to be more like
+  [ARel](https://github.com/rails/arel#readme).
+  * Moved the DSL from `Ronin::Code::SQL` into {Ronin::SQL}.
+* Removed `Ronin::SQL::Error`.
+* Removed `String#sql_error`.
+* Removed `String#sql_error?`.
+* Removed `URI::HTTP.has_sql_errors?`.
+* Removed `URI::HTTP.sql_error`.
+* Removed `URI::HTTP.sql_errors`.
+
 ### 0.2.4 / 2009-09-24
 
 * Require ronin >= 0.3.0.
@@ -62,3 +80,5 @@
 * Supports obfustication of SQL code.
 * Supports SQL Injection code generation.
 
+[Ruby]: http://www.ruby-lang.org/
+[ronin-support]: https://github.com/ronin-ruby/ronin-support#readme
