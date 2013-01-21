@@ -63,6 +63,14 @@ module Ronin
     # @option options [String, Symbol, Integer] :place_holder
     #   Place-holder data.
     #
+    # @yield [(injection)]
+    #   If a block is given, it will be evaluated within the injection.
+    #   If the block accepts an argument, the block will be called with the
+    #   new injection.
+    #
+    # @yieldparam [Injection] injection
+    #   The new injection.
+    #
     # @return [Injection]
     #   The new SQL injection.
     #

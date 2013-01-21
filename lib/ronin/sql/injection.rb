@@ -68,9 +68,15 @@ module Ronin
       # @option options [String, Symbol, Integer] :place_holder
       #   Place-holder data.
       #
+      # @yield [(injection)]
+      #   If a block is given, it will be evaluated within the injection.
+      #   If the block accepts an argument, the block will be called with the
+      #   new injection.
+      #
+      # @yieldparam [Injection] injection
+      #   The new injection.
+      #
       def initialize(options={},&block)
-        super()
-
         @escape       = options.fetch(:escape,:integer)
         @place_holder = options.fetch(:place_holder) do
           PLACE_HOLDERS.fetch(@escape)
@@ -78,7 +84,7 @@ module Ronin
 
         @expression = @place_holder
 
-        instance_eval(&block) if block
+        super(&block)
       end
 
       #
