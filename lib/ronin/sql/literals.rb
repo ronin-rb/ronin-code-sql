@@ -24,6 +24,9 @@ require 'ronin/sql/literal'
 
 module Ronin
   module SQL
+    #
+    # Methods for creating SQL {Literals Literal}.
+    #
     module Literals
       #
       # Creates a `NULL` literal.

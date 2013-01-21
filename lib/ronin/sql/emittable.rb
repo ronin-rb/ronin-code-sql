@@ -24,6 +24,9 @@ require 'ronin/sql/emitter'
 
 module Ronin
   module SQL
+    #
+    # Allows an object to be converted to raw SQL.
+    #
     module Emittable
       #
       # Creates a new emitter.

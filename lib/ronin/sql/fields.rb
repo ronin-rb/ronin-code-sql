@@ -24,6 +24,9 @@ require 'ronin/sql/field'
 
 module Ronin
   module SQL
+    #
+    # Allows creating {Field Fields} via {#method_missing}.
+    #
     module Fields
       #
       # @return [true]

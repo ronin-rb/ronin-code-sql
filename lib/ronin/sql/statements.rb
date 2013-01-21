@@ -22,6 +22,9 @@
 
 module Ronin
   module SQL
+    #
+    # Methods for creating common SQL {Statement Statements}.
+    #
     module Statements
       #
       # Creates an arbitrary statement.

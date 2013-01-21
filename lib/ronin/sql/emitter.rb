@@ -24,6 +24,9 @@ require 'ronin/formatting/sql'
 
 module Ronin
   module SQL
+    #
+    # Generates raw SQL.
+    #
     class Emitter
 
       # The case to use when emitting keywords

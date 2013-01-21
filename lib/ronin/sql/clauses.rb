@@ -22,6 +22,9 @@
 
 module Ronin
   module SQL
+    #
+    # Methods for creating common SQL {Clause Clauses}.
+    #
     module Clauses
       #
       # The defined clauses of the statement.

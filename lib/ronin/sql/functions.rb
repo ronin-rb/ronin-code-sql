@@ -24,6 +24,9 @@ require 'ronin/sql/function'
 
 module Ronin
   module SQL
+    #
+    # Methods for creating common SQL {Function Functions}.
+    #
     module Functions
       #
       # @!group Aggregate Functions

@@ -23,6 +23,8 @@
 module Ronin
   module SQL
     #
+    # Methods for creating SQL expressions.
+    #
     # @see http://sqlite.org/lang_expr.html
     #
     module Operators
