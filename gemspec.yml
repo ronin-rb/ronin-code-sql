@@ -13,4 +13,4 @@ required_ruby_version: ">= 1.9.1"
 
 development_dependencies:
   bundler: ~> 1.0
-  yard: ~> 0.7
+  yard: ~> 0.8
