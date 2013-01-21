@@ -1,4 +1,4 @@
-### 1.0.0 / 2013-01-20
+### 1.0.0 / 2013-01-21
 
 * Require [Ruby] >= 1.9.1.
 * No longer require ronin.
