@@ -12,6 +12,7 @@
 
 ### Features
 
+* Provides convenience methods for encoding/decoding SQL data.
 * Provides an Domain Specific Language (DSL) for crafting normal SQL and
   SQL injections.
 
