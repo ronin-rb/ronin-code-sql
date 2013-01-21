@@ -81,4 +81,3 @@
 * Supports SQL Injection code generation.
 
 [Ruby]: http://www.ruby-lang.org/
-[ronin-support]: https://github.com/ronin-ruby/ronin-support#readme
