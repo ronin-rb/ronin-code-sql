@@ -23,14 +23,14 @@
 require 'ronin/sql/binary_expr'
 require 'ronin/sql/literals'
 require 'ronin/sql/clauses'
-require 'ronin/sql/program'
+require 'ronin/sql/statement_list'
 
 module Ronin
   module SQL
     #
     # Represents a SQL injection (SQLi).
     #
-    class Injection < Program
+    class Injection < StatementList
 
       include Literals
       include Clauses
@@ -154,7 +154,7 @@ module Ronin
         end
 
         unless statements.empty?
-          sql << '; ' << emitter.emit_program(self)
+          sql << '; ' << emitter.emit_statement_list(self)
         end
 
         case @escape

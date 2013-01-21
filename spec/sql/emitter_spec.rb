@@ -4,7 +4,7 @@ require 'ronin/sql/unary_expr'
 require 'ronin/sql/binary_expr'
 require 'ronin/sql/field'
 require 'ronin/sql/statement'
-require 'ronin/sql/program'
+require 'ronin/sql/statement_list'
 require 'ronin/sql/emitter'
 
 describe SQL::Emitter do
@@ -449,23 +449,23 @@ describe SQL::Emitter do
     end
   end
 
-  describe "#emit_program" do
-    let(:program) do
-      sql = SQL::Program.new
+  describe "#emit_statement_list" do
+    let(:stmts) do
+      sql = SQL::StatementList.new
       sql << SQL::Statement.new(:SELECT, 1)
       sql << SQL::Statement.new([:DROP, :TABLE], :users)
       sql
     end
 
     it "should emit multiple statements separated by '; '" do
-      subject.emit_program(program).should == 'SELECT 1; DROP TABLE users'
+      subject.emit_statement_list(stmts).should == 'SELECT 1; DROP TABLE users'
     end
 
     context "with custom :space" do
       subject { described_class.new(space: '/**/') }
 
       it "should emit the custom white-space deliminater" do
-        subject.emit_program(program).should == 'SELECT/**/1;/**/DROP/**/TABLE/**/users'
+        subject.emit_statement_list(stmts).should == 'SELECT/**/1;/**/DROP/**/TABLE/**/users'
       end
     end
   end

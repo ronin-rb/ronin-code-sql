@@ -32,28 +32,28 @@ require 'ronin/sql/emittable'
 module Ronin
   module SQL
     #
-    # Represents a SQL Program.
+    # Represents a list of SQL {Statements Statement}.
     #
-    class Program
+    class StatementList
 
       include Fields
       include Functions
       include Statements
       include Emittable
 
-      # The statements of the program
+      # The list of statements
       attr_reader :statements
 
       #
-      # Initializes a new SQL program.
+      # Initializes a new SQL statement list.
       #
-      # @yield [(program)]
-      #   If a block is given, it will be evaluated within the program.
+      # @yield [(statements)]
+      #   If a block is given, it will be evaluated within the statement list.
       #   If the block accepts an argument, the block will be called with the
-      #   new program.
+      #   new statement list.
       #
-      # @yieldparam [Program] program
-      #   The new program.
+      # @yieldparam [StatementList] statements
+      #   The new statement list.
       #
       def initialize(&block)
         @statements = []
@@ -67,7 +67,7 @@ module Ronin
       end
 
       #
-      # Appends a statement to the program.
+      # Appends a statement.
       #
       # @param [Statement] statement
       #   The SQL statement.
@@ -80,7 +80,7 @@ module Ronin
       end
 
       #
-      # Appends an arbitrary statement to the program.
+      # Appends an arbitrary statement.
       #
       # @param [Symbol] keyword
       #   Name of the statement.

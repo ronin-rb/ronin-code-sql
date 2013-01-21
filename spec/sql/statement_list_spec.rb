@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/sql/program'
+require 'ronin/sql/statement_list'
 
-describe SQL::Program do
+describe SQL::StatementList do
   describe "#initialize" do
     context "when given a block" do
       subject do
@@ -14,13 +14,13 @@ describe SQL::Program do
 
       context "that accepts an argument" do
         it "should yield itself" do
-          yielded_program = nil
+          yielded_statement_list = nil
 
-          described_class.new do |program|
-            yielded_program = program
+          described_class.new do |statement_list|
+            yielded_statement_list = statement_list
           end
 
-          yielded_program.should be_kind_of(described_class)
+          yielded_statement_list.should be_kind_of(described_class)
         end
       end
     end

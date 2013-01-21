@@ -5,8 +5,8 @@ describe SQL do
   subject { Object.new.extend(described_class) }
 
   describe "#sql" do
-    it "should return a new SQL::Program" do
-      subject.sql.should be_kind_of(SQL::Program)
+    it "should return a new SQL::StatementList" do
+      subject.sql.should be_kind_of(SQL::StatementList)
     end
   end
 

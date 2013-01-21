@@ -20,32 +20,32 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/program'
+require 'ronin/sql/statement_list'
 require 'ronin/sql/injection'
 
 module Ronin
   module SQL
 
     #
-    # Creates a new SQL program.
+    # Creates a new SQL statement list.
     #
-    # @yield [(program)]
-    #   If a block is given, it will be evaluated within the program.
+    # @yield [(statements)]
+    #   If a block is given, it will be evaluated within the statement list.
     #   If the block accepts an argument, the block will be called with the
-    #   new program.
+    #   new statement list.
     #
-    # @yieldparam [Program] program
-    #   The new program.
+    # @yieldparam [StatementList] statements
+    #   The new statement list.
     #
-    # @return [Program]
-    #   The new SQL program.
+    # @return [StatementList]
+    #   The new SQL statement list.
     #
     # @example
     #   sql { select(1,2,3,4,id).from(users) }
-    #   # => #<Ronin::SQL::Program: SELECT (1,2,3,4,id) FROM users>
+    #   # => #<Ronin::SQL::StatementList: SELECT (1,2,3,4,id) FROM users>
     #
     def sql(&block)
-      Program.new(&block)
+      StatementList.new(&block)
     end
 
     #

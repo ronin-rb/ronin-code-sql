@@ -290,7 +290,7 @@ module Ronin
         when BinaryExpr, UnaryExpr then emit_expression(object)
         when Clause                then emit_clause(object)
         when Statement             then emit_statement(object)
-        when Program               then emit_program(object)
+        when StatementList         then emit_statement_list(object)
         else
           if object.respond_to?(:to_sql)
             object.to_sql
@@ -356,16 +356,16 @@ module Ronin
       end
 
       #
-      # Emits a full SQL program.
+      # Emits a full SQL statement list.
       #
-      # @param [Program] program
-      #   The SQL Program.
+      # @param [StatementList] list
+      #   The SQL statement list.
       #
       # @return [String]
       #   The raw SQL.
       #
-      def emit_program(program)
-        program.statements.map { |stmt|
+      def emit_statement_list(list)
+        list.statements.map { |stmt|
           emit_statement(stmt)
         }.join(";#{@space}")
       end
