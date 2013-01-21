@@ -8,13 +8,13 @@
 
 ## Description
 
-{Ronin::SQL} is a Ruby DSL for crafting SQL Injections (SQLi).
+{Ronin::SQL} is a Ruby DSL for crafting [SQL Injections (SQLi)][SQLi].
 
 ### Features
 
 * Provides convenience methods for encoding/decoding SQL data.
 * Provides an Domain Specific Language (DSL) for crafting normal SQL and
-  SQL injections.
+  [SQL injections][SQLi].
 
 ## Examples
 
@@ -106,5 +106,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with Ronin Asm.  If not, see <http://www.gnu.org/licenses/>.
+
+[SQLi]: http://en.wikipedia.org/wiki/SQL_injection
 
 [Ruby]: http://www.ruby-lang.org
