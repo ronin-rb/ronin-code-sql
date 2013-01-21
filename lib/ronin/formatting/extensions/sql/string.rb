@@ -38,6 +38,10 @@ class String
   #   "O'Brian".sql_escape
   #   # => "'O''Brian'"
   #
+  # @example Encode with double-quotes:
+  #   "O'Briand".sql_escape(:double)
+  #   # => "\"O'Brian\""
+  #
   # @api public
   #
   def sql_escape(quotes=:single)
