@@ -16,8 +16,6 @@ describe SQL::Emitter do
   end
 
   describe "#emit_keyword" do
-    let(:keyword) { :select }
-
     context "when passed an Array of Symbols" do
       let(:keywords) { [:DROP, :TABLE] }
 
@@ -35,6 +33,8 @@ describe SQL::Emitter do
     end
 
     context "when case is :upper" do
+      let(:keyword) { :select }
+
       subject { described_class.new(case: :upper) }
 
       it "should upcase the keyword" do
@@ -43,6 +43,8 @@ describe SQL::Emitter do
     end
 
     context "when case is :lower" do
+      let(:keyword) { :SELECT }
+
       subject { described_class.new(case: :lower) }
 
       it "should upcase the keyword" do
@@ -51,6 +53,8 @@ describe SQL::Emitter do
     end
 
     context "when case is :random" do
+      let(:keyword) { :select }
+
       subject { described_class.new(case: :random) }
 
       it "should contain at least one upper-case character" do
@@ -71,8 +75,10 @@ describe SQL::Emitter do
 
   describe "#emit_operator" do
     context "when the operator is upper-case alphabetic text" do
+      subject { described_class.new(case: :lower) }
+
       it "should emit a keyword" do
-        subject.emit_operator(:AS).should == 'AS'
+        subject.emit_operator(:AS).should == 'as'
       end
     end
 
@@ -149,10 +155,12 @@ describe SQL::Emitter do
 
   describe "#emit_expression" do
     context "when the expression is a BinaryExpr" do
-      context "when the operator is upper-case alpha" do
-        let(:expr) { SQL::BinaryExpr.new(:id,:IS,1) }
+      context "when the operator is alphabetic" do
+        subject { described_class.new(case: :upper) }
 
-        it "should emit the operands and operator with spaces" do
+        let(:expr) { SQL::BinaryExpr.new(:id,:is,1) }
+
+        it "should emit the operands and operator as a keyword with spaces" do
           subject.emit_expression(expr).should == 'id IS 1'
         end
       end
@@ -319,6 +327,14 @@ describe SQL::Emitter do
       end
     end
 
+    context "when passed a Statment" do
+      let(:stmt) { SQL::Statement.new(:SELECT,1) }
+
+      it "should emit a statement" do
+        subject.emit(stmt).should == 'SELECT 1'
+      end
+    end
+
     context "when the object responds to #to_sql" do
       let(:object) { double(:sql_object) }
       let(:sql)    { "EXEC sp_configure 'xp_cmdshell', 0;" }
@@ -390,24 +406,28 @@ describe SQL::Emitter do
   end
 
   describe "#emit_statement" do
-    let(:stmt) { SQL::Statement.new(:SELECT) }
+    subject { described_class.new(case: :lower) }
 
-    it "should emit the statment keyword" do
-      subject.emit_statement(stmt).should == 'SELECT'
+    context "without an argument" do
+      let(:stmt) { SQL::Statement.new(:SELECT) }
+
+      it "should emit the statment keyword" do
+        subject.emit_statement(stmt).should == 'select'
+      end
     end
 
     context "with an argument" do
       let(:stmt) { SQL::Statement.new(:SELECT,1) }
 
       it "should emit the statment argument" do
-        subject.emit_statement(stmt).should == 'SELECT 1'
+        subject.emit_statement(stmt).should == 'select 1'
       end
 
       context "with custom :space" do
-        subject { described_class.new(space: '/**/') }
+        subject { described_class.new(case: :lower, space: '/**/') }
 
         it "should emit the custom white-space deliminater" do
-          subject.emit_statement(stmt).should == 'SELECT/**/1'
+          subject.emit_statement(stmt).should == 'select/**/1'
         end
       end
     end
@@ -416,14 +436,14 @@ describe SQL::Emitter do
       let(:stmt) { SQL::Statement.new(:SELECT,1).offset(1).limit(100) }
 
       it "should emit the statment argument" do
-        subject.emit_statement(stmt).should == 'SELECT 1 OFFSET 1 LIMIT 100'
+        subject.emit_statement(stmt).should == 'select 1 offset 1 limit 100'
       end
 
       context "with custom :space" do
-        subject { described_class.new(space: '/**/') }
+        subject { described_class.new(case: :lower, space: '/**/') }
 
         it "should emit the custom white-space deliminater" do
-          subject.emit_statement(stmt).should == 'SELECT/**/1/**/OFFSET/**/1/**/LIMIT/**/100'
+          subject.emit_statement(stmt).should == 'select/**/1/**/offset/**/1/**/limit/**/100'
         end
       end
     end

@@ -22,4 +22,5 @@ group :development do
 
   gem 'rubygems-tasks', '~> 0.1'
   gem 'rspec',          '~> 2.4'
+  gem 'simplecov',      '~> 0.7'
 end

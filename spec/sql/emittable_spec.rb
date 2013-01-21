@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'ronin/sql/emittable'
+require 'ronin/sql/literal'
 
 describe SQL::Emittable do
-  subject { Object.new.extend(described_class) }
+  subject { SQL::Literal.new('hello') }
 
   describe "#emitter" do
     it "should return an SQL::Emitter" do
@@ -15,8 +16,14 @@ describe SQL::Emittable do
   end
 
   describe "#to_sql" do
-    it "should raise NotImplementedError" do
-      lambda { subject.to_sql }.should raise_error(NotImplementedError)
+    it "should emit the object" do
+      subject.to_sql.should == "'hello'"
+    end
+
+    context "when given options" do
+      it "should pass them to #emitter" do
+        subject.to_sql(quote: :double).should == '"hello"'
+      end
     end
   end
 

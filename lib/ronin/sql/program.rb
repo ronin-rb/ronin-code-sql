@@ -105,19 +105,6 @@ module Ronin
         return new_statement
       end
 
-      #
-      # Converts the SQL program into raw SQL.
-      #
-      # @param [Hash] options
-      #   Additional options for {Emitter#initialize}.
-      #
-      # @return [String]
-      #   The raw SQL.
-      #
-      def to_sql(options={})
-        emitter(options).emit_program(self)
-      end
-
     end
   end
 end

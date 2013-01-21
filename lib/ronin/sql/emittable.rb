@@ -39,16 +39,28 @@ module Ronin
       end
 
       #
-      # Emits SQL.
+      # The default `to_sql` method.
       #
       # @param [Hash] options
-      #   Additional emitter options.
+      #   Additional options for {#emitter}.
       #
-      # @raise [NotImplementedError]
-      #   This method must be implemented.
+      # @option options [:lower, :upper, :random, nil] :case
+      #   Case for keywords.
+      #
+      # @option options [String] :space (' ')
+      #   String to use for white-space.
+      #
+      # @option options [:single, :double] :quote (:single)
+      #   Type of quotes to use for Strings.
+      #
+      # @return [String]
+      #   The raw SQL.
+      #
+      # @raise [ArgumentError]
+      #   Could not emit an unknown SQL object.
       #
       def to_sql(options={})
-        raise(NotImplementedError,"#{self.class}#to_sql is not implemented")
+        emitter(options).emit(self)
       end
 
       #

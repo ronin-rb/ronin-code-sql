@@ -51,6 +51,7 @@ module Ronin
       #   String to use for white-space.
       #
       # @option options [:single, :double] :quote (:single)
+      #   Type of quotes to use for Strings.
       #
       def initialize(options={})
         @case  = options[:case]
@@ -98,8 +99,8 @@ module Ronin
         op = op.to_s
 
         case op
-        when /^[A-Z]+$/ then emit_keyword(op)
-        else                 op
+        when /^[a-zA-Z]+$/ then emit_keyword(op)
+        else                    op
         end
       end
 
@@ -265,14 +266,14 @@ module Ronin
       #
       # Emits a SQL object.
       #
-      # @param [Object] object
+      # @param [#to_sql] object
       #   The SQL object.
       #
       # @return [String]
       #   The raw SQL.
       #
       # @raise [ArgumentError]
-      #   Could not emit the SQL object.
+      #   Could not emit an unknown SQL object.
       #
       def emit(object)
         case object
@@ -287,6 +288,9 @@ module Ronin
         when Array                 then emit_list(object)
         when Hash                  then emit_assignments(object)
         when BinaryExpr, UnaryExpr then emit_expression(object)
+        when Clause                then emit_clause(object)
+        when Statement             then emit_statement(object)
+        when Program               then emit_program(object)
         else
           if object.respond_to?(:to_sql)
             object.to_sql

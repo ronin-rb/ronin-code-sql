@@ -67,19 +67,6 @@ module Ronin
         super(keyword,argument)
       end
 
-      #
-      # Converts the clause into raw SQL.
-      #
-      # @param [Hash] options
-      #   Additional options for {Emitter#initialize}.
-      #
-      # @return [String]
-      #   The raw SQL.
-      #
-      def to_sql(options={})
-        emitter(options).emit_clause(self)
-      end
-
     end
   end
 end

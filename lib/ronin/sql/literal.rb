@@ -33,19 +33,6 @@ module Ronin
       include Operators
       include Emittable
 
-      #
-      # Emits the literal.
-      #
-      # @param [Hash] options
-      #   Additional options for {Emitter#initialize}.
-      #
-      # @return [String]
-      #   The SQL literal.
-      #
-      def to_sql(options={})
-        emitter(options).emit(value)
-      end
-
     end
   end
 end
