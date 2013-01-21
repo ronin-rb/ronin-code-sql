@@ -102,5 +102,3 @@ You should have received a copy of the GNU General Public License
 along with Ronin Asm.  If not, see <http://www.gnu.org/licenses/>.
 
 [Ruby]: http://www.ruby-lang.org
-
-[ronin-support]: https://github.com/ronin-ruby/ronin-support#readme
