@@ -71,13 +71,6 @@ module Ronin
       end
 
       #
-      # @see #to_sql
-      #
-      def to_str
-        to_sql
-      end
-
-      #
       # Inspects the object.
       #
       # @return [String]

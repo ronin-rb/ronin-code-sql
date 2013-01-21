@@ -29,25 +29,13 @@ describe SQL::Emittable do
 
   describe "#to_s" do
     it "should call #to_sql with no arguments" do
-      subject.should_receive(:to_sql).with()
-
-      subject.to_s
-    end
-  end
-
-  describe "#to_str" do
-    it "should call #to_sql with no arguments" do
-      subject.should_receive(:to_sql).with()
-
-      subject.to_str
+      subject.to_s.should == subject.to_sql
     end
   end
 
   describe "#inspect" do
     it "should call #to_sql with no arguments" do
-      subject.should_receive(:to_sql).with()
-
-      subject.inspect
+      subject.inspect.should include(subject.to_sql)
     end
   end
 end

@@ -31,7 +31,7 @@ class String
   # @return [String]
   #   The escaped String.
   #
-  # @raise [ArgumentError]
+  # @raise [TypeError]
   #   The quotes argument was neither `:single`, `:double` nor `:tick`.
   #
   # @example
@@ -70,12 +70,11 @@ class String
   # @since 1.0.0
   #
   def sql_unescape
-    char = case [self[0,1], self[-1,1]]
-           when ["'", "'"] then "'"
-           when ['"', '"'] then '"'
-           when ['`', '`'] then '`'
+    char = if    (self[0] == "'" && self[-1] == "'") then "'"
+           elsif (self[0] == '"' && self[-1] == '"') then '"'
+           elsif (self[0] == '`' && self[-1] == '`') then '`'
            else
-             raise("#{self.inspect} is not properly quoted")
+             raise(TypeError,"#{self.inspect} is not properly quoted")
            end
 
     return self[1..-2].gsub(char * 2,char)
@@ -125,7 +124,7 @@ class String
       raw = ''
 
       scan(/../) do |hex_char|
-        raw << hex_char.to_i(16).chr
+        raw << hex_char.to_i(16)
       end
 
       return raw

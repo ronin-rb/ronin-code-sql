@@ -15,9 +15,9 @@ describe String do
   end
 
   describe "#sql_escape" do
-    context "with :single" do
-      subject { "hello" }
+    subject { "hello" }
 
+    context "with :single" do
       it "should wrap the String in single-quotes" do
         subject.sql_escape(:single).should == "'hello'"
       end
@@ -32,8 +32,6 @@ describe String do
     end
 
     context "with :double" do
-      subject { "hello" }
-
       it "should wrap the String in double-quotes" do
         subject.sql_escape(:double).should == '"hello"'
       end
@@ -48,8 +46,6 @@ describe String do
     end
 
     context "with :tick" do
-      subject { "hello" }
-
       it "should wrap the String in tick-mark quotes" do
         subject.sql_escape(:tick).should == "`hello`"
       end
@@ -63,9 +59,13 @@ describe String do
       end
     end
 
-    context "otherwise" do
-      subject { "hello" }
+    context "with no arguments" do
+      it "should default quote to :single" do
+        subject.sql_escape.should == subject.sql_escape(:single)
+      end
+    end
 
+    context "otherwise" do
       it "should raise an ArgumentError" do
         lambda { subject.sql_escape(:foo) }.should raise_error(ArgumentError)
       end
@@ -125,7 +125,7 @@ describe String do
       subject { "hello" }
 
       it "should raise an exception" do
-        lambda { subject.sql_unescape }.should raise_error
+        lambda { subject.sql_unescape }.should raise_error(TypeError)
       end
     end
   end
