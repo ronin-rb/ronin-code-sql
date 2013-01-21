@@ -109,7 +109,7 @@ module Ronin
       # @return ["NULL"]
       #
       def emit_null
-        emit_keyword(:null)
+        emit_keyword(:NULL)
       end
 
       #
