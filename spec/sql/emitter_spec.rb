@@ -56,6 +56,16 @@ describe SQL::Emitter do
         subject.emit_keyword(keyword).should =~ /[SELECT]/
       end
     end
+
+    context "when case is nil" do
+      subject { described_class.new(case: nil) }
+
+      let(:keyword) { 'Select' }
+
+      it "should emit the keyword as is" do
+        subject.emit_keyword(keyword).should == keyword
+      end
+    end
   end
 
   describe "#emit_operator" do

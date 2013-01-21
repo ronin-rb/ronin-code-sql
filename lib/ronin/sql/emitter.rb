@@ -77,6 +77,8 @@ module Ronin
               keyword[index] = keyword[index].swapcase
             end
           end
+        else
+          keyword
         end
       end
 
