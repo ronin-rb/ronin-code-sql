@@ -1,44 +1,7 @@
 require 'spec_helper'
-require 'ronin/sql/binary_expr'
-require 'ronin/sql/unary_expr'
 require 'ronin/sql/operators'
-
-shared_examples_for "BinaryExpr" do |method,operator=method|
-  describe "##{method}" do
-    let(:operand) { 1 }
-    let(:expr)    { subject.send(method,operand) }
-
-    it "should be a BinaryExpr" do
-      expr.should be_kind_of(SQL::BinaryExpr)
-    end
-
-    it "should set the right-hand operand" do
-      expr.right.should == operand
-    end
-
-    it "should have a '#{operator}' operator" do
-      expr.operator.should == operator
-    end
-  end
-end
-
-shared_examples_for "UnaryExpr" do |method,operator=method|
-  describe "##{method}" do
-    let(:expr) { subject.send(method) }
-
-    it "should be a UnaryExpr" do
-      expr.should be_kind_of(SQL::UnaryExpr)
-    end
-
-    it "should set the operand" do
-      expr.operand.should == subject
-    end
-
-    it "should have a '#{operator}' operator" do
-      expr.operator.should == operator
-    end
-  end
-end
+require 'sql/binary_expr_examples'
+require 'sql/unary_expr_examples'
 
 describe SQL::Operators do
   subject { Object.new.extend(described_class) }

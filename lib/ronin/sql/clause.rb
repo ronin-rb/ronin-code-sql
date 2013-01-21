@@ -57,14 +57,14 @@ module Ronin
       #   Otherwise the block will be evaluated within the clause.
       #
       def initialize(keyword,argument=nil,&block)
-        if block
-          argument = case block.arity
-                     when 1 then yield(self)
-                     else        instance_eval(&block)
-                     end
-        end
-
         super(keyword,argument)
+
+        if block
+          self.argument = case block.arity
+                          when 0 then instance_eval(&block)
+                          else        block.call(self)
+                          end
+        end
       end
 
     end

@@ -4,6 +4,14 @@ require 'ronin/sql/fields'
 describe SQL::Fields do
   subject { Object.new.extend(described_class) }
 
+  describe "#respond_to_missing?" do
+    it "should return true" do
+      subject.respond_to_missing?(double(:method)).should be(true)
+    end
+  end
+
+  its(:to_ary) { should be_nil }
+
   describe "#method_missing" do
     let(:name) { 'users' }
 

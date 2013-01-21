@@ -56,7 +56,7 @@ module Ronin
         if (arguments.empty? && block.nil?)
           Field.new(name)
         else
-          super(name,*arguments,&block)
+          super
         end
       end
     end
