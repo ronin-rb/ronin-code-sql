@@ -32,6 +32,10 @@ module Ronin
     # @return [Program]
     #   The new SQL program.
     #
+    # @example
+    #   sql { select(1,2,3,4,id).from(users) }
+    #   # => #<Ronin::SQL::Program: SELECT (1,2,3,4,id) FROM users>
+    #
     def sql(&block)
       Program.new(&block)
     end
@@ -53,6 +57,10 @@ module Ronin
     #
     # @return [Injection]
     #   The new SQL injection.
+    #
+    # @example
+    #   sqli { self.and { 1 == 1 }.select(1,2,3,4,id).from(users) }
+    #   # => #<Ronin::SQL::Injection: 1 AND 1=1; SELECT (1,2,3,4,id) FROM users; SELECT (1,2,3,4,id) FROM users>
     #
     def sqli(options={},&block)
       Injection.new(options,&block)
