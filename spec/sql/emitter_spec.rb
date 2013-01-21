@@ -9,8 +9,9 @@ require 'ronin/sql/emitter'
 
 describe SQL::Emitter do
   describe "#initialize" do
-    context "with default values" do
-      its(:case) { should == :upper }
+    context "without options" do
+      its(:space) { should == ' ' }
+      its(:quote) { should == :single }
     end
   end
 
@@ -142,7 +143,7 @@ describe SQL::Emitter do
     let(:values) { {x: 1, y: 2} }
 
     it "should emit a list of column names and values" do
-      subject.emit_assignments(values).should == 'X=1,Y=2'
+      subject.emit_assignments(values).should == 'x=1,y=2'
     end
   end
 
@@ -215,14 +216,14 @@ describe SQL::Emitter do
   end
 
   describe "#emit_function" do
-    let(:func) { SQL::Function.new(:now) }
+    let(:func) { SQL::Function.new(:NOW) }
 
     it "should emit the function name as a keyword" do
       subject.emit_function(func).should == 'NOW()'
     end
 
     context "with arguments" do
-      let(:func) { SQL::Function.new(:max,1,2) }
+      let(:func) { SQL::Function.new(:MAX,1,2) }
 
       it "should emit the function arguments" do
         subject.emit_function(func).should == 'MAX(1,2)'
@@ -298,7 +299,7 @@ describe SQL::Emitter do
 
     context "when passed a Hash" do
       it "should emit a list of assignments" do
-        subject.emit(x: 1, y: 2).should == 'X=1,Y=2'
+        subject.emit(x: 1, y: 2).should == 'x=1,y=2'
       end
     end
 
