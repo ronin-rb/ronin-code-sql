@@ -22,7 +22,7 @@ describe SQL::Emittable do
 
     context "when given options" do
       it "should pass them to #emitter" do
-        subject.to_sql(quote: :double).should == '"hello"'
+        subject.to_sql(quotes: :double).should == '"hello"'
       end
     end
   end

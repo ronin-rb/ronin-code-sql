@@ -36,7 +36,7 @@ module Ronin
       attr_reader :space
 
       # Type of String quotes to use
-      attr_reader :quote
+      attr_reader :quotes
 
       #
       # Initializes the SQL Emitter.
@@ -50,13 +50,13 @@ module Ronin
       # @option options [String] :space (' ')
       #   String to use for white-space.
       #
-      # @option options [:single, :double] :quote (:single)
+      # @option options [:single, :double] :quotes (:single)
       #   Type of quotes to use for Strings.
       #
       def initialize(options={})
         @case  = options[:case]
         @space = options.fetch(:space,' ')
-        @quote = options.fetch(:quote,:single)
+        @quotes = options.fetch(:quotes,:single)
       end
 
       #
@@ -169,7 +169,7 @@ module Ronin
       #   The raw SQL.
       #
       def emit_string(string)
-        string.sql_escape(@quote)
+        string.sql_escape(@quotes)
       end
 
       #

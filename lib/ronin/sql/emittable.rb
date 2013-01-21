@@ -50,7 +50,7 @@ module Ronin
       # @option options [String] :space (' ')
       #   String to use for white-space.
       #
-      # @option options [:single, :double] :quote (:single)
+      # @option options [:single, :double] :quotes (:single)
       #   Type of quotes to use for Strings.
       #
       # @return [String]

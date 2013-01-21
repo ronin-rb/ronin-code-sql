@@ -10,8 +10,8 @@ require 'ronin/sql/emitter'
 describe SQL::Emitter do
   describe "#initialize" do
     context "without options" do
-      its(:space) { should == ' ' }
-      its(:quote) { should == :single }
+      its(:space)  { should == ' ' }
+      its(:quotes) { should == :single }
     end
   end
 
@@ -124,8 +124,8 @@ describe SQL::Emitter do
       subject.emit_string("O'Brian").should == "'O''Brian'"
     end
 
-    context "when :quote is :double" do
-      subject { described_class.new(quote: :double) }
+    context "when :quotes is :double" do
+      subject { described_class.new(quotes: :double) }
 
       it "should double quote Strings" do
         subject.emit_string("O'Brian").should == "\"O'Brian\""
