@@ -153,6 +153,12 @@ describe SQL::Injection do
         it "should emit the clauses" do
           subject.to_sql.should == '1 OR 1=1 LIMIT 100 OFFSET 10'
         end
+
+        context "with :space" do
+          it "should emit the clauses with custom spaces" do
+            subject.to_sql(space: '/**/').should == '1/**/OR/**/1=1/**/LIMIT/**/100/**/OFFSET/**/10'
+          end
+        end
       end
 
       context "with statements" do
@@ -164,6 +170,12 @@ describe SQL::Injection do
 
         it "should emit the clauses" do
           subject.to_sql.should == '1 OR 1=1; SELECT (1,2,3)'
+        end
+
+        context "with :space" do
+          it "should emit the statements with custom spaces" do
+            subject.to_sql(space: '/**/').should == '1/**/OR/**/1=1;/**/SELECT/**/(1,2,3)'
+          end
         end
       end
     end

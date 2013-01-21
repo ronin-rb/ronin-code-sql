@@ -233,7 +233,7 @@ module Ronin
           right = "(#{right})" if expr.right.kind_of?(Statement)
 
           case op
-          when /^\w+$/ then "#{left} #{op} #{right}"
+          when /^\w+$/ then [left, op, right].join(@space)
           else              "#{left}#{op}#{right}"
           end
         when UnaryExpr
@@ -241,7 +241,7 @@ module Ronin
           operand = "(#{operand})" if expr.operand.kind_of?(Statement)
 
           case op
-          when /^\w+$/ then "#{op} #{operand}"
+          when /^\w+$/ then [op, operand].join(@space)
           else              "#{op}#{operand}"
           end
         end

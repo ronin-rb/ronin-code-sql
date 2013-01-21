@@ -150,11 +150,11 @@ module Ronin
         sql << emitter.emit(@expression)
 
         unless clauses.empty?
-          sql << ' ' << emitter.emit_clauses(clauses)
+          sql << emitter.space << emitter.emit_clauses(clauses)
         end
 
         unless statements.empty?
-          sql << '; ' << emitter.emit_statement_list(self)
+          sql << ';' << emitter.space << emitter.emit_statement_list(self)
         end
 
         case @escape
