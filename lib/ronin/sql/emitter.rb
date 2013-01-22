@@ -228,6 +228,8 @@ module Ronin
       # @return [String]
       #   The raw SQL.
       #
+      # @since 1.1.0
+      #
       def emit_argument(operand)
         case operand
         when Statement then "(#{emit_statement(operand)})"
