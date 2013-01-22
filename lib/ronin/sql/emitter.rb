@@ -288,6 +288,7 @@ module Ronin
         when Array                 then emit_list(object)
         when Hash                  then emit_assignments(object)
         when BinaryExpr, UnaryExpr then emit_expression(object)
+        when Function              then emit_function(object)
         when Clause                then emit_clause(object)
         when Statement             then emit_statement(object)
         when StatementList         then emit_statement_list(object)

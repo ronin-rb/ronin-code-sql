@@ -327,6 +327,14 @@ describe SQL::Emitter do
       end
     end
 
+    context "when passed a Function" do
+      let(:func) { SQL::Function.new(:MAX,1,2) }
+
+      it "should emit the function" do
+        subject.emit(func).should == 'MAX(1,2)'
+      end
+    end
+
     context "when passed a Statment" do
       let(:stmt) { SQL::Statement.new(:SELECT,1) }
 
