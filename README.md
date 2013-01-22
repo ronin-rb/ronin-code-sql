@@ -69,7 +69,7 @@ Clauses:
     sqli = Ronin::SQL::Injection.new
     sqli.or { 1 == 1 }.limit(0)
     puts sqli
-    # 1 AND admin=1
+    # 1 OR 1=1 LIMIT 0
 
 Statements:
 
