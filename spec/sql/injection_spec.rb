@@ -36,8 +36,9 @@ describe SQL::Injection do
 
       subject { described_class.new(:place_holder => data) }
 
-      its(:place_holder) { should == data }
-      its(:expression)   { should == data }
+      it "should pass it to the InjectionExpr" do
+        subject.expression.expression.should == data
+      end
     end
 
     context "when a block is given" do
@@ -45,68 +46,6 @@ describe SQL::Injection do
 
       it "should instance_eval the block" do
         subject.instance_variable_get(:@x).should == 1
-      end
-    end
-  end
-
-  describe "#and" do
-    context "on first call" do
-      before { subject.and { 1 } }
-
-      it "should create a 'AND' BinaryExpr" do
-        subject.expression.operator.should == :AND
-      end
-
-      it "should create an expression with the place-holder" do
-        subject.expression.left.should == subject.place_holder
-      end
-
-      it "should create an expression with the expression" do
-        subject.expression.right.should == 1
-      end
-    end
-
-    context "on multiple calls" do
-      before { subject.and { 1 }.and { 2 } }
-
-      it "should create another 'AND' BinaryExpr" do
-        subject.expression.operator.should == :AND
-      end
-
-      it "should nest the expressions" do
-        subject.expression.left.right.should == 1
-        subject.expression.right.should == 2
-      end
-    end
-  end
-
-  describe "#or" do
-    context "on first call" do
-      before { subject.or { 1 } }
-
-      it "should create a 'OR' BinaryExpr" do
-        subject.expression.operator.should == :OR
-      end
-
-      it "should create an expression with the place-holder" do
-        subject.expression.left.should == subject.place_holder
-      end
-
-      it "should create an expression with the expression" do
-        subject.expression.right.should == 1
-      end
-    end
-
-    context "on multiple calls" do
-      before { subject.or { 1 }.or { 2 } }
-
-      it "should create another 'OR' BinaryExpr" do
-        subject.expression.operator.should == :OR
-      end
-
-      it "should nest the expressions" do
-        subject.expression.left.right.should == 1
-        subject.expression.right.should == 2
       end
     end
   end

@@ -20,9 +20,9 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
 
-require 'ronin/sql/binary_expr'
 require 'ronin/sql/literals'
 require 'ronin/sql/clauses'
+require 'ronin/sql/injection_expr'
 require 'ronin/sql/statement_list'
 
 module Ronin
@@ -46,9 +46,6 @@ module Ronin
 
       # The type of element to escape out of
       attr_reader :escape
-
-      # The place holder data
-      attr_reader :place_holder
 
       # The expression that will be injected
       attr_reader :expression
@@ -78,11 +75,12 @@ module Ronin
       #
       def initialize(options={},&block)
         @escape       = options.fetch(:escape,:integer)
-        @place_holder = options.fetch(:place_holder) do
+
+        place_holder = options.fetch(:place_holder) do
           PLACE_HOLDERS.fetch(@escape)
         end
 
-        @expression = @place_holder
+        @expression = InjectionExpr.new(place_holder)
 
         super(&block)
       end
@@ -90,44 +88,34 @@ module Ronin
       #
       # Appends an `AND` expression to the injection.
       #
-      # @yield [(injection)]
+      # @yield [(expr)]
       #   The return value of the block will be used as the right-hand side
       #   operand.  If the block accepts an argument, it will be called with
       #   the injection.
       #
-      # @yieldparam [Injection] injection
+      # @yieldparam [InjectionExpr] expr
       #
       # @return [self]
       #
       def and(&block)
-        value = case block.arity
-                when 0 then instance_eval(&block)
-                else        block.call(self)
-                end
-
-        @expression = BinaryExpr.new(@expression,:AND,value)
+        @expression.and(&block)
         return self
       end
 
       #
       # Appends an `OR` expression to the injection.
       #
-      # @yield [(injection)]
+      # @yield [(expr)]
       #   The return value of the block will be used as the right-hand side
       #   operand. If the block accepts an argument, it will be called with
-      #   the injection.
+      #   the injection expression.
       #
-      # @yieldparam [Injection] injection
+      # @yieldparam [InjectionExp] expr
       #
       # @return [self]
       #
       def or(&block)
-        value = case block.arity
-                when 0 then instance_eval(&block)
-                else        block.call(self)
-                end
-
-        @expression = BinaryExpr.new(@expression,:OR,value)
+        @expression.or(&block)
         return self
       end
 
@@ -145,9 +133,7 @@ module Ronin
       #
       def to_sql(options={})
         emitter = emitter(options)
-        sql     = ''
-
-        sql << emitter.emit(@expression)
+        sql     = @expression.to_sql(options)
 
         unless clauses.empty?
           sql << emitter.space << emitter.emit_clauses(clauses)
