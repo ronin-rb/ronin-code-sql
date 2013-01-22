@@ -74,6 +74,14 @@ Clauses:
 Statements:
 
     sqli = Ronin::SQL::Injection.new
+    sqli.and { 1 == 0 }
+    sqli.insert.into(:users).values('hacker','passw0rd','t')
+    puts sqli
+    # 1 AND 1=0; INSERT INTO users VALUES ('hacker','passw0rd','t')
+
+Sub-Statements:
+
+    sqli = Ronin::SQL::Injection.new
     sqli.union { select(1,2,3,4,id).from(users) }
     puts sqli
     # 1 UNION SELECT (1,2,3,4,id) FROM users
