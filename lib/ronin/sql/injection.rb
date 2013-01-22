@@ -32,6 +32,8 @@ module Ronin
     #
     # @api public
     #
+    # @see http://en.wikipedia.org/wiki/SQL_injection
+    #
     class Injection < StatementList
 
       include Literals
