@@ -25,7 +25,7 @@ require 'ronin/sql/emittable'
 module Ronin
   module SQL
     #
-    # Represents a unary-expression in SQL.
+    # Represents a unary expression in SQL.
     #
     # @api semipublic
     #
