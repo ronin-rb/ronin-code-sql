@@ -21,6 +21,7 @@
 #
 
 require 'ronin/sql/operators'
+require 'ronin/sql/emittable'
 
 module Ronin
   module SQL
@@ -30,6 +31,7 @@ module Ronin
     class Field < Struct.new(:name,:parent)
 
       include Operators
+      include Emittable
 
       #
       # Initializes the new field.
@@ -59,18 +61,6 @@ module Ronin
         names.each { |name| field = new(name,field) }
 
         return field
-      end
-
-      #
-      # Converts the field to a String.
-      #
-      # @return [String]
-      #   The full field name.
-      #
-      def to_s
-        if parent then "#{parent}.#{name}"
-        else           name.to_s
-        end
       end
 
       alias to_str to_s

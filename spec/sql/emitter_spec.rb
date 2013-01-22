@@ -134,8 +134,21 @@ describe SQL::Emitter do
   end
 
   describe "#emit_field" do
-    it "should emit a String" do
-      subject.emit_field(:id).should == 'id'
+    subject { described_class.new(case: :upper) }
+
+    let(:field) { SQL::Field.new(:id) }
+
+    it "should emit the name as a keyword" do
+      subject.emit_field(field).should == 'ID'
+    end
+
+    context "when the field has a parent" do
+      let(:parent) { SQL::Field.new(:users)     }
+      let(:field)  { SQL::Field.new(:id,parent) }
+
+      it "should emit the parent then the field name" do
+        subject.emit_field(field).should == 'USERS.ID'
+      end
     end
   end
 
@@ -161,7 +174,7 @@ describe SQL::Emitter do
         let(:expr) { SQL::BinaryExpr.new(:id,:is,1) }
 
         it "should emit the operands and operator as a keyword with spaces" do
-          subject.emit_expression(expr).should == 'id IS 1'
+          subject.emit_expression(expr).should == 'ID IS 1'
         end
       end
 

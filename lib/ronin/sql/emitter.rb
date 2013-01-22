@@ -182,7 +182,13 @@ module Ronin
       #   The raw SQL.
       #
       def emit_field(field)
-        field.to_s
+        name = emit_keyword(field.name)
+
+        if field.parent
+          name = "#{emit_field(field.parent)}.#{name}"
+        end
+
+        return name
       end
 
       #
@@ -284,7 +290,8 @@ module Ronin
         when Float                 then emit_decimal(object)
         when String                then emit_string(object)
         when Literal               then emit(object.value)
-        when Field, Symbol         then emit_field(object)
+        when Symbol                then emit_keyword(object)
+        when Field                 then emit_field(object)
         when Array                 then emit_list(object)
         when Hash                  then emit_assignments(object)
         when BinaryExpr, UnaryExpr then emit_expression(object)
