@@ -28,6 +28,8 @@ module Ronin
   # Provides a Domain Specific Language (DSL) for crafting complex
   # SQL and SQL Injections (SQLi).
   #
+  # @see http://en.wikipedia.org/wiki/SQL_injection
+  #
   module SQL
 
     #
