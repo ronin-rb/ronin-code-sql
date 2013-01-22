@@ -92,6 +92,13 @@ Test if a table exists:
     puts sqli.to_sql
     # 1 AND (SELECT COUNT(*) FROM users)=1
 
+Create errors by using non-existant tables:
+
+    sqli = Ronin::SQL::Injection.new(escape: :string)
+    sqli.and { non_existant_table == '1' }
+    puts sqli.to_sql
+    # 1' AND non_existant_table='1
+
 Dumping all values of a column:
 
     sqli = Ronin::SQL::Injection.new(escape: :string)
