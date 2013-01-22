@@ -74,17 +74,17 @@ describe SQL::Emitter do
   end
 
   describe "#emit_operator" do
-    context "when the operator is upper-case alphabetic text" do
-      subject { described_class.new(case: :lower) }
-
-      it "should emit a keyword" do
-        subject.emit_operator(:AS).should == 'as'
+    context "when the operator is a symbol" do
+      it "should emit a String" do
+        subject.emit_operator(:"!=").should == '!='
       end
     end
 
     context "otherwise" do
-      it "should emit a String" do
-        subject.emit_operator(:"!=").should == '!='
+      subject { described_class.new(case: :lower) }
+
+      it "should emit a keyword" do
+        subject.emit_operator(:AS).should == 'as'
       end
     end
   end

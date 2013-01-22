@@ -97,8 +97,8 @@ module Ronin
       #
       def emit_operator(op)
         case op
-        when Array, /^[a-zA-Z]+$/ then emit_keyword(op)
-        else                           op.to_s
+        when /^\W+$/          then op.to_s
+        else                       emit_keyword(op)
         end
       end
 
@@ -237,16 +237,16 @@ module Ronin
           right = "(#{right})" if expr.right.kind_of?(Statement)
 
           case op
-          when /^\w+$/ then [left, op, right].join(@space)
-          else              "#{left}#{op}#{right}"
+          when /^\W+$/ then "#{left}#{op}#{right}"
+          else              [left, op, right].join(@space)
           end
         when UnaryExpr
           operand = emit(expr.operand)
           operand = "(#{operand})" if expr.operand.kind_of?(Statement)
 
-          case op
-          when /^\w+$/ then [op, operand].join(@space)
-          else              "#{op}#{operand}"
+          case expr.operator
+          when /^\W+$/ then "#{op}#{operand}"
+          else              [op, operand].join(@space)
           end
         end
       end
