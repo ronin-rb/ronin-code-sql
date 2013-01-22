@@ -48,11 +48,11 @@ Injecting a `1=1` test into a Integer comparison:
     sqli = Ronin::SQL::Injection.new
     sqli.or { 1 == 1 }
     puts sqli
-    # 1' OR '1'='1
+    # 1 OR 1=1
 
 Injecting a `1=1` test into a String comparison:
 
-    sqli = Ronin::SQL::Injection.new(:escape => :string)
+    sqli = Ronin::SQL::Injection.new(escape: :string)
     sqli.or { string(1) == string(1) }
     puts sqli
     # 1' OR '1'='1
