@@ -89,18 +89,16 @@ module Ronin
       #
       # Emits a SQL operator.
       #
-      # @param [Symbol] op
+      # @param [Array<Symbol>, Symbol] op
       #   The operator symbol.
       #
       # @return [String]
       #   The raw SQL.
       #
       def emit_operator(op)
-        op = op.to_s
-
         case op
-        when /^[a-zA-Z]+$/ then emit_keyword(op)
-        else                    op
+        when Array, /^[a-zA-Z]+$/ then emit_keyword(op)
+        else                           op.to_s
         end
       end
 

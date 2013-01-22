@@ -205,7 +205,7 @@ module Ronin
       #   The new binary expression.
       #
       def is_not(other)
-        BinaryExpr.new(self,:"IS NOT",other)
+        BinaryExpr.new(self,[:IS, :NOT],other)
       end
 
       #

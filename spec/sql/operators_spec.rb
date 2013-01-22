@@ -25,7 +25,7 @@ describe SQL::Operators do
   include_examples "BinaryExpr", :!=
   include_examples "BinaryExpr", :as, :AS
   include_examples "BinaryExpr", :is, :IS
-  include_examples "BinaryExpr", :is_not, :"IS NOT"
+  include_examples "BinaryExpr", :is_not, [:IS, :NOT]
   include_examples "BinaryExpr", :like, :LIKE
   include_examples "BinaryExpr", :glob, :GLOB
   include_examples "BinaryExpr", :match, :MATCH
