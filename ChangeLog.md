@@ -1,3 +1,15 @@
+### 1.1.0 / 2013-01-22
+
+* Added {Ronin::SQL::InjectionExpr}, so that statements specified within
+  `and { }`, `or { }` blocks would not be appending to the
+  {Ronin::SQL::Injection} object.
+* Made {Ronin::SQL::Field} emittable.
+* Added {Ronin::SQL::Emitter#emit_argument}, so that any sub-statements will
+  be wrapped in `( )`.
+* Improved {Ronin::SQL::Emitter#emit_field}.
+* Fixed {Ronin::SQL::Emitter#emit} to pass {Ronin::SQL::Function}s to
+  {Ronin::SQL::Emitter#emit_function}.
+
 ### 1.0.0 / 2013-01-21
 
 * Require [Ruby] >= 1.9.1.
