@@ -423,6 +423,22 @@ describe SQL::Emitter do
         subject.emit_statement(stmt).should == 'select 1'
       end
 
+      context "when the argument is an Array" do
+        let(:stmt) { SQL::Statement.new(:SELECT,[1,2,3]) }
+
+        it "should emit a list" do
+          subject.emit_statement(stmt).should == 'select (1,2,3)'
+        end
+
+        context "with only one element" do
+          let(:stmt) { SQL::Statement.new(:SELECT,[1]) }
+
+          it "should emit the element" do
+            subject.emit_statement(stmt).should == 'select 1'
+          end
+        end
+      end
+
       context "with custom :space" do
         subject { described_class.new(case: :lower, space: '/**/') }
 

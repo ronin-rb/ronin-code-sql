@@ -345,7 +345,16 @@ module Ronin
         sql = emit_keyword(stmt.keyword)
 
         unless stmt.argument.nil?
-          sql << @space << emit(stmt.argument)
+          case stmt.argument
+          when Array
+            sql << @space << if stmt.argument.length == 1
+                               emit(stmt.argument[0])
+                             else
+                               emit_list(stmt.argument)
+                             end
+          else
+            sql << @space << emit(stmt.argument)
+          end
         end
 
         unless stmt.clauses.empty?
