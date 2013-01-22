@@ -166,6 +166,24 @@ describe SQL::Emitter do
     end
   end
 
+  describe "#emit_argument" do
+    context "when the value is a Statement" do
+      let(:stmt) { SQL::Statement.new(:SELECT,1) }
+
+      it "should wrap the statement in ( )" do
+        subject.emit_argument(stmt).should == '(SELECT 1)'
+      end
+    end
+
+    context "otherwise" do
+      let(:value) { 'hello' }
+
+      it "should emit the value" do
+        subject.emit_argument(value).should == "'hello'"
+      end
+    end
+  end
+
   describe "#emit_expression" do
     context "when the expression is a BinaryExpr" do
       context "when the operator is alphabetic" do

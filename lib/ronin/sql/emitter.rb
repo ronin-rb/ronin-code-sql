@@ -218,6 +218,22 @@ module Ronin
       end
 
       #
+      # Emits a value used in an expression.
+      #
+      # @param [Statement, #to_sql] operand
+      #   The operand to emit.
+      #
+      # @return [String]
+      #   The raw SQL.
+      #
+      def emit_argument(operand)
+        case operand
+        when Statement then "(#{emit_statement(operand)})"
+        else                emit(operand)
+        end
+      end
+
+      #
       # Emits a SQL expression.
       #
       # @param [BinaryExpr, UnaryExpr] expr
@@ -231,18 +247,14 @@ module Ronin
 
         case expr
         when BinaryExpr
-          left, right = emit(expr.left), emit(expr.right)
-
-          left  = "(#{left})"  if expr.left.kind_of?(Statement)
-          right = "(#{right})" if expr.right.kind_of?(Statement)
+          left, right = emit_argument(expr.left), emit_argument(expr.right)
 
           case op
           when /^\W+$/ then "#{left}#{op}#{right}"
           else              [left, op, right].join(@space)
           end
         when UnaryExpr
-          operand = emit(expr.operand)
-          operand = "(#{operand})" if expr.operand.kind_of?(Statement)
+          operand = emit_argument(expr.operand)
 
           case expr.operator
           when /^\W+$/ then "#{op}#{operand}"
@@ -262,7 +274,7 @@ module Ronin
       #
       def emit_function(function)
         name      = emit_keyword(function.name)
-        arguments = function.arguments.map { |argument| emit(argument) }
+        arguments = function.arguments.map { |value| emit_argument(value) }
 
         return "#{name}(#{arguments.join(',')})"
       end
@@ -319,7 +331,7 @@ module Ronin
         sql = emit_keyword(clause.keyword)
 
         unless clause.argument.nil?
-          sql << @space << emit(clause.argument)
+          sql << @space << emit_argument(clause.argument)
         end
 
         return sql
@@ -354,12 +366,12 @@ module Ronin
           case stmt.argument
           when Array
             sql << @space << if stmt.argument.length == 1
-                               emit(stmt.argument[0])
+                               emit_argument(stmt.argument[0])
                              else
                                emit_list(stmt.argument)
                              end
           else
-            sql << @space << emit(stmt.argument)
+            sql << @space << emit_argument(stmt.argument)
           end
         end
 
