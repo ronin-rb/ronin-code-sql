@@ -171,6 +171,15 @@ module Ronin
       end
 
       #
+      # Appends a `UNION ALL` clause.
+      #
+      # @return [self]
+      #
+      def union_all(&block)
+        clause([:UNION, :ALL],&block)
+      end
+
+      #
       # Appends a `GROUP BY` clause.
       #
       # @param [Array<Field, Symbol>] columns

@@ -29,6 +29,9 @@ describe SQL::Clauses do
   include_examples "Clause", :full_join, [:FULL, :JOIN], :table
   include_examples "Clause", :on, :ON, proc { id == 1 }
   include_examples "Clause", :union, :UNION, proc { select(:*).from(:table) }
+  include_examples "Clause", :union_all, [:UNION, :ALL], proc {
+                               select(:*).from(:table)
+                             }
   include_examples "Clause", :group_by, [:GROUP, :BY], [:column1, :column2]
   include_examples "Clause", :having, :HAVING, proc { max(priv) > 100 }
   include_examples "Clause", :limit, :LIMIT, 100
