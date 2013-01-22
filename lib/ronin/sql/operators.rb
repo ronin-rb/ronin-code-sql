@@ -25,6 +25,8 @@ module Ronin
     #
     # Methods for creating SQL expressions.
     #
+    # @api public
+    #
     # @see http://sqlite.org/lang_expr.html
     #
     module Operators

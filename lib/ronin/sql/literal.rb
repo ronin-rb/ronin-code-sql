@@ -28,6 +28,8 @@ module Ronin
     #
     # Represents SQL literals.
     #
+    # @api semipublic
+    #
     class Literal < Struct.new(:value)
 
       include Operators

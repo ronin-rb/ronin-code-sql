@@ -32,6 +32,8 @@ module Ronin
     #
     # @api private
     #
+    # @since 1.1.0
+    #
     class InjectionExpr
 
       include Literals

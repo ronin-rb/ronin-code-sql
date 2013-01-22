@@ -27,6 +27,8 @@ module Ronin
     #
     # Allows creating {Field Fields} via {#method_missing}.
     #
+    # @api public
+    #
     module Fields
       #
       # @return [true]

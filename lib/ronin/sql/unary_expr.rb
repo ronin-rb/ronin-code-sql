@@ -27,6 +27,8 @@ module Ronin
     #
     # Represents a unary-expression in SQL.
     #
+    # @api semipublic
+    #
     class UnaryExpr < Struct.new(:operator,:operand)
 
       include Emittable

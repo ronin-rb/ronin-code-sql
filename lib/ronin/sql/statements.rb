@@ -25,6 +25,8 @@ module Ronin
     #
     # Methods for creating common SQL {Statement Statements}.
     #
+    # @api public
+    #
     module Statements
       #
       # Creates an arbitrary statement.

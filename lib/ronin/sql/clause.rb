@@ -32,6 +32,8 @@ module Ronin
     #
     # Represents a SQL Clause.
     #
+    # @api semipublic
+    #
     class Clause < Struct.new(:keyword,:argument)
 
       include Literals

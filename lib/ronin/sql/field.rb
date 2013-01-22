@@ -28,6 +28,8 @@ module Ronin
     #
     # Represents a SQL column, table or database name.
     #
+    # @api semipublic
+    #
     class Field < Struct.new(:name,:parent)
 
       include Operators

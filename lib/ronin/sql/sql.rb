@@ -44,6 +44,8 @@ module Ronin
     #   sql { select(1,2,3,4,id).from(users) }
     #   # => #<Ronin::SQL::StatementList: SELECT (1,2,3,4,id) FROM users>
     #
+    # @api public
+    #
     def sql(&block)
       StatementList.new(&block)
     end
@@ -77,6 +79,8 @@ module Ronin
     # @example
     #   sqli { self.and { 1 == 1 }.select(1,2,3,4,id).from(users) }
     #   # => #<Ronin::SQL::Injection: 1 AND 1=1; SELECT (1,2,3,4,id) FROM users; SELECT (1,2,3,4,id) FROM users>
+    #
+    # @api public
     #
     def sqli(options={},&block)
       Injection.new(options,&block)

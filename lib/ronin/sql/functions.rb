@@ -27,6 +27,8 @@ module Ronin
     #
     # Methods for creating common SQL {Function Functions}.
     #
+    # @api public
+    #
     module Functions
       #
       # @!group Aggregate Functions

@@ -25,6 +25,8 @@ module Ronin
     #
     # Methods for creating common SQL {Clause Clauses}.
     #
+    # @api public
+    #
     module Clauses
       #
       # The defined clauses of the statement.
@@ -174,6 +176,8 @@ module Ronin
       # Appends a `UNION ALL` clause.
       #
       # @return [self]
+      #
+      # @since 1.1.0
       #
       def union_all(&block)
         clause([:UNION, :ALL],&block)

@@ -27,12 +27,16 @@ module Ronin
     #
     # Allows an object to be converted to raw SQL.
     #
+    # @api public
+    #
     module Emittable
       #
       # Creates a new emitter.
       #
       # @param [Hash] options
       #   Additional options for {Emitter#initialize}.
+      #
+      # @api private
       #   
       def emitter(options={})
         Emitter.new(options)

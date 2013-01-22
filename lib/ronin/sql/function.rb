@@ -28,6 +28,8 @@ module Ronin
     #
     # Represents a SQL function call.
     #
+    # @api semipublic
+    #
     class Function < Struct.new(:name,:arguments)
 
       include Operators

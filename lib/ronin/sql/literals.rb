@@ -27,6 +27,8 @@ module Ronin
     #
     # Methods for creating SQL {Literals Literal}.
     #
+    # @api public
+    #
     module Literals
       #
       # Creates a `NULL` literal.

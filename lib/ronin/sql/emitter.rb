@@ -27,6 +27,8 @@ module Ronin
     #
     # Generates raw SQL.
     #
+    # @api private
+    #
     class Emitter
 
       # The case to use when emitting keywords

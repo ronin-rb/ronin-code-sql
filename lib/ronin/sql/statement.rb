@@ -31,6 +31,8 @@ module Ronin
     #
     # Represents a SQL Statement.
     #
+    # @api semipublic
+    #
     class Statement < Struct.new(:keyword,:argument)
 
       include Literals

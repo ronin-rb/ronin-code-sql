@@ -30,6 +30,8 @@ module Ronin
     #
     # Represents a SQL injection (SQLi).
     #
+    # @api public
+    #
     class Injection < StatementList
 
       include Literals

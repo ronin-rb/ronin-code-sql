@@ -34,6 +34,8 @@ module Ronin
     #
     # Represents a list of SQL {Statements Statement}.
     #
+    # @api public
+    #
     class StatementList
 
       include Fields
