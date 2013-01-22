@@ -124,10 +124,10 @@ Enumerate through database table names:
             select(:name).top(1).from(sysobjects).where { xtype == 'U' }, 1, 1
           )
         )
-      )
+      ) > 116
     }
     puts sqli
-    # 1 AND ASCII(LOWER(SUBSTRING((SELECT name TOP 1 FROM sysobjects WHERE xtype='U'),1,1)))
+    # 1 AND ASCII(LOWER(SUBSTRING((SELECT name TOP 1 FROM sysobjects WHERE xtype='U'),1,1)))>116
 
 Find user supplied tables via the `sysObjects` table:
 
