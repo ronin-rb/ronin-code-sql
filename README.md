@@ -92,6 +92,13 @@ Test if a table exists:
     puts sqli.to_sql
     # 1 AND (SELECT COUNT(*) FROM users)=1
 
+Dumping all values of a column:
+
+    sqli = Ronin::SQL::Injection.new(escape: :string)
+    sqli.or { username.is_not(null) }.or { username == '' }
+    puts sqli.to_sql
+    # 1' OR username IS NOT NULL OR username='
+
 ## Requirements
 
 * [Ruby] >= 1.9.1
