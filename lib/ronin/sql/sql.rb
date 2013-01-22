@@ -24,6 +24,10 @@ require 'ronin/sql/statement_list'
 require 'ronin/sql/injection'
 
 module Ronin
+  #
+  # Provides a Domain Specific Language (DSL) for crafting complex
+  # SQL and SQL Injections (SQLi).
+  #
   module SQL
 
     #
