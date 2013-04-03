@@ -11,7 +11,7 @@ describe SQL::Emittable do
     end
 
     it "should accept Emitter options" do
-      subject.emitter(:case => :lower).case.should == :lower
+      subject.emitter(case: :lower).case.should == :lower
     end
   end
 

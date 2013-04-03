@@ -23,7 +23,7 @@ describe SQL::Injection do
         let(:place_holders) { described_class::PLACE_HOLDERS }
         let(:escape) { :string }
 
-        subject { described_class.new(:escape => escape) }
+        subject { described_class.new(escape: escape) }
 
         it "should default the place_holder based on the :escape type" do
           subject.place_holder.should == place_holders[escape]
@@ -34,7 +34,7 @@ describe SQL::Injection do
     context "with :place_holder" do
       let(:data) { 'A' }
 
-      subject { described_class.new(:place_holder => data) }
+      subject { described_class.new(place_holder: data) }
 
       it "should pass it to the InjectionExpr" do
         subject.expression.expression.should == data
