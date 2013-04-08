@@ -31,9 +31,16 @@ module Ronin
     #
     module Fields
       #
+      # Specifies that {#method_missing} will catch all missing methods.
+      #
+      # @param [Symbol] name
+      #   The method name that is being checked.
+      #
+      # @param [Boolean] include_private
+      #
       # @return [true]
       #
-      def respond_to_missing?(name)
+      def respond_to_missing?(name,include_private)
         true
       end
 
