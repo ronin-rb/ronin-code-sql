@@ -6,7 +6,7 @@ describe SQL::Fields do
 
   describe "#respond_to_missing?" do
     it "should return true" do
-      subject.respond_to_missing?(double(:method)).should be(true)
+      subject.respond_to?(double(:method)).should be(true)
     end
   end
 
