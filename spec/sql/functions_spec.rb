@@ -8,12 +8,12 @@ describe SQL::Functions do
 
   describe "#count" do
     it "should create a COUNT function" do
-      subject.count.name.should == :COUNT
+      expect(subject.count.name).to eq(:COUNT)
     end
 
     context "without arguments" do
       it "should default arguments to *" do
-        subject.count.arguments.should == [:*]
+        expect(subject.count.arguments).to eq([:*])
       end
     end
   end

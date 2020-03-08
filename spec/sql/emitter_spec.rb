@@ -20,14 +20,14 @@ describe SQL::Emitter do
       let(:keywords) { [:DROP, :TABLE] }
 
       it "should join the keywords" do
-        subject.emit_keyword(keywords).should == "DROP TABLE"
+        expect(subject.emit_keyword(keywords)).to eq("DROP TABLE")
       end
 
       context "when :space is set" do
         subject { described_class.new(space: '/**/') }
 
         it "should join the keywords" do
-          subject.emit_keyword(keywords).should == "DROP/**/TABLE"
+          expect(subject.emit_keyword(keywords)).to eq("DROP/**/TABLE")
         end
       end
     end
@@ -38,7 +38,7 @@ describe SQL::Emitter do
       subject { described_class.new(case: :upper) }
 
       it "should upcase the keyword" do
-        subject.emit_keyword(keyword).should == 'SELECT'
+        expect(subject.emit_keyword(keyword)).to eq('SELECT')
       end
     end
 
@@ -48,7 +48,7 @@ describe SQL::Emitter do
       subject { described_class.new(case: :lower) }
 
       it "should upcase the keyword" do
-        subject.emit_keyword(keyword).should == 'select'
+        expect(subject.emit_keyword(keyword)).to eq('select')
       end
     end
 
@@ -58,7 +58,7 @@ describe SQL::Emitter do
       subject { described_class.new(case: :random) }
 
       it "should contain at least one upper-case character" do
-        subject.emit_keyword(keyword).should =~ /[SELECT]/
+        expect(subject.emit_keyword(keyword)).to match(/[SELECT]/)
       end
     end
 
@@ -68,7 +68,7 @@ describe SQL::Emitter do
       let(:keyword) { 'Select' }
 
       it "should emit the keyword as is" do
-        subject.emit_keyword(keyword).should == keyword
+        expect(subject.emit_keyword(keyword)).to eq(keyword)
       end
     end
   end
@@ -76,7 +76,7 @@ describe SQL::Emitter do
   describe "#emit_operator" do
     context "when the operator is a symbol" do
       it "should emit a String" do
-        subject.emit_operator(:"!=").should == '!='
+        expect(subject.emit_operator(:"!=")).to eq('!=')
       end
     end
 
@@ -84,51 +84,51 @@ describe SQL::Emitter do
       subject { described_class.new(case: :lower) }
 
       it "should emit a keyword" do
-        subject.emit_operator(:AS).should == 'as'
+        expect(subject.emit_operator(:AS)).to eq('as')
       end
     end
   end
 
   describe "#emit_null" do
     it "should emit the NULL keyword" do
-      subject.emit_null.should == 'NULL'
+      expect(subject.emit_null).to eq('NULL')
     end
   end
 
   describe "#emit_false" do
     it "should emit 1=0" do
-      subject.emit_false.should == '1=0'
+      expect(subject.emit_false).to eq('1=0')
     end
   end
 
   describe "#emit_true" do
     it "should emit 1=1" do
-      subject.emit_true.should == '1=1'
+      expect(subject.emit_true).to eq('1=1')
     end
   end
 
   describe "#emit_integer" do
     it "should emit a String" do
-      subject.emit_integer(10).should == '10'
+      expect(subject.emit_integer(10)).to eq('10')
     end
   end
 
   describe "#emit_decimal" do
     it "should emit a String" do
-      subject.emit_decimal(2.5).should == '2.5'
+      expect(subject.emit_decimal(2.5)).to eq('2.5')
     end
   end
 
   describe "#emit_string" do
     it "should emit a String" do
-      subject.emit_string("O'Brian").should == "'O''Brian'"
+      expect(subject.emit_string("O'Brian")).to eq("'O''Brian'")
     end
 
     context "when :quotes is :double" do
       subject { described_class.new(quotes: :double) }
 
       it "should double quote Strings" do
-        subject.emit_string("O'Brian").should == "\"O'Brian\""
+        expect(subject.emit_string("O'Brian")).to eq("\"O'Brian\"")
       end
     end
   end
@@ -139,7 +139,7 @@ describe SQL::Emitter do
     let(:field) { SQL::Field.new(:id) }
 
     it "should emit the name as a keyword" do
-      subject.emit_field(field).should == 'ID'
+      expect(subject.emit_field(field)).to eq('ID')
     end
 
     context "when the field has a parent" do
@@ -147,14 +147,14 @@ describe SQL::Emitter do
       let(:field)  { SQL::Field.new(:id,parent) }
 
       it "should emit the parent then the field name" do
-        subject.emit_field(field).should == 'USERS.ID'
+        expect(subject.emit_field(field)).to eq('USERS.ID')
       end
     end
   end
 
   describe "#emit_list" do
     it "should emit a ',' separated list" do
-      subject.emit_list([1,2,3,'foo']).should == "(1,2,3,'foo')"
+      expect(subject.emit_list([1,2,3,'foo'])).to eq("(1,2,3,'foo')")
     end
   end
 
@@ -162,7 +162,7 @@ describe SQL::Emitter do
     let(:values) { {x: 1, y: 2} }
 
     it "should emit a list of column names and values" do
-      subject.emit_assignments(values).should == 'x=1,y=2'
+      expect(subject.emit_assignments(values)).to eq('x=1,y=2')
     end
   end
 
@@ -171,7 +171,7 @@ describe SQL::Emitter do
       let(:stmt) { SQL::Statement.new(:SELECT,1) }
 
       it "should wrap the statement in ( )" do
-        subject.emit_argument(stmt).should == '(SELECT 1)'
+        expect(subject.emit_argument(stmt)).to eq('(SELECT 1)')
       end
     end
 
@@ -179,7 +179,7 @@ describe SQL::Emitter do
       let(:value) { 'hello' }
 
       it "should emit the value" do
-        subject.emit_argument(value).should == "'hello'"
+        expect(subject.emit_argument(value)).to eq("'hello'")
       end
     end
   end
@@ -192,7 +192,7 @@ describe SQL::Emitter do
         let(:expr) { SQL::BinaryExpr.new(:id,:is,1) }
 
         it "should emit the operands and operator as a keyword with spaces" do
-          subject.emit_expression(expr).should == 'ID IS 1'
+          expect(subject.emit_expression(expr)).to eq('ID IS 1')
         end
       end
 
@@ -200,7 +200,7 @@ describe SQL::Emitter do
         let(:expr) { SQL::BinaryExpr.new(:id,:"=",1) }
 
         it "should emit the operands and operator without spaces" do
-          subject.emit_expression(expr).should == 'id=1'
+          expect(subject.emit_expression(expr)).to eq('id=1')
         end
       end
 
@@ -210,7 +210,7 @@ describe SQL::Emitter do
         end
 
         it "should wrap the left-hand operand in parenthesis" do
-          subject.emit_expression(expr).should == '(SELECT 1)=1'
+          expect(subject.emit_expression(expr)).to eq('(SELECT 1)=1')
         end
       end
 
@@ -220,7 +220,7 @@ describe SQL::Emitter do
         end
 
         it "should wrap the left-hand operand in parenthesis" do
-          subject.emit_expression(expr).should == '1=(SELECT 1)'
+          expect(subject.emit_expression(expr)).to eq('1=(SELECT 1)')
         end
       end
     end
@@ -230,7 +230,7 @@ describe SQL::Emitter do
         let(:expr) { SQL::UnaryExpr.new(:NOT,:admin) }
 
         it "should emit the operand and operator with spaces" do
-          subject.emit_expression(expr).should == 'NOT admin'
+          expect(subject.emit_expression(expr)).to eq('NOT admin')
         end
       end
 
@@ -238,7 +238,7 @@ describe SQL::Emitter do
         let(:expr) { SQL::UnaryExpr.new(:"-",1) }
 
         it "should emit the operand and operator without spaces" do
-          subject.emit_expression(expr).should == '-1'
+          expect(subject.emit_expression(expr)).to eq('-1')
         end
       end
 
@@ -248,7 +248,7 @@ describe SQL::Emitter do
         end
 
         it "should wrap the operand in parenthesis" do
-          subject.emit_expression(expr).should == 'NOT (SELECT 1)'
+          expect(subject.emit_expression(expr)).to eq('NOT (SELECT 1)')
         end
       end
     end
@@ -258,14 +258,14 @@ describe SQL::Emitter do
     let(:func) { SQL::Function.new(:NOW) }
 
     it "should emit the function name as a keyword" do
-      subject.emit_function(func).should == 'NOW()'
+      expect(subject.emit_function(func)).to eq('NOW()')
     end
 
     context "with arguments" do
       let(:func) { SQL::Function.new(:MAX,1,2) }
 
       it "should emit the function arguments" do
-        subject.emit_function(func).should == 'MAX(1,2)'
+        expect(subject.emit_function(func)).to eq('MAX(1,2)')
       end
     end
   end
@@ -273,37 +273,37 @@ describe SQL::Emitter do
   describe "#emit" do
     context "when passed nil" do
       it "should emit the NULL keyword" do
-        subject.emit(nil).should == 'NULL'
+        expect(subject.emit(nil)).to eq('NULL')
       end
     end
 
     context "when passed true" do
       it "should emit true" do
-        subject.emit(true).should == '1=1'
+        expect(subject.emit(true)).to eq('1=1')
       end
     end
 
     context "when passed false" do
       it "should emit false" do
-        subject.emit(false).should == '1=0'
+        expect(subject.emit(false)).to eq('1=0')
       end
     end
 
     context "when passed an Integer" do
       it "should emit an integer" do
-        subject.emit(10).should == '10'
+        expect(subject.emit(10)).to eq('10')
       end
     end
 
     context "when passed a Float" do
       it "should emit a decimal" do
-        subject.emit(2.5).should == '2.5'
+        expect(subject.emit(2.5)).to eq('2.5')
       end
     end
 
     context "when passed a String" do
       it "should emit a string" do
-        subject.emit("O'Brian").should == "'O''Brian'"
+        expect(subject.emit("O'Brian")).to eq("'O''Brian'")
       end
     end
 
@@ -311,7 +311,7 @@ describe SQL::Emitter do
       let(:literal) { SQL::Literal.new(42) }
 
       it "should emit the value" do
-        subject.emit(literal).should == '42'
+        expect(subject.emit(literal)).to eq('42')
       end
     end
 
@@ -320,25 +320,25 @@ describe SQL::Emitter do
       let(:column) { SQL::Field.new(:id,table) }
 
       it "should emit a field" do
-        subject.emit(column).should == 'users.id'
+        expect(subject.emit(column)).to eq('users.id')
       end
     end
 
     context "when passed a Symbol" do
       it "should emit a field" do
-        subject.emit(:id).should == 'id'
+        expect(subject.emit(:id)).to eq('id')
       end
     end
 
     context "when passed an Array" do
       it "should emit a list" do
-        subject.emit([1,2,3,'foo']).should == "(1,2,3,'foo')"
+        expect(subject.emit([1,2,3,'foo'])).to eq("(1,2,3,'foo')")
       end
     end
 
     context "when passed a Hash" do
       it "should emit a list of assignments" do
-        subject.emit(x: 1, y: 2).should == 'x=1,y=2'
+        expect(subject.emit(x: 1, y: 2)).to eq('x=1,y=2')
       end
     end
 
@@ -346,7 +346,7 @@ describe SQL::Emitter do
       let(:expr) { SQL::BinaryExpr.new(:id,:"=",1) }
 
       it "should emit an expression" do
-        subject.emit(expr).should == 'id=1'
+        expect(subject.emit(expr)).to eq('id=1')
       end
     end
 
@@ -354,7 +354,7 @@ describe SQL::Emitter do
       let(:expr) { SQL::UnaryExpr.new(:NOT,:admin) }
 
       it "should emit an expression" do
-        subject.emit(expr).should == 'NOT admin'
+        expect(subject.emit(expr)).to eq('NOT admin')
       end
     end
 
@@ -362,7 +362,7 @@ describe SQL::Emitter do
       let(:func) { SQL::Function.new(:MAX,1,2) }
 
       it "should emit the function" do
-        subject.emit(func).should == 'MAX(1,2)'
+        expect(subject.emit(func)).to eq('MAX(1,2)')
       end
     end
 
@@ -370,7 +370,7 @@ describe SQL::Emitter do
       let(:stmt) { SQL::Statement.new(:SELECT,1) }
 
       it "should emit a statement" do
-        subject.emit(stmt).should == 'SELECT 1'
+        expect(subject.emit(stmt)).to eq('SELECT 1')
       end
     end
 
@@ -379,9 +379,9 @@ describe SQL::Emitter do
       let(:sql)    { "EXEC sp_configure 'xp_cmdshell', 0;" }
 
       it "should call #to_sql" do
-        object.stub(:to_sql).and_return(sql)
+        allow(object).to receive(:to_sql).and_return(sql)
 
-        subject.emit(object).should == sql
+        expect(subject.emit(object)).to eq(sql)
       end
     end
 
@@ -389,9 +389,9 @@ describe SQL::Emitter do
       let(:object) { Object.new }
 
       it "should raise an ArgumentError" do
-        lambda {
+        expect {
           subject.emit(object)
-        }.should raise_error(ArgumentError)
+        }.to raise_error(ArgumentError)
       end
     end
   end
@@ -400,7 +400,7 @@ describe SQL::Emitter do
     let(:clause) { SQL::Clause.new(:"NOT INDEXED") }
 
     it "should emit the clause keyword" do
-      subject.emit_clause(clause).should == "NOT INDEXED"
+      expect(subject.emit_clause(clause)).to eq("NOT INDEXED")
     end
 
     context "with an argument" do
@@ -408,7 +408,7 @@ describe SQL::Emitter do
       let(:clause)   { SQL::Clause.new(:LIMIT,argument) }
 
       it "should also emit the clause argument" do
-        subject.emit_clause(clause).should == "LIMIT #{argument}"
+        expect(subject.emit_clause(clause)).to eq("LIMIT #{argument}")
       end
     end
 
@@ -418,7 +418,7 @@ describe SQL::Emitter do
       let(:clause)   { SQL::Clause.new(:LIMIT,100) }
 
       it "should emit the custom white-space deliminater" do
-        subject.emit_clause(clause).should == 'LIMIT/**/100'
+        expect(subject.emit_clause(clause)).to eq('LIMIT/**/100')
       end
     end
   end
@@ -432,14 +432,14 @@ describe SQL::Emitter do
     end
 
     it "should emit multiple clauses" do
-      subject.emit_clauses(clauses).should == 'LIMIT 100 OFFSET 10'
+      expect(subject.emit_clauses(clauses)).to eq('LIMIT 100 OFFSET 10')
     end
 
     context "with custom :space" do
       subject { described_class.new(space: '/**/') }
 
       it "should emit the custom white-space deliminater" do
-        subject.emit_clauses(clauses).should == 'LIMIT/**/100/**/OFFSET/**/10'
+        expect(subject.emit_clauses(clauses)).to eq('LIMIT/**/100/**/OFFSET/**/10')
       end
     end
   end
@@ -451,7 +451,7 @@ describe SQL::Emitter do
       let(:stmt) { SQL::Statement.new(:SELECT) }
 
       it "should emit the statment keyword" do
-        subject.emit_statement(stmt).should == 'select'
+        expect(subject.emit_statement(stmt)).to eq('select')
       end
     end
 
@@ -459,21 +459,21 @@ describe SQL::Emitter do
       let(:stmt) { SQL::Statement.new(:SELECT,1) }
 
       it "should emit the statment argument" do
-        subject.emit_statement(stmt).should == 'select 1'
+        expect(subject.emit_statement(stmt)).to eq('select 1')
       end
 
       context "when the argument is an Array" do
         let(:stmt) { SQL::Statement.new(:SELECT,[1,2,3]) }
 
         it "should emit a list" do
-          subject.emit_statement(stmt).should == 'select (1,2,3)'
+          expect(subject.emit_statement(stmt)).to eq('select (1,2,3)')
         end
 
         context "with only one element" do
           let(:stmt) { SQL::Statement.new(:SELECT,[1]) }
 
           it "should emit the element" do
-            subject.emit_statement(stmt).should == 'select 1'
+            expect(subject.emit_statement(stmt)).to eq('select 1')
           end
         end
       end
@@ -482,7 +482,7 @@ describe SQL::Emitter do
         subject { described_class.new(case: :lower, space: '/**/') }
 
         it "should emit the custom white-space deliminater" do
-          subject.emit_statement(stmt).should == 'select/**/1'
+          expect(subject.emit_statement(stmt)).to eq('select/**/1')
         end
       end
     end
@@ -491,14 +491,14 @@ describe SQL::Emitter do
       let(:stmt) { SQL::Statement.new(:SELECT,1).offset(1).limit(100) }
 
       it "should emit the statment argument" do
-        subject.emit_statement(stmt).should == 'select 1 offset 1 limit 100'
+        expect(subject.emit_statement(stmt)).to eq('select 1 offset 1 limit 100')
       end
 
       context "with custom :space" do
         subject { described_class.new(case: :lower, space: '/**/') }
 
         it "should emit the custom white-space deliminater" do
-          subject.emit_statement(stmt).should == 'select/**/1/**/offset/**/1/**/limit/**/100'
+          expect(subject.emit_statement(stmt)).to eq('select/**/1/**/offset/**/1/**/limit/**/100')
         end
       end
     end
@@ -513,14 +513,14 @@ describe SQL::Emitter do
     end
 
     it "should emit multiple statements separated by '; '" do
-      subject.emit_statement_list(stmts).should == 'SELECT 1; DROP TABLE users'
+      expect(subject.emit_statement_list(stmts)).to eq('SELECT 1; DROP TABLE users')
     end
 
     context "with custom :space" do
       subject { described_class.new(space: '/**/') }
 
       it "should emit the custom white-space deliminater" do
-        subject.emit_statement_list(stmts).should == 'SELECT/**/1;/**/DROP/**/TABLE/**/users'
+        expect(subject.emit_statement_list(stmts)).to eq('SELECT/**/1;/**/DROP/**/TABLE/**/users')
       end
     end
   end

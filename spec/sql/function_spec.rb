@@ -8,7 +8,7 @@ describe SQL::Function do
       subject { described_class.new(:f) }
 
       it "should set arguments to []" do
-        subject.arguments.should == []
+        expect(subject.arguments).to eq([])
       end
     end
 
@@ -18,7 +18,7 @@ describe SQL::Function do
       subject { described_class.new(:f,*arguments) }
 
       it "should set arguments" do
-        subject.arguments.should == arguments
+        expect(subject.arguments).to eq(arguments)
       end
     end
   end

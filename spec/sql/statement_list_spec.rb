@@ -9,7 +9,7 @@ describe SQL::StatementList do
       end
 
       it "should instance_eval the block" do
-        subject.instance_variable_get(:@x).should == 1
+        expect(subject.instance_variable_get(:@x)).to eq(1)
       end
 
       context "that accepts an argument" do
@@ -20,7 +20,7 @@ describe SQL::StatementList do
             yielded_statement_list = statement_list
           end
 
-          yielded_statement_list.should be_kind_of(described_class)
+          expect(yielded_statement_list).to be_kind_of(described_class)
         end
       end
     end
@@ -32,7 +32,7 @@ describe SQL::StatementList do
     before { subject << SQL::Statement.new(keyword) }
 
     it "should append a new statement" do
-      subject.statements.last.keyword.should == keyword
+      expect(subject.statements.last.keyword).to eq(keyword)
     end
   end
 
@@ -42,7 +42,7 @@ describe SQL::StatementList do
     before { subject.statement(keyword) }
 
     it "should create and append a new Statement" do
-      subject.statements.last.keyword.should == keyword
+      expect(subject.statements.last.keyword).to eq(keyword)
     end
   end
 end

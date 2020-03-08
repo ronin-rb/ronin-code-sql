@@ -6,12 +6,12 @@ shared_examples_for "Function" do |method,arguments=[],additional_arguments=[]|
     let(:func) { subject.send(method,*arguments) }
 
     it "should create a #{method.upcase} function" do
-      func.name.should == name
+      expect(func.name).to eq(name)
     end
 
     unless arguments.empty?
       it "should set the arguments" do
-        func.arguments.should == arguments
+        expect(func.arguments).to eq(arguments)
       end
     end
 
@@ -20,7 +20,7 @@ shared_examples_for "Function" do |method,arguments=[],additional_arguments=[]|
         let(:func) { subject.send(method,*additional_arguments) }
 
         it "should set the arguments" do
-          func.arguments.should == additional_arguments
+          expect(func.arguments).to eq(additional_arguments)
         end
       end
     end

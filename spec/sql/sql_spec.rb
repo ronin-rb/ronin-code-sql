@@ -6,13 +6,13 @@ describe SQL do
 
   describe "#sql" do
     it "should return a new SQL::StatementList" do
-      subject.sql.should be_kind_of(SQL::StatementList)
+      expect(subject.sql).to be_kind_of(SQL::StatementList)
     end
   end
 
   describe "#sqli" do
     it "should return a new SQL::Injection" do
-      subject.sqli.should be_kind_of(SQL::Injection)
+      expect(subject.sqli).to be_kind_of(SQL::Injection)
     end
   end
 end

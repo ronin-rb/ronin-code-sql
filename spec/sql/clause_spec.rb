@@ -9,7 +9,7 @@ describe SQL::Clause do
       subject { described_class.new(:CLAUSE,argument) }
 
       it "should set the argument" do
-        subject.argument.should == argument
+        expect(subject.argument).to eq(argument)
       end
     end
 
@@ -19,7 +19,7 @@ describe SQL::Clause do
       end
 
       it "should use the return value as the argument" do
-        subject.argument.should == 1
+        expect(subject.argument).to eq(1)
       end
 
       context "that accepts an argument" do

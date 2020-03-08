@@ -7,19 +7,19 @@ shared_examples_for "BinaryExpr" do |method,operator=method|
     let(:expr)    { subject.send(method,operand) }
 
     it "should be a BinaryExpr" do
-      expr.should be_kind_of(SQL::BinaryExpr)
+      expect(expr).to be_kind_of(SQL::BinaryExpr)
     end
 
     it "should set the left-hand side operand" do
-      expr.left.should == subject
+      expect(expr.left).to eq(subject)
     end
 
     it "should have a '#{operator}' operator" do
-      expr.operator.should == operator
+      expect(expr.operator).to eq(operator)
     end
 
     it "should set the right-hand side operand" do
-      expr.right.should == operand
+      expect(expr.right).to eq(operand)
     end
   end
 end

@@ -7,35 +7,35 @@ describe SQL::Emittable do
 
   describe "#emitter" do
     it "should return an SQL::Emitter" do
-      subject.emitter.should be_kind_of(SQL::Emitter)
+      expect(subject.emitter).to be_kind_of(SQL::Emitter)
     end
 
     it "should accept Emitter options" do
-      subject.emitter(case: :lower).case.should == :lower
+      expect(subject.emitter(case: :lower).case).to eq(:lower)
     end
   end
 
   describe "#to_sql" do
     it "should emit the object" do
-      subject.to_sql.should == "'hello'"
+      expect(subject.to_sql).to eq("'hello'")
     end
 
     context "when given options" do
       it "should pass them to #emitter" do
-        subject.to_sql(quotes: :double).should == '"hello"'
+        expect(subject.to_sql(quotes: :double)).to eq('"hello"')
       end
     end
   end
 
   describe "#to_s" do
     it "should call #to_sql with no arguments" do
-      subject.to_s.should == subject.to_sql
+      expect(subject.to_s).to eq(subject.to_sql)
     end
   end
 
   describe "#inspect" do
     it "should call #to_sql with no arguments" do
-      subject.inspect.should include(subject.to_sql)
+      expect(subject.inspect).to include(subject.to_sql)
     end
   end
 end

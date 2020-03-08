@@ -11,15 +11,15 @@ describe SQL::InjectionExpr do
       before { subject.and { 1 } }
 
       it "should create a 'AND' BinaryExpr" do
-        subject.expression.operator.should == :AND
+        expect(subject.expression.operator).to eq(:AND)
       end
 
       it "should create an expression with the initial value" do
-        subject.expression.left.should == initial_value
+        expect(subject.expression.left).to eq(initial_value)
       end
 
       it "should create an expression with the expression" do
-        subject.expression.right.should == 1
+        expect(subject.expression.right).to eq(1)
       end
     end
 
@@ -27,12 +27,12 @@ describe SQL::InjectionExpr do
       before { subject.and { 1 }.and { 2 } }
 
       it "should create another 'AND' BinaryExpr" do
-        subject.expression.operator.should == :AND
+        expect(subject.expression.operator).to eq(:AND)
       end
 
       it "should nest the expressions" do
-        subject.expression.left.right.should == 1
-        subject.expression.right.should == 2
+        expect(subject.expression.left.right).to eq(1)
+        expect(subject.expression.right).to eq(2)
       end
     end
   end
@@ -42,15 +42,15 @@ describe SQL::InjectionExpr do
       before { subject.or { 1 } }
 
       it "should create a 'OR' BinaryExpr" do
-        subject.expression.operator.should == :OR
+        expect(subject.expression.operator).to eq(:OR)
       end
 
       it "should create an expression with the initial value" do
-        subject.expression.left.should == initial_value
+        expect(subject.expression.left).to eq(initial_value)
       end
 
       it "should create an expression with the expression" do
-        subject.expression.right.should == 1
+        expect(subject.expression.right).to eq(1)
       end
     end
 
@@ -58,12 +58,12 @@ describe SQL::InjectionExpr do
       before { subject.or { 1 }.or { 2 } }
 
       it "should create another 'OR' BinaryExpr" do
-        subject.expression.operator.should == :OR
+        expect(subject.expression.operator).to eq(:OR)
       end
 
       it "should nest the expressions" do
-        subject.expression.left.right.should == 1
-        subject.expression.right.should == 2
+        expect(subject.expression.left.right).to eq(1)
+        expect(subject.expression.right).to eq(2)
       end
     end
   end
@@ -73,7 +73,7 @@ describe SQL::InjectionExpr do
       subject { described_class.new(1) }
 
       it "should still emit the initial value" do
-        subject.to_sql.should == '1'
+        expect(subject.to_sql).to eq('1')
       end
     end
 
@@ -85,12 +85,12 @@ describe SQL::InjectionExpr do
       end
 
       it "should emit the expression" do
-        subject.to_sql.should == '1 OR 1=1'
+        expect(subject.to_sql).to eq('1 OR 1=1')
       end
 
       context "when given emitter options" do
         it "should accept additional options" do
-          subject.to_sql(case: :lower).should == '1 or 1=1'
+          expect(subject.to_sql(case: :lower)).to eq('1 or 1=1')
         end
       end
     end

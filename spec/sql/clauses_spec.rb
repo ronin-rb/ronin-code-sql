@@ -15,7 +15,7 @@ describe SQL::Clauses do
     before { subject.clause(keyword) }
 
     it "should add an arbitrary clause" do
-      clause.keyword.should == keyword
+      expect(clause.keyword).to eq(keyword)
     end
   end
 

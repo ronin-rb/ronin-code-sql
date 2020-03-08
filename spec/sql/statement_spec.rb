@@ -9,7 +9,7 @@ describe SQL::Statement do
       subject { described_class.new(:STATEMENT,argument) }
 
       it "should set the argument" do
-        subject.argument.should == argument
+        expect(subject.argument).to eq(argument)
       end
     end
 
@@ -19,7 +19,7 @@ describe SQL::Statement do
       end
 
       it "should instance_eval the block" do
-        subject.instance_variable_get(:@x).should == 1
+        expect(subject.instance_variable_get(:@x)).to eq(1)
       end
 
       context "that accepts an argument" do
@@ -30,7 +30,7 @@ describe SQL::Statement do
             yielded_statement = stmt
           end
 
-          yielded_statement.should be_kind_of(described_class)
+          expect(yielded_statement).to be_kind_of(described_class)
         end
       end
     end

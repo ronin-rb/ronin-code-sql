@@ -26,7 +26,7 @@ describe SQL::Injection do
         subject { described_class.new(escape: escape) }
 
         it "should default the place_holder based on the :escape type" do
-          subject.place_holder.should == place_holders[escape]
+          expect(subject.place_holder).to eq(place_holders[escape])
         end
       end
     end
@@ -37,7 +37,7 @@ describe SQL::Injection do
       subject { described_class.new(place_holder: data) }
 
       it "should pass it to the InjectionExpr" do
-        subject.expression.expression.should == data
+        expect(subject.expression.expression).to eq(data)
       end
     end
 
@@ -45,7 +45,7 @@ describe SQL::Injection do
       subject { described_class.new { @x = 1 } }
 
       it "should instance_eval the block" do
-        subject.instance_variable_get(:@x).should == 1
+        expect(subject.instance_variable_get(:@x)).to eq(1)
       end
     end
   end
@@ -55,7 +55,7 @@ describe SQL::Injection do
       subject { described_class.new(place_holder: 1) }
 
       it "should still emit the place-holder value" do
-        subject.to_sql.should == '1'
+        expect(subject.to_sql).to eq('1')
       end
 
       context "with clauses" do
@@ -66,7 +66,7 @@ describe SQL::Injection do
         end
 
         it "should emit the clauses" do
-          subject.to_sql.should == '1 LIMIT 100 OFFSET 10'
+          expect(subject.to_sql).to eq('1 LIMIT 100 OFFSET 10')
         end
       end
     end
@@ -79,7 +79,7 @@ describe SQL::Injection do
       end
 
       it "should emit the expression" do
-        subject.to_sql.should == '1 OR 1=1'
+        expect(subject.to_sql).to eq('1 OR 1=1')
       end
 
       context "with clauses" do
@@ -90,12 +90,12 @@ describe SQL::Injection do
         end
 
         it "should emit the clauses" do
-          subject.to_sql.should == '1 OR 1=1 LIMIT 100 OFFSET 10'
+          expect(subject.to_sql).to eq('1 OR 1=1 LIMIT 100 OFFSET 10')
         end
 
         context "with :space" do
           it "should emit the clauses with custom spaces" do
-            subject.to_sql(space: '/**/').should == '1/**/OR/**/1=1/**/LIMIT/**/100/**/OFFSET/**/10'
+            expect(subject.to_sql(space: '/**/')).to eq('1/**/OR/**/1=1/**/LIMIT/**/100/**/OFFSET/**/10')
           end
         end
       end
@@ -108,12 +108,12 @@ describe SQL::Injection do
         end
 
         it "should emit the clauses" do
-          subject.to_sql.should == '1 OR 1=1; SELECT (1,2,3)'
+          expect(subject.to_sql).to eq('1 OR 1=1; SELECT (1,2,3)')
         end
 
         context "with :space" do
           it "should emit the statements with custom spaces" do
-            subject.to_sql(space: '/**/').should == '1/**/OR/**/1=1;/**/SELECT/**/(1,2,3)'
+            expect(subject.to_sql(space: '/**/')).to eq('1/**/OR/**/1=1;/**/SELECT/**/(1,2,3)')
           end
         end
       end
@@ -128,7 +128,7 @@ describe SQL::Injection do
         end 
 
         it "should balance the quotes" do
-          subject.to_sql.should == "1' OR '1'='1"
+          expect(subject.to_sql).to eq("1' OR '1'='1")
         end
       end
 
@@ -140,7 +140,7 @@ describe SQL::Injection do
         end 
 
         it "should terminate the SQL statement" do
-          subject.to_sql.should == "1' OR 1=1;--"
+          expect(subject.to_sql).to eq("1' OR 1=1;--")
         end
       end
 
@@ -152,7 +152,7 @@ describe SQL::Injection do
         end 
 
         it "should terminate the SQL statement" do
-          subject.to_sql(terminate: true).should == "1' OR '1'='1';--"
+          expect(subject.to_sql(terminate: true)).to eq("1' OR '1'='1';--")
         end
       end
     end
@@ -165,7 +165,7 @@ describe SQL::Injection do
       end 
 
       it "should terminate the SQL statement" do
-        subject.to_sql(terminate: true).should == "1 OR 1=1;--"
+        expect(subject.to_sql(terminate: true)).to eq("1 OR 1=1;--")
       end
     end
   end

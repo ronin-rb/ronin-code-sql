@@ -6,41 +6,41 @@ describe SQL::Literals do
 
   describe "#null" do
     it "should return a Literal" do
-      subject.null.should be_kind_of(SQL::Literal)
+      expect(subject.null).to be_kind_of(SQL::Literal)
     end
 
     it "should have the value of :NULL" do
-      subject.null.value.should == :NULL
+      expect(subject.null.value).to eq(:NULL)
     end
   end
 
   describe "#int" do
     it "should return a Literal" do
-      subject.int(5).should be_kind_of(SQL::Literal)
+      expect(subject.int(5)).to be_kind_of(SQL::Literal)
     end
 
     it "should convert the value to an Integer" do
-      subject.int('5').value.should == 5
+      expect(subject.int('5').value).to eq(5)
     end
   end
 
   describe "#float" do
     it "should return a Literal" do
-      subject.float(1.5).should be_kind_of(SQL::Literal)
+      expect(subject.float(1.5)).to be_kind_of(SQL::Literal)
     end
 
     it "should convert the value to a Float" do
-      subject.float('1.5').value.should == 1.5
+      expect(subject.float('1.5').value).to eq(1.5)
     end
   end
 
   describe "#float" do
     it "should return a Literal" do
-      subject.string('A').should be_kind_of(SQL::Literal)
+      expect(subject.string('A')).to be_kind_of(SQL::Literal)
     end
 
     it "should convert the value to a String" do
-      subject.string(42).value.should == '42'
+      expect(subject.string(42).value).to eq('42')
     end
   end
 end

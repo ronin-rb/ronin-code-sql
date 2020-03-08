@@ -14,25 +14,25 @@ shared_examples_for "Statement" do |method,keyword,argument=nil|
     end
 
     it "should add a #{keyword} clause" do
-      statement.keyword.should == keyword
+      expect(statement.keyword).to eq(keyword)
     end
 
     case argument
     when Proc
       it "should accept a block" do
-        statement.argument.should_not be_nil
+        expect(statement.argument).not_to be_nil
       end
     when NilClass
       it "should not have an argument" do
-        statement.argument.should be_nil
+        expect(statement.argument).to be_nil
       end
     when Array
       it "should accept an argument" do
-        statement.argument.should == arguments
+        expect(statement.argument).to eq(arguments)
       end
     else
       it "should accept an argument" do
-        statement.argument.should == argument
+        expect(statement.argument).to eq(argument)
       end
     end
   end

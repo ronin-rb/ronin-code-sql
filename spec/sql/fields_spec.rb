@@ -6,7 +6,7 @@ describe SQL::Fields do
 
   describe "#respond_to_missing?" do
     it "should return true" do
-      subject.respond_to?(double(:method)).should be(true)
+      expect(subject.respond_to?(double(:method))).to be(true)
     end
   end
 
@@ -17,23 +17,23 @@ describe SQL::Fields do
 
     context "when called with no arguments and no block" do
       it "should create a Field" do
-        subject.send(name).name.should == name
+        expect(subject.send(name).name).to eq(name)
       end
     end
 
     context "when called with arguments" do
       it "should raise a NoMethodError" do
-        lambda {
+        expect {
           subject.sned(name,1,2,3)
-        }.should raise_error(NoMethodError)
+        }.to raise_error(NoMethodError)
       end
     end
 
     context "when called with a block" do
       it "should raise a NoMethodError" do
-        lambda {
+        expect {
           subject.sned(name) { 1 + 1 }
-        }.should raise_error(NoMethodError)
+        }.to raise_error(NoMethodError)
       end
     end
   end

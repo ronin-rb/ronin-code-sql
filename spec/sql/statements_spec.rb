@@ -10,7 +10,7 @@ describe SQL::Statements do
     let(:keyword) { :EXEC }
 
     it "should create an arbitrary statement" do
-      subject.statement(keyword).keyword.should == keyword
+      expect(subject.statement(keyword).keyword).to eq(keyword)
     end
   end
 
