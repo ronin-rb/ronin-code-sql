@@ -12,5 +12,5 @@ has_yard: true
 required_ruby_version: ">= 1.9.1"
 
 development_dependencies:
-  bundler: ~> 1.0
+  bundler: ~> 2.0
   yard: ~> 0.8
