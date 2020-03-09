@@ -11,7 +11,7 @@ gem 'jruby-openssl',	'~> 0.7', platforms: :jruby
 # gem 'ronin',          '~> 1.5.0', git: "#{RONIN_URI}/ronin.git"
 
 group :development do
-  gem 'rake',         '~> 10.0'
+  gem 'rake'
   gem 'kramdown',     '~> 0.12'
 
   gem 'ripl',              '~> 0.3'
