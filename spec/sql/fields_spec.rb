@@ -6,7 +6,7 @@ describe SQL::Fields do
 
   describe "#respond_to_missing?" do
     it "should return true" do
-      expect(subject.respond_to?(double(:method))).to be(true)
+      expect(subject).to respond_to(:foo)
     end
   end
 
