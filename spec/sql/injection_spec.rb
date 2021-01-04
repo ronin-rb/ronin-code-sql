@@ -14,8 +14,8 @@ describe SQL::Injection do
 
   describe "#initialize" do
     context "with no arguments" do
-      its(:escape)       { should == :integer }
-      its(:place_holder) { should == 1 }
+      it { expect(subject.escape).to       eq(:integer) }
+      it { expect(subject.place_holder).to eq(1)        }
     end
 
     context "with :escape" do

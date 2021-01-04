@@ -10,7 +10,7 @@ describe SQL::Fields do
     end
   end
 
-  its(:to_ary) { should be_nil }
+  it { expect(subject.to_ary).to be_nil }
 
   describe "#method_missing" do
     let(:name) { 'users' }

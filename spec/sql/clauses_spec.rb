@@ -7,7 +7,8 @@ describe SQL::Clauses do
   subject { Object.new.extend(described_class) }
 
   let(:clause) { subject.clauses.last }
-  its(:clauses) { should be_empty }
+
+  it { expect(subject.clauses).to be_empty }
 
   describe "#clause" do
     let(:keyword) { :EXEC }

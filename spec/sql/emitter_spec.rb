@@ -10,8 +10,8 @@ require 'ronin/sql/emitter'
 describe SQL::Emitter do
   describe "#initialize" do
     context "without options" do
-      its(:space)  { should == ' ' }
-      its(:quotes) { should == :single }
+      it { expect(subject.space).to  eq(' ')     }
+      it { expect(subject.quotes).to eq(:single) }
     end
   end
 
