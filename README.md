@@ -1,9 +1,9 @@
 # Ronin SQL
 
-* [Source](https://github.com/ronin-ruby/ronin-sql)
-* [Issues](https://github.com/ronin-ruby/ronin-sql/issues)
-* [Documentation](http://rubydoc.info/github/ronin-ruby/ronin-sql/frames)
-* [Mailing List](https://groups.google.com/group/ronin-ruby)
+* [Source](https://github.com/ronin-rb/ronin-sql)
+* [Issues](https://github.com/ronin-rb/ronin-sql/issues)
+* [Documentation](http://rubydoc.info/github/ronin-rb/ronin-sql/frames)
+* [Mailing List](https://groups.google.com/group/ronin-rb)
 * [irc.freenode.net #ronin](http://webchat.freenode.net/?channels=ronin&uio=Mj10cnVldd)
 
 ## Description

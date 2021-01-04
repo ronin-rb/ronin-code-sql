@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-RONIN_URI  = 'http://github.com/ronin-ruby'
+RONIN_URI  = 'http://github.com/ronin-rb'
 
 gemspec
 
