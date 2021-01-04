@@ -6,8 +6,6 @@
 * [Mailing List](https://groups.google.com/group/ronin-ruby)
 * [irc.freenode.net #ronin](http://webchat.freenode.net/?channels=ronin&uio=Mj10cnVldd)
 
-[![Build Status](https://secure.travis-ci.org/ronin-ruby/ronin-sql.png?branch=master)](https://travis-ci.org/ronin-ruby/ronin-sql)
-
 ## Description
 
 {Ronin::SQL} is a Ruby DSL for crafting [SQL Injections (SQLi)][SQLi].
