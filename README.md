@@ -2,7 +2,7 @@
 
 * [Source](https://github.com/ronin-rb/ronin-sql)
 * [Issues](https://github.com/ronin-rb/ronin-sql/issues)
-* [Documentation](http://rubydoc.info/github/ronin-rb/ronin-sql/frames)
+* [Documentation](https://ronin-rb.dev/docs/ronin-sql/frames)
 * [irc.freenode.net #ronin](http://webchat.freenode.net/?channels=ronin&uio=Mj10cnVldd)
 
 ## Description
