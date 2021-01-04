@@ -3,7 +3,7 @@
 * [Source](https://github.com/ronin-rb/ronin-sql)
 * [Issues](https://github.com/ronin-rb/ronin-sql/issues)
 * [Documentation](https://ronin-rb.dev/docs/ronin-sql/frames)
-* [irc.freenode.net #ronin](http://webchat.freenode.net/?channels=ronin&uio=Mj10cnVldd)
+* [IRC](https://ronin-rb.dev/irc/)
 
 ## Description
 
