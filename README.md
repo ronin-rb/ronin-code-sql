@@ -152,7 +152,7 @@ Bypass filters using `/**/` instead of spaces:
 
 Ronin SQL - A Ruby DSL for crafting SQL Injections.
 
-Copyright (c) 2007-2013 Hal Brodigan (postmodern.mod3 at gmail.com)
+Copyright (c) 2007-2021 Hal Brodigan (postmodern.mod3 at gmail.com)
 
 This file is part of ronin-sql.
 
