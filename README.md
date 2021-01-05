@@ -154,7 +154,7 @@ Ronin SQL - A Ruby DSL for crafting SQL Injections.
 
 Copyright (c) 2007-2013 Hal Brodigan (postmodern.mod3 at gmail.com)
 
-This file is part of Ronin SQL.
+This file is part of ronin-sql.
 
 Ronin Asm is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
