@@ -1,4 +1,4 @@
-# Ronin SQL
+# ronin-sql
 
 * [Source](https://github.com/ronin-rb/ronin-sql)
 * [Issues](https://github.com/ronin-rb/ronin-sql/issues)
