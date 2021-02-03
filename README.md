@@ -4,7 +4,7 @@
 * [Issues](https://github.com/ronin-rb/ronin-sql/issues)
 * [Documentation](https://ronin-rb.dev/docs/ronin-sql/frames)
 * [Slack](https://ronin-rb.slack.com) |
-  [Discord](https://discord.gg/F5Ap9B2N) |
+  [Discord](https://discord.gg/6WAb3PsVX9) |
   [Twitter](https://twitter.com/ronin_rb) |
   [IRC](https://ronin-rb.dev/irc/)
 
