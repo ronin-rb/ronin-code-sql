@@ -1,6 +1,7 @@
 # ronin-sql
 
 [![CI](https://github.com/ronin-rb/ronin-sql/actions/workflows/ruby.yml/badge.svg)](https://github.com/ronin-rb/ronin-sql/actions/workflows/ruby.yml)
+[![Code Climate](https://codeclimate.com/github/ronin-rb/ronin-sql.svg)](https://codeclimate.com/github/ronin-rb/ronin-sql)
 
 * [Source](https://github.com/ronin-rb/ronin-sql)
 * [Issues](https://github.com/ronin-rb/ronin-sql/issues)
