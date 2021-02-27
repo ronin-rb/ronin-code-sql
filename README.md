@@ -1,5 +1,7 @@
 # ronin-sql
 
+[![CI](https://github.com/ronin-rb/ronin-sql/actions/workflows/ruby.yml/badge.svg)](https://github.com/ronin-rb/ronin-sql/actions/workflows/ruby.yml)
+
 * [Source](https://github.com/ronin-rb/ronin-sql)
 * [Issues](https://github.com/ronin-rb/ronin-sql/issues)
 * [Documentation](https://ronin-rb.dev/docs/ronin-sql/frames)
