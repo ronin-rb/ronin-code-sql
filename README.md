@@ -144,7 +144,7 @@ Bypass filters using `/**/` instead of spaces:
 
 ## Requirements
 
-* [Ruby] >= 1.9.1
+* [Ruby] >= 2.0.0
 
 ## Install
 
