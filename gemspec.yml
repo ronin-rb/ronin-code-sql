@@ -1,7 +1,7 @@
 name: ronin-sql
 summary: A Ruby DSL for crafting SQL Injections.
 description:
-  Ronin SQL is a Ruby DSL for crafting SQL Injections.
+  ronin-sql is a Ruby DSL for crafting SQL Injections.
 
 license: LGPL-3.0
 authors: Postmodern
