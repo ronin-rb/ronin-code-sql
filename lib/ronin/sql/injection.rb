@@ -59,9 +59,6 @@ module Ronin
       # @param [:integer, :decimal, :string, :column] escape
       #   The type of element to escape out of.
       #
-      # @param [Boolean] terminate
-      #   Specifies whether to terminate the SQLi with a comment.
-      #
       # @param [String, Symbol, Integer] place_holder
       #   Place-holder data.
       #
