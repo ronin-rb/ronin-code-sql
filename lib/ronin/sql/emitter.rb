@@ -42,22 +42,22 @@ module Ronin
       #
       # Initializes the SQL Emitter.
       #
-      # @param [Hash] options
-      #   Emitter options.
-      #
-      # @option options [:lower, :upper, :random, nil] :case
-      #   Case for keywords.
-      #
-      # @option options [String] :space (' ')
+      # @param [String] space
       #   String to use for white-space.
       #
-      # @option options [:single, :double] :quotes (:single)
+      # @param [:single, :double] quotes
       #   Type of quotes to use for Strings.
       #
-      def initialize(options={})
-        @case  = options[:case]
-        @space = options.fetch(:space,' ')
-        @quotes = options.fetch(:quotes,:single)
+      # @param [Hash{Symbol => Object}] kwargs
+      #   Emitter options.
+      #
+      # @option kwargs [:lower, :upper, :random, nil] :case
+      #   Case for keywords.
+      #
+      def initialize(space: ' ', quotes: :single, **kwargs)
+        @case   = kwargs[:case] # HACK: because `case` is a ruby keyword
+        @space  = space
+        @quotes = quotes
       end
 
       #

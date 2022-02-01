@@ -56,16 +56,13 @@ module Ronin
       #
       # Initializes a new SQL injection.
       #
-      # @param [Hash] options
-      #   Additional injection options.
-      #
-      # @option options [:integer, :decimal, :string, :column] :escape (:integer)
+      # @param [:integer, :decimal, :string, :column] escape
       #   The type of element to escape out of.
       #
-      # @option options [Boolean] :terminate
+      # @param [Boolean] terminate
       #   Specifies whether to terminate the SQLi with a comment.
       #
-      # @option options [String, Symbol, Integer] :place_holder
+      # @param [String, Symbol, Integer] place_holder
       #   Place-holder data.
       #
       # @yield [(injection)]
@@ -76,13 +73,10 @@ module Ronin
       # @yieldparam [Injection] injection
       #   The new injection.
       #
-      def initialize(options={},&block)
-        @escape       = options.fetch(:escape,:integer)
-
-        place_holder = options.fetch(:place_holder) do
-          PLACE_HOLDERS.fetch(@escape)
-        end
-
+      def initialize(escape:       :integer,
+                     place_holder: PLACE_HOLDERS.fetch(escape),
+                     &block)
+        @escape     = escape
         @expression = InjectionExpr.new(place_holder)
 
         super(&block)
@@ -125,18 +119,18 @@ module Ronin
       #
       # Converts the SQL injection to SQL.
       #
-      # @param [Hash] options
-      #   Additional options for {Emitter#initialize}.
-      #
-      # @option options [Boolean] :terminate
+      # @param [Boolean] terminate
       #   Specifies whether to terminate the injection with `;--`.
+      #
+      # @param [Hash{Symbol => Object}] kwargs
+      #   Additional keyword arguments for {Emitter#initialize}.
       #
       # @return [String]
       #   The raw SQL.
       #
-      def to_sql(options={})
-        emitter = emitter(options)
-        sql     = @expression.to_sql(options)
+      def to_sql(terminate: false, **kwargs)
+        emitter = emitter(**kwargs)
+        sql     = @expression.to_sql(**kwargs)
 
         unless clauses.empty?
           sql << emitter.space << emitter.emit_clauses(clauses)
@@ -148,7 +142,7 @@ module Ronin
 
         case @escape
         when :string, :list
-          if (options[:terminate] || (sql[0,1] != sql[-1,1]))
+          if (terminate || (sql[0,1] != sql[-1,1]))
             # terminate the expression
             sql << ';--'
           else
@@ -158,7 +152,7 @@ module Ronin
           # balance the quotes
           sql = sql[1..-1]
         else
-          if options[:terminate]
+          if terminate
             # terminate the expression
             sql << ';--'
           end

@@ -97,14 +97,14 @@ module Ronin
       #
       # Emits the injection expression.
       #
-      # @param [Hash] options
-      #   Additional options for {Emitter#initialize}.
+      # @param [Hash{Symbol => Object}] kwargs
+      #   Additional keyword arguments for {Emitter#initialize}.
       #
       # @return [String]
       #   The raw SQL.
       #
-      def to_sql(options={})
-        emitter(options).emit(@expression)
+      def to_sql(**kwargs)
+        emitter(**kwargs).emit(@expression)
       end
 
     end

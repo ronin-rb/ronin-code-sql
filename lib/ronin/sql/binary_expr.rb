@@ -37,14 +37,14 @@ module Ronin
       #
       # Converts the binary expression to SQL.
       #
-      # @param [Hash] options
-      #   Additional options for {Emitter#initialize}.
+      # @param [Hash{Symbol => Object}] kwargs
+      #   Additional keyword arguments for {Emitter#initialize}.
       #
       # @return [String]
       #   The emitted SQL expression.
       #
-      def to_sql(options={})
-        emitter(options).emit_expression(self)
+      def to_sql(**kwargs)
+        emitter(**kwargs).emit_expression(self)
       end
 
     end

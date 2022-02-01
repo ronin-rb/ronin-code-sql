@@ -32,28 +32,28 @@ module Ronin
       #
       # Creates a new emitter.
       #
-      # @param [Hash] options
-      #   Additional options for {Emitter#initialize}.
+      # @param [Hash{Symbol => Object}] kwargs
+      #   Additional keyword arguments for {Emitter#initialize}.
       #
       # @api private
       #   
-      def emitter(options={})
-        Emitter.new(options)
+      def emitter(**kwargs)
+        Emitter.new(**kwargs)
       end
 
       #
       # The default `to_sql` method.
       #
-      # @param [Hash] options
-      #   Additional options for {#emitter}.
+      # @param [Hash{Symbol => Object}] kwargs
+      #   Additional keyword arguments for {Emitter#initialize}.
       #
-      # @option options [:lower, :upper, :random, nil] :case
+      # @option kwargs [:lower, :upper, :random, nil] :case
       #   Case for keywords.
       #
-      # @option options [String] :space (' ')
+      # @option kwargs [String] :space (' ')
       #   String to use for white-space.
       #
-      # @option options [:single, :double] :quotes (:single)
+      # @option kwargs [:single, :double] :quotes (:single)
       #   Type of quotes to use for Strings.
       #
       # @return [String]
@@ -62,8 +62,8 @@ module Ronin
       # @raise [ArgumentError]
       #   Could not emit an unknown SQL object.
       #
-      def to_sql(options={})
-        emitter(options).emit(self)
+      def to_sql(**kwargs)
+        emitter(**kwargs).emit(self)
       end
 
       #

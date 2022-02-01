@@ -58,16 +58,16 @@ module Ronin
     #
     # Creates a new SQL injection (SQLi)
     #
-    # @param [Hash] options
-    #   Additional injection options.
+    # @param [Hash{Symbol => Object}] kwargs
+    #   Additional keyword arguments for {Injection#initialize}.
     #
-    # @option options [:integer, :decimal, :string, :column] :escape
+    # @option kwargs [:integer, :decimal, :string, :column] :escape
     #   The type of element to escape out of.
     #
-    # @option options [Boolean] :terminate
+    # @option kwargs [Boolean] :terminate
     #   Specifies whether to terminate the SQLi with a comment.
     #
-    # @option options [String, Symbol, Integer] :place_holder
+    # @option kwargs [String, Symbol, Integer] :place_holder
     #   Place-holder data.
     #
     # @yield [(injection)]
@@ -87,8 +87,8 @@ module Ronin
     #
     # @api public
     #
-    def sqli(options={},&block)
-      Injection.new(options,&block)
+    def sqli(**kwargs,&block)
+      Injection.new(**kwargs,&block)
     end
 
   end
