@@ -188,7 +188,7 @@ $ gem install ronin-sql
 
 Ronin SQL - A Ruby DSL for crafting SQL Injections.
 
-Copyright (c) 2007-2021 Hal Brodigan (postmodern.mod3 at gmail.com)
+Copyright (c) 2007-2022 Hal Brodigan (postmodern.mod3 at gmail.com)
 
 This file is part of ronin-sql.
 
