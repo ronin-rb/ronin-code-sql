@@ -19,4 +19,4 @@
 # along with ronin-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/formatting/extensions/sql'
+require 'ronin/format/sql'
