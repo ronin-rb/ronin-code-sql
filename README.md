@@ -176,7 +176,7 @@ puts sqli.to_sql(:space => '/**/')
 
 ## Requirements
 
-* [Ruby] >= 2.0.0
+* [Ruby] >= 3.0.0
 
 ## Install
 
