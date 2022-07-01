@@ -107,4 +107,5 @@ describe SQL::Functions do
   include_examples "Function", :ucase, ['foo']
   include_examples "Function", :unhex, ['4D7953514C']
   include_examples "Function", :upper, ['hello']
+  include_examples "Function", :sleep, [5]
 end

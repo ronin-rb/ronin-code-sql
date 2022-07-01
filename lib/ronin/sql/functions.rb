@@ -985,6 +985,21 @@ module Ronin
       def upper(string)
         Function.new(:UPPER,string)
       end
+
+      #
+      # The `SLEEP` function.
+      #
+      # @param [Object] secs
+      #   The number of seconds to sleep for.
+      #
+      # @return [Function]
+      #   The new function.
+      #
+      # @since 1.2.0
+      #
+      def sleep(secs)
+        Function.new(:SLEEP,secs)
+      end
     end
   end
 end
