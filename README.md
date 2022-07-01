@@ -161,7 +161,7 @@ sqli = Ronin::SQL::Injection.new
 sqli.union_all {
   select(1,2,3,4,5,6,name).from(sysObjects).where { xtype == 'U' }
 }
-puts sqli.to_sql(:terminate => true)
+puts sqli.to_sql(terminate: true)
 # 1 UNION ALL (SELECT (1,2,3,4,5,6,name) FROM sysObjects WHERE xtype='U');--
 ```
 
@@ -170,7 +170,7 @@ Bypass filters using `/**/` instead of spaces:
 ```ruby
 sqli = Ronin::SQL::Injection.new
 sqli.union { select(1,2,3,4,id).from(users) }
-puts sqli.to_sql(:space => '/**/')
+puts sqli.to_sql(space: '/**/')
 # 1/**/UNION/**/SELECT/**/(1,2,3,4,id)/**/FROM/**/users
 ```
 
