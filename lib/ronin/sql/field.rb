@@ -74,6 +74,9 @@ module Ronin
       # @param [Symbol] name
       #   The sub-field name.
       #
+      # @param [Array] arguments
+      #   Additional mehtod arguments.
+      #
       # @example
       #   db.users
       #
