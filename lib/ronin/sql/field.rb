@@ -100,7 +100,7 @@ module Ronin
         if (self.parent.nil? || self.parent.parent.nil?)
           Field.new(name,self)
         else
-          raise(NoMethodError,"cannot access coumns from other columns")
+          raise(NoMethodError,"cannot access columns from other columns")
         end
       end
 
