@@ -32,6 +32,8 @@ module Ronin
       #
       # Multiplication.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -41,6 +43,8 @@ module Ronin
 
       #
       # Division.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -52,6 +56,8 @@ module Ronin
       #
       # Modulus.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -61,6 +67,8 @@ module Ronin
 
       #
       # Addition.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -72,6 +80,8 @@ module Ronin
       #
       # Subtraction.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -81,6 +91,8 @@ module Ronin
 
       #
       # Bit-wise left shift.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -92,6 +104,8 @@ module Ronin
       #
       # Bit-wise right shift.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -101,6 +115,8 @@ module Ronin
 
       #
       # Bit-wise `AND`.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -112,6 +128,8 @@ module Ronin
       #
       # Bit-wise `OR`.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -121,6 +139,8 @@ module Ronin
 
       #
       # Less than.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -132,6 +152,8 @@ module Ronin
       #
       # Less than or equal to.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -141,6 +163,8 @@ module Ronin
 
       #
       # Greater than.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -152,6 +176,8 @@ module Ronin
       #
       # Greater than or equal to.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -161,6 +187,8 @@ module Ronin
 
       #
       # Equal to.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -172,6 +200,8 @@ module Ronin
       #
       # Not equal to.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -181,6 +211,8 @@ module Ronin
 
       #
       # Alias.
+      #
+      # @param [Symbol] name
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -192,6 +224,8 @@ module Ronin
       #
       # `IS` comparison.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -201,6 +235,8 @@ module Ronin
 
       #
       # `IS NOT` comparison.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -212,6 +248,8 @@ module Ronin
       #
       # `LIKE` comparison.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -221,6 +259,8 @@ module Ronin
 
       #
       # `GLOB` comparison.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -232,6 +272,8 @@ module Ronin
       #
       # `MATCH` comparison.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -242,6 +284,8 @@ module Ronin
       #
       # `REGEXP` comparison.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -251,6 +295,8 @@ module Ronin
 
       #
       # `REGEXP` comparison.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
@@ -312,6 +358,8 @@ module Ronin
       #
       # `AND`.
       #
+      # @param [Object] other
+      #
       # @return [BinaryExpr]
       #   The new binary expression.
       #
@@ -321,6 +369,8 @@ module Ronin
 
       #
       # `OR`.
+      #
+      # @param [Object] other
       #
       # @return [BinaryExpr]
       #   The new binary expression.
