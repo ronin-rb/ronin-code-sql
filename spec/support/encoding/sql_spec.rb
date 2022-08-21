@@ -1,67 +1,57 @@
 require 'spec_helper'
-require 'ronin/support/encoding/sql/core_ext/string'
+require 'ronin/support/encoding/sql'
 
-describe String do
-  it "should provide the #sql_escape method" do
-    expect(subject).to respond_to(:sql_escape)
-  end
-
-  it "should provide the #sql_encode method" do
-    expect(subject).to respond_to(:sql_encode)
-  end
-
-  it "should provide the #sql_decode method" do
-    expect(subject).to respond_to(:sql_decode)
-  end
-
-  describe "#sql_escape" do
-    subject { "hello" }
+describe Ronin::Support::Encoding::SQL do
+  describe ".escape" do
+    let(:data) { "hello" }
 
     context "when given quotes: :single" do
       it "should wrap the String in single-quotes" do
-        expect(subject.sql_escape(quotes: :single)).to eq("'hello'")
+        expect(subject.escape(data, quotes: :single)).to eq("'hello'")
       end
 
       context "when the String already contains single-quotes" do
-        subject { "O'Brian" }
+        let(:data) { "O'Brian" }
 
         it "should escape existing single-quotes" do
-          expect(subject.sql_escape(quotes: :single)).to eq("'O''Brian'")
+          expect(subject.escape(data, quotes: :single)).to eq("'O''Brian'")
         end
       end
     end
 
     context "when given quotes: :double" do
       it "should wrap the String in double-quotes" do
-        expect(subject.sql_escape(quotes: :double)).to eq('"hello"')
+        expect(subject.escape(data, quotes: :double)).to eq('"hello"')
       end
 
       context "when the String already contains double-quotes" do
-        subject { 'the "thing"' }
+        let(:data) { 'the "thing"' }
 
         it "should escape existing double-quotes" do
-          expect(subject.sql_escape(quotes: :double)).to eq('"the ""thing"""')
+          expect(subject.escape(data, quotes: :double)).to eq('"the ""thing"""')
         end
       end
     end
 
     context "when given quotes: :tick" do
       it "should wrap the String in tick-mark quotes" do
-        expect(subject.sql_escape(quotes: :tick)).to eq("`hello`")
+        expect(subject.escape(data, quotes: :tick)).to eq("`hello`")
       end
 
       context "when the String already contains tick-marks" do
-        subject { "the `thing`" }
+        let(:data) { "the `thing`" }
 
         it "should escape existing tick-mark quotes" do
-          expect(subject.sql_escape(quotes: :tick)).to eq('`the ``thing```')
+          expect(subject.escape(data, quotes: :tick)).to eq('`the ``thing```')
         end
       end
     end
 
     context "with no quotes: keyword argument" do
       it "should default single quotes" do
-        expect(subject.sql_escape).to eq(subject.sql_escape(quotes: :single))
+        expect(subject.escape(data)).to eq(
+          subject.escape(data, quotes: :single)
+        )
       end
     end
 
@@ -70,108 +60,107 @@ describe String do
 
       it "should raise an ArgumentError" do
         expect {
-          subject.sql_escape(quotes: quotes)
+          subject.escape(data, quotes: quotes)
         }.to raise_error(ArgumentError,"invalid quoting style #{quotes.inspect}")
       end
     end
   end
 
-  describe "#sql_unescape" do
+  describe ".unescape" do
     context "when the String is single-quoted" do
-      subject { "'hello'" }
+      let(:data) { "'hello'" }
 
       it "should remove leading and tailing single-quotes" do
-        expect(subject.sql_unescape).to eq("hello")
+        expect(subject.unescape(data)).to eq("hello")
       end
 
       context "when the String contains escaped single-quotes" do
-        subject { "'O''Brian'" }
+        let(:data) { "'O''Brian'" }
 
         it "should unescape the single-quotes" do
-          expect(subject.sql_unescape).to eq("O'Brian")
+          expect(subject.unescape(data)).to eq("O'Brian")
         end
       end
     end
 
     context "when the String is double-quoted" do
-      subject { '"hello"' }
+      let(:data) { '"hello"' }
 
       it "should remove leading and tailing double-quotes" do
-        expect(subject.sql_unescape).to eq('hello')
+        expect(subject.unescape(data)).to eq('hello')
       end
 
       context "when the String contains escaped double-quotes" do
-        subject { '"the ""thing"""' }
+        let(:data) { '"the ""thing"""' }
 
         it "should unescape the double-quotes" do
-          expect(subject.sql_unescape).to eq('the "thing"')
+          expect(subject.unescape(data)).to eq('the "thing"')
         end
       end
     end
 
     context "when the String is tick-mark quoted" do
-      subject { '`hello`' }
+      let(:data) { '`hello`' }
 
       it "should remove leading and tailing tick-mark quotes" do
-        expect(subject.sql_unescape).to eq('hello')
+        expect(subject.unescape(data)).to eq('hello')
       end
 
       context "when the String contains escaped tick-mark quotes" do
-        subject { '`the ``thing```' }
+        let(:data) { '`the ``thing```' }
 
         it "should unescape the tick-mark quotes" do
-          expect(subject.sql_unescape).to eq('the `thing`')
+          expect(subject.unescape(data)).to eq('the `thing`')
         end
       end
     end
 
     context "when the String is not quoted" do
-      subject { "hello" }
+      let(:data) { "hello" }
 
       it "should raise an exception" do
         expect {
-          subject.sql_unescape
-        }.to raise_error(ArgumentError,"#{subject.inspect} is not properly quoted")
+          subject.unescape(data)
+        }.to raise_error(ArgumentError,"#{data.inspect} is not properly quoted")
       end
     end
   end
 
-  describe "#sql_encode" do
-    subject { "/etc/passwd" }
+  describe ".encode" do
+    let(:data) { "/etc/passwd" }
 
     let(:encoded_string) { '0x2f6574632f706173737764' }
 
     it "should be able to be SQL-hex encoded" do
-      expect(subject.sql_encode).to eq(encoded_string)
+      expect(subject.encode(data)).to eq(encoded_string)
     end
 
     it "should return an empty String if empty" do
-      expect(''.sql_encode).to eq('')
+      expect(subject.encode('')).to eq('')
     end
   end
 
-  describe "#sql_decode" do
-    subject { '2f6574632f706173737764' }
-
-    let(:decoded_string) { '/etc/passwd' }
+  describe ".decode" do
+    let(:data)           { '2f6574632f706173737764' }
+    let(:decoded_string) { '/etc/passwd'            }
 
     it "should be able to be SQL-hex decoded" do
-      expect(subject.sql_decode).to eq(decoded_string)
+      expect(subject.decode(data)).to eq(decoded_string)
     end
 
     context "with upper-case hexadecimal" do
-      subject { '2F6574632F706173737764' }
+      let(:data) { '2F6574632F706173737764' }
 
       it "should be able to be SQL-hex decoded" do
-        expect(subject.sql_decode).to eq(decoded_string)
+        expect(subject.decode(data)).to eq(decoded_string)
       end
     end
 
     context "when the String is a SQL escaped string" do
-      subject { "'Conan O''Brian'" }
+      let(:data) { "'Conan O''Brian'" }
 
       it "should unescape the SQL String" do
-        expect(subject.sql_decode).to eq("Conan O'Brian")
+        expect(subject.decode(data)).to eq("Conan O'Brian")
       end
     end
   end

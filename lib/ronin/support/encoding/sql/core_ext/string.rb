@@ -19,18 +19,23 @@
 # along with ronin-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+require 'ronin/support/encoding/sql'
+
 class String
 
   #
   # Escapes an String for SQL.
   #
-  # @param [:single, :double, :tick] quotes (:single)
+  # @param [Hash{Symbol => Object}] kwargs
+  #   Additional keyword arguments.
+  #
+  # @option kwargs [:single, :double, :tick] :quotes (:single)
   #   Specifies whether to create a single or double quoted string.
   #
   # @return [String]
   #   The escaped String.
   #
-  # @raise [TypeError]
+  # @raise [ArgumentError]
   #   The quotes argument was neither `:single`, `:double` nor `:tick`.
   #
   # @example
@@ -43,16 +48,10 @@ class String
   #
   # @api public
   #
-  def sql_escape(quotes=:single)
-    char = case quotes
-           when :single then "'"
-           when :double then '"'
-           when :tick   then '`'
-           else
-             raise(ArgumentError,"invalid quoting style #{quotes.inspect}")
-           end
-
-    return char + gsub(char,char * 2) + char
+  # @see Ronin::Support::Encoding::SQL.escape
+  #
+  def sql_escape(**kwargs)
+    Ronin::Support::Encoding::SQL.escape(self,**kwargs)
   end
 
   #
@@ -61,7 +60,7 @@ class String
   # @return [String]
   #   The unescaped String.
   #
-  # @raise
+  # @raise [ArgumentError]
   #   The String was not quoted with single, double or tick-mark quotes.
   #
   # @example
@@ -70,17 +69,12 @@ class String
   #
   # @api public
   #
+  # @see Ronin::Support::Encoding::SQL.unescape
+  #
   # @since 1.0.0
   #
   def sql_unescape
-    char = if    (self[0] == "'" && self[-1] == "'") then "'"
-           elsif (self[0] == '"' && self[-1] == '"') then '"'
-           elsif (self[0] == '`' && self[-1] == '`') then '`'
-           else
-             raise(TypeError,"#{self.inspect} is not properly quoted")
-           end
-
-    return self[1..-2].gsub(char * 2,char)
+    Ronin::Support::Encoding::SQL.unescape(self)
   end
 
   #
@@ -92,16 +86,10 @@ class String
   #
   # @api public
   #
+  # @see Ronin::Support::Encoding::SQL.encode
+  #
   def sql_encode
-    return '' if empty?
-
-    hex_string = '0x'
-
-    each_byte do |b|
-      hex_string << ('%.2x' % b)
-    end
-
-    return hex_string
+    Ronin::Support::Encoding::SQL.encode(self)
   end
 
   #
@@ -118,22 +106,12 @@ class String
   # @raise
   #   The String is neither hex encoded or SQL escaped.
   #
-  # @see #sql_unescape
+  # @see Ronin::Support::Encoding::SQL.decode
   #
   # @api public
   #
   def sql_decode
-    if (self =~ /^[0-9a-fA-F]{2,}$/ && (length % 2 == 0))
-      raw = ''
-
-      scan(/../) do |hex_char|
-        raw << hex_char.to_i(16)
-      end
-
-      return raw
-    else
-      sql_unescape
-    end
+    Ronin::Support::Encoding::SQL.decode(self)
   end
 
 end
