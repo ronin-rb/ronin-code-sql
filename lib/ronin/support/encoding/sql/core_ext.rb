@@ -19,4 +19,4 @@
 # along with ronin-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/format/core_ext/sql'
+require 'ronin/support/encoding/sql/core_ext/string'

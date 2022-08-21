@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'ronin/format/core_ext/sql/string'
+require 'ronin/support/encoding/sql/core_ext/string'
 
 describe String do
   it "should provide the #sql_escape method" do
