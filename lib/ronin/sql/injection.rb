@@ -104,7 +104,7 @@ module Ronin
       #   operand. If the block accepts an argument, it will be called with
       #   the injection expression.
       #
-      # @yieldparam [InjectionExp] expr
+      # @yieldparam [InjectionExpr] expr
       #
       # @return [self]
       #
