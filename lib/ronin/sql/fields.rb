@@ -54,6 +54,15 @@ module Ronin
       #
       # Allows specifying databases, tables or columns.
       #
+      # @param [Symbol] name
+      #   The field name to access.
+      #
+      # @param [Array] arguments
+      #   Additional method arguments.
+      #
+      # @return [Field]
+      #   The field object.
+      #
       # @example
       #   db.users
       #
