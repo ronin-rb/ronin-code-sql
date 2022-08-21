@@ -42,6 +42,9 @@ module Ronin
       #
       # Creates an Integer literal.
       #
+      # @param [String, Numeric] value
+      #   The value to convert to an Integer.
+      #
       # @return [Literal<Integer>]
       #   The Integer literal.
       #
@@ -52,6 +55,9 @@ module Ronin
       #
       # Creates an Float literal.
       #
+      # @param [String, Numeric] value
+      #   The value to convert to a Float.
+      #
       # @return [Literal<Float>]
       #   The Float literal.
       #
@@ -61,6 +67,9 @@ module Ronin
 
       #
       # Creates an String literal.
+      #
+      # @param [String, Numeric] value
+      #   The value to convert to a String.
       #
       # @return [Literal<String>]
       #   The String literal.
