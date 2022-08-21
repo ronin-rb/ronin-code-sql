@@ -19,7 +19,7 @@
 # along with ronin-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/formatting/sql'
+require 'ronin/support/encoding/sql'
 
 module Ronin
   module SQL
@@ -168,7 +168,7 @@ module Ronin
       #   The raw SQL.
       #
       def emit_string(string)
-        string.sql_escape(@quotes)
+        Support::Encoding::SQL.escape(string, quotes: @quotes)
       end
 
       #
