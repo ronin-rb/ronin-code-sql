@@ -106,7 +106,7 @@ module Ronin
       #
       # Emits the `NULL` value.
       #
-      # @return ["NULL"]
+      # @return [String]
       #
       def emit_null
         emit_keyword(:NULL)
