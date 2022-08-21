@@ -131,6 +131,8 @@ module Ronin
       #
       # The `ABS` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -140,6 +142,8 @@ module Ronin
 
       #
       # The `ACOS` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -151,6 +155,8 @@ module Ronin
       #
       # The `ASIN` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -160,6 +166,8 @@ module Ronin
 
       #
       # The `ATAN` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -171,6 +179,10 @@ module Ronin
       #
       # The `ATAN2` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
+      # @param [Field, Function, Symbol, Numeric] y
+      #
       # @return [Function]
       #   The new function.
       #
@@ -180,6 +192,8 @@ module Ronin
 
       #
       # The `BIT_AND` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -191,6 +205,8 @@ module Ronin
       #
       # The `BIT_COUNT` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -200,6 +216,8 @@ module Ronin
 
       #
       # The `BIT_OR` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -211,6 +229,8 @@ module Ronin
       #
       # The `CEIL` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -220,6 +240,8 @@ module Ronin
 
       #
       # The `CEILING` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -231,6 +253,8 @@ module Ronin
       #
       # The `COS` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -240,6 +264,8 @@ module Ronin
 
       #
       # The `COT` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -251,6 +277,8 @@ module Ronin
       #
       # The `DEGREES` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -260,6 +288,8 @@ module Ronin
 
       #
       # The `EXP` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -271,6 +301,8 @@ module Ronin
       #
       # The `FLOOR` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -281,15 +313,21 @@ module Ronin
       #
       # The `FORMAT` function.
       #
+      # @param [Field, Function, Symbol, String, Numeric] value
+      #
+      # @param [Field, Function, Symbol, String] pattern
+      #
       # @return [Function]
       #   The new function.
       #
-      def format(x,d)
-        Function.new(:FORMAT,x,d)
+      def format(value,pattern)
+        Function.new(:FORMAT,value,pattern)
       end
 
       #
       # The `GREATEST` function.
+      #
+      # @param [Array<Field, Function, Symbol, Numeric>] values
       #
       # @return [Function]
       #   The new function.
@@ -301,6 +339,8 @@ module Ronin
       #
       # The `INTERVAL` function.
       #
+      # @param [Array<Field, Function, Symbol, Numeric>] values
+      #
       # @return [Function]
       #   The new function.
       #
@@ -310,6 +350,8 @@ module Ronin
 
       #
       # The `LEAST` function.
+      #
+      # @param [Array<Field, Function, Symbol, Numeric>] values
       #
       # @return [Function]
       #   The new function.
@@ -321,15 +363,23 @@ module Ronin
       #
       # The `LOG` function.
       #
+      # @param [Field, Function, Symbol, Numeric, nil] b
+      #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
-      def log(*b,x)
-        Function.new(:LOG,*b,x)
+      def log(b=nil,x)
+        if b then Function.new(:LOG,b,x)
+        else      Function.new(:LOG,x)
+        end
       end
 
       #
       # The `LOG10` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -340,6 +390,10 @@ module Ronin
 
       #
       # The `MOD` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] n
+      #
+      # @param [Field, Function, Symbol, Numeric] m
       #
       # @return [Function]
       #   The new function.
@@ -361,6 +415,10 @@ module Ronin
       #
       # The `POW` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
+      # @param [Field, Function, Symbol, Numeric] y
+      #
       # @return [Function]
       #   The new function.
       #
@@ -371,6 +429,10 @@ module Ronin
       #
       # The `POWER` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
+      # @param [Field, Function, Symbol, Numeric] y
+      #
       # @return [Function]
       #   The new function.
       #
@@ -380,6 +442,8 @@ module Ronin
 
       #
       # The `RADIANS` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -401,6 +465,10 @@ module Ronin
       #
       # The `ROUND` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
+      # @param [Field, Function, Symbol, Numeric, nil] d
+      #
       # @return [Function]
       #   The new function.
       #
@@ -413,6 +481,8 @@ module Ronin
       #
       # The `SIGN` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -422,6 +492,8 @@ module Ronin
 
       #
       # The `SIN` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
       #
       # @return [Function]
       #   The new function.
@@ -433,6 +505,8 @@ module Ronin
       #
       # The `SQRT` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -442,6 +516,8 @@ module Ronin
 
       #
       # The `STD` function.
+      #
+      # @param [Field, Symbol] field
       #
       # @return [Function]
       #   The new function.
@@ -453,6 +529,8 @@ module Ronin
       #
       # The `STDDEV` function.
       #
+      # @param [Field, Symbol] field
+      #
       # @return [Function]
       #   The new function.
       #
@@ -463,6 +541,8 @@ module Ronin
       #
       # The `TAN` function.
       #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
       # @return [Function]
       #   The new function.
       #
@@ -472,6 +552,10 @@ module Ronin
 
       #
       # The `TRUNCATE` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] x
+      #
+      # @param [Field, Function, Symbol, Numeric] d
       #
       # @return [Function]
       #   The new function.
@@ -487,6 +571,8 @@ module Ronin
       #
       # The `ASCII` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -496,6 +582,8 @@ module Ronin
 
       #
       # The `BIN` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] n
       #
       # @return [Function]
       #   The new function.
@@ -507,6 +595,8 @@ module Ronin
       #
       # The `BIT_LENGTH` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -516,6 +606,8 @@ module Ronin
 
       #
       # The `CHAR` function.
+      #
+      # @param [Array<Numeric>] bytes
       #
       # @return [Function]
       #   The new function.
@@ -527,6 +619,8 @@ module Ronin
       #
       # The `CHAR_LENGTH` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -536,6 +630,8 @@ module Ronin
 
       #
       # The `CHARACTER_LENGTH` function.
+      #
+      # @param [Field, Function, Symbol, String] string
       #
       # @return [Function]
       #   The new function.
@@ -547,6 +643,8 @@ module Ronin
       #
       # The `CONCAT` function.
       #
+      # @param [Array<Field, Function, Symbol, String>] strings
+      #
       # @return [Function]
       #   The new function.
       #
@@ -556,6 +654,10 @@ module Ronin
 
       #
       # The `CONCAT_WS` function.
+      #
+      # @param [Field, Function, Symbol, String] separator
+      #
+      # @param [Array<Field, Function, Symbol, String>] strings
       #
       # @return [Function]
       #   The new function.
@@ -567,25 +669,45 @@ module Ronin
       #
       # The `CONV` function.
       #
+      # @param [Field, Function, Symbol, Numeric] number
+      #
+      # @param [Field, Function, Symbol, Numeric] from_base
+      #
+      # @param [Field, Function, Symbol, Numeric] to_base
+      #
       # @return [Function]
       #   The new function.
       #
-      def conv(n,from_base,to_base)
-        Function.new(:CONV,n,from_base,to_base)
+      def conv(number,from_base,to_base)
+        Function.new(:CONV,number,from_base,to_base)
       end
 
       #
       # The `ELT` function.
       #
+      # @param [Field, Function, Symbol, Numeric] index
+      #
+      # @param [Array<Field, Function, Symbol, String>] strings
+      #
       # @return [Function]
       #   The new function.
       #
-      def elt(n,*strings)
-        Function.new(:ELT,n,*strings)
+      def elt(index,*strings)
+        Function.new(:ELT,index,*strings)
       end
 
       #
       # The `EXPORT_SET` function.
+      #
+      # @param [Field, Function, Symbol, Numeric] bits
+      #
+      # @param [Field, Function, Symbol, String] on
+      #
+      # @param [Field, Function, Symbol, String] off
+      #
+      # @param [Field, Function, Symbol, String, nil] separator
+      #
+      # @param [Field, Function, Symbol, Numeric, nil] number_of_bits
       #
       # @return [Function]
       #   The new function.
@@ -603,6 +725,8 @@ module Ronin
       #
       # The `FIELD` function.
       #
+      # @param [Array<Field, Function, Symbol, String>] strings
+      #
       # @return [Function]
       #   The new function.
       #
@@ -613,25 +737,35 @@ module Ronin
       #
       # The `FIND_IN_SET` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Array<Field, Function, Symbol, String>] set
+      #
       # @return [Function]
       #   The new function.
       #
-      def find_in_set(string,*set)
-        Function.new(:FIND_IN_SET,string,*set)
+      def find_in_set(string,set)
+        Function.new(:FIND_IN_SET,string,set)
       end
 
       #
       # The `GLOB` function.
       #
+      # @param [Field, Function, Symbol, String] pattern
+      #
+      # @param [Field, Function, Symbol, String] string
+      #
       # @return [Function]
       #   The new function.
       #
-      def glob(x,y)
-        Function.new(:GLOB,x,y)
+      def glob(pattern,string)
+        Function.new(:GLOB,pattern,string)
       end
 
       #
       # The `HEX` function.
+      #
+      # @param [Field, Function, Symbol, Numeric, String] value
       #
       # @return [Function]
       #   The new function.
@@ -643,6 +777,14 @@ module Ronin
       #
       # The `INSERT` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, Numeric] position
+      #
+      # @param [Field, Function, Symbol, Numeric] length
+      #
+      # @param [Field, Function, Symbol, String] new_string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -652,6 +794,10 @@ module Ronin
 
       #
       # The `INSTR` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, String] sub_string
       #
       # @return [Function]
       #   The new function.
@@ -663,6 +809,8 @@ module Ronin
       #
       # The `LCASE` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -673,6 +821,10 @@ module Ronin
       #
       # The `LEFT` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, Numeric] length
+      #
       # @return [Function]
       #   The new function.
       #
@@ -682,6 +834,8 @@ module Ronin
 
       #
       # The `LENGTH` function.
+      #
+      # @param [Field, Function, Symbol, String] string
       #
       # @return [Function]
       #   The new function.
@@ -705,6 +859,8 @@ module Ronin
       #
       # The `LOAD_FILE` function.
       #
+      # @param [Field, Function, Symbol, String] file_name
+      #
       # @return [Function]
       #   The new function.
       #
@@ -715,17 +871,25 @@ module Ronin
       #
       # The `LOCATE` function.
       #
+      # @param [Field, Function, Symbol, String] substring
+      #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, Numeric, nil] pos
+      #
       # @return [Function]
       #   The new function.
       #
-      def locate(sub_string,string,pos=nil)
-        if pos then Function.new(:LOCATE,sub_string,string,pos)
-        else        Function.new(:LOCATE,sub_string,string)
+      def locate(substring,string,pos=nil)
+        if pos then Function.new(:LOCATE,substring,string,pos)
+        else        Function.new(:LOCATE,substring,string)
         end
       end
 
       #
       # The `LOWER` function.
+      #
+      # @param [Field, Function, Symbol, String] string
       #
       # @return [Function]
       #   The new function.
@@ -737,6 +901,12 @@ module Ronin
       #
       # The `LPAD` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, Numeric] length
+      #
+      # @param [Field, Function, Symbol, String] pad_string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -746,6 +916,8 @@ module Ronin
 
       #
       # The `LTRIM` function.
+      #
+      # @param [Field, Function, Symbol, String] string
       #
       # @return [Function]
       #   The new function.
@@ -757,6 +929,10 @@ module Ronin
       #
       # The `MAKE_SET` function.
       #
+      # @param [Field, Function, Symbol, Numeric] bits
+      #
+      # @param [Array<Field, Function, Symbol, String>] strings
+      #
       # @return [Function]
       #   The new function.
       #
@@ -766,6 +942,12 @@ module Ronin
 
       #
       # The `MID` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, Numeric] position
+      #
+      # @param [Field, Function, Symbol, Numeric] length
       #
       # @return [Function]
       #   The new function.
@@ -777,15 +959,19 @@ module Ronin
       #
       # The `OCT` function.
       #
+      # @param [Field, Function, Symbol, Numeric] number
+      #
       # @return [Function]
       #   The new function.
       #
-      def oct(n)
-        Function.new(:OCT,n)
+      def oct(number)
+        Function.new(:OCT,number)
       end
 
       #
       # The `OCTET_LENGTH` function.
+      #
+      # @param [Field, Function, Symbol, String] string
       #
       # @return [Function]
       #   The new function.
@@ -797,6 +983,8 @@ module Ronin
       #
       # The `ORD` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -806,6 +994,8 @@ module Ronin
 
       #
       # The `POSITION` function.
+      #
+      # @param [BinaryExpr] expr
       #
       # @return [Function]
       #   The new function.
@@ -817,6 +1007,8 @@ module Ronin
       #
       # The `QUOTE` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -826,6 +1018,10 @@ module Ronin
 
       #
       # The `REPEAT` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, Numeric] count
       #
       # @return [Function]
       #   The new function.
@@ -837,6 +1033,12 @@ module Ronin
       #
       # The `REPLACE` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #
+      # @param [Field, Function, Symbol, String] from_string
+      #
+      # @param [Field, Function, Symbol, String] to_string
+      #
       # @return [Function]
       #   The new function.
       #
@@ -846,6 +1048,9 @@ module Ronin
       
       #
       # The `REVERSE` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #   The input String to reverse.
       #
       # @return [Function]
       #   The new function.
@@ -857,6 +1062,12 @@ module Ronin
       #
       # The `RIGHT` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #   The input String to extract from.
+      #
+      # @param [Integer] length
+      #   The desired number of characters to extract.
+      #
       # @return [Function]
       #   The new function.
       #
@@ -866,6 +1077,15 @@ module Ronin
 
       #
       # The `RPAD` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #   The original String to pad.
+      #
+      # @param [Integer] length
+      #   The desired length of the String.
+      #
+      # @param [Field, Function, Symbol, String] pad_string
+      #   The String to pad with.
       #
       # @return [Function]
       #   The new function.
@@ -877,6 +1097,9 @@ module Ronin
       #
       # The `RTRIM` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #   The original String to trim.
+      #
       # @return [Function]
       #   The new function.
       #
@@ -886,6 +1109,9 @@ module Ronin
 
       #
       # The `SOUNDEX` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #   The input string.
       #
       # @return [Function]
       #   The new function.
@@ -897,15 +1123,21 @@ module Ronin
       #
       # The `SPACE` function.
       #
+      # @param [Field, Function, Symbol, Numeric] number
+      #
       # @return [Function]
       #   The new function.
       #
-      def space(n)
-        Function.new(:SPACE,n)
+      def space(number)
+        Function.new(:SPACE,number)
       end
 
       #
       # The `STRCMP` function.
+      #
+      # @param [Field, Function, Symbol, String] string1
+      #
+      # @param [Field, Function, Symbol, String] string2
       #
       # @return [Function]
       #   The new function.
@@ -916,6 +1148,15 @@ module Ronin
 
       #
       # The `SUBSTRING` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #   The original string.
+      #
+      # @param [Integer] position
+      #   The beginning index of the substring.
+      #
+      # @param [Integer, nil] length
+      #   The desired length of the substring.
       #
       # @return [Function]
       #   The new function.
@@ -929,6 +1170,15 @@ module Ronin
       #
       # The `SUBSTRING_INDEX` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #   The string to search within.
+      #
+      # @param [Field, Function, Symbol, String] deliminator
+      #   The deliminator string to search for.
+      #
+      # @param [Integer] count
+      #   The number of times to search for the deliminator.
+      #
       # @return [Function]
       #   The new function.
       #
@@ -939,15 +1189,15 @@ module Ronin
       #
       # The `TRIM` function.
       #
-      # @param [String, Hash] string_or_options
+      # @param [String, Hash{Symbol => Object}] string_or_options
       #
-      # @option string_or_options [String] :both
+      # @option string_or_options [Field, Function, Symbol, String] :both
       #
-      # @option string_or_options [String] :leading
+      # @option string_or_options [Field, Function, Symbol, String] :leading
       #
-      # @option string_or_options [String] :trailing
+      # @option string_or_options [Field, Function, Symbol, String] :trailing
       #
-      # @option string_or_options [String] :from
+      # @option string_or_options [Field, Function, Symbol, String] :from
       #
       # @return [Function]
       #   The new function.
@@ -959,6 +1209,9 @@ module Ronin
       #
       # The `UCASE` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #   The string argument for `UCASE`.
+      #
       # @return [Function]
       #   The new function.
       #
@@ -968,6 +1221,9 @@ module Ronin
 
       #
       # The `UNHEX` function.
+      #
+      # @param [Field, Function, Symbol, String] string
+      #   The string argument for `UNHEX`.
       #
       # @return [Function]
       #   The new function.
@@ -979,6 +1235,9 @@ module Ronin
       #
       # The `UPPER` function.
       #
+      # @param [Field, Function, Symbol, String] string
+      #   The string argument for `UPPER`.
+      #
       # @return [Function]
       #   The new function.
       #
@@ -989,7 +1248,7 @@ module Ronin
       #
       # The `SLEEP` function.
       #
-      # @param [Object] secs
+      # @param [Numeric] secs
       #   The number of seconds to sleep for.
       #
       # @return [Function]
