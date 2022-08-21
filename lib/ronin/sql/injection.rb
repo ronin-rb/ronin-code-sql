@@ -48,9 +48,13 @@ module Ronin
       }
 
       # The type of element to escape out of
+      #
+      # @return [:integer, :decimal, :string, :column]
       attr_reader :escape
 
       # The expression that will be injected
+      #
+      # @return [InjectionExpr]
       attr_reader :expression
 
       #
