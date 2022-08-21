@@ -77,6 +77,15 @@ module Ronin
       # @param [Array] arguments
       #   Additional mehtod arguments.
       #
+      # @return [Field]
+      #   The sub-field for the given name.
+      #
+      # @raise [ArgumentError]
+      #   The method missing call was given additional arguments.
+      #
+      # @raise [NoMethodError]
+      #   Cannot access a column from another column.
+      #
       # @example
       #   db.users
       #
