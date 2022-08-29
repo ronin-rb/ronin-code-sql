@@ -177,6 +177,7 @@ puts sqli.to_sql(space: '/**/')
 ## Requirements
 
 * [Ruby] >= 3.0.0
+* [ronin-support] ~> 1.0
 
 ## Install
 
@@ -208,3 +209,4 @@ along with ronin-sql.  If not, see <https://www.gnu.org/licenses/>.
 [SQLi]: http://en.wikipedia.org/wiki/SQL_injection
 
 [Ruby]: http://www.ruby-lang.org
+[ronin-support]: https://github.com/ronin-rb/ronin-support#readme
