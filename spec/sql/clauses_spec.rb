@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'sql/clause_examples'
-require 'ronin/sql/clause'
-require 'ronin/sql/clauses'
+require 'ronin/code/sql/clause'
+require 'ronin/code/sql/clauses'
 
-describe Ronin::SQL::Clauses do
+describe Ronin::Code::SQL::Clauses do
   subject { Object.new.extend(described_class) }
 
   let(:clause) { subject.clauses.last }

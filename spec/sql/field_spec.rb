@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/sql/field'
+require 'ronin/code/sql/field'
 
-describe Ronin::SQL::Field do
+describe Ronin::Code::SQL::Field do
   describe "#initialize" do
     it "should convert name to a String" do
       expect(described_class.new(:table).name).to eq('table')

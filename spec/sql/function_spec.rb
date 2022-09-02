@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-require 'ronin/sql/function'
+require 'ronin/code/sql/function'
 
-describe Ronin::SQL::Function do
+describe Ronin::Code::SQL::Function do
   describe "#initialize" do
     context "with no arguments" do
       subject { described_class.new(:f) }

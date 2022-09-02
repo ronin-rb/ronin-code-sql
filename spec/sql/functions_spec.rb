@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'sql/function_examples'
-require 'ronin/sql/functions'
-require 'ronin/sql/binary_expr'
+require 'ronin/code/sql/functions'
+require 'ronin/code/sql/binary_expr'
 
-describe Ronin::SQL::Functions do
+describe Ronin::Code::SQL::Functions do
   subject { Object.new.extend(described_class) }
 
   describe "#count" do
@@ -91,7 +91,7 @@ describe Ronin::SQL::Functions do
   include_examples "Function", :octet_length, ["55"]
   include_examples "Function", :ord, ["55"]
   include_examples "Function", :position, [
-    Ronin::SQL::BinaryExpr.new('55',:IN,:name)
+    Ronin::Code::SQL::BinaryExpr.new('55',:IN,:name)
   ]
   include_examples "Function", :quote, ["hello"]
   include_examples "Function", :repeat, ["A", 100]

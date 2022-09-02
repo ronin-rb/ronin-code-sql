@@ -1,9 +1,9 @@
 require 'spec_helper'
-require 'ronin/sql/operators'
+require 'ronin/code/sql/operators'
 require 'sql/binary_expr_examples'
 require 'sql/unary_expr_examples'
 
-describe Ronin::SQL::Operators do
+describe Ronin::Code::SQL::Operators do
   subject { Object.new.extend(described_class) }
 
   let(:operand) { 1 }

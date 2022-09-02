@@ -1,12 +1,12 @@
 require 'spec_helper'
-require 'ronin/sql/unary_expr'
+require 'ronin/code/sql/unary_expr'
 
 shared_examples_for "UnaryExpr" do |method,operator=method|
   describe "##{method}" do
     let(:expr) { subject.send(method) }
 
     it "should be a UnaryExpr" do
-      expect(expr).to be_kind_of(Ronin::SQL::UnaryExpr)
+      expect(expr).to be_kind_of(Ronin::Code::SQL::UnaryExpr)
     end
 
     it "should set the operand" do

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'ronin/sql/binary_expr'
+require 'ronin/code/sql/binary_expr'
 
-describe Ronin::SQL::BinaryExpr do
+describe Ronin::Code::SQL::BinaryExpr do
 end

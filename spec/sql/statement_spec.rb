@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/sql/statement'
+require 'ronin/code/sql/statement'
 
-describe Ronin::SQL::Statement do
+describe Ronin::Code::SQL::Statement do
   describe "#initialize" do
     context "when given an argument" do
       let(:argument) { 1 }

@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/sql/statement_list'
+require 'ronin/code/sql/statement_list'
 
-describe Ronin::SQL::StatementList do
+describe Ronin::Code::SQL::StatementList do
   describe "#initialize" do
     context "when given a block" do
       subject do
@@ -29,7 +29,7 @@ describe Ronin::SQL::StatementList do
   describe "#<<" do
     let(:keyword) { :SELECT }
 
-    before { subject << Ronin::SQL::Statement.new(keyword) }
+    before { subject << Ronin::Code::SQL::Statement.new(keyword) }
 
     it "should append a new statement" do
       expect(subject.statements.last.keyword).to eq(keyword)

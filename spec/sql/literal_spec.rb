@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'ronin/sql/literal'
+require 'ronin/code/sql/literal'
 
-describe Ronin::SQL::Literal do
+describe Ronin::Code::SQL::Literal do
 end

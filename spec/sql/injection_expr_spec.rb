@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/sql/injection_expr'
+require 'ronin/code/sql/injection_expr'
 
-describe Ronin::SQL::InjectionExpr do
+describe Ronin::Code::SQL::InjectionExpr do
   let(:initial_value) { 1 }
 
   subject { described_class.new(initial_value) }

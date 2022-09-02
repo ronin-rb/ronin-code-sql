@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'ronin/sql/unary_expr'
+require 'ronin/code/sql/unary_expr'
 
-describe Ronin::SQL::UnaryExpr do
+describe Ronin::Code::SQL::UnaryExpr do
 end

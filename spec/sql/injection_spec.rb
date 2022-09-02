@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'ronin/sql/injection'
+require 'ronin/code/sql/injection'
 
-describe Ronin::SQL::Injection do
+describe Ronin::Code::SQL::Injection do
   describe "PLACE_HOLDERS" do
     subject { described_class::PLACE_HOLDERS }
 
