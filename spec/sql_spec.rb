@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'ronin/sql/sql'
+require 'ronin/sql'
 
 describe SQL do
   subject { Object.new.extend(described_class) }
