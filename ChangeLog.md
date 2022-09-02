@@ -89,7 +89,7 @@
 
 * Initial release.
 * Supports SQL code generation.
-* Supports obfustication of SQL code.
+* Supports obfuscation of SQL code.
 * Supports SQL Injection code generation.
 
 [Ruby]: http://www.ruby-lang.org/
