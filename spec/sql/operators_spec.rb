@@ -3,7 +3,7 @@ require 'ronin/sql/operators'
 require 'sql/binary_expr_examples'
 require 'sql/unary_expr_examples'
 
-describe SQL::Operators do
+describe Ronin::SQL::Operators do
   subject { Object.new.extend(described_class) }
 
   let(:operand) { 1 }

@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'ronin/sql/literals'
 
-describe SQL::Literals do
+describe Ronin::SQL::Literals do
   subject { Object.new.extend(described_class) }
 
   describe "#null" do
     it "should return a Literal" do
-      expect(subject.null).to be_kind_of(SQL::Literal)
+      expect(subject.null).to be_kind_of(Ronin::SQL::Literal)
     end
 
     it "should have the value of :NULL" do
@@ -16,7 +16,7 @@ describe SQL::Literals do
 
   describe "#int" do
     it "should return a Literal" do
-      expect(subject.int(5)).to be_kind_of(SQL::Literal)
+      expect(subject.int(5)).to be_kind_of(Ronin::SQL::Literal)
     end
 
     it "should convert the value to an Integer" do
@@ -26,7 +26,7 @@ describe SQL::Literals do
 
   describe "#float" do
     it "should return a Literal" do
-      expect(subject.float(1.5)).to be_kind_of(SQL::Literal)
+      expect(subject.float(1.5)).to be_kind_of(Ronin::SQL::Literal)
     end
 
     it "should convert the value to a Float" do
@@ -36,7 +36,7 @@ describe SQL::Literals do
 
   describe "#float" do
     it "should return a Literal" do
-      expect(subject.string('A')).to be_kind_of(SQL::Literal)
+      expect(subject.string('A')).to be_kind_of(Ronin::SQL::Literal)
     end
 
     it "should convert the value to a String" do

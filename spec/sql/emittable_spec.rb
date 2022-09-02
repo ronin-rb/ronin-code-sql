@@ -2,12 +2,12 @@ require 'spec_helper'
 require 'ronin/sql/emittable'
 require 'ronin/sql/literal'
 
-describe SQL::Emittable do
-  subject { SQL::Literal.new('hello') }
+describe Ronin::SQL::Emittable do
+  subject { Ronin::SQL::Literal.new('hello') }
 
   describe "#emitter" do
-    it "should return an SQL::Emitter" do
-      expect(subject.emitter).to be_kind_of(SQL::Emitter)
+    it "should return an Ronin::SQL::Emitter" do
+      expect(subject.emitter).to be_kind_of(Ronin::SQL::Emitter)
     end
 
     it "should accept Emitter options" do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'ronin/sql/fields'
 
-describe SQL::Fields do
+describe Ronin::SQL::Fields do
   subject { Object.new.extend(described_class) }
 
   describe "#respond_to_missing?" do

@@ -3,7 +3,7 @@ require 'sql/statement_examples'
 require 'ronin/sql/statement'
 require 'ronin/sql/statements'
 
-describe SQL::Statements do
+describe Ronin::SQL::Statements do
   subject { Object.new.extend(described_class) }
 
   describe "#statement" do

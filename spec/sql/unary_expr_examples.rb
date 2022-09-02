@@ -6,7 +6,7 @@ shared_examples_for "UnaryExpr" do |method,operator=method|
     let(:expr) { subject.send(method) }
 
     it "should be a UnaryExpr" do
-      expect(expr).to be_kind_of(SQL::UnaryExpr)
+      expect(expr).to be_kind_of(Ronin::SQL::UnaryExpr)
     end
 
     it "should set the operand" do

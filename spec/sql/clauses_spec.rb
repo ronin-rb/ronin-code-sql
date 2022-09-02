@@ -3,7 +3,7 @@ require 'sql/clause_examples'
 require 'ronin/sql/clause'
 require 'ronin/sql/clauses'
 
-describe SQL::Clauses do
+describe Ronin::SQL::Clauses do
   subject { Object.new.extend(described_class) }
 
   let(:clause) { subject.clauses.last }

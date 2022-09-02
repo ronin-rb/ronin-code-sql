@@ -7,7 +7,7 @@ shared_examples_for "BinaryExpr" do |method,operator=method|
     let(:expr)    { subject.send(method,operand) }
 
     it "should be a BinaryExpr" do
-      expect(expr).to be_kind_of(SQL::BinaryExpr)
+      expect(expr).to be_kind_of(Ronin::SQL::BinaryExpr)
     end
 
     it "should set the left-hand side operand" do
