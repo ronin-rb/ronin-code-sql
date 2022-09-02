@@ -1,26 +1,26 @@
 ### 1.1.0 / 2013-01-22
 
-* Added {Ronin::SQL::InjectionExpr}, so that statements specified within
+* Added `Ronin::SQL::InjectionExpr`, so that statements specified within
   `and { }`, `or { }` blocks would not be appending to the
-  {Ronin::SQL::Injection} object.
-* Made {Ronin::SQL::Field} emittable.
-* Added {Ronin::SQL::Emitter#emit_argument}, so that any sub-statements will
+  `Ronin::SQL::Injection` object.
+* Made `Ronin::SQL::Field` emittable.
+* Added `Ronin::SQL::Emitter#emit_argument`, so that any sub-statements will
   be wrapped in `( )`.
-* Improved {Ronin::SQL::Emitter#emit_field}.
-* Fixed {Ronin::SQL::Emitter#emit} to pass {Ronin::SQL::Function}s to
-  {Ronin::SQL::Emitter#emit_function}.
+* Improved `Ronin::SQL::Emitter#emit_field`.
+* Fixed `Ronin::SQL::Emitter#emit` to pass `Ronin::SQL::Function`s to
+  `Ronin::SQL::Emitter#emit_function`.
 
 ### 1.0.0 / 2013-01-21
 
 * Require [Ruby] >= 1.9.1.
 * No longer require ronin.
 * No longer require ronin-web.
-* Added {String#sql_unescape}.
-* Moved {String#sql_escape}, {String#sql_encode} and {String#sql_decode}
+* Added `String#sql_unescape`.
+* Moved `String#sql_escape`, `String#sql_encode` and `String#sql_decode`
   from [ronin-support].
-* Refactored the {Ronin::SQL SQL} DSL to be more like
+* Refactored the `Ronin::SQL SQL` DSL to be more like
   [ARel](https://github.com/rails/arel#readme).
-  * Moved the DSL from `Ronin::Code::SQL` into {Ronin::SQL}.
+  * Moved the DSL from `Ronin::Code::SQL` into `Ronin::SQL`.
 * Removed `Ronin::SQL::Error`.
 * Removed `String#sql_error`.
 * Removed `String#sql_error?`.
@@ -45,7 +45,7 @@
 * Require ronin >= 0.2.4.
 * Require ronin-web >= 0.1.3.
 * Use Ronin::Scanners::Scanner to define the scanner for finding
-  Ronin::SQL::Injection objects for URI::HTTP urls.
+  `Ronin::SQL::Injection` objects for URI::HTTP urls.
 * Added more specs.
 
 ### 0.2.2 / 2009-01-22
@@ -61,8 +61,8 @@
 
 ### 0.2.0 / 2009-01-08
 
-* Require Ronin >= 0.1.3.
-* Refactored Ronin::Code::SQL.
+* Require ronin >= 0.1.3.
+* Refactored `Ronin::Code::SQL`.
   * Implemented a token emitter system.
   * Support common SQL expression modifiers.
   * Support common SQL clauses.
@@ -75,15 +75,15 @@
     * has_table?(table): `AND (SELECT FROM table count(*) == 1)`
     * uses_column?(column): `GROUP BY column HAVING 1 = 1`
     * uses_table?(table): `OR table IS NOT NULL`
-* Removed references to Ronin::Vulnerable.
+* Removed references to `Ronin::Vulnerable`.
 * Added more specs:
-  * Specs for most of Ronin::Code::SQL.
-  * Specs on Ronin::SQL::Error and the SQL encoding/decoding extensions for
+  * Specs for most of `Ronin::Code::SQL`.
+  * Specs on `Ronin::SQL::Error` and the SQL encoding/decoding extensions for
     the String class.
 
 ### 0.1.1 / 2008-09-28
 
-* Trivial bug fix to URI::HTTP#sql_errors.
+* Trivial bug fix to `URI::HTTP#sql_errors`.
 
 ### 0.1.0 / 2007-12-23
 
