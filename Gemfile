@@ -9,11 +9,12 @@ gem 'ronin-support',	       '~> 1.0', github: "ronin-rb/ronin-support",
                                        branch: '1.0.0'
 group :development do
   gem 'rake'
-  gem 'rubygems-tasks', '~> 0.1'
+  gem 'rubygems-tasks',  '~> 0.1'
 
-  gem 'rspec',          '~> 3.0'
+  gem 'rspec',           '~> 3.0'
 
-  gem 'kramdown',       '~> 2.3'
-  gem 'redcarpet',      platform: :mri
-  gem 'yard',           '~> 0.9'
+  gem 'kramdown',        '~> 2.3'
+  gem 'redcarpet',       platform: :mri
+  gem 'yard',            '~> 0.9'
+  gem 'yard-spellcheck', require: false
 end
