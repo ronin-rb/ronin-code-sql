@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 gemspec
 
-gem 'jruby-openssl',	'~> 0.7', platform: :jruby
+platform :jruby do
+  gem 'jruby-openssl',	'~> 0.7'
+end
 
 # Library dependencies
 gem 'ronin-support',	       '~> 1.0', github: "ronin-rb/ronin-support",
@@ -19,6 +21,6 @@ group :development do
   gem 'yard-spellcheck', require: false
 
   gem 'dead_end',        require: false
-  gem 'sord',            require: false
-  gem 'stackprof',       require: false
+  gem 'sord',            require: false, platform: :mri
+  gem 'stackprof',       require: false, platform: :mri
 end
