@@ -1,2 +1,3 @@
 require 'rspec'
-require 'ronin/code/sql/version'
+require 'simplecov'
+SimpleCov.start
