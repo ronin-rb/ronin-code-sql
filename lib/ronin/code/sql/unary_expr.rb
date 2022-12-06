@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 #
 # ronin-code-sql - A Ruby DSL for crafting SQL Injections.
 #
