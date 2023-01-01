@@ -1,3 +1,12 @@
+### 2.0.0 / 2023-XX-XX
+
+* Require `ruby` >= 3.0.0.
+* Added [ronin-support] ~> 0.1 as a dependency.
+* Renmaed `ronin/formatting/sql` to `ronin/support/encoding/sql` and moved it
+  back into [ronin-support].
+
+[ronin-support]: https://github.com/ronin-rb/ronin-support#readme
+
 ### 1.1.0 / 2013-01-22
 
 * Added `Ronin::SQL::InjectionExpr`, so that statements specified within
