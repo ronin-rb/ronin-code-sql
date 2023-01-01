@@ -7,8 +7,9 @@ platform :jruby do
 end
 
 # Library dependencies
-gem 'ronin-support',	       '~> 1.0', github: "ronin-rb/ronin-support",
-                                       branch: '1.0.0'
+# gem 'ronin-support',	       '~> 1.0', github: "ronin-rb/ronin-support",
+#                                        branch: 'main'
+
 group :development do
   gem 'rake'
   gem 'rubygems-tasks',  '~> 0.1'
