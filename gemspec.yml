@@ -10,7 +10,7 @@ homepage: https://github.com/ronin-rb/ronin-code-sql#readme
 has_yard: true
 
 metadata:
-  documentation_uri: https://rubydoc.info/gems/ronin-code-sql
+  documentation_uri: https://ronin-rb.dev/docs/ronin-code-sql
   source_code_uri:   https://github.com/ronin-rb/ronin-code-sql
   bug_tracker_uri:   https://github.com/ronin-rb/ronin-code-sql/issues
   changelog_uri:     https://github.com/ronin-rb/ronin-code-sql/blob/master/ChangeLog.md
