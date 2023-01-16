@@ -75,7 +75,7 @@ module Ronin
         #   The sub-field name.
         #
         # @param [Array] arguments
-        #   Additional mehtod arguments.
+        #   Additional method arguments.
         #
         # @return [Field]
         #   The sub-field for the given name.
