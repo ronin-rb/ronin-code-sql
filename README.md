@@ -122,13 +122,13 @@ puts sqli
 # 1 AND (SELECT COUNT(*) FROM users)=1
 ```
 
-Create errors by using non-existant tables:
+Create errors by using non-existent tables:
 
 ```ruby
 sqli = Ronin::Code::SQL::Injection.new(escape: :string)
-sqli.and { non_existant_table == '1' }
+sqli.and { non_existent_table == '1' }
 puts sqli
-# 1' AND non_existant_table='1
+# 1' AND non_existent_table='1
 ```
 
 Dumping all values of a column:
