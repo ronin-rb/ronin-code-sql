@@ -22,7 +22,7 @@ module Ronin
   module Code
     module SQL
       # Ronin SQL version
-      VERSION = '2.0.0.beta1'
+      VERSION = '2.0.0'
     end
   end
 end
