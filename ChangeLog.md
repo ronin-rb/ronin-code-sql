@@ -1,4 +1,4 @@
-### 2.0.0 / 2023-XX-XX
+### 2.0.0 / 2023-02-01
 
 * Require `ruby` >= 3.0.0.
 * Added [ronin-support] ~> 0.1 as a dependency.
