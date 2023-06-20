@@ -145,9 +145,10 @@ module Ronin
           when :string, :list
             if (terminate || (sql[0,1] != sql[-1,1]))
               # terminate the expression
-              sql << ';--'
+              sql << ';' << emitter.emit_comment
             else
-              sql = sql[0..-2]
+              comment_len = emitter.emit_comment.length
+              sql = sql[0..-comment_len]
             end
 
             # balance the quotes
@@ -155,7 +156,7 @@ module Ronin
           else
             if terminate
               # terminate the expression
-              sql << ';--'
+              sql << ';' << emitter.emit_comment
             end
           end
 

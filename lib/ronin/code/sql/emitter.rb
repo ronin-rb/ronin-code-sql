@@ -133,6 +133,16 @@ module Ronin
         end
 
         #
+        # Emits a SQL comment.
+        #
+        # @return [String]
+        #   The raw SQL.
+        #
+        def emit_comment
+          '--'
+        end
+
+        #
         # Emits a SQL Integer.
         #
         # @param [Integer] int
