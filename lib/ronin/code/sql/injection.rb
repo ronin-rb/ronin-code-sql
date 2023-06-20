@@ -147,8 +147,7 @@ module Ronin
               # terminate the expression
               sql << ';' << emitter.emit_comment
             else
-              comment_len = emitter.emit_comment.length
-              sql = sql[0..-comment_len]
+              sql = sql[0..-2]
             end
 
             # balance the quotes
