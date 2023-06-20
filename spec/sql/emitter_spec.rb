@@ -107,6 +107,12 @@ describe Ronin::Code::SQL::Emitter do
     end
   end
 
+  describe "#emit_comment" do
+    it "should emit a String" do
+      expect(subject.emit_comment).to eq('--')
+    end
+  end
+
   describe "#emit_integer" do
     it "should emit a String" do
       expect(subject.emit_integer(10)).to eq('10')
