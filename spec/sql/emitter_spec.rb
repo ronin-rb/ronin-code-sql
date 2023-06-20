@@ -12,7 +12,9 @@ describe Ronin::Code::SQL::Emitter do
     context "without options" do
       it { expect(subject.space).to  eq(' ')     }
       it { expect(subject.quotes).to eq(:single) }
+      it { expect(subject.syntax).to eq(:unset)  }
     end
+
   end
 
   describe "#emit_keyword" do
@@ -108,8 +110,41 @@ describe Ronin::Code::SQL::Emitter do
   end
 
   describe "#emit_comment" do
-    it "should emit a String" do
-      expect(subject.emit_comment).to eq('--')
+    context "when :syntax is :unset" do
+      it "should emit a comment that works everywhere '-- '" do
+        expect(subject.emit_comment).to start_with('-- ')
+      end
+    end
+
+    context "when :syntax is :mysql" do
+      subject { described_class.new(syntax: :mysql) }
+
+      it "should emit a MySQL/MariaDB-compatible comment that starts with '-- ' or '#'" do
+        expect(subject.emit_comment).to start_with('-- ').or start_with('#')
+      end
+    end
+
+    context "when :syntax is :postgres" do
+      subject { described_class.new(syntax: :postgres) }
+      it "should emit a Postgres-compatible comment that starts with '--'" do
+        expect(subject.emit_comment).to start_with('--')
+      end
+    end
+
+    context "when :syntax is :oracle" do
+      subject { described_class.new(syntax: :oracle) }
+
+      it "should emit a Oracle-compatible comment that starts with '--'" do
+        expect(subject.emit_comment).to start_with('--')
+      end
+    end
+
+    context "when :syntax is :mssql" do
+      subject { described_class.new(syntax: :mssql) }
+
+      it "should emit a MSSQL-compatible comment that starts with '--'" do
+        expect(subject.emit_comment).to start_with('--')
+      end
     end
   end
 

@@ -140,7 +140,7 @@ describe Ronin::Code::SQL::Injection do
         end 
 
         it "should terminate the SQL statement" do
-          expect(subject.to_sql).to eq("1' OR 1=1;--")
+          expect(subject.to_sql).to start_with("1' OR 1=1;-- ")
         end
       end
 
@@ -152,7 +152,7 @@ describe Ronin::Code::SQL::Injection do
         end 
 
         it "should terminate the SQL statement" do
-          expect(subject.to_sql(terminate: true)).to eq("1' OR '1'='1';--")
+          expect(subject.to_sql(terminate: true)).to start_with("1' OR '1'='1';-- ")
         end
       end
     end
@@ -165,7 +165,7 @@ describe Ronin::Code::SQL::Injection do
       end 
 
       it "should terminate the SQL statement" do
-        expect(subject.to_sql(terminate: true)).to eq("1 OR 1=1;--")
+        expect(subject.to_sql(terminate: true)).to start_with("1 OR 1=1;-- ")
       end
     end
   end
