@@ -42,6 +42,9 @@ module Ronin
         # Generate DB-specific code
         attr_reader :syntax
 
+        # String to use as 'comment' or :auto to let the emitter decide
+        attr_reader :comment
+
         #
         # Initializes the SQL Emitter.
         #
@@ -51,18 +54,23 @@ module Ronin
         # @param [:single, :double] quotes
         #   Type of quotes to use for Strings.
         #
+        # @param [:unset, :mysql, :postgres, :oracle, :mssql] syntax
+        #   Syntax used during code-generation
+        #
+        # @param [:auto, String] comment
+        #   String to use as the comment when terminating injection string
+        #
         # @param [Hash{Symbol => Object}] kwargs
         #   Emitter options.
         #
         # @option kwargs [:lower, :upper, :random, nil] :case
         #   Case for keywords.
         #
-        # @option kwargs [:unset, :mysql, :postgres, :oracle, :mssql] :syntax
-        #   Syntax used during code-generation
-        #
-        def initialize(space: ' ', quotes: :single, **kwargs)
+
+        def initialize(space: ' ', quotes: :single, syntax: :unset, comment: :auto, **kwargs)
           @case   = kwargs[:case] # HACK: because `case` is a ruby keyword
-          @syntax = syntax || :unset
+          @syntax = syntax
+          @comment = comment
           @space  = space
           @quotes = quotes
         end
@@ -146,8 +154,9 @@ module Ronin
         #   The raw SQL.
         #
         def emit_comment
-          # -- works everywhere no need to include syntax-dependent code
-          '-- '
+          return '-- ' if @comment == :auto # -- works everywhere no need to include syntax-dependent code
+
+          @comment # Comment provided by user - use it
         end
 
         #
