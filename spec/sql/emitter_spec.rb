@@ -12,8 +12,8 @@ describe Ronin::Code::SQL::Emitter do
     context "without options" do
       it { expect(subject.space).to  eq(' ')     }
       it { expect(subject.quotes).to eq(:single) }
-      it { expect(subject.syntax).to eq(:unset)  }
-      it { expect(subject.comment).to eq(:auto)  }
+      it { expect(subject.syntax).to be_nil  }
+      it { expect(subject.comment).to be_nil  }
     end
 
     context "provided :quotes" do
