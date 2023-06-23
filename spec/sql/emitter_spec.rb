@@ -12,6 +12,40 @@ describe Ronin::Code::SQL::Emitter do
     context "without options" do
       it { expect(subject.space).to  eq(' ')     }
       it { expect(subject.quotes).to eq(:single) }
+      it { expect(subject.syntax).to be(nil) }
+      it { expect(subject.comment).to be(nil) }
+    end
+
+    context "provided :quotes" do
+      subject { described_class.new(quotes: 'test_quotes') }
+
+      it 'is expected to hold it' do
+        expect(subject.quotes).to eq('test_quotes')
+      end
+    end
+
+    context "provided :space" do
+      subject { described_class.new(space: '# test-space #') }
+
+      it 'is expected to hold it' do
+        expect(subject.space).to eq('# test-space #')
+      end
+    end
+
+    context "provided :syntax" do
+      subject { described_class.new(syntax: :test_syntax) }
+
+      it 'is expected to hold it' do
+        expect(subject.syntax).to eq(:test_syntax)
+      end
+    end
+
+    context "provided :comment" do
+      subject { described_class.new(comment: '<!-- test comment ') }
+
+      it 'is expected to hold it' do
+        expect(subject.comment).to eq('<!-- test comment ')
+      end
     end
   end
 
@@ -104,6 +138,56 @@ describe Ronin::Code::SQL::Emitter do
   describe "#emit_true" do
     it "should emit 1=1" do
       expect(subject.emit_true).to eq('1=1')
+    end
+  end
+
+  describe "#emit_comment" do
+    context "when :comment is set to specific value" do
+      let(:custom_comment) { '# -- /* custom comment ' }
+      subject { described_class.new(comment: custom_comment) }
+
+      it 'should use that value' do
+        expect(subject.emit_comment).to eq(custom_comment)
+      end
+    end
+
+    context "when :comment is not set(defaulted to :auto)" do
+      context "when :syntax is :unset" do
+        it "should emit a comment that works everywhere '-- '" do
+          expect(subject.emit_comment).to start_with('-- ')
+        end
+      end
+
+      context "when :syntax is :mysql" do
+        subject { described_class.new(syntax: :mysql) }
+
+        it "should emit a MySQL/MariaDB-compatible comment that starts with '-- ' or '#'" do
+          expect(subject.emit_comment).to start_with('-- ').or start_with('#')
+        end
+      end
+
+      context "when :syntax is :postgres" do
+        subject { described_class.new(syntax: :postgres) }
+        it "should emit a Postgres-compatible comment that starts with '--'" do
+          expect(subject.emit_comment).to start_with('--')
+        end
+      end
+
+      context "when :syntax is :oracle" do
+        subject { described_class.new(syntax: :oracle) }
+
+        it "should emit a Oracle-compatible comment that starts with '--'" do
+          expect(subject.emit_comment).to start_with('--')
+        end
+      end
+
+      context "when :syntax is :mssql" do
+        subject { described_class.new(syntax: :mssql) }
+
+        it "should emit a MSSQL-compatible comment that starts with '--'" do
+          expect(subject.emit_comment).to start_with('--')
+        end
+      end
     end
   end
 
