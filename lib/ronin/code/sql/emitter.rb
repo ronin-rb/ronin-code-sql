@@ -31,18 +31,28 @@ module Ronin
       class Emitter
 
         # The case to use when emitting keywords
+        #
+        # @return [:lower, :upper, :random, nil]
         attr_reader :case
 
         # String to use for white-space
+        #
+        # @return [String]
         attr_reader :space
 
         # Type of String quotes to use
+        #
+        # @return [:single, :double]
         attr_reader :quotes
 
         # Generate DB-specific code
+        #
+        # @return [nil, :mysql, :postgres, :oracle, :mssql]
         attr_reader :syntax
 
         # String to use as 'comment' or `nil` to let the emitter decide
+        #
+        # @return [String, nil]
         attr_reader :comment
 
         #
