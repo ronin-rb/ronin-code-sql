@@ -30,7 +30,6 @@ module Ronin
     # @see http://en.wikipedia.org/wiki/SQL_injection
     #
     module SQL
-
       #
       # Creates a new SQL statement list.
       #
@@ -90,7 +89,6 @@ module Ronin
       def sqli(**kwargs,&block)
         Injection.new(**kwargs,&block)
       end
-
     end
   end
 end

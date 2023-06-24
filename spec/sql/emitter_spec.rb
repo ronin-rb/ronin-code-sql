@@ -58,7 +58,7 @@ describe Ronin::Code::SQL::Emitter do
       subject { described_class.new(case: :random) }
 
       it "should contain at least one upper-case character" do
-        expect(subject.emit_keyword(keyword)).to match(/[SELECT]/)
+        expect(subject.emit_keyword(keyword)).to match(/\ASELECT\z/i)
       end
     end
 
@@ -239,7 +239,7 @@ describe Ronin::Code::SQL::Emitter do
       end
 
       context "when the operator is symbolic" do
-        let(:expr) { Ronin::Code::SQL::UnaryExpr.new(:"-",1) }
+        let(:expr) { Ronin::Code::SQL::UnaryExpr.new(:-,1) }
 
         it "should emit the operand and operator without spaces" do
           expect(subject.emit_expression(expr)).to eq('-1')
@@ -421,7 +421,7 @@ describe Ronin::Code::SQL::Emitter do
     context "with custom :space" do
       subject { described_class.new(space: '/**/') }
 
-      let(:clause)   { Ronin::Code::SQL::Clause.new(:LIMIT,100) }
+      let(:clause) { Ronin::Code::SQL::Clause.new(:LIMIT,100) }
 
       it "should emit the custom white-space deliminater" do
         expect(subject.emit_clause(clause)).to eq('LIMIT/**/100')

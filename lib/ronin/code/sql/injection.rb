@@ -151,7 +151,7 @@ module Ronin
             end
 
             # balance the quotes
-            sql = sql[1..-1]
+            sql = sql[1..]
           else
             if terminate
               # terminate the expression

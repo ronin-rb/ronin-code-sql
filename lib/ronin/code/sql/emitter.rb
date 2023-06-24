@@ -70,36 +70,37 @@ module Ronin
         #   The raw SQL.
         #
         def emit_keyword(keyword)
-          keyword = Array(keyword).join(@space)
+          string = Array(keyword).join(@space)
 
           case @case
-          when :upper  then keyword.upcase
-          when :lower  then keyword.downcase
+          when :upper  then string.upcase
+          when :lower  then string.downcase
           when :random
-            keyword.tap do
-              (keyword.length / 2).times do
-                index = rand(keyword.length)
-                keyword[index] = keyword[index].swapcase
+            string.tap do
+              (string.length / 2).times do
+                index = rand(string.length)
+
+                string[index] = string[index].swapcase
               end
             end
           else
-            keyword
+            string
           end
         end
 
         #
         # Emits a SQL operator.
         #
-        # @param [Array<Symbol>, Symbol] op
+        # @param [Array<Symbol>, Symbol] operator
         #   The operator symbol.
         #
         # @return [String]
         #   The raw SQL.
         #
-        def emit_operator(op)
-          case op
-          when /^\W+$/          then op.to_s
-          else                       emit_keyword(op)
+        def emit_operator(operator)
+          case operator
+          when /^\W+$/ then operator.to_s
+          else              emit_keyword(operator)
           end
         end
 
@@ -200,7 +201,7 @@ module Ronin
         #   The raw SQL.
         #
         def emit_list(list)
-          '(' + list.map { |element| emit(element) }.join(',') + ')'
+          "(#{list.map { |element| emit(element) }.join(',')})"
         end
 
         #
@@ -250,7 +251,8 @@ module Ronin
 
           case expr
           when BinaryExpr
-            left, right = emit_argument(expr.left), emit_argument(expr.right)
+            left  = emit_argument(expr.left)
+            right = emit_argument(expr.right)
 
             case op
             when /^\W+$/ then "#{left}#{op}#{right}"
@@ -366,16 +368,16 @@ module Ronin
           sql = emit_keyword(stmt.keyword)
 
           unless stmt.argument.nil?
-            case stmt.argument
-            when Array
-              sql << @space << if stmt.argument.length == 1
+            sql << @space << case stmt.argument
+                             when Array
+                               if stmt.argument.length == 1
                                  emit_argument(stmt.argument[0])
                                else
                                  emit_list(stmt.argument)
                                end
-            else
-              sql << @space << emit_argument(stmt.argument)
-            end
+                             else
+                               emit_argument(stmt.argument)
+                             end
           end
 
           unless stmt.clauses.empty?

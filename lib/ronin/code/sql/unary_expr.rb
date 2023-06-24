@@ -28,9 +28,31 @@ module Ronin
       #
       # @api semipublic
       #
-      class UnaryExpr < Struct.new(:operator,:operand)
+      class UnaryExpr
 
         include Emittable
+
+        # The unary operator symbol.
+        #
+        # @return [Symbol]
+        attr_reader :operator
+
+        # The unary operand.
+        #
+        # @return [Statement, BinaryExpr, Function, Field, Literal]
+        attr_reader :operand
+
+        #
+        # Initializes the unary expression.
+        #
+        # @param [Symbol] operator
+        #
+        # @param [Statement, BinaryExpr, Function, Field, Literal] operand
+        #
+        def initialize(operator,operand)
+          @operator = operator
+          @operand  = operand
+        end
 
       end
     end

@@ -125,7 +125,7 @@ describe Ronin::Code::SQL::Injection do
           sqli = described_class.new(escape: :string)
           sqli.or { string(1) == string(1) }
           sqli
-        end 
+        end
 
         it "should balance the quotes" do
           expect(subject.to_sql).to eq("1' OR '1'='1")
@@ -137,7 +137,7 @@ describe Ronin::Code::SQL::Injection do
           sqli = described_class.new(escape: :string)
           sqli.or { int(1) == int(1) }
           sqli
-        end 
+        end
 
         it "should terminate the SQL statement" do
           expect(subject.to_sql).to eq("1' OR 1=1;--")
@@ -149,7 +149,7 @@ describe Ronin::Code::SQL::Injection do
           sqli = described_class.new(escape: :string)
           sqli.or { string(1) == string(1) }
           sqli
-        end 
+        end
 
         it "should terminate the SQL statement" do
           expect(subject.to_sql(terminate: true)).to eq("1' OR '1'='1';--")
@@ -162,7 +162,7 @@ describe Ronin::Code::SQL::Injection do
         sqli = described_class.new(escape: :integer)
         sqli.or { 1 == 1 }
         sqli
-      end 
+      end
 
       it "should terminate the SQL statement" do
         expect(subject.to_sql(terminate: true)).to eq("1 OR 1=1;--")

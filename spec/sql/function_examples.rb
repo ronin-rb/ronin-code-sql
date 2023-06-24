@@ -26,5 +26,3 @@ shared_examples_for "Function" do |method,arguments=[],additional_arguments=[]|
     end
   end
 end
-
-

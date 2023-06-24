@@ -32,12 +32,22 @@ module Ronin
       #
       # @api semipublic
       #
-      class Statement < Struct.new(:keyword,:argument)
+      class Statement
 
         include Literals
         include Operators
         include Clauses
         include Emittable
+
+        # The statement name.
+        #
+        # @return [Symbol, Array<Symbol>]
+        attr_reader :keyword
+
+        # The statement's argument.
+        #
+        # @return [Object, nil]
+        attr_reader :argument
 
         #
         # Initializes a new SQL statement.
@@ -56,7 +66,8 @@ module Ronin
         #   Otherwise the block will be evaluated within the statement.
         #
         def initialize(keyword,argument=nil,&block)
-          super(keyword,argument)
+          @keyword  = keyword
+          @argument = argument
 
           if block
             case block.arity
