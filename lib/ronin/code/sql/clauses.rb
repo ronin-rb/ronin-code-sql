@@ -75,7 +75,7 @@ module Ronin
         #
         # Appends an `INTO` clause.
         #
-        # @param [Field, Symbol] table
+        # @param [Field, Symbol, nil] table
         #   The table to insert into.
         #
         # @return [self]
@@ -231,24 +231,12 @@ module Ronin
         # Appends a `TOP` clause.
         #
         # @param [Integer] value
-        #   The number of top rows to select. 
+        #   The number of top rows to select.
         #
         # @return [self]
         #
         def top(value,&block)
           clause(:TOP,value,&block)
-        end
-
-        #
-        # Appends a `INTO` clause.
-        #
-        # @param [Field, Symbol] table
-        #   The table to insert/replace into.
-        #
-        # @return [self]
-        #
-        def into(table)
-          clause(:INTO,table)
         end
 
         #

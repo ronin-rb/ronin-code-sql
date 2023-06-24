@@ -29,10 +29,25 @@ module Ronin
       #
       # @api semipublic
       #
-      class Literal < Struct.new(:value)
+      class Literal
 
         include Operators
         include Emittable
+
+        # The literal value.
+        #
+        # @return [String, Integer, Float, :NULL]
+        attr_reader :value
+
+        #
+        # Initializes the literal value.
+        #
+        # @param [String, Integer, Float, :NULL] value
+        #   The value for the literal.
+        #
+        def initialize(value)
+          @value = value
+        end
 
       end
     end

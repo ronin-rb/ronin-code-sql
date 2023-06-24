@@ -29,10 +29,20 @@ module Ronin
       #
       # @api semipublic
       #
-      class Field < Struct.new(:name,:parent)
+      class Field
 
         include Operators
         include Emittable
+
+        # The name of the field.
+        #
+        # @return [String]
+        attr_reader :name
+
+        # The parent of the field name.
+        #
+        # @return [Field, nil]
+        attr_reader :parent
 
         #
         # Initializes the new field.
@@ -40,11 +50,12 @@ module Ronin
         # @param [String] name
         #   The name of the field.
         #
-        # @param [Field] parent
+        # @param [Field, nil] parent
         #   The parent of the field.
         #
         def initialize(name,parent=nil)
-          super(name.to_s,parent)
+          @name   = name.to_s
+          @parent = parent
         end
 
         #
@@ -59,12 +70,26 @@ module Ronin
           names = name.to_s.split('.',3)
           field = nil
 
-          names.each { |name| field = new(name,field) }
+          names.each { |keyword| field = new(keyword,field) }
 
           return field
         end
 
         alias to_str to_s
+
+        #
+        # Determines if the field responds to the given method.
+        #
+        # @param [Symbol] name
+        #   The method name.
+        #
+        # @return [Boolean]
+        #   Will return false if the field already has two parents, otherwise
+        #   will return true.
+        #
+        def respond_to_missing?(name)
+          self.parent.nil? || self.parent.parent.nil?
+        end
 
         protected
 

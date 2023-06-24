@@ -36,7 +36,7 @@ module Ronin
         #   Additional keyword arguments for {Emitter#initialize}.
         #
         # @api private
-        #   
+        #
         def emitter(**kwargs)
           Emitter.new(**kwargs)
         end

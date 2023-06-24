@@ -33,7 +33,7 @@ module Ronin
       #
       # @api semipublic
       #
-      class Clause < Struct.new(:keyword,:argument)
+      class Clause
 
         include Literals
         include Fields
@@ -41,13 +41,23 @@ module Ronin
         include Statements
         include Emittable
 
+        # The name of the clause.
+        #
+        # @return [Symbol]
+        attr_reader :keyword
+
+        # The clause's argument.
+        #
+        # @return [Object, nil]
+        attr_reader :argument
+
         #
         # Initializes the SQL clause.
         #
         # @param [Symbol] keyword
         #   The name of the clause.
         #
-        # @param [Object] argument
+        # @param [Object, nil] argument
         #   Additional argument for the clause.
         #
         # @yield [(clause)]
@@ -58,13 +68,14 @@ module Ronin
         #   Otherwise the block will be evaluated within the clause.
         #
         def initialize(keyword,argument=nil,&block)
-          super(keyword,argument)
+          @keyword  = keyword
+          @argument = argument
 
           if block
-            self.argument = case block.arity
-                            when 0 then instance_eval(&block)
-                            else        block.call(self)
-                            end
+            @argument = case block.arity
+                        when 0 then instance_eval(&block)
+                        else        block.call(self)
+                        end
           end
         end
 

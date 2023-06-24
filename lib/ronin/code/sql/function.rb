@@ -29,10 +29,20 @@ module Ronin
       #
       # @api semipublic
       #
-      class Function < Struct.new(:name,:arguments)
+      class Function
 
         include Operators
         include Emittable
+
+        # The function's name.
+        #
+        # @return [Symbol]
+        attr_reader :name
+
+        # The function's arguments.
+        #
+        # @return [Array]
+        attr_reader :arguments
 
         #
         # Creates a new Function object.
@@ -41,10 +51,11 @@ module Ronin
         #   The name of the function.
         #
         # @param [Array] arguments
-        #   The arguments of the function.
+        #   The arguments being passed to the function.
         #
         def initialize(name,*arguments)
-          super(name,arguments)
+          @name      = name
+          @arguments = arguments
         end
 
       end

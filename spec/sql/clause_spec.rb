@@ -23,8 +23,7 @@ describe Ronin::Code::SQL::Clause do
       end
 
       context "that accepts an argument" do
-        it "should yield itself" do
-        end
+        it "should yield itself"
       end
     end
   end

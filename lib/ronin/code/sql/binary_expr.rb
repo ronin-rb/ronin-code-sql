@@ -29,10 +29,43 @@ module Ronin
       #
       # @api semipublic
       #
-      class BinaryExpr < Struct.new(:left,:operator,:right)
+      class BinaryExpr
 
         include Operators
         include Emittable
+
+        # The left-hand side of the binary expression.
+        #
+        # @return [Statement, Function, BinaryExpr, Field, Literal]
+        attr_reader :left
+
+        # The binary expression's operator.
+        #
+        # @return [Symbol]
+        attr_reader :operator
+
+        # The right-hand side of the binary expression.
+        #
+        # @return [Object]
+        attr_reader :right
+
+        #
+        # Initializes the binary expression.
+        #
+        # @param [Statement, Function, BinaryExpr, Field, Literal] left
+        #   The left-hand side of the binary expression.
+        #
+        # @param [Symbol] operator
+        #   The binary expression's operator.
+        #
+        # @param [Object] right
+        #   The right-hand side of the binary expression.
+        #
+        def initialize(left,operator,right)
+          @left     = left
+          @operator = operator
+          @right    = right
+        end
 
         #
         # Converts the binary expression to SQL.

@@ -101,7 +101,7 @@ module Ronin
         #
         # The `SQRT` function.
         #
-        # @param [Field, Symbol] field
+        # @param [Field, Function, Symbol, Numeric] field
         #   The field to aggregate.
         #
         # @return [Function]
@@ -500,18 +500,6 @@ module Ronin
         #
         def sin(x)
           Function.new(:SIN,x)
-        end
-
-        #
-        # The `SQRT` function.
-        #
-        # @param [Field, Function, Symbol, Numeric] x
-        #
-        # @return [Function]
-        #   The new function.
-        #
-        def sqrt(x)
-          Function.new(:SQRT,x)
         end
 
         #
@@ -1045,7 +1033,7 @@ module Ronin
         def replace(string,from_string,to_string)
           Function.new(:REPLACE,string,from_string,to_string)
         end
-        
+
         #
         # The `REVERSE` function.
         #

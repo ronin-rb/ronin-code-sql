@@ -85,7 +85,7 @@ describe Ronin::Code::SQL::Functions do
   include_examples "Function", :lower, ["HELLO"]
   include_examples "Function", :lpad, ["hello", 10, ' ']
   include_examples "Function", :ltrim, ["     hello"]
-  include_examples "Function", :make_set, [8|1, 'a', 'b', 'c', 'd']
+  include_examples "Function", :make_set, [8 | 1, 'a', 'b', 'c', 'd']
   include_examples "Function", :mid, ["hello",2,3]
   include_examples "Function", :oct, ["55"]
   include_examples "Function", :octet_length, ["55"]
