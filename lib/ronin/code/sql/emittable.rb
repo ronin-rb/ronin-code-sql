@@ -56,6 +56,13 @@ module Ronin
         # @option kwargs [:single, :double] :quotes (:single)
         #   Type of quotes to use for Strings.
         #
+        # @option kwargs [nil, :mysql, :postgres, :oracle, :mssql] :syntax
+        #   Specific SQL syntax to use.
+        #
+        # @option kwargs [nil, String] :comment
+        #   Optional String to use as the SQL comment when terminating
+        #   injection string
+        #
         # @return [String]
         #   The raw SQL.
         #
