@@ -34,6 +34,7 @@ describe Ronin::Code::SQL::Clauses do
                                select(:*).from(:table)
                              }
   include_examples "Clause", :group_by, [:GROUP, :BY], [:column1, :column2]
+  include_examples "Clause", :order_by, [:ORDER, :BY], [:column1, :column2]
   include_examples "Clause", :having, :HAVING, proc { max(priv) > 100 }
   include_examples "Clause", :limit, :LIMIT, 100
   include_examples "Clause", :offset, :OFFSET, 20
