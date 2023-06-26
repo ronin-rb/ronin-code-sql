@@ -202,6 +202,8 @@ module Ronin
         #
         # @return [self]
         #
+        # @since 2.1.0
+        #
         def order_by(*columns,&block)
           clause([:ORDER, :BY],columns,&block)
         end
