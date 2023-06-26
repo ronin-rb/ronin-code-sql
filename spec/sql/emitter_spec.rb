@@ -455,7 +455,7 @@ describe Ronin::Code::SQL::Emitter do
     subject { described_class.new(case: :lower) }
 
     context "without an argument" do
-      let(:stmt)    { Ronin::Code::SQL::Statement.new(:SELECT) }
+      let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT) }
 
       it "should emit the statment keyword" do
         expect(subject.emit_statement(stmt)).to eq('select')
