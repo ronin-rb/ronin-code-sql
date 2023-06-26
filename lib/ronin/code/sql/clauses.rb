@@ -195,6 +195,18 @@ module Ronin
         end
 
         #
+        # Appends a `ORDER BY` clause.
+        #
+        # @param [Array<Field, Symbol>] columns
+        #   The columns for `ORDER BY`.
+        #
+        # @return [self]
+        #
+        def order_by(*columns,&block)
+          clause([:ORDER, :BY],columns,&block)
+        end
+
+        #
         # Appends a `HAVING` clause.
         #
         # @return [self]

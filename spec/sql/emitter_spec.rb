@@ -516,20 +516,21 @@ describe Ronin::Code::SQL::Emitter do
   describe "#emit_clauses" do
     let(:clauses) do
       [
+        Ronin::Code::SQL::Clause.new([:ORDER, :BY], 3),
         Ronin::Code::SQL::Clause.new(:LIMIT, 100),
         Ronin::Code::SQL::Clause.new(:OFFSET, 10)
       ]
     end
 
     it "should emit multiple clauses" do
-      expect(subject.emit_clauses(clauses)).to eq('LIMIT 100 OFFSET 10')
+      expect(subject.emit_clauses(clauses)).to eq('ORDER BY 3 LIMIT 100 OFFSET 10')
     end
 
     context "with custom :space" do
       subject { described_class.new(space: '/**/') }
 
       it "should emit the custom white-space deliminater" do
-        expect(subject.emit_clauses(clauses)).to eq('LIMIT/**/100/**/OFFSET/**/10')
+        expect(subject.emit_clauses(clauses)).to eq('ORDER/**/BY/**/3/**/LIMIT/**/100/**/OFFSET/**/10')
       end
     end
   end
@@ -550,6 +551,14 @@ describe Ronin::Code::SQL::Emitter do
 
       it "should emit the statment argument" do
         expect(subject.emit_statement(stmt)).to eq('select 1')
+      end
+
+      context "with `order by` clasule " do
+        let(:stmt_order_by) { Ronin::Code::SQL::Statement.new(:SELECT,1).order_by([1, :col_x]) }
+
+        it "should emit order_by with multiple columns" do
+          expect(subject.emit_statement(stmt_order_by)).to eq('select 1 order by ((1,col_x))')
+        end
       end
 
       context "when the argument is an Array" do
