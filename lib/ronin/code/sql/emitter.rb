@@ -163,6 +163,8 @@ module Ronin
         # @return [String]
         #   The raw SQL.
         #
+        # @since 2.1.0
+        #
         def emit_comment
           # Return chosen comment or default one which works everywhere
           @comment || '-- '
