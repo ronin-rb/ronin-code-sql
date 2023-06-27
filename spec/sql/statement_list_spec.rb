@@ -8,12 +8,12 @@ describe Ronin::Code::SQL::StatementList do
         described_class.new { @x = 1 }
       end
 
-      it "should instance_eval the block" do
+      it "must instance_eval the block" do
         expect(subject.instance_variable_get(:@x)).to eq(1)
       end
 
       context "that accepts an argument" do
-        it "should yield itself" do
+        it "must yield itself" do
           yielded_statement_list = nil
 
           described_class.new do |statement_list|
@@ -31,7 +31,7 @@ describe Ronin::Code::SQL::StatementList do
 
     before { subject << Ronin::Code::SQL::Statement.new(keyword) }
 
-    it "should append a new statement" do
+    it "must append a new statement" do
       expect(subject.statements.last.keyword).to eq(keyword)
     end
   end
@@ -41,7 +41,7 @@ describe Ronin::Code::SQL::StatementList do
 
     before { subject.statement(keyword) }
 
-    it "should create and append a new Statement" do
+    it "must create and append a new Statement" do
       expect(subject.statements.last.keyword).to eq(keyword)
     end
   end

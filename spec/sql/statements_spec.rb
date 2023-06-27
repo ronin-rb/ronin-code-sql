@@ -9,7 +9,7 @@ describe Ronin::Code::SQL::Statements do
   describe "#statement" do
     let(:keyword) { :EXEC }
 
-    it "should create an arbitrary statement" do
+    it "must create an arbitrary statement" do
       expect(subject.statement(keyword).keyword).to eq(keyword)
     end
   end

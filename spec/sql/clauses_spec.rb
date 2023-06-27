@@ -15,7 +15,7 @@ describe Ronin::Code::SQL::Clauses do
 
     before { subject.clause(keyword) }
 
-    it "should add an arbitrary clause" do
+    it "must add an arbitrary clause" do
       expect(clause.keyword).to eq(keyword)
     end
   end

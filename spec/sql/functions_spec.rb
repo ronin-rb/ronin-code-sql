@@ -7,12 +7,12 @@ describe Ronin::Code::SQL::Functions do
   subject { Object.new.extend(described_class) }
 
   describe "#count" do
-    it "should create a COUNT function" do
+    it "must create a COUNT function" do
       expect(subject.count.name).to eq(:COUNT)
     end
 
     context "without arguments" do
-      it "should default arguments to *" do
+      it "must default arguments to *" do
         expect(subject.count.arguments).to eq([:*])
       end
     end

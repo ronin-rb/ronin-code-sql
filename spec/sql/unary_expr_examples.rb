@@ -5,15 +5,15 @@ shared_examples_for "UnaryExpr" do |method,operator=method|
   describe "##{method}" do
     let(:expr) { subject.send(method) }
 
-    it "should be a UnaryExpr" do
+    it "must be a UnaryExpr" do
       expect(expr).to be_kind_of(Ronin::Code::SQL::UnaryExpr)
     end
 
-    it "should set the operand" do
+    it "must set the operand" do
       expect(expr.operand).to eq(subject)
     end
 
-    it "should have a '#{operator}' operator" do
+    it "must have a '#{operator}' operator" do
       expect(expr.operator).to eq(operator)
     end
   end

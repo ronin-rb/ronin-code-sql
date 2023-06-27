@@ -5,7 +5,7 @@ describe Ronin::Code::SQL::Fields do
   subject { Object.new.extend(described_class) }
 
   describe "#respond_to_missing?" do
-    it "should return true" do
+    it "must return true" do
       expect(subject).to respond_to(:foo)
     end
   end
@@ -16,13 +16,13 @@ describe Ronin::Code::SQL::Fields do
     let(:name) { 'users' }
 
     context "when called with no arguments and no block" do
-      it "should create a Field" do
+      it "must create a Field" do
         expect(subject.send(name).name).to eq(name)
       end
     end
 
     context "when called with arguments" do
-      it "should raise a NoMethodError" do
+      it "must raise a NoMethodError" do
         expect {
           subject.sned(name,1,2,3)
         }.to raise_error(NoMethodError)
@@ -30,7 +30,7 @@ describe Ronin::Code::SQL::Fields do
     end
 
     context "when called with a block" do
-      it "should raise a NoMethodError" do
+      it "must raise a NoMethodError" do
         expect {
           subject.sned(name) { 1 + 1 }
         }.to raise_error(NoMethodError)

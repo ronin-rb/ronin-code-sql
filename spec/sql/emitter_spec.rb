@@ -53,14 +53,14 @@ describe Ronin::Code::SQL::Emitter do
     context "when passed an Array of Symbols" do
       let(:keywords) { [:DROP, :TABLE] }
 
-      it "should join the keywords" do
+      it "must join the keywords" do
         expect(subject.emit_keyword(keywords)).to eq("DROP TABLE")
       end
 
       context "when :space is set" do
         subject { described_class.new(space: '/**/') }
 
-        it "should join the keywords" do
+        it "must join the keywords" do
           expect(subject.emit_keyword(keywords)).to eq("DROP/**/TABLE")
         end
       end
@@ -71,7 +71,7 @@ describe Ronin::Code::SQL::Emitter do
 
       subject { described_class.new(case: :upper) }
 
-      it "should upcase the keyword" do
+      it "must upcase the keyword" do
         expect(subject.emit_keyword(keyword)).to eq('SELECT')
       end
     end
@@ -81,7 +81,7 @@ describe Ronin::Code::SQL::Emitter do
 
       subject { described_class.new(case: :lower) }
 
-      it "should upcase the keyword" do
+      it "must upcase the keyword" do
         expect(subject.emit_keyword(keyword)).to eq('select')
       end
     end
@@ -91,7 +91,7 @@ describe Ronin::Code::SQL::Emitter do
 
       subject { described_class.new(case: :random) }
 
-      it "should contain at least one upper-case character" do
+      it "must contain at least one upper-case character" do
         expect(subject.emit_keyword(keyword)).to match(/\ASELECT\z/i)
       end
     end
@@ -101,7 +101,7 @@ describe Ronin::Code::SQL::Emitter do
 
       let(:keyword) { 'Select' }
 
-      it "should emit the keyword as is" do
+      it "must emit the keyword as is" do
         expect(subject.emit_keyword(keyword)).to eq(keyword)
       end
     end
@@ -109,7 +109,7 @@ describe Ronin::Code::SQL::Emitter do
 
   describe "#emit_operator" do
     context "when the operator is a symbol" do
-      it "should emit a String" do
+      it "must emit a String" do
         expect(subject.emit_operator(:"!=")).to eq('!=')
       end
     end
@@ -117,26 +117,26 @@ describe Ronin::Code::SQL::Emitter do
     context "otherwise" do
       subject { described_class.new(case: :lower) }
 
-      it "should emit a keyword" do
+      it "must emit a keyword" do
         expect(subject.emit_operator(:AS)).to eq('as')
       end
     end
   end
 
   describe "#emit_null" do
-    it "should emit the NULL keyword" do
+    it "must emit the NULL keyword" do
       expect(subject.emit_null).to eq('NULL')
     end
   end
 
   describe "#emit_false" do
-    it "should emit 1=0" do
+    it "must emit 1=0" do
       expect(subject.emit_false).to eq('1=0')
     end
   end
 
   describe "#emit_true" do
-    it "should emit 1=1" do
+    it "must emit 1=1" do
       expect(subject.emit_true).to eq('1=1')
     end
   end
@@ -153,7 +153,7 @@ describe Ronin::Code::SQL::Emitter do
 
     context "when :comment is not set(defaulted to :auto)" do
       context "when :syntax is :unset" do
-        it "should emit a comment that works everywhere '-- '" do
+        it "must emit a comment that works everywhere '-- '" do
           expect(subject.emit_comment).to start_with('-- ')
         end
       end
@@ -161,14 +161,14 @@ describe Ronin::Code::SQL::Emitter do
       context "when :syntax is :mysql" do
         subject { described_class.new(syntax: :mysql) }
 
-        it "should emit a MySQL/MariaDB-compatible comment that starts with '-- ' or '#'" do
+        it "must emit a MySQL/MariaDB-compatible comment that starts with '-- ' or '#'" do
           expect(subject.emit_comment).to start_with('-- ').or start_with('#')
         end
       end
 
       context "when :syntax is :postgres" do
         subject { described_class.new(syntax: :postgres) }
-        it "should emit a Postgres-compatible comment that starts with '--'" do
+        it "must emit a Postgres-compatible comment that starts with '--'" do
           expect(subject.emit_comment).to start_with('--')
         end
       end
@@ -176,7 +176,7 @@ describe Ronin::Code::SQL::Emitter do
       context "when :syntax is :oracle" do
         subject { described_class.new(syntax: :oracle) }
 
-        it "should emit a Oracle-compatible comment that starts with '--'" do
+        it "must emit a Oracle-compatible comment that starts with '--'" do
           expect(subject.emit_comment).to start_with('--')
         end
       end
@@ -184,7 +184,7 @@ describe Ronin::Code::SQL::Emitter do
       context "when :syntax is :mssql" do
         subject { described_class.new(syntax: :mssql) }
 
-        it "should emit a MSSQL-compatible comment that starts with '--'" do
+        it "must emit a MSSQL-compatible comment that starts with '--'" do
           expect(subject.emit_comment).to start_with('--')
         end
       end
@@ -192,26 +192,26 @@ describe Ronin::Code::SQL::Emitter do
   end
 
   describe "#emit_integer" do
-    it "should emit a String" do
+    it "must emit a String" do
       expect(subject.emit_integer(10)).to eq('10')
     end
   end
 
   describe "#emit_decimal" do
-    it "should emit a String" do
+    it "must emit a String" do
       expect(subject.emit_decimal(2.5)).to eq('2.5')
     end
   end
 
   describe "#emit_string" do
-    it "should emit a String" do
+    it "must emit a String" do
       expect(subject.emit_string("O'Brian")).to eq("'O''Brian'")
     end
 
     context "when :quotes is :double" do
       subject { described_class.new(quotes: :double) }
 
-      it "should double quote Strings" do
+      it "must double quote Strings" do
         expect(subject.emit_string("O'Brian")).to eq("\"O'Brian\"")
       end
     end
@@ -222,7 +222,7 @@ describe Ronin::Code::SQL::Emitter do
 
     let(:field) { Ronin::Code::SQL::Field.new(:id) }
 
-    it "should emit the name as a keyword" do
+    it "must emit the name as a keyword" do
       expect(subject.emit_field(field)).to eq('ID')
     end
 
@@ -230,7 +230,7 @@ describe Ronin::Code::SQL::Emitter do
       let(:parent) { Ronin::Code::SQL::Field.new(:users)     }
       let(:field)  { Ronin::Code::SQL::Field.new(:id,parent) }
 
-      it "should emit the parent then the field name" do
+      it "must emit the parent then the field name" do
         expect(subject.emit_field(field)).to eq('USERS.ID')
       end
     end
@@ -238,13 +238,13 @@ describe Ronin::Code::SQL::Emitter do
 
   describe "#emit_list" do
     context "when given an Array with multiple values" do
-      it "should emit a ',' separated list" do
+      it "must emit a ',' separated list" do
         expect(subject.emit_list([1,2,3,'foo'])).to eq("(1,2,3,'foo')")
       end
     end
 
     context "when given an Array with only one element" do
-      it "should emit the single element without parentheses" do
+      it "must emit the single element without parentheses" do
         expect(subject.emit_list([1])).to eq('1')
       end
     end
@@ -253,7 +253,7 @@ describe Ronin::Code::SQL::Emitter do
   describe "#emit_assignments" do
     let(:values) { {x: 1, y: 2} }
 
-    it "should emit a list of column names and values" do
+    it "must emit a list of column names and values" do
       expect(subject.emit_assignments(values)).to eq('x=1,y=2')
     end
   end
@@ -262,7 +262,7 @@ describe Ronin::Code::SQL::Emitter do
     context "when the value is a Statement" do
       let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT,1) }
 
-      it "should wrap the statement in ( )" do
+      it "must wrap the statement in ( )" do
         expect(subject.emit_argument(stmt)).to eq('(SELECT 1)')
       end
     end
@@ -270,7 +270,7 @@ describe Ronin::Code::SQL::Emitter do
     context "otherwise" do
       let(:value) { 'hello' }
 
-      it "should emit the value" do
+      it "must emit the value" do
         expect(subject.emit_argument(value)).to eq("'hello'")
       end
     end
@@ -283,7 +283,7 @@ describe Ronin::Code::SQL::Emitter do
 
         let(:expr) { Ronin::Code::SQL::BinaryExpr.new(:id,:is,1) }
 
-        it "should emit the operands and operator as a keyword with spaces" do
+        it "must emit the operands and operator as a keyword with spaces" do
           expect(subject.emit_expression(expr)).to eq('ID IS 1')
         end
       end
@@ -291,7 +291,7 @@ describe Ronin::Code::SQL::Emitter do
       context "when the operator is symbolic" do
         let(:expr) { Ronin::Code::SQL::BinaryExpr.new(:id,:"=",1) }
 
-        it "should emit the operands and operator without spaces" do
+        it "must emit the operands and operator without spaces" do
           expect(subject.emit_expression(expr)).to eq('id=1')
         end
       end
@@ -303,7 +303,7 @@ describe Ronin::Code::SQL::Emitter do
           )
         end
 
-        it "should wrap the left-hand operand in parenthesis" do
+        it "must wrap the left-hand operand in parenthesis" do
           expect(subject.emit_expression(expr)).to eq('(SELECT 1)=1')
         end
       end
@@ -315,7 +315,7 @@ describe Ronin::Code::SQL::Emitter do
           )
         end
 
-        it "should wrap the left-hand operand in parenthesis" do
+        it "must wrap the left-hand operand in parenthesis" do
           expect(subject.emit_expression(expr)).to eq('1=(SELECT 1)')
         end
       end
@@ -325,7 +325,7 @@ describe Ronin::Code::SQL::Emitter do
       context "when the operator is upper-case alpha" do
         let(:expr) { Ronin::Code::SQL::UnaryExpr.new(:NOT,:admin) }
 
-        it "should emit the operand and operator with spaces" do
+        it "must emit the operand and operator with spaces" do
           expect(subject.emit_expression(expr)).to eq('NOT admin')
         end
       end
@@ -333,7 +333,7 @@ describe Ronin::Code::SQL::Emitter do
       context "when the operator is symbolic" do
         let(:expr) { Ronin::Code::SQL::UnaryExpr.new(:-,1) }
 
-        it "should emit the operand and operator without spaces" do
+        it "must emit the operand and operator without spaces" do
           expect(subject.emit_expression(expr)).to eq('-1')
         end
       end
@@ -345,7 +345,7 @@ describe Ronin::Code::SQL::Emitter do
           )
         end
 
-        it "should wrap the operand in parenthesis" do
+        it "must wrap the operand in parenthesis" do
           expect(subject.emit_expression(expr)).to eq('NOT (SELECT 1)')
         end
       end
@@ -355,14 +355,14 @@ describe Ronin::Code::SQL::Emitter do
   describe "#emit_function" do
     let(:func) { Ronin::Code::SQL::Function.new(:NOW) }
 
-    it "should emit the function name as a keyword" do
+    it "must emit the function name as a keyword" do
       expect(subject.emit_function(func)).to eq('NOW()')
     end
 
     context "with arguments" do
       let(:func) { Ronin::Code::SQL::Function.new(:MAX,1,2) }
 
-      it "should emit the function arguments" do
+      it "must emit the function arguments" do
         expect(subject.emit_function(func)).to eq('MAX(1,2)')
       end
     end
@@ -370,37 +370,37 @@ describe Ronin::Code::SQL::Emitter do
 
   describe "#emit" do
     context "when passed nil" do
-      it "should emit the NULL keyword" do
+      it "must emit the NULL keyword" do
         expect(subject.emit(nil)).to eq('NULL')
       end
     end
 
     context "when passed true" do
-      it "should emit true" do
+      it "must emit true" do
         expect(subject.emit(true)).to eq('1=1')
       end
     end
 
     context "when passed false" do
-      it "should emit false" do
+      it "must emit false" do
         expect(subject.emit(false)).to eq('1=0')
       end
     end
 
     context "when passed an Integer" do
-      it "should emit an integer" do
+      it "must emit an integer" do
         expect(subject.emit(10)).to eq('10')
       end
     end
 
     context "when passed a Float" do
-      it "should emit a decimal" do
+      it "must emit a decimal" do
         expect(subject.emit(2.5)).to eq('2.5')
       end
     end
 
     context "when passed a String" do
-      it "should emit a string" do
+      it "must emit a string" do
         expect(subject.emit("O'Brian")).to eq("'O''Brian'")
       end
     end
@@ -408,7 +408,7 @@ describe Ronin::Code::SQL::Emitter do
     context "when passed a Literal" do
       let(:literal) { Ronin::Code::SQL::Literal.new(42) }
 
-      it "should emit the value" do
+      it "must emit the value" do
         expect(subject.emit(literal)).to eq('42')
       end
     end
@@ -417,25 +417,25 @@ describe Ronin::Code::SQL::Emitter do
       let(:table)  { Ronin::Code::SQL::Field.new(:users)    }
       let(:column) { Ronin::Code::SQL::Field.new(:id,table) }
 
-      it "should emit a field" do
+      it "must emit a field" do
         expect(subject.emit(column)).to eq('users.id')
       end
     end
 
     context "when passed a Symbol" do
-      it "should emit a field" do
+      it "must emit a field" do
         expect(subject.emit(:id)).to eq('id')
       end
     end
 
     context "when passed an Array" do
-      it "should emit a list" do
+      it "must emit a list" do
         expect(subject.emit([1,2,3,'foo'])).to eq("(1,2,3,'foo')")
       end
     end
 
     context "when passed a Hash" do
-      it "should emit a list of assignments" do
+      it "must emit a list of assignments" do
         expect(subject.emit(x: 1, y: 2)).to eq('x=1,y=2')
       end
     end
@@ -443,7 +443,7 @@ describe Ronin::Code::SQL::Emitter do
     context "when passed a BinaryExpr" do
       let(:expr) { Ronin::Code::SQL::BinaryExpr.new(:id,:"=",1) }
 
-      it "should emit an expression" do
+      it "must emit an expression" do
         expect(subject.emit(expr)).to eq('id=1')
       end
     end
@@ -451,7 +451,7 @@ describe Ronin::Code::SQL::Emitter do
     context "when passed a UnaryExpr" do
       let(:expr) { Ronin::Code::SQL::UnaryExpr.new(:NOT,:admin) }
 
-      it "should emit an expression" do
+      it "must emit an expression" do
         expect(subject.emit(expr)).to eq('NOT admin')
       end
     end
@@ -459,7 +459,7 @@ describe Ronin::Code::SQL::Emitter do
     context "when passed a Function" do
       let(:func) { Ronin::Code::SQL::Function.new(:MAX,1,2) }
 
-      it "should emit the function" do
+      it "must emit the function" do
         expect(subject.emit(func)).to eq('MAX(1,2)')
       end
     end
@@ -467,7 +467,7 @@ describe Ronin::Code::SQL::Emitter do
     context "when passed a Statment" do
       let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT,1) }
 
-      it "should emit a statement" do
+      it "must emit a statement" do
         expect(subject.emit(stmt)).to eq('SELECT 1')
       end
     end
@@ -476,7 +476,7 @@ describe Ronin::Code::SQL::Emitter do
       let(:object) { double(:sql_object) }
       let(:sql)    { "EXEC sp_configure 'xp_cmdshell', 0;" }
 
-      it "should call #to_sql" do
+      it "must call #to_sql" do
         allow(object).to receive(:to_sql).and_return(sql)
 
         expect(subject.emit(object)).to eq(sql)
@@ -486,7 +486,7 @@ describe Ronin::Code::SQL::Emitter do
     context "otherwise" do
       let(:object) { Object.new }
 
-      it "should raise an ArgumentError" do
+      it "must raise an ArgumentError" do
         expect {
           subject.emit(object)
         }.to raise_error(ArgumentError)
@@ -497,7 +497,7 @@ describe Ronin::Code::SQL::Emitter do
   describe "#emit_clause" do
     let(:clause) { Ronin::Code::SQL::Clause.new(:"NOT INDEXED") }
 
-    it "should emit the clause keyword" do
+    it "must emit the clause keyword" do
       expect(subject.emit_clause(clause)).to eq("NOT INDEXED")
     end
 
@@ -505,7 +505,7 @@ describe Ronin::Code::SQL::Emitter do
       let(:argument) { 100 }
       let(:clause)   { Ronin::Code::SQL::Clause.new(:LIMIT,argument) }
 
-      it "should also emit the clause argument" do
+      it "must also emit the clause argument" do
         expect(subject.emit_clause(clause)).to eq("LIMIT #{argument}")
       end
     end
@@ -515,7 +515,7 @@ describe Ronin::Code::SQL::Emitter do
 
       let(:clause) { Ronin::Code::SQL::Clause.new(:LIMIT,100) }
 
-      it "should emit the custom white-space deliminater" do
+      it "must emit the custom white-space deliminater" do
         expect(subject.emit_clause(clause)).to eq('LIMIT/**/100')
       end
     end
@@ -530,14 +530,14 @@ describe Ronin::Code::SQL::Emitter do
       ]
     end
 
-    it "should emit multiple clauses" do
+    it "must emit multiple clauses" do
       expect(subject.emit_clauses(clauses)).to eq('ORDER BY 3 LIMIT 100 OFFSET 10')
     end
 
     context "with custom :space" do
       subject { described_class.new(space: '/**/') }
 
-      it "should emit the custom white-space deliminater" do
+      it "must emit the custom white-space deliminater" do
         expect(subject.emit_clauses(clauses)).to eq('ORDER/**/BY/**/3/**/LIMIT/**/100/**/OFFSET/**/10')
       end
     end
@@ -549,7 +549,7 @@ describe Ronin::Code::SQL::Emitter do
     context "without an argument" do
       let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT) }
 
-      it "should emit the statment keyword" do
+      it "must emit the statment keyword" do
         expect(subject.emit_statement(stmt)).to eq('select')
       end
     end
@@ -557,14 +557,14 @@ describe Ronin::Code::SQL::Emitter do
     context "with an argument" do
       let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT,1) }
 
-      it "should emit the statment argument" do
+      it "must emit the statment argument" do
         expect(subject.emit_statement(stmt)).to eq('select 1')
       end
 
       context "with `order by` clasule " do
         let(:stmt_order_by) { Ronin::Code::SQL::Statement.new(:SELECT,1).order_by([1, :col_x]) }
 
-        it "should emit order_by with multiple columns" do
+        it "must emit order_by with multiple columns" do
           expect(subject.emit_statement(stmt_order_by)).to eq('select 1 order by (1,col_x)')
         end
       end
@@ -572,14 +572,14 @@ describe Ronin::Code::SQL::Emitter do
       context "when the argument is an Array" do
         let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT,[1,2,3]) }
 
-        it "should emit a list" do
+        it "must emit a list" do
           expect(subject.emit_statement(stmt)).to eq('select (1,2,3)')
         end
 
         context "with only one element" do
           let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT,[1]) }
 
-          it "should emit the element" do
+          it "must emit the element" do
             expect(subject.emit_statement(stmt)).to eq('select 1')
           end
         end
@@ -588,7 +588,7 @@ describe Ronin::Code::SQL::Emitter do
       context "with custom :space" do
         subject { described_class.new(case: :lower, space: '/**/') }
 
-        it "should emit the custom white-space deliminater" do
+        it "must emit the custom white-space deliminater" do
           expect(subject.emit_statement(stmt)).to eq('select/**/1')
         end
       end
@@ -597,14 +597,14 @@ describe Ronin::Code::SQL::Emitter do
     context "with clauses" do
       let(:stmt) { Ronin::Code::SQL::Statement.new(:SELECT,1).offset(1).limit(100) }
 
-      it "should emit the statment argument" do
+      it "must emit the statment argument" do
         expect(subject.emit_statement(stmt)).to eq('select 1 offset 1 limit 100')
       end
 
       context "with custom :space" do
         subject { described_class.new(case: :lower, space: '/**/') }
 
-        it "should emit the custom white-space deliminater" do
+        it "must emit the custom white-space deliminater" do
           expect(subject.emit_statement(stmt)).to eq('select/**/1/**/offset/**/1/**/limit/**/100')
         end
       end
@@ -619,14 +619,14 @@ describe Ronin::Code::SQL::Emitter do
       sql
     end
 
-    it "should emit multiple statements separated by '; '" do
+    it "must emit multiple statements separated by '; '" do
       expect(subject.emit_statement_list(stmts)).to eq('SELECT 1; DROP TABLE users')
     end
 
     context "with custom :space" do
       subject { described_class.new(space: '/**/') }
 
-      it "should emit the custom white-space deliminater" do
+      it "must emit the custom white-space deliminater" do
         expect(subject.emit_statement_list(stmts)).to eq('SELECT/**/1;/**/DROP/**/TABLE/**/users')
       end
     end

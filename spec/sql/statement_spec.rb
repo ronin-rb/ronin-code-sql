@@ -8,7 +8,7 @@ describe Ronin::Code::SQL::Statement do
 
       subject { described_class.new(:STATEMENT,argument) }
 
-      it "should set the argument" do
+      it "must set the argument" do
         expect(subject.argument).to eq(argument)
       end
     end
@@ -18,12 +18,12 @@ describe Ronin::Code::SQL::Statement do
         described_class.new(:STATEMENT) { @x = 1 }
       end
 
-      it "should instance_eval the block" do
+      it "must instance_eval the block" do
         expect(subject.instance_variable_get(:@x)).to eq(1)
       end
 
       context "that accepts an argument" do
-        it "should yield itself" do
+        it "must yield itself" do
           yielded_statement = nil
 
           described_class.new(:STATEMENT) do |stmt|

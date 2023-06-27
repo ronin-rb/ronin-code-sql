@@ -10,15 +10,15 @@ describe Ronin::Code::SQL::InjectionExpr do
     context "on first call" do
       before { subject.and { 1 } }
 
-      it "should create a 'AND' BinaryExpr" do
+      it "must create a 'AND' BinaryExpr" do
         expect(subject.expression.operator).to eq(:AND)
       end
 
-      it "should create an expression with the initial value" do
+      it "must create an expression with the initial value" do
         expect(subject.expression.left).to eq(initial_value)
       end
 
-      it "should create an expression with the expression" do
+      it "must create an expression with the expression" do
         expect(subject.expression.right).to eq(1)
       end
     end
@@ -26,11 +26,11 @@ describe Ronin::Code::SQL::InjectionExpr do
     context "on multiple calls" do
       before { subject.and { 1 }.and { 2 } }
 
-      it "should create another 'AND' BinaryExpr" do
+      it "must create another 'AND' BinaryExpr" do
         expect(subject.expression.operator).to eq(:AND)
       end
 
-      it "should nest the expressions" do
+      it "must nest the expressions" do
         expect(subject.expression.left.right).to eq(1)
         expect(subject.expression.right).to eq(2)
       end
@@ -41,15 +41,15 @@ describe Ronin::Code::SQL::InjectionExpr do
     context "on first call" do
       before { subject.or { 1 } }
 
-      it "should create a 'OR' BinaryExpr" do
+      it "must create a 'OR' BinaryExpr" do
         expect(subject.expression.operator).to eq(:OR)
       end
 
-      it "should create an expression with the initial value" do
+      it "must create an expression with the initial value" do
         expect(subject.expression.left).to eq(initial_value)
       end
 
-      it "should create an expression with the expression" do
+      it "must create an expression with the expression" do
         expect(subject.expression.right).to eq(1)
       end
     end
@@ -57,11 +57,11 @@ describe Ronin::Code::SQL::InjectionExpr do
     context "on multiple calls" do
       before { subject.or { 1 }.or { 2 } }
 
-      it "should create another 'OR' BinaryExpr" do
+      it "must create another 'OR' BinaryExpr" do
         expect(subject.expression.operator).to eq(:OR)
       end
 
-      it "should nest the expressions" do
+      it "must nest the expressions" do
         expect(subject.expression.left.right).to eq(1)
         expect(subject.expression.right).to eq(2)
       end
@@ -72,7 +72,7 @@ describe Ronin::Code::SQL::InjectionExpr do
     context "without additional expressions" do
       subject { described_class.new(1) }
 
-      it "should still emit the initial value" do
+      it "must still emit the initial value" do
         expect(subject.to_sql).to eq('1')
       end
     end
@@ -84,12 +84,12 @@ describe Ronin::Code::SQL::InjectionExpr do
         sqli
       end
 
-      it "should emit the expression" do
+      it "must emit the expression" do
         expect(subject.to_sql).to eq('1 OR 1=1')
       end
 
       context "when given emitter options" do
-        it "should accept additional options" do
+        it "must accept additional options" do
           expect(subject.to_sql(case: :lower)).to eq('1 or 1=1')
         end
       end

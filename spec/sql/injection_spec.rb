@@ -25,7 +25,7 @@ describe Ronin::Code::SQL::Injection do
 
         subject { described_class.new(escape: escape) }
 
-        it "should default the place_holder based on the :escape type" do
+        it "must default the place_holder based on the :escape type" do
           expect(subject.place_holder).to eq(place_holders[escape])
         end
       end
@@ -36,7 +36,7 @@ describe Ronin::Code::SQL::Injection do
 
       subject { described_class.new(place_holder: data) }
 
-      it "should pass it to the InjectionExpr" do
+      it "must pass it to the InjectionExpr" do
         expect(subject.expression.expression).to eq(data)
       end
     end
@@ -44,7 +44,7 @@ describe Ronin::Code::SQL::Injection do
     context "when a block is given" do
       subject { described_class.new { @x = 1 } }
 
-      it "should instance_eval the block" do
+      it "must instance_eval the block" do
         expect(subject.instance_variable_get(:@x)).to eq(1)
       end
     end
@@ -54,7 +54,7 @@ describe Ronin::Code::SQL::Injection do
     context "without an expression" do
       subject { described_class.new(place_holder: 1) }
 
-      it "should still emit the place-holder value" do
+      it "must still emit the place-holder value" do
         expect(subject.to_sql).to eq('1')
       end
 
@@ -65,7 +65,7 @@ describe Ronin::Code::SQL::Injection do
           sqli
         end
 
-        it "should emit the clauses" do
+        it "must emit the clauses" do
           expect(subject.to_sql).to eq('1 LIMIT 100 OFFSET 10')
         end
       end
@@ -78,7 +78,7 @@ describe Ronin::Code::SQL::Injection do
         sqli
       end
 
-      it "should emit the expression" do
+      it "must emit the expression" do
         expect(subject.to_sql).to eq('1 OR 1=1')
       end
 
@@ -89,12 +89,12 @@ describe Ronin::Code::SQL::Injection do
           sqli
         end
 
-        it "should emit the clauses" do
+        it "must emit the clauses" do
           expect(subject.to_sql).to eq('1 OR 1=1 LIMIT 100 OFFSET 10')
         end
 
         context "with :space" do
-          it "should emit the clauses with custom spaces" do
+          it "must emit the clauses with custom spaces" do
             expect(subject.to_sql(space: '/**/')).to eq('1/**/OR/**/1=1/**/LIMIT/**/100/**/OFFSET/**/10')
           end
         end
@@ -107,12 +107,12 @@ describe Ronin::Code::SQL::Injection do
           sqli
         end
 
-        it "should emit the clauses" do
+        it "must emit the clauses" do
           expect(subject.to_sql).to eq('1 OR 1=1; SELECT (1,2,3)')
         end
 
         context "with :space" do
-          it "should emit the statements with custom spaces" do
+          it "must emit the statements with custom spaces" do
             expect(subject.to_sql(space: '/**/')).to eq('1/**/OR/**/1=1;/**/SELECT/**/(1,2,3)')
           end
         end
@@ -127,7 +127,7 @@ describe Ronin::Code::SQL::Injection do
           sqli
         end
 
-        it "should balance the quotes" do
+        it "must balance the quotes" do
           expect(subject.to_sql).to eq("1' OR '1'='1")
         end
       end
@@ -139,7 +139,7 @@ describe Ronin::Code::SQL::Injection do
           sqli
         end
 
-        it "should terminate the SQL statement" do
+        it "must terminate the SQL statement" do
           expect(subject.to_sql).to start_with("1' OR 1=1;-- ")
         end
       end
@@ -151,7 +151,7 @@ describe Ronin::Code::SQL::Injection do
           sqli
         end
 
-        it "should terminate the SQL statement" do
+        it "must terminate the SQL statement" do
           expect(subject.to_sql(terminate: true)).to start_with("1' OR '1'='1';-- ")
         end
       end
@@ -164,7 +164,7 @@ describe Ronin::Code::SQL::Injection do
         sqli
       end
 
-      it "should terminate the SQL statement" do
+      it "must terminate the SQL statement" do
         expect(subject.to_sql(terminate: true)).to start_with("1 OR 1=1;-- ")
       end
     end
