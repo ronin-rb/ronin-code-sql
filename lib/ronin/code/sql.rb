@@ -30,6 +30,7 @@ module Ronin
     #
     module SQL
       include Mixin
+      extend Mixin
     end
   end
 end
