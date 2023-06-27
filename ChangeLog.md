@@ -1,3 +1,12 @@
+### 2.1.0 / 2023-06-26
+
+* Added {Ronin::Code::SQL::Mixin}.
+* Added {Ronin::Code::SQLI} as an alias for {Ronin::Code::SQL::Injection}.
+* Added support for the `syntax:` and `comment:` keyword arguments to
+  {Ronin::Code::SQL::Statement#to_sql} and {Ronin::Code::SQL::Injection#to_sql}.
+* Added {Ronin::Code::SQL::Clauses#order_by}.
+* Added {Ronin::Code::SQL::Emitter#emit_comment}.
+
 ### 2.0.0 / 2023-02-01
 
 * Require `ruby` >= 3.0.0.
