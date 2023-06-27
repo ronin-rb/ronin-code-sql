@@ -177,6 +177,15 @@ puts sqli.to_sql(space: '/**/')
 # 1/**/UNION/**/SELECT/**/(1,2,3,4,id)/**/FROM/**/users
 ```
 
+Bypass filters using MySQL `#` comments:
+
+```ruby
+sqli = Ronin::Code::SQLI.new
+sqli.or { 1 == 1 }
+puts sqli.to_sql(terminate: true, comment: '#')
+# 1 OR 1=1 OR 1=1;#
+```
+
 ## Requirements
 
 * [Ruby] >= 3.0.0
