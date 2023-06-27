@@ -237,8 +237,16 @@ describe Ronin::Code::SQL::Emitter do
   end
 
   describe "#emit_list" do
-    it "should emit a ',' separated list" do
-      expect(subject.emit_list([1,2,3,'foo'])).to eq("(1,2,3,'foo')")
+    context "when given an Array with multiple values" do
+      it "should emit a ',' separated list" do
+        expect(subject.emit_list([1,2,3,'foo'])).to eq("(1,2,3,'foo')")
+      end
+    end
+
+    context "when given an Array with only one element" do
+      it "should emit the single element without parentheses" do
+        expect(subject.emit_list([1])).to eq('1')
+      end
     end
   end
 
@@ -557,7 +565,7 @@ describe Ronin::Code::SQL::Emitter do
         let(:stmt_order_by) { Ronin::Code::SQL::Statement.new(:SELECT,1).order_by([1, :col_x]) }
 
         it "should emit order_by with multiple columns" do
-          expect(subject.emit_statement(stmt_order_by)).to eq('select 1 order by ((1,col_x))')
+          expect(subject.emit_statement(stmt_order_by)).to eq('select 1 order by (1,col_x)')
         end
       end
 

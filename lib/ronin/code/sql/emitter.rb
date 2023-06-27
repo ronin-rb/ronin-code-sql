@@ -238,7 +238,11 @@ module Ronin
         #   The raw SQL.
         #
         def emit_list(list)
-          "(#{list.map { |element| emit(element) }.join(',')})"
+          if list.length == 1
+            emit(list.first)
+          else
+            "(#{list.map { |element| emit(element) }.join(',')})"
+          end
         end
 
         #
