@@ -19,6 +19,7 @@
 #
 
 require 'ronin/code/sql/mixin'
+require 'ronin/code/sqli'
 
 module Ronin
   module Code
