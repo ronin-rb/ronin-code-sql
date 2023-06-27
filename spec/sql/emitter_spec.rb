@@ -142,8 +142,9 @@ describe Ronin::Code::SQL::Emitter do
   end
 
   describe "#emit_comment" do
-    context "when :comment is set to specific value" do
+    context "when #comment is set to specific value" do
       let(:custom_comment) { '# -- /* custom comment ' }
+
       subject { described_class.new(comment: custom_comment) }
 
       it 'should use that value' do
@@ -151,41 +152,42 @@ describe Ronin::Code::SQL::Emitter do
       end
     end
 
-    context "when :comment is not set(defaulted to :auto)" do
-      context "when :syntax is :unset" do
+    context "when #comment is not set" do
+      context "when #syntax is nil" do
         it "must emit a comment that works everywhere '-- '" do
-          expect(subject.emit_comment).to start_with('-- ')
+          expect(subject.emit_comment).to eq('-- ')
         end
       end
 
-      context "when :syntax is :mysql" do
+      context "when #syntax is :mysql" do
         subject { described_class.new(syntax: :mysql) }
 
         it "must emit a MySQL/MariaDB-compatible comment that starts with '-- ' or '#'" do
-          expect(subject.emit_comment).to start_with('-- ').or start_with('#')
+          expect(subject.emit_comment).to eq('-- ')
         end
       end
 
-      context "when :syntax is :postgres" do
+      context "when #syntax is :postgres" do
         subject { described_class.new(syntax: :postgres) }
-        it "must emit a Postgres-compatible comment that starts with '--'" do
-          expect(subject.emit_comment).to start_with('--')
+
+        it "must emit a Postgres-compatible comment that starts with '-- '" do
+          expect(subject.emit_comment).to eq('-- ')
         end
       end
 
-      context "when :syntax is :oracle" do
+      context "when #syntax is :oracle" do
         subject { described_class.new(syntax: :oracle) }
 
-        it "must emit a Oracle-compatible comment that starts with '--'" do
-          expect(subject.emit_comment).to start_with('--')
+        it "must emit a Oracle-compatible comment that starts with '-- '" do
+          expect(subject.emit_comment).to eq('-- ')
         end
       end
 
-      context "when :syntax is :mssql" do
+      context "when #syntax is :mssql" do
         subject { described_class.new(syntax: :mssql) }
 
-        it "must emit a MSSQL-compatible comment that starts with '--'" do
-          expect(subject.emit_comment).to start_with('--')
+        it "must emit a MSSQL-compatible comment that starts with '-- '" do
+          expect(subject.emit_comment).to eq('-- ')
         end
       end
     end
