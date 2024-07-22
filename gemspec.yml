@@ -3,7 +3,7 @@ summary: A Ruby DSL for crafting SQL Injections.
 description:
   ronin-code-sql is a Ruby DSL for crafting SQL Injections.
 
-license: LGPL-3.0
+license: LGPL-3.0-or-later
 authors: Postmodern
 email: postmodern.mod3@gmail.com
 homepage: https://github.com/ronin-rb/ronin-code-sql#readme
