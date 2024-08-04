@@ -18,8 +18,8 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/statement_list'
-require 'ronin/code/sql/injection'
+require_relative 'statement_list'
+require_relative 'injection'
 
 module Ronin
   module Code

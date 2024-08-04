@@ -18,7 +18,7 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/injection'
+require_relative 'sql/injection'
 
 module Ronin
   module Code

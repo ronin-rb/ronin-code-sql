@@ -18,7 +18,7 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/function'
+require_relative 'function'
 
 module Ronin
   module Code

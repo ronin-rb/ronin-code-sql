@@ -18,7 +18,7 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/emitter'
+require_relative 'emitter'
 
 module Ronin
   module Code

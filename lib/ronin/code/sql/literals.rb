@@ -18,7 +18,7 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/literal'
+require_relative 'literal'
 
 module Ronin
   module Code

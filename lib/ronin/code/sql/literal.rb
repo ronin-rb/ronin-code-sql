@@ -18,8 +18,8 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/emittable'
-require 'ronin/code/sql/operators'
+require_relative 'emittable'
+require_relative 'operators'
 
 module Ronin
   module Code

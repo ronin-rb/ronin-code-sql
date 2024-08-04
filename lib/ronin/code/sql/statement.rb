@@ -18,11 +18,11 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/literals'
-require 'ronin/code/sql/clause'
-require 'ronin/code/sql/clauses'
-require 'ronin/code/sql/operators'
-require 'ronin/code/sql/emittable'
+require_relative 'literals'
+require_relative 'clause'
+require_relative 'clauses'
+require_relative 'operators'
+require_relative 'emittable'
 
 module Ronin
   module Code

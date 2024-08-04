@@ -18,8 +18,8 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/mixin'
-require 'ronin/code/sqli'
+require_relative 'sql/mixin'
+require_relative 'sqli'
 
 module Ronin
   module Code

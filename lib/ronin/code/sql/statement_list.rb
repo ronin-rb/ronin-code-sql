@@ -18,14 +18,14 @@
 # along with ronin-code-sql.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-require 'ronin/code/sql/field'
-require 'ronin/code/sql/fields'
-require 'ronin/code/sql/unary_expr'
-require 'ronin/code/sql/binary_expr'
-require 'ronin/code/sql/functions'
-require 'ronin/code/sql/statement'
-require 'ronin/code/sql/statements'
-require 'ronin/code/sql/emittable'
+require_relative 'field'
+require_relative 'fields'
+require_relative 'unary_expr'
+require_relative 'binary_expr'
+require_relative 'functions'
+require_relative 'statement'
+require_relative 'statements'
+require_relative 'emittable'
 
 module Ronin
   module Code
