@@ -564,7 +564,7 @@ describe Ronin::Code::SQL::Emitter do
       end
 
       context "with `order by` clasule " do
-        let(:stmt_order_by) { Ronin::Code::SQL::Statement.new(:SELECT,1).order_by([1, :col_x]) }
+        let(:stmt_order_by) { Ronin::Code::SQL::Statement.new(:SELECT,1).order_by(1, :col_x) }
 
         it "must emit order_by with multiple columns" do
           expect(subject.emit_statement(stmt_order_by)).to eq('select 1 order by (1,col_x)')
