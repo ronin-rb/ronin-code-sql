@@ -1,3 +1,9 @@
+### 2.1.1 / 2025-02-14
+
+* Omit parentheses when formatting SQL lists containing only one element
+  (ex: `order_by(1)` -> `ORDER BY 1`, not `ORDER BY (1)`).
+* Use `require_relative` to improve load times.
+
 ### 2.1.0 / 2023-06-26
 
 * Added {Ronin::Code::SQL::Mixin}.
